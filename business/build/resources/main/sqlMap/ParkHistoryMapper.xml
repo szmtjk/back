@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.xingyi.logistic.db.dao.ParkDao">
+    <!--auto generated Code-->
+    <resultMap id="AllColumnMap" type="com.xingyi.logistic.db.dataobject.park.ParkDO">
+        <result column="id" property="id"/>
+        <result column="car_no" property="carNo"/>
+        <result column="start_time" property="startTime"/>
+        <result column="exit_time" property="exitTime"/>
+        <result column="amount" property="amount"/>
+        <result column="prepay_amount" property="prepayAmount"/>
+        <result column="flag" property="flag"/>
+        <result column="park_date" property="parkDate"/>
+        <result column="amount_status" property="amountStatus"/>
+        <result column="account_flag" property="accountFlag"/>
+        <result column="park_type" property="parkType"/>
+        <result column="memo" property="memo"/>
+        <result column="updated" property="updated"/>
+    </resultMap>
+
+    <!--auto generated Code-->
+    <sql id="all_column">
+        `id`,
+        `car_no`,
+        `start_time`,
+        `exit_time`,
+        `amount`,
+        `prepay_amount`,
+        `flag`,
+        `park_date`,
+        `amount_status`,
+        `account_flag`,
+        `park_type`,
+        `memo`
+    </sql>
+
+    <!--auto generated Code-->
+    <insert id="insertSelective" useGeneratedKeys="true" keyProperty="pojo.id">
+        INSERT INTO park_history (
+        <if test="pojo.carNo!=null"> `car_no`,</if>
+        <if test="pojo.startTime!=null"> `start_time`,</if>
+        <if test="pojo.exitTime!=null"> `exit_time`,</if>
+        <if test="pojo.amount!=null"> `amount`,</if>
+        <if test="pojo.prepayAmount!=null"> `prepay_amount`,</if>
+        <if test="pojo.flag!=null"> `flag`,</if>
+        <if test="pojo.parkDate!=null"> `park_date`,</if>
+        <if test="pojo.amountStatus!=null"> `amount_status`,</if>
+        <if test="pojo.accountFlag!=null"> `account_flag`,</if>
+        <if test="pojo.parkType!=null"> `parkType`,</if>
+        <if test="pojo.memo!=null"> `memo`,</if>
+        `updated`
+        )
+        VALUES (
+        <if test="pojo.carNo!=null"> #{pojo.carNo},</if>
+        <if test="pojo.startTime!=null"> #{pojo.startTime},</if>
+        <if test="pojo.exitTime!=null"> #{pojo.exitTime},</if>
+        <if test="pojo.amount!=null"> #{pojo.amount},</if>
+        <if test="pojo.prepayAmount!=null"> #{pojo.prepayAmount},</if>
+        <if test="pojo.flag!=null"> #{pojo.flag},</if>
+        <if test="pojo.parkDate!=null"> #{pojo.parkDate},</if>
+        <if test="pojo.amountStatus!=null"> #{pojo.amountStatus},</if>
+        <if test="pojo.accountFlag!=null"> #{pojo.accountFlag},</if>
+        <if test="pojo.parkType!=null"> #{pojo.parkType},</if>
+        <if test="pojo.memo!=null"> #{pojo.memo},</if>
+        UNIX_TIMESTAMP(now())
+        )
+    </insert>
+
+    <!--auto generated Code-->
+    <insert id="addParkStart" useGeneratedKeys="true" keyProperty="pojo.id">
+        INSERT INTO park_history (
+        `car_no`,
+        <if test="pojo.prepayAmount != null"> `prepay_amount`, </if>
+        <if test="pojo.parkType != null"> `park_type`, </if>
+        `start_time`,
+        `park_date`
+        ) VALUES (
+        #{pojo.carNo},
+        <if test="pojo.prepayAmount != null"> #{pojo.prepayAmount}, </if>
+        <if test="pojo.parkType != null"> #{pojo.parkType}, </if>
+        UNIX_TIMESTAMP(now()),
+        CURRENT_DATE
+        )
+    </insert>
+
+    <select id="getDBTime" resultType="Integer">
+        select UNIX_TIMESTAMP(now())
+    </select>
+
+    <update id="updateById">
+        UPDATE park_history
+        <set>
+            <if test="pojo.carNo != null"> `car_no` = #{pojo.carNo}, </if>
+            <if test="pojo.startTime != null"> `start_time` = #{pojo.startTime}, </if>
+            <if test="pojo.exitTime != null"> `exit_time` = #{pojo.exitTime}, </if>
+            <if test="pojo.amount != null"> `amount` = #{pojo.amount}, </if>
+            <if test="pojo.prepayAmount != null"> `prepay_amount` = #{pojo.prepayAmount}, </if>
+            <if test="pojo.flag != null"> `flag` = #{pojo.flag}, </if>
+            <if test="pojo.amountStatus != null"> `amount_status` = #{pojo.amountStatus}, </if>
+            <if test="pojo.accountFlag != null"> `account_flag` = #{pojo.accountFlag}, </if>
+            <if test="pojo.parkType != null"> `park_type` = #{pojo.parkType}, </if>
+            <if test="pojo.memo != null"> `memo` = #{pojo.memo}, </if>
+            `updated` = UNIX_TIMESTAMP(now())
+        </set>
+        WHERE id = #{pojo.id}
+    </update>
+
+    <delete id="delById" parameterType="java.lang.Integer">
+        delete from park_history
+        where `id` = #{id}
+        limit 1
+    </delete>
+
+    <select id="queryCount" resultType="java.lang.Integer" parameterType="Map" >
+        SELECT  count(1)
+        FROM  `park_history`
+        <include refid="queryParkWhere"/>
+    </select>
+
+    <select id="querySinglePark" resultMap="AllColumnMap" parameterType="Map" >
+        SELECT  <include refid="all_column"/>
+        FROM  `park_history`
+        where `car_no` = #{pojo.carNo}
+        order by `start_time` desc
+        limit 1
+    </select>
+
+    <select id="querySingleParkingExcludeCurrentId" resultMap="AllColumnMap" parameterType="Map" >
+        SELECT  <include refid="all_column"/>
+        FROM  `park_history`
+        where `flag` = 0 and `car_no` = #{pojo.carNo} and `id` != #{pojo.id}
+        order by `start_time` desc
+        limit 1
+    </select>
+
+    <select id="querySingleParkById" resultMap="AllColumnMap" parameterType="java.lang.Integer" >
+        SELECT  <include refid="all_column"/>
+        FROM  `park_history`
+        where `id` = #{id}
+        limit 1
+    </select>
+
+    <select id="queryParkList" resultMap="AllColumnMap" parameterType="Map" >
+        SELECT  <include refid="all_column"/>
+        FROM  `park_history`
+        <include refid="queryParkWhere"/>
+        order by `start_time` desc
+        <if test="pojo.start != null and pojo.start gt -1 and pojo.limit != null and pojo.limit gt 0">
+            limit #{pojo.start}, #{pojo.limit}
+        </if>
+    </select>
+
+    <sql id="queryParkWhere">
+        WHERE 1=1
+        <if test="pojo.flag != null"> and `flag` = #{pojo.flag} </if>
+        <if test="pojo.carNo != null"> and `car_no` like concat('%', #{pojo.carNo}, '%') </if>
+    </sql>
+
+    <select id="queryParkAccountList" resultMap="AllColumnMap">
+        SELECT  <include refid="all_column"/>
+        FROM  `park_history`
+        where `flag` = 0 and `account_flag` = 0 and `park_date` &lt; CURRENT_DATE()
+    </select>
+
+</mapper>
+

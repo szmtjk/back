@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.xingyi.logistic.db.dao.ParkAccountDao">
+    <!--auto generated Code-->
+    <resultMap id="AllColumnMap" type="com.xingyi.logistic.db.dataobject.park.ParkAccountDO">
+        <result column="id" property="id"/>
+        <result column="car_no" property="carNo"/>
+        <result column="account_date" property="accountDate"/>
+        <result column="amount" property="amount"/>
+        <result column="flag" property="flag"/>
+    </resultMap>
+
+    <!--auto generated Code-->
+    <sql id="all_column">
+        `id`,
+        `car_no`,
+        `account_date`,
+        `amount`,
+        `flag`
+    </sql>
+
+    <!--auto generated Code-->
+    <insert id="insertSelective" useGeneratedKeys="true" keyProperty="pojo.id">
+        INSERT INTO park_account
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="pojo.carNo!=null"> `car_no`,</if>
+            <if test="pojo.accountDate!=null"> `account_date`,</if>
+            <if test="pojo.amount!=null"> `amount`,</if>
+            <if test="pojo.flag!=null"> `flag`,</if>
+        </trim>
+        VALUES
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="pojo.carNo!=null">#{pojo.carNo},</if>
+            <if test="pojo.accountDate!=null">#{pojo.accountDate},</if>
+            <if test="pojo.amount!=null">#{pojo.amount},</if>
+            <if test="pojo.flag!=null">#{pojo.flag},</if>
+        </trim>
+    </insert>
+
+    <delete id="delete">
+        delete from park_account
+        where `car_no` = #{pojo.carNo}
+          and `flag` = #{pojo.flag}
+          and `account_date` = #{pojo.accountDate}
+    </delete>
+
+    <!--auto generated Code-->
+    <update id="update">
+        UPDATE park_account
+        <set>
+            <if test="pojo.carNo != null"> `car_no` = #{pojo.carNo}, </if>
+            <if test="pojo.accountDate != null"> `account_date` = #{pojo.accountDate}, </if>
+            <if test="pojo.amount != null"> `amount` = #{pojo.amount}, </if>
+            <if test="pojo.flag != null"> `flag` = #{pojo.flag} </if>
+        </set>
+        WHERE id = #{pojo.id}
+    </update>
+</mapper>
+

@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.xingyi.logistic.db.dao.MemberDao">
+    <!--auto generated Code-->
+    <resultMap id="AllColumnMap" type="com.xingyi.logistic.db.dataobject.member.MemberDO">
+        <result column="id" property="id"/>
+        <result column="car_no" property="carNo"/>
+        <result column="mobile" property="mobile"/>
+        <result column="name" property="name"/>
+        <result column="gender" property="gender"/>
+        <result column="memo" property="memo"/>
+        <result column="member_type" property="memberType"/>
+        <result column="created" property="created"/>
+        <result column="updated" property="updated"/>
+    </resultMap>
+
+    <sql id="all_column">
+        `id`,
+        `car_no`,
+        `mobile`,
+        `name`,
+        `gender`,
+        `memo`,
+        `member_type`,
+        `created`,
+        `updated`
+    </sql>
+
+    <!--auto generated Code-->
+    <insert id="insertSelective" useGeneratedKeys="true" keyProperty="pojo.id">
+        INSERT INTO member
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="pojo.carNo!=null"> `car_no`,</if>
+            <if test="pojo.mobile!=null"> `mobile`,</if>
+            <if test="pojo.name!=null"> `name`,</if>
+            <if test="pojo.gender!=null"> `gender`,</if>
+            <if test="pojo.memo!=null"> `memo`,</if>
+            <if test="pojo.memberType!=null"> `member_type`,</if>
+            `created`,
+            `updated`
+        </trim>
+        VALUES
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="pojo.carNo!=null">#{pojo.carNo},</if>
+            <if test="pojo.mobile!=null">#{pojo.mobile},</if>
+            <if test="pojo.name!=null">#{pojo.name},</if>
+            <if test="pojo.gender!=null">#{pojo.gender},</if>
+            <if test="pojo.memo!=null">#{pojo.memo},</if>
+            <if test="pojo.memberType!=null">#{pojo.memberType},</if>
+            UNIX_TIMESTAMP(now()),
+            UNIX_TIMESTAMP(now())
+        </trim>
+    </insert>
+
+    <!--auto generated Code-->
+    <update id="update">
+        UPDATE member
+        <set>
+            <if test="pojo.carNo != null"> `car_no` = #{pojo.carNo}, </if>
+            <if test="pojo.mobile != null"> `mobile` = #{pojo.mobile}, </if>
+            <if test="pojo.name != null"> `name` = #{pojo.name}, </if>
+            <if test="pojo.gender != null"> `gender` = #{pojo.gender}, </if>
+            <if test="pojo.memo != null"> `memo` = #{pojo.memo}, </if>
+            <if test="pojo.memberType != null"> `member_type` = #{pojo.memberType}, </if>
+            <if test="pojo.updated != null"> `updated` = UNIX_TIMESTAMP(now()) </if>
+        </set>
+        WHERE id = #{pojo.id}
+    </update>
+
+    <select id="querySingle" resultMap="AllColumnMap" parameterType="Map">
+        select <include refid="all_column"/>
+        from member
+        <include refid="whereCarNoExactMatch"/>
+        limit 1
+    </select>
+
+    <select id="queryCount" resultType="java.lang.Integer" parameterType="Map">
+        select count(1)
+        from member
+        <include refid="whereCarNoFuzzyMatch"/>
+    </select>
+
+    <select id="queryCountByKey" resultType="java.lang.Integer" parameterType="Map">
+        select count(1)
+        from member
+        <include refid="whereKeyFuzzyMatch"/>
+    </select>
+
+    <select id="queryAll" resultMap="AllColumnMap" parameterType="Map">
+        select <include refid="all_column"/>
+        from member
+        <include refid="whereCarNoFuzzyMatch"/>
+        order by id desc
+        <include refid="pageCommon"/>
+    </select>
+
+    <select id="queryAllByKey" resultMap="AllColumnMap" parameterType="Map">
+        select <include refid="all_column"/>
+        from member
+        <include refid="whereKeyFuzzyMatch"/>
+        order by id desc
+        <include refid="pageCommon"/>
+    </select>
+
+    <sql id="whereCarNoExactMatch">
+        WHERE 1=1
+        <if test="pojo.id != null"> and `id` = #{pojo.id} </if>
+        <if test="pojo.carNo != null"> and `car_no` = #{pojo.carNo} </if>
+    </sql>
+
+    <sql id="whereCarNoFuzzyMatch">
+        WHERE 1=1
+        <if test="pojo.carNo != null"> and `car_no` like concat('%', #{pojo.carNo}, '%') </if>
+        <if test="pojo.flag != null"> and `flag` = #{pojo.flag} </if>
+    </sql>
+    <sql id="whereKeyFuzzyMatch">
+        WHERE 1=1
+        <if test="pojo.key != null"> and (`car_no` like concat('%', #{pojo.key}, '%') or `mobile` like concat('%', #{pojo.key}, '%'))</if>
+    </sql>
+
+    <sql id="pageCommon">
+        <if test="pojo.start != null and pojo.start gt -1 and pojo.limit != null and pojo.limit gt 0">
+            limit #{pojo.start}, #{pojo.limit}
+        </if>
+    </sql>
+</mapper>
+

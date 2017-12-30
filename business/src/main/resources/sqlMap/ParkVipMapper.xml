@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.xingyi.logistic.db.dao.ParkVipDao">
+    <!--auto generated Code-->
+    <resultMap id="AllColumnMap" type="com.xingyi.logistic.db.dataobject.park.ParkVipDO">
+        <result column="id" property="id"/>
+        <result column="car_no" property="carNo"/>
+        <result column="start_date" property="startDate"/>
+        <result column="end_date" property="endDate"/>
+        <result column="amount" property="amount"/>
+        <result column="flag" property="flag"/>
+        <result column="memo" property="memo"/>
+        <result column="status" property="status"/>
+        <result column="created" property="created"/>
+        <result column="updated" property="updated"/>
+    </resultMap>
+
+    <!--auto generated Code-->
+    <sql id="all_column">
+        `id`,
+        `car_no`,
+        `start_date`,
+        `end_date`,
+        `amount`,
+        `flag`,
+        `memo`,
+        `created`,
+        `updated`
+    </sql>
+
+    <!--auto generated Code-->
+    <insert id="insertSelective" useGeneratedKeys="true" keyProperty="pojo.id">
+        INSERT INTO park_vip
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="pojo.carNo!=null"> `car_no`,</if>
+            <if test="pojo.startDate!=null"> `start_date`,</if>
+            <if test="pojo.endDate!=null"> `end_date`,</if>
+            <if test="pojo.amount!=null"> `amount`,</if>
+            <if test="pojo.flag!=null"> `flag`,</if>
+            <if test="pojo.memo!=null"> `memo`,</if>
+            `created`,
+            `updated`
+        </trim>
+        VALUES
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="pojo.carNo!=null">#{pojo.carNo},</if>
+            <if test="pojo.startDate!=null">#{pojo.startDate},</if>
+            <if test="pojo.endDate!=null">#{pojo.endDate},</if>
+            <if test="pojo.amount!=null">#{pojo.amount},</if>
+            <if test="pojo.flag!=null">#{pojo.flag},</if>
+            <if test="pojo.memo!=null">#{pojo.memo},</if>
+            UNIX_TIMESTAMP(now()),
+            UNIX_TIMESTAMP(now())
+        </trim>
+    </insert>
+
+    <!--auto generated Code-->
+    <update id="update">
+        UPDATE park_vip
+        <set>
+            <if test="pojo.carNo != null"> `car_no` = #{pojo.carNo}, </if>
+            <if test="pojo.startDate != null"> `start_date` = #{pojo.startDate}, </if>
+            <if test="pojo.endDate != null"> `end_date` = #{pojo.endDate}, </if>
+            <if test="pojo.amount != null"> `amount` = #{pojo.amount}, </if>
+            <if test="pojo.flag != null"> `flag` = #{pojo.flag}, </if>
+            <if test="pojo.memo != null"> `memo` = #{pojo.memo}, </if>
+            `updated` = UNIX_TIMESTAMP(now())
+        </set>
+        WHERE id = #{pojo.id}
+    </update>
+
+    <update id="updateStatusStop">
+        UPDATE park_vip
+        <set>
+            `status` = 1,
+            `updated` = UNIX_TIMESTAMP(now())
+        </set>
+        WHERE `car_no` = #{pojo.carNo}
+    </update>
+
+    <select id="querySingle" resultMap="AllColumnMap" parameterType="Map">
+        select <include refid="all_column"/>
+        from park_vip
+        <include refid="whereCarNoExactMatch"/>
+        limit 1
+    </select>
+
+    <select id="queryLastSingle" resultMap="AllColumnMap" parameterType="Map">
+        select <include refid="all_column"/>
+        from park_vip
+        <include refid="whereCarNoExactMatch"/>
+        order by `end_date` desc
+        limit 1
+    </select>
+
+    <select id="queryLastSingleExcludeCurrentId" resultMap="AllColumnMap" parameterType="Map">
+        select <include refid="all_column"/>
+        from park_vip
+        <include refid="whereCarNoExactMatchAndIdExclude"/>
+        order by `end_date` desc
+        limit 1
+    </select>
+
+    <select id="queryCount" resultType="java.lang.Integer" parameterType="Map">
+        select count(1)
+        from park_vip
+        <include refid="whereCarNoFuzzyMatch"/>
+    </select>
+
+    <select id="queryAll" resultMap="AllColumnMap" parameterType="Map">
+        select <include refid="all_column"/>
+        from park_vip
+        <include refid="whereCarNoFuzzyMatch"/>
+        order by `car_no`, `end_date`
+        <include refid="pageCommon"/>
+    </select>
+
+    <select id="queryDistinctCount" resultType="java.lang.Integer" parameterType="Map">
+        select count(1)
+        from <include refid="queryDistinctCommon"/>
+    </select>
+
+    <select id="queryDistinctAll" resultMap="AllColumnMap" parameterType="Map">
+        select b.*
+        from <include refid="queryDistinctCommon"/>
+        order by b.end_date, b.id
+        <include refid="pageCommon"/>
+    </select>
+
+    <sql id="queryDistinctCommon">
+         (select car_no, max(end_date) as end_date
+              from park_vip
+              where status=0
+                <if test="pojo.carNo != null"> and `car_no` like concat('%', #{pojo.carNo}, '%') </if>
+                <if test="pojo.flag != null"> and `flag` = #{pojo.flag} </if>
+              group by car_no) a
+        left join park_vip b on b.car_no=a.car_no and b.end_date=a.end_date
+    </sql>
+
+    <sql id="whereCarNoExactMatch">
+        WHERE 1=1
+        <if test="pojo.id != null"> and `id` = #{pojo.id} </if>
+        <if test="pojo.carNo != null"> and `car_no` = #{pojo.carNo} </if>
+    </sql>
+
+    <sql id="whereCarNoExactMatchAndIdExclude">
+        WHERE 1=1
+        <if test="pojo.id != null"> and `id` != #{pojo.id} </if>
+        <if test="pojo.carNo != null"> and `car_no` = #{pojo.carNo} </if>
+    </sql>
+
+    <sql id="whereCarNoFuzzyMatch">
+        WHERE 1=1
+        <if test="pojo.carNo != null"> and `car_no` like concat('%', #{pojo.carNo}, '%') </if>
+        <if test="pojo.flag != null"> and `flag` = #{pojo.flag} </if>
+    </sql>
+
+    <sql id="pageCommon">
+        <if test="pojo.start != null and pojo.start gt -1 and pojo.limit != null and pojo.limit gt 0">
+            limit #{pojo.start}, #{pojo.limit}
+        </if>
+    </sql>
+</mapper>
+

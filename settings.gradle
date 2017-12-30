@@ -1,0 +1,5 @@
+rootProject.name = 'xyl'
+include 'common'
+include 'site'
+include 'business'
+

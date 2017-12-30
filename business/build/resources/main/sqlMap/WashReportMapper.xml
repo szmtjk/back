@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.xingyi.logistic.db.dao.WashReportDao">
+    <!--auto generated Code-->
+    <resultMap id="dayReportColumnMap" type="com.xingyi.logistic.db.dataobject.wash.WashReportDayDO">
+        <result column="wash_date" property="washDate"/>
+        <result column="wash_amount" property="washAmount"/>
+        <result column="normal_count" property="normalCount"/>
+        <result column="vip_count" property="vipCount"/>
+    </resultMap>
+
+    <resultMap id="monthReportColumnMap" type="com.xingyi.logistic.db.dataobject.wash.WashReportMonthDO">
+        <result column="wash_date" property="washDate"/>
+        <result column="total_amount" property="totalAmount"/>
+        <result column="normal_count" property="normalCount"/>
+        <result column="vip_count" property="vipCount"/>
+    </resultMap>
+
+    <select id="queryDayReportCount" resultType="java.lang.Integer" parameterType="Map" >
+        SELECT  count(1)
+        FROM <include refid="queryDReportComm"/>
+    </select>
+
+    <select id="queryDayReport" resultMap="dayReportColumnMap" parameterType="Map" >
+        SELECT  *
+        FROM  <include refid="queryDReportComm"/>
+        order by `wash_date`
+        <include refid="pageCommon"/>
+    </select>
+
+    <select id="queryMonthReportCount" resultType="java.lang.Integer" parameterType="Map" >
+        SELECT  count(1)
+        FROM <include refid="queryMReportComm"/>
+    </select>
+
+    <select id="queryMonthReport" resultMap="monthReportColumnMap" parameterType="Map" >
+        SELECT  *
+        FROM  <include refid="queryMReportComm"/>
+        order by `wash_date`
+        <include refid="pageCommon"/>
+    </select>
+
+    <sql id="queryDReportComm">
+        (
+        SELECT wash_date, sum(amount) as wash_amount, sum(case when a.vip_type = 0 then 1 else 0 end ) as normal_count,
+            sum(case when a.vip_type > 0 then 1 else 0 end ) as vip_count
+        from wash_history a
+        where status &gt;= 10
+        <if test="pojo.startDate != null"> and `wash_date` &gt;= #{pojo.startDate} </if>
+        <if test="pojo.endDate != null"> and `wash_date` &lt;= #{pojo.endDate} </if>
+        group by wash_date
+        ) aa
+    </sql>
+
+    <sql id="queryMReportComm">
+        (
+        select date_format(aa.wash_date, '%Y-%m') as wash_date, sum(aa.wash_amount) as total_amount,
+        sum(aa.normal_count) as normal_count, sum(aa.vip_count) as vip_count
+        from <include refid="queryDReportComm" />
+        group by date_format(aa.wash_date, '%Y-%m')
+        ) bb
+    </sql>
+
+    <sql id="pageCommon">
+        <if test="pojo.start != null and pojo.start gt -1 and pojo.limit != null and pojo.limit gt 0">
+            limit #{pojo.start}, #{pojo.limit}
+        </if>
+    </sql>
+
+</mapper>
+

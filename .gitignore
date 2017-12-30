@@ -1,0 +1,27 @@
+*.class
+*.iml
+*.iws
+api/target/
+impl/target/
+biz/target/
+web/target/
+target/
+impl/logs/
+*.jar
+*sentrycache*
+.idea/
+.gradle/
+out/
+mars-common/build/
+mars-site/build/
+mars-business/build/
+
+# temp ignore
+logs/
+*.log
+*.cache
+*.diff
+*.patch
+*.tmp
+*.swp
+.DS_Store
