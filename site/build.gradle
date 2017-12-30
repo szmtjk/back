@@ -3,21 +3,21 @@ buildscript {
         mavenLocal()
         mavenCentral()
     }
-
-    dependencies {
-        classpath "com.tuniu.nl.eveoh:gradle-aspectj:1.5"
-    }
+//
+//    dependencies {
+//        classpath "com.tuniu.nl.eveoh:gradle-aspectj:1.5"
+//    }
 }
-
-project.ext {
-    aspectjVersion = '1.8.5'
-}
-
-apply plugin: 'aspectj'
-
-compileAspect {
-    additionalAjcArgs = ['encoding': 'UTF-8']
-}
+//
+//project.ext {
+//    aspectjVersion = '1.8.5'
+//}
+//
+//apply plugin: 'aspectj'
+//
+//compileAspect {
+//    additionalAjcArgs = ['encoding': 'UTF-8']
+//}
 
 war {
     archiveName = 'xyl.war'
@@ -40,12 +40,12 @@ processResources {
 dependencies {
     compile project(':business')
     compile project(':common')
-
-    aspectpath ("com.tuniu.mob:mob-boot-monitor:${mobBootVersion}")
+//
+//    aspectpath ("com.tuniu.mob:mob-boot-monitor:${mobBootVersion}")
 
     compile 'org.springframework.boot:spring-boot-starter-web'
     providedRuntime 'org.springframework.boot:spring-boot-starter-tomcat'
-    compile ("com.tuniu.mob:mob-boot-monitor:${mobBootVersion}")
+//    compile ("com.tuniu.mob:mob-boot-monitor:${mobBootVersion}")
     testCompile 'org.springframework.boot:spring-boot-starter-test'
 
 }
