@@ -1,6 +1,6 @@
 package com.xingyi.logistic.business.db.dao;
 
-import com.tuniu.mob.boot.jdbc.annotation.Dao;
+import com.xxx.boot.jdbc.annotation.Dao;
 import com.xingyi.logistic.business.db.dao.base.BaseDAO;
 import com.xingyi.logistic.business.db.entity.PortDBQuery;
 import com.xingyi.logistic.business.db.entity.PortDO;
@@ -11,4 +11,5 @@ import com.xingyi.logistic.business.db.entity.PortDO;
 @Dao
 public interface PortDAO extends BaseDAO<PortDO, PortDBQuery> {
 
+    PortDO getByName(String name);
 }

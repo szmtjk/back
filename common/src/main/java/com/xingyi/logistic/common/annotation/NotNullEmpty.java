@@ -1,6 +1,3 @@
-/**
- * Copyright (C) 2006-2017 Tuniu All rights reserved
- */
 package com.xingyi.logistic.common.annotation;
 
 import javax.validation.Constraint;

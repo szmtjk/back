@@ -1,4 +1,4 @@
-group 'com.myc'
+group 'com.xingyi.logistic'
 version '1.0-SNAPSHOT'
 
 apply plugin: 'java'

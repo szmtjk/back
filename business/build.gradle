@@ -1,4 +1,4 @@
-group 'com.myc'
+group 'com.xingyi.logistic'
 version '1.0-SNAPSHOT'
 
 apply plugin: 'java'
@@ -12,8 +12,8 @@ repositories {
 
 dependencies {
     compile project(':common')
+    compile project(':boot-jdbc')
 
-    compile("com.tuniu.mob:mob-boot-jdbc:1.1.1")
     compile 'com.alibaba:fastjson:1.2.29'
     compile fileTree(dir: 'libs', include: '*.jar')
 }

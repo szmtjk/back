@@ -1,7 +1,7 @@
 package com.xingyi.logistic.business.db.config;
 
-import com.tuniu.mob.boot.jdbc.annotation.Dao;
-import com.tuniu.mob.boot.jdbc.annotation.MobMapperScan;
+import com.xxx.boot.jdbc.annotation.Dao;
+import com.xxx.boot.jdbc.annotation.MobMapperScan;
 import org.springframework.context.annotation.Configuration;
 
 /**

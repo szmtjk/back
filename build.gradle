@@ -1,6 +1,6 @@
 def vJavaLang = '1.8'
 
-def javaProjects = [project(':site'), project(':common'), project(':business')]
+def javaProjects = [project(':site'), project(':common'), project(':business'), project(':boot-jdbc')]
 def bootProjects = [project(':site')]
 
 ext {

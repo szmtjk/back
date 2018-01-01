@@ -19,6 +19,7 @@ public class PortController extends BaseCRUDController<Port, PortQuery> {
     @Autowired
     private PortService portService;
 
+
     @Override
     public JsonRet<Integer> add(Port port) {
         return super.add(port);
@@ -38,6 +39,11 @@ public class PortController extends BaseCRUDController<Port, PortQuery> {
     public JsonRet<Port> getById(Long id) {
         return super.getById(id);
     }
+
+    public JsonRet<Port> getByName(String name) {
+        return null;
+    }
+
 
     @Override
     public JsonRet<Object> getList(PortQuery portQuery) {

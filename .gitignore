@@ -1,10 +1,10 @@
 *.class
 *.iml
 *.iws
-api/target/
-impl/target/
-biz/target/
-web/target/
+boot-jdbc/target/
+common/target/
+business/target/
+site/target/
 target/
 impl/logs/
 *.jar
@@ -12,6 +12,7 @@ impl/logs/
 .idea/
 .gradle/
 out/
+boot-jdbc/build/**/*.*
 common/build/**/*.*
 site/build/**/*.*
 business/build/**/*.*
