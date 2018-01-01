@@ -13,8 +13,8 @@ impl/logs/
 .gradle/
 out/
 common/build/**/*.*
-site/build/
-business/build/
+site/build/**/*.*
+business/build/**/*.*
 
 # temp ignore
 logs/
