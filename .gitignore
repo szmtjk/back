@@ -12,7 +12,7 @@ impl/logs/
 .idea/
 .gradle/
 out/
-common/build/
+common/build/**/*.*
 site/build/
 business/build/
 
