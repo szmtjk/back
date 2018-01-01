@@ -11,9 +11,6 @@ import org.springframework.web.context.WebApplicationContext;
  */
 public class Application extends SpringBootServletInitializer {
 
-    /**
-     * gradle bootRun的时候会找有main方法的类，如果有多个就必须在build.gradle里面指定是哪个类
-     */
     public static void main(String... args) {
         SpringApplication.run(MycWebConfig.class, args);
     }
@@ -24,9 +21,6 @@ public class Application extends SpringBootServletInitializer {
         return super.run(application);
     }
 
-    /**
-     * 继承{@link SpringBootServletInitializer SpringBootServletInitializer}是通过war包来部署的入口
-     */
     @Override
     protected SpringApplicationBuilder configure(SpringApplicationBuilder builder) {
         return builder.sources(MycWebConfig.class);

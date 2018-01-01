@@ -7,7 +7,8 @@ import org.springframework.web.bind.annotation.RestController;
  * Created by Jadic on 2017/6/7.
  */
 @RestController
-public class TestController {
+@RequestMapping("/test")
+public class TestController extends BaseController {
 
     @RequestMapping("/hi")
     public String testHi() {

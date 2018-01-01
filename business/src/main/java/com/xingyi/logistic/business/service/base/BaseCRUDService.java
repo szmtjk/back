@@ -1,0 +1,207 @@
+package com.xingyi.logistic.business.service.base;
+
+import com.xingyi.logistic.business.bean.BaseDBQueryPage;
+import com.xingyi.logistic.business.bean.BaseModelAndDO;
+import com.xingyi.logistic.business.bean.BaseQueryPage;
+import com.xingyi.logistic.business.db.dao.base.BaseDAO;
+import com.xingyi.logistic.business.util.JsonUtil;
+import com.xingyi.logistic.business.util.ParamValidator;
+import com.xingyi.logistic.common.bean.JsonRet;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import java.util.List;
+import java.util.stream.Collectors;
+
+/**
+ * Created by Jadic on 2017/12/31.
+ */
+public abstract class BaseCRUDService<DO extends BaseModelAndDO, Model, DBQueryPage extends BaseDBQueryPage, QueryPage extends BaseQueryPage> {
+
+    private static final Logger LOG = LoggerFactory.getLogger(BaseCRUDService.class);
+
+    public JsonRet<Integer> add(Model model) {
+        return commonAdd(model);
+    }
+
+    public JsonRet<Boolean> modify(Model model) {
+        return commonModify(model);
+    }
+
+    public JsonRet<Boolean> del(Long id) {
+        return commonDel(id);
+    }
+
+    public JsonRet<Model> getById(Long id) {
+        return commonGetById(id);
+    }
+
+    public JsonRet<Integer> getTotal(QueryPage query) {
+        return commonGetTotal(query);
+    }
+
+    public JsonRet<List<Model>> getList(QueryPage query) {
+        return commonGetList(query);
+    }
+
+    public JsonRet<Integer> commonAdd(Model model) {
+        JsonRet<Integer> ret = new JsonRet<>();
+        if (!ParamValidator.isParamValid(ret, model)) {
+            return ret;
+        }
+
+        if (!isBizCheckPassed(ret, model)) {
+            return ret;
+        }
+
+        DO dataObject = getModelConverter().toDataObject(model);
+        dataObject.setId(null);//新增时去除id值
+        BaseDAO<DO, DBQueryPage> dao = getDAO();
+        try {
+            if (dao.getExistCount(dataObject) > 0) {
+                ret.setErrTip(ConstErr.DATA_REPEATED);
+                return ret;
+            }
+            if (dao.insertSelective(dataObject) > 0) {
+                ret.setSuccessData(1);
+                return ret;
+            } else {
+                ret.setErrTip(ConstErr.ADD_ERR);
+            }
+        } catch (Exception e) {
+            ret.setErrTip(ConstErr.ADD_ERR);
+            LOG.error("[ERROR]insert, do:{}", JsonUtil.toJson(dataObject), e);
+        }
+        return ret;
+    }
+
+    public JsonRet<Boolean> commonModify(Model model) {
+        JsonRet<Boolean> ret = new JsonRet<>();
+        if (!ParamValidator.isParamValid(ret, model)) {
+            return ret;
+        }
+
+        if (!isBizCheckPassed(ret, model)) {
+            return ret;
+        }
+
+        DO dataObject = getModelConverter().toDataObject(model);
+        BaseDAO<DO, DBQueryPage> dao = getDAO();
+        try {
+            if (dao.getById(dataObject.getId()) == null) {
+                ret.setErrTip(ConstErr.DATA_NOT_EXIST);
+                return ret;
+            }
+
+            if (dao.getExistCount(dataObject) > 0) {
+                ret.setErrTip(ConstErr.DATA_REPEATED);
+                return ret;
+            }
+            if (dao.update(dataObject) > 0) {
+                ret.setSuccessData(true);
+                return ret;
+            } else {
+                ret.setErrTip(ConstErr.MODIFY_ERR);
+            }
+        } catch (Exception e) {
+            ret.setErrTip(ConstErr.MODIFY_ERR);
+            LOG.error("[ERROR]modify, do:{}", JsonUtil.toJson(dataObject), e);
+        }
+        return ret;
+    }
+
+    public JsonRet<Boolean> commonDel(Long id) {
+        JsonRet<Boolean> ret = new JsonRet<>();
+        try {
+            if (id == null) {
+                return JsonRet.getErrRet(ConstErr.ID_INVALID);
+            }
+
+            if (!isBizDelAllowed(ret, id)) {
+                return ret;
+            }
+
+            if (getDAO().del(id) > 0) {
+                return JsonRet.getSuccessRet(true);
+            } else {
+                return JsonRet.getErrRet(ConstErr.DEL_ERR);
+            }
+        } catch (Exception e) {
+            LOG.error("[ERROR]delete, id:{}", id, e);
+            return JsonRet.getErrRet(ConstErr.DEL_ERR);
+        }
+    }
+
+    public JsonRet<Model> commonGetById(Long id) {
+        try {
+            if (id == null) {
+                return JsonRet.getErrRet(ConstErr.ID_INVALID);
+            }
+            DO dataObject = getDAO().getById(id);
+            if (dataObject != null) {
+                return JsonRet.getSuccessRet(getModelConverter().toModel(dataObject));
+            } else {
+                return JsonRet.getErrRet(ConstErr.GET_ERR);
+            }
+        } catch (Exception e) {
+            LOG.error("[ERROR]getById, id:{}", id, e);
+            return JsonRet.getErrRet(ConstErr.GET_ERR);
+        }
+    }
+
+    public JsonRet<Integer> commonGetTotal(QueryPage query) {
+        JsonRet<Integer> ret = new JsonRet<>();
+        if (query != null && !ParamValidator.isParamValid(ret, query)) {//查询条件为null时不作检测
+            return ret;
+        }
+        DBQueryPage condition = getConditionConverter().toDOCondition(query);
+        try {
+            return JsonRet.getSuccessRet(getDAO().getCount(condition));
+        } catch (Exception e) {
+            LOG.error("[ERROR]get total", e);
+            return JsonRet.getErrRet(ConstErr.GET_ERR);
+        }
+    }
+
+    public JsonRet<List<Model>> commonGetList(QueryPage query) {
+        JsonRet<List<Model>> ret = new JsonRet<>();
+        if (query != null && !ParamValidator.isParamValid(ret, query)) {//查询条件为null时不作检测
+            return ret;
+        }
+        DBQueryPage condition = getConditionConverter().toDOCondition(query);
+        try {
+            List<DO> doList = getDAO().queryByPage(condition);
+            return JsonRet.getSuccessRet(doList.stream().map(getModelConverter()::toModel).collect(Collectors.toList()));
+        } catch (Exception e) {
+            LOG.error("[ERROR]get list", e);
+            return JsonRet.getErrRet(ConstErr.GET_ERR);
+        }
+    }
+
+
+    /**
+     * 入参模型数据的一些特殊业务逻辑判断校验
+     * @param ret
+     * @param model
+     * @return true 校验通过
+     */
+    protected boolean isBizCheckPassed(JsonRet<?> ret, Model model) {
+        return true;
+    }
+
+    /**
+     * 删除数据前业务逻辑校验
+     * @param ret
+     * @param id
+     * @return true 允许删除
+     */
+    protected boolean isBizDelAllowed(JsonRet<?> ret, Long id) {
+        return true;
+    }
+
+    protected abstract ModelConverter<DO, Model> getModelConverter();
+
+    protected abstract BaseDAO<DO, DBQueryPage> getDAO();
+
+    protected abstract QueryConditionConverter<QueryPage, DBQueryPage> getConditionConverter();
+}

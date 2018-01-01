@@ -33,4 +33,26 @@ public class JsonRet<T> {
     public void setData(T data) {
         this.data = data;
     }
+
+    public void setSuccessData(T data) {
+        this.success = true;
+        this.data = data;
+    }
+
+    public void setErrTip(String msg) {
+        this.success = false;
+        this.msg = msg;
+    }
+
+    public static <T> JsonRet<T> getSuccessRet(T data) {
+        JsonRet<T> ret = new JsonRet<>();
+        ret.setSuccessData(data);
+        return ret;
+    }
+
+    public static <T> JsonRet<T> getErrRet(String msg) {
+        JsonRet<T> ret = new JsonRet<>();
+        ret.setErrTip(msg);
+        return ret;
+    }
 }

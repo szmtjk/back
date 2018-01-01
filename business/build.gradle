@@ -6,14 +6,14 @@ apply plugin: 'java'
 sourceCompatibility = 1.8
 
 repositories {
+    mavenLocal()
     mavenCentral()
 }
 
 dependencies {
     compile project(':common')
 
-//    compile("com.tuniu.mob:mob-boot-rest:1.0.7")
     compile("com.tuniu.mob:mob-boot-jdbc:1.1.1")
-
+    compile 'com.alibaba:fastjson:1.2.29'
     compile fileTree(dir: 'libs', include: '*.jar')
 }

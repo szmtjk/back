@@ -12,9 +12,9 @@ impl/logs/
 .idea/
 .gradle/
 out/
-mars-common/build/
-mars-site/build/
-mars-business/build/
+common/build/
+site/build/
+business/build/
 
 # temp ignore
 logs/
