@@ -1,5 +1,6 @@
 package com.xingyi.logistic.business.util;
 
+import com.xingyi.logistic.common.bean.ErrCode;
 import com.xingyi.logistic.common.bean.JsonRet;
 import org.apache.bval.jsr.ApacheValidationProvider;
 
@@ -23,14 +24,14 @@ public class ParamValidator {
 
     public static <T> boolean isParamValid(JsonRet<?> ret, T t) {
         if (t == null) {
-            ret.setErrTip("参数为空");
+            ret.setErrTip(ErrCode.PARAM_MISS);
             return false;
         }
 
         Set<ConstraintViolation<T>> validate = VALIDATOR.validate(t);
         if (!validate.isEmpty()) {
             for (ConstraintViolation<T> violation : validate) {
-                ret.setErrTip("[" + violation.getPropertyPath() + "]" + violation.getMessage());
+                ret.setErrTip(ErrCode.PARAM_INVALID.getCode(), "[" + violation.getPropertyPath() + "]" + violation.getMessage());
                 return false;//return only one invalid tip
             }
         }

@@ -7,6 +7,7 @@ package com.xingyi.logistic.common.bean;
 public class JsonRet<T> {
 
     private boolean success;
+    private int errCode = 200;
     private String msg;
     private T data;
 
@@ -16,6 +17,14 @@ public class JsonRet<T> {
 
     public void setSuccess(boolean success) {
         this.success = success;
+    }
+
+    public int getErrCode() {
+        return errCode;
+    }
+
+    public void setErrCode(int errCode) {
+        this.errCode = errCode;
     }
 
     public String getMsg() {
@@ -39,9 +48,16 @@ public class JsonRet<T> {
         this.data = data;
     }
 
-    public void setErrTip(String msg) {
+    public void setErrTip(int errCode, String msg) {
         this.success = false;
+        this.errCode = errCode;
         this.msg = msg;
+    }
+
+    public void setErrTip(ErrCode errCode) {
+        this.success = false;
+        this.errCode = errCode.getCode();
+        this.msg = errCode.getMsg();
     }
 
     public static <T> JsonRet<T> getSuccessRet(T data) {
@@ -50,9 +66,16 @@ public class JsonRet<T> {
         return ret;
     }
 
-    public static <T> JsonRet<T> getErrRet(String msg) {
+    public static <T> JsonRet<T> getErrRet(int errCode, String msg) {
         JsonRet<T> ret = new JsonRet<>();
-        ret.setErrTip(msg);
+        ret.setErrTip(errCode, msg);
         return ret;
     }
+
+    public static <T> JsonRet<T> getErrRet(ErrCode errCode) {
+        JsonRet<T> ret = new JsonRet<>();
+        ret.setErrTip(errCode);
+        return ret;
+    }
+
 }

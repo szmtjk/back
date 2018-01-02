@@ -21,7 +21,7 @@ public class PortController extends BaseCRUDController<Port, PortQuery> {
 
 
     @Override
-    public JsonRet<Integer> add(Port port) {
+    public JsonRet<Long> add(Port port) {
         return super.add(port);
     }
 

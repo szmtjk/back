@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <configuration scan="false">
-    <property name="PATH_LOG" value="logs/mars"/>
+    <property name="PATH_LOG" value="logs/xyl"/>
 
     <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
         <encoder>
@@ -9,7 +9,7 @@
     </appender>
 
     <appender name="FILE" class="ch.qos.logback.core.FileAppender">
-        <File>${PATH_LOG}/mars.log</File>
+        <File>${PATH_LOG}/xyl.log</File>
         <encoder>
             <charset>UTF-8</charset>
             <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [%t] %4p %logger{29}.%M - %msg%n%ex{10}</pattern>

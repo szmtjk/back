@@ -3,6 +3,7 @@ package com.xingyi.logistic.controller;
 import com.xingyi.logistic.business.bean.BaseQueryPage;
 import com.xingyi.logistic.business.service.BaseService;
 import com.xingyi.logistic.business.util.PrimitiveUtil;
+import com.xingyi.logistic.common.bean.ErrCode;
 import com.xingyi.logistic.common.bean.JsonRet;
 import com.xingyi.logistic.config.JsonParam;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -18,7 +19,7 @@ import java.util.Map;
 public abstract class BaseCRUDController<Model, Condition extends BaseQueryPage> extends BaseController {
 
     @RequestMapping("/add")
-    public JsonRet<Integer> add(@JsonParam Model model) {
+    public JsonRet<Long> add(@JsonParam Model model) {
         return getBaseService().add(model);
     }
 
@@ -50,14 +51,14 @@ public abstract class BaseCRUDController<Model, Condition extends BaseQueryPage>
                     params.put("list", listRet.getData());
                     return JsonRet.getSuccessRet(params);
                 } else {
-                    return JsonRet.getErrRet(listRet.getMsg());
+                    return JsonRet.getErrRet(ErrCode.GET_ERR.getCode(), listRet.getMsg());
                 }
             } else {
                 params.put("total", 0);
                 return JsonRet.getSuccessRet(params);
             }
         }
-        return JsonRet.getErrRet(totalRet.getMsg());
+        return JsonRet.getErrRet(ErrCode.GET_ERR.getCode(), totalRet.getMsg());
     }
 
     protected abstract BaseService<Model, Condition> getBaseService();

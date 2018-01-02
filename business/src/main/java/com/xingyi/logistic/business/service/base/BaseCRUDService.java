@@ -6,6 +6,7 @@ import com.xingyi.logistic.business.bean.BaseQueryPage;
 import com.xingyi.logistic.business.db.dao.base.BaseDAO;
 import com.xingyi.logistic.business.util.JsonUtil;
 import com.xingyi.logistic.business.util.ParamValidator;
+import com.xingyi.logistic.common.bean.ErrCode;
 import com.xingyi.logistic.common.bean.JsonRet;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -20,7 +21,7 @@ public abstract class BaseCRUDService<DO extends BaseModelAndDO, Model, DBQueryP
 
     private static final Logger LOG = LoggerFactory.getLogger(BaseCRUDService.class);
 
-    public JsonRet<Integer> add(Model model) {
+    public JsonRet<Long> add(Model model) {
         return commonAdd(model);
     }
 
@@ -44,8 +45,8 @@ public abstract class BaseCRUDService<DO extends BaseModelAndDO, Model, DBQueryP
         return commonGetList(query);
     }
 
-    public JsonRet<Integer> commonAdd(Model model) {
-        JsonRet<Integer> ret = new JsonRet<>();
+    public JsonRet<Long> commonAdd(Model model) {
+        JsonRet<Long> ret = new JsonRet<>();
         if (!ParamValidator.isParamValid(ret, model)) {
             return ret;
         }
@@ -59,17 +60,17 @@ public abstract class BaseCRUDService<DO extends BaseModelAndDO, Model, DBQueryP
         BaseDAO<DO, DBQueryPage> dao = getDAO();
         try {
             if (dao.getExistCount(dataObject) > 0) {
-                ret.setErrTip(ConstErr.DATA_REPEATED);
+                ret.setErrTip(ErrCode.DATA_REPEATED);
                 return ret;
             }
             if (dao.insertSelective(dataObject) > 0) {
-                ret.setSuccessData(1);
+                ret.setSuccessData(dataObject.getId());
                 return ret;
             } else {
-                ret.setErrTip(ConstErr.ADD_ERR);
+                ret.setErrTip(ErrCode.ADD_ERR);
             }
         } catch (Exception e) {
-            ret.setErrTip(ConstErr.ADD_ERR);
+            ret.setErrTip(ErrCode.ADD_ERR);
             LOG.error("[ERROR]insert, do:{}", JsonUtil.toJson(dataObject), e);
         }
         return ret;
@@ -89,22 +90,22 @@ public abstract class BaseCRUDService<DO extends BaseModelAndDO, Model, DBQueryP
         BaseDAO<DO, DBQueryPage> dao = getDAO();
         try {
             if (dao.getById(dataObject.getId()) == null) {
-                ret.setErrTip(ConstErr.DATA_NOT_EXIST);
+                ret.setErrTip(ErrCode.DATA_NOT_EXIST);
                 return ret;
             }
 
             if (dao.getExistCount(dataObject) > 0) {
-                ret.setErrTip(ConstErr.DATA_REPEATED);
+                ret.setErrTip(ErrCode.DATA_REPEATED);
                 return ret;
             }
             if (dao.update(dataObject) > 0) {
                 ret.setSuccessData(true);
                 return ret;
             } else {
-                ret.setErrTip(ConstErr.MODIFY_ERR);
+                ret.setErrTip(ErrCode.MODIFY_ERR);
             }
         } catch (Exception e) {
-            ret.setErrTip(ConstErr.MODIFY_ERR);
+            ret.setErrTip(ErrCode.MODIFY_ERR);
             LOG.error("[ERROR]modify, do:{}", JsonUtil.toJson(dataObject), e);
         }
         return ret;
@@ -114,7 +115,7 @@ public abstract class BaseCRUDService<DO extends BaseModelAndDO, Model, DBQueryP
         JsonRet<Boolean> ret = new JsonRet<>();
         try {
             if (id == null) {
-                return JsonRet.getErrRet(ConstErr.ID_INVALID);
+                return JsonRet.getErrRet(ErrCode.ID_INVALID);
             }
 
             if (!isBizDelAllowed(ret, id)) {
@@ -124,28 +125,28 @@ public abstract class BaseCRUDService<DO extends BaseModelAndDO, Model, DBQueryP
             if (getDAO().del(id) > 0) {
                 return JsonRet.getSuccessRet(true);
             } else {
-                return JsonRet.getErrRet(ConstErr.DEL_ERR);
+                return JsonRet.getErrRet(ErrCode.DEL_ERR);
             }
         } catch (Exception e) {
             LOG.error("[ERROR]delete, id:{}", id, e);
-            return JsonRet.getErrRet(ConstErr.DEL_ERR);
+            return JsonRet.getErrRet(ErrCode.DEL_ERR);
         }
     }
 
     public JsonRet<Model> commonGetById(Long id) {
         try {
             if (id == null) {
-                return JsonRet.getErrRet(ConstErr.ID_INVALID);
+                return JsonRet.getErrRet(ErrCode.ID_INVALID);
             }
             DO dataObject = getDAO().getById(id);
             if (dataObject != null) {
                 return JsonRet.getSuccessRet(getModelConverter().toModel(dataObject));
             } else {
-                return JsonRet.getErrRet(ConstErr.GET_ERR);
+                return JsonRet.getErrRet(ErrCode.GET_ERR);
             }
         } catch (Exception e) {
             LOG.error("[ERROR]getById, id:{}", id, e);
-            return JsonRet.getErrRet(ConstErr.GET_ERR);
+            return JsonRet.getErrRet(ErrCode.GET_ERR);
         }
     }
 
@@ -159,7 +160,7 @@ public abstract class BaseCRUDService<DO extends BaseModelAndDO, Model, DBQueryP
             return JsonRet.getSuccessRet(getDAO().getCount(condition));
         } catch (Exception e) {
             LOG.error("[ERROR]get total", e);
-            return JsonRet.getErrRet(ConstErr.GET_ERR);
+            return JsonRet.getErrRet(ErrCode.GET_ERR);
         }
     }
 
@@ -174,7 +175,7 @@ public abstract class BaseCRUDService<DO extends BaseModelAndDO, Model, DBQueryP
             return JsonRet.getSuccessRet(doList.stream().map(getModelConverter()::toModel).collect(Collectors.toList()));
         } catch (Exception e) {
             LOG.error("[ERROR]get list", e);
-            return JsonRet.getErrRet(ConstErr.GET_ERR);
+            return JsonRet.getErrRet(ErrCode.GET_ERR);
         }
     }
 

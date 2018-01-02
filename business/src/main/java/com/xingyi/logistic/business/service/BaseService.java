@@ -15,7 +15,7 @@ public interface BaseService<Model, Condition extends BaseQueryPage> {
      * @param model
      * @return
      */
-    JsonRet<Integer> add(Model model);
+    JsonRet<Long> add(Model model);
 
     /**
      * 修改
