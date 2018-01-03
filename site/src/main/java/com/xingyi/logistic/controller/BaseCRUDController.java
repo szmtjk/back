@@ -7,6 +7,7 @@ import com.xingyi.logistic.common.bean.ErrCode;
 import com.xingyi.logistic.common.bean.JsonRet;
 import com.xingyi.logistic.config.JsonParam;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.HashMap;
@@ -18,17 +19,17 @@ import java.util.Map;
  */
 public abstract class BaseCRUDController<Model, Condition extends BaseQueryPage> extends BaseController {
 
-    @RequestMapping("/add")
+    @RequestMapping(value = "/add", method = RequestMethod.POST)
     public JsonRet<Long> add(@JsonParam Model model) {
         return getBaseService().add(model);
     }
 
-    @RequestMapping("/modify")
+    @RequestMapping(value = "/modify", method = RequestMethod.POST)
     public JsonRet<Boolean> modify(@JsonParam Model model) {
         return getBaseService().modify(model);
     }
 
-    @RequestMapping("/del")
+    @RequestMapping(value = "/del", method = RequestMethod.POST)
     public JsonRet<Boolean> del(@RequestParam Long id) {
         return getBaseService().del(id);
     }

@@ -87,6 +87,10 @@ public abstract class BaseCRUDService<DO extends BaseModelAndDO, Model, DBQueryP
         }
 
         DO dataObject = getModelConverter().toDataObject(model);
+        if (dataObject.getId() == null) {
+            ret.setErrTip(ErrCode.ID_INVALID);
+            return ret;
+        }
         BaseDAO<DO, DBQueryPage> dao = getDAO();
         try {
             if (dao.getById(dataObject.getId()) == null) {

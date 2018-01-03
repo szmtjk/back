@@ -25,7 +25,7 @@ import static java.lang.annotation.ElementType.PARAMETER;
 @Retention(RetentionPolicy.RUNTIME)
 public @interface NotNullEmpty {
 
-    String message() default "not null or empty message";
+    String message() default "can't be null or empty";
 
     Class<?>[] groups() default {};
 

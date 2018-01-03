@@ -3,6 +3,8 @@ package com.xingyi.logistic.business.bean;
 import com.xingyi.logistic.common.annotation.AllowedNumber;
 import com.xingyi.logistic.common.annotation.NotNullEmpty;
 
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 
 /**
@@ -14,13 +16,17 @@ public class BasePort extends BaseModelAndDO {
     private String portNo;//港口编号
     @NotNullEmpty
     private String name;//名称
-    @AllowedNumber(values = {1, 2})
+    @AllowedNumber(values = {1, 2}, message = "港口类型错误")
     private Integer portType;//港口类型 1：集装箱 2：其他
     @NotNullEmpty
     private String company;//所属公司
     @NotNull
+    @Max(value = 180000000, message = "超出经度范围")
+    @Min(value = 0)
     private Long longitude;//经度
     @NotNull
+    @Max(value = 90000000, message = "超出维度范围")
+    @Min(value = 0)
     private Long latitude;//纬度
     @NotNull
     private Long radius;//港口半径

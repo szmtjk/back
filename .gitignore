@@ -14,7 +14,7 @@ impl/logs/
 out/
 boot-jdbc/build/**/*.*
 common/build/**/*.*
-site/build/**/*.*
+site/build/**/*
 business/build/**/*.*
 
 # temp ignore
@@ -26,3 +26,8 @@ logs/
 *.tmp
 *.swp
 .DS_Store
+/boot-jdbc/build/
+/business/build/
+/out/
+/site/build/
+/site/logs/

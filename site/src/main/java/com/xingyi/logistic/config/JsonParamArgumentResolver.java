@@ -1,6 +1,7 @@
 package com.xingyi.logistic.config;
 
 import com.alibaba.fastjson.JSON;
+import com.xingyi.logistic.business.util.JsonUtil;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -12,7 +13,6 @@ import org.springframework.web.method.support.HandlerMethodArgumentResolver;
 import org.springframework.web.method.support.ModelAndViewContainer;
 
 import javax.servlet.http.HttpServletRequest;
-import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
@@ -52,17 +52,19 @@ public class JsonParamArgumentResolver implements HandlerMethodArgumentResolver 
         if ("GET".equals(method) || "DELETE".equals("method")) {
             return httpServletRequest.getQueryString();
         }
-        StringBuilder jsonStr = new StringBuilder();
-        BufferedReader reader = httpServletRequest.getReader();
-        String line;
-        while ((line = reader.readLine()) != null) {
-            jsonStr.append(line);
-        }
-        String parameterString = jsonStr.toString();
+        String parameterString = getPostString(httpServletRequest);
         if (StringUtils.isEmpty(parameterString)) {
             parameterString = httpServletRequest.getQueryString();
         }
         return StringUtils.isNotEmpty(parameterString) ? parameterString : null;
+    }
+
+    private String getPostString(HttpServletRequest httpRequest) throws IOException {
+        Map<String, Object> params = new HashMap<>();
+        for (String key : httpRequest.getParameterMap().keySet()) {
+            params.put(key, httpRequest.getParameter(key));
+        }
+        return JsonUtil.toJson(params);
     }
 
     private String convertToJsonString(String parameterString) {
@@ -73,6 +75,9 @@ public class JsonParamArgumentResolver implements HandlerMethodArgumentResolver 
         if (!CollectionUtils.isEmpty(map)) {
             return JSON.toJSONString(map);
         } else {
+            if (JSON.parseObject(parameterString) != null) {
+                return parameterString;
+            }
             return null;
         }
     }
