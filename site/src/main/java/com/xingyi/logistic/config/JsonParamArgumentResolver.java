@@ -38,7 +38,7 @@ public class JsonParamArgumentResolver implements HandlerMethodArgumentResolver 
         String jsonString = convertToJsonString(parameterString);
         if (StringUtils.isNotEmpty(jsonString)) {
             try {
-                return JSON.parseObject(jsonString, parameter.getGenericParameterType());
+                return JSON.parseObject(jsonString, parameter.getParameterType());
             } catch (Exception e) {
                 LOG.error("parse json err, json:{}", parameter, e);
             }

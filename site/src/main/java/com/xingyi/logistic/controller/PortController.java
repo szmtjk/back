@@ -40,11 +40,6 @@ public class PortController extends BaseCRUDController<Port, PortQuery> {
         return super.getById(id);
     }
 
-    public JsonRet<Port> getByName(String name) {
-        return null;
-    }
-
-
     @Override
     public JsonRet<Object> getList(PortQuery portQuery) {
         return super.getList(portQuery);
