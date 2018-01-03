@@ -38,12 +38,12 @@ public class MycWebConfig extends WebMvcConfigurerAdapter {
         registry.addInterceptor(new HandlerInterceptorAdapter(){
             @Override
             public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
-                String originHeader=request.getHeader("Origin");
+                String originHeader = request.getHeader("Origin");
                 response.setHeader("Access-Control-Allow-Origin", originHeader);
                 response.setHeader("Access-Control-Allow-Credentials", "true");
                 response.setHeader("Access-Control-Allow-Methods", "POST, GET, OPTIONS");
                 response.setHeader("Access-Control-Allow-Headers", "x-requested-with");
-                return false;
+                return true;
             }
         });
     }
