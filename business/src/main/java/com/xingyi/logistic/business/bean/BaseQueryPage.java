@@ -9,7 +9,7 @@ public class BaseQueryPage {
 
     private Integer page = 1;
     private Integer pageSize = 10;
-    private Integer pageIndex = 1;                                  //mini ui默认页码参数
+    private Integer pageIndex = 0;                                  //mini ui默认页码参数从0开始
     private Integer queryParamFlag = QueryType.DEFAULT.getCode();   //不同查询列表标识 0：默认标准返回格式 1：mini ui参数格式
 
     public Integer getPage() {
