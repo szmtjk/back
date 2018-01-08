@@ -241,4 +241,101 @@ CREATE TABLE IF NOT EXISTS `Ship` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COMMENT='船舶'
 
+CREATE TABLE `BigShipState` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `pch` varchar(20) COLLATE utf8_bin NOT NULL DEFAULT '' COMMENT '批次号',
+  `arriveLocation` varchar(30) COLLATE utf8_bin NOT NULL DEFAULT '' COMMENT '到达位置',
+  `arriveTime` int(11) NOT NULL DEFAULT '0' COMMENT '到达时间',
+  `departTime` int(11) NOT NULL DEFAULT '0' COMMENT '离港时间',
+  `status` tinyint(2) NOT NULL DEFAULT '0' COMMENT '状态  1：启用  2：禁用',
+  `creator` int(11) NOT NULL DEFAULT '0',
+  `created` int(11) NOT NULL DEFAULT '0',
+  `updated` int(11) NOT NULL DEFAULT '0',
+  `isDeleted` tinyint(2) NOT NULL DEFAULT '0',
+  `description` varchar(100) COLLATE utf8_bin NOT NULL DEFAULT '',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin COMMENT='大轮动态';
+
+CREATE TABLE `CustomerTask` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `customerId` int(11) NOT NULL DEFAULT '0',
+  `contractId` int(11) NOT NULL DEFAULT '0' COMMENT '合同id',
+  `totalLoad` int(11) NOT NULL DEFAULT '0' COMMENT '总载重',
+  `description` varchar(100) COLLATE utf8_bin NOT NULL DEFAULT '',
+  `creator` int(11) NOT NULL DEFAULT '0',
+  `created` int(11) NOT NULL DEFAULT '0',
+  `updated` int(11) NOT NULL DEFAULT '0',
+  `isDeleted` int(11) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin COMMENT='客户任务';
+
+CREATE TABLE `CustomerTaskFlow` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `taskId` int(11) NOT NULL DEFAULT '0' COMMENT '客户任务id',
+  `goodsName` varchar(30) COLLATE utf8_bin NOT NULL DEFAULT '' COMMENT '货物名称',
+  `goodsType` tinyint(2) NOT NULL DEFAULT '0' COMMENT '货物类型  1：熟料  2：散装  3：集装箱',
+  `totalWeight` int(11) NOT NULL DEFAULT '0' COMMENT '总吨位',
+  `direction` varchar(20) COLLATE utf8_bin NOT NULL,
+  `sender` varchar(30) COLLATE utf8_bin NOT NULL DEFAULT '' COMMENT '发送方',
+  `receiver` varchar(30) COLLATE utf8_bin NOT NULL DEFAULT '' COMMENT '收货单位',
+  `loadingDate` date NOT NULL DEFAULT '1900-01-01' COMMENT '装货日期',
+  `dischargeDate` date NOT NULL DEFAULT '1900-01-01' COMMENT '卸货日期',
+  `loadType` tinyint(2) NOT NULL DEFAULT '0' COMMENT '装货途径  1：大轮  2：场地',
+  `bigShipPC` varchar(20) COLLATE utf8_bin NOT NULL DEFAULT '' COMMENT '大轮批次',
+  `totalLoad` int(11) NOT NULL DEFAULT '0' COMMENT '总载重',
+  `arriveLocation` varchar(30) COLLATE utf8_bin NOT NULL DEFAULT '' COMMENT '到达位置',
+  `bigShipArriveTime` int(11) NOT NULL DEFAULT '0' COMMENT '大轮预计达到时间',
+  `bigShipDepartTime` int(11) NOT NULL DEFAULT '0' COMMENT '大轮预计离开时间',
+  `selfPick` tinyint(2) NOT NULL DEFAULT '0' COMMENT '是否自提  1：是 2：否',
+  `sailingArea` smallint(6) NOT NULL DEFAULT '0' COMMENT '航行区域',
+  `shipSuggestUnitPrice` int(10) NOT NULL DEFAULT '0' COMMENT '船户参考运价',
+  `sailingFlag` tinyint(2) NOT NULL DEFAULT '0' COMMENT '航次标识  1：正常  2：散装回程货  3：安吉货',
+  `status` tinyint(2) NOT NULL DEFAULT '0' COMMENT '状态 1：启用  2：禁用',
+  `description` varchar(100) COLLATE utf8_bin NOT NULL,
+  `creator` int(11) NOT NULL DEFAULT '0',
+  `created` int(11) NOT NULL DEFAULT '0',
+  `updated` int(11) NOT NULL DEFAULT '1',
+  `isDeleted` int(11) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin COMMENT='客户任务流向';
+
+CREATE TABLE `SailingInfo` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `shipId` int(11) NOT NULL DEFAULT '0' COMMENT '船id',
+  `type` tinyint(2) NOT NULL DEFAULT '0' COMMENT '航次信息类型  1：空船到港  2：空船装后  3:重船到港  4：重船卸后',
+  `arriveTime` int(11) NOT NULL DEFAULT '0' COMMENT '到港时间',
+  `departTime` int(11) NOT NULL DEFAULT '0' COMMENT '出发时间',
+  `loadTime` int(11) NOT NULL DEFAULT '0' COMMENT '实际装货时间',
+  `loadWeight` int(11) NOT NULL DEFAULT '0' COMMENT '装货吨位',
+  `dischargeTime` int(11) NOT NULL DEFAULT '0' COMMENT '卸货时间',
+  `dischargeWeight` int(11) NOT NULL DEFAULT '0' COMMENT '卸货重量',
+  `dsichargeDelayFee` int(11) NOT NULL DEFAULT '0' COMMENT '卸货延迟费用',
+  `description` varchar(100) COLLATE utf8_bin NOT NULL DEFAULT '',
+  `creator` int(11) NOT NULL DEFAULT '0',
+  `created` int(11) NOT NULL DEFAULT '0',
+  `updated` int(11) NOT NULL DEFAULT '0',
+  `isDeleted` tinyint(2) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin COMMENT='航次信息';
+
+CREATE TABLE `ShipStaff` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(20) COLLATE utf8_bin NOT NULL DEFAULT '',
+  `mobile` varchar(15) COLLATE utf8_bin NOT NULL DEFAULT '' COMMENT '手机号',
+  `gender` tinyint(2) NOT NULL DEFAULT '0' COMMENT '性别 1：男  2：女',
+  `identity` varchar(18) COLLATE utf8_bin NOT NULL DEFAULT '' COMMENT '身份证号',
+  `birthday` date NOT NULL DEFAULT '1900-01-01' COMMENT '生日',
+  `residence` varchar(50) COLLATE utf8_bin NOT NULL DEFAULT '' COMMENT '户籍',
+  `shipId` int(11) NOT NULL DEFAULT '0' COMMENT '所属',
+  `title` tinyint(2) NOT NULL DEFAULT '0' COMMENT '岗位  1：船长  2：驾驶员  3：轮机员  4：水手',
+  `isOwner` tinyint(2) NOT NULL DEFAULT '0' COMMENT '是否承包人  1：是  2：否',
+  `status` tinyint(2) NOT NULL DEFAULT '0' COMMENT '状态  1：启用  2：禁用',
+  `description` varchar(100) COLLATE utf8_bin NOT NULL DEFAULT '',
+  `creator` int(11) NOT NULL DEFAULT '0',
+  `created` int(11) NOT NULL DEFAULT '0',
+  `updated` int(11) NOT NULL DEFAULT '0',
+  `isDeleted` tinyint(2) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin COMMENT='船舶人员';
+
 SET FOREIGN_KEY_CHECKS = 1;
