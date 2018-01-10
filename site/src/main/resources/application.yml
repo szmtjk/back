@@ -33,7 +33,7 @@ druid:
       mapperLocations: classpath*:sqlMap/**/*Mapper.xml
       url: jdbc:mysql://127.0.0.1:3306/xyl?zeroDateTimeBehavior=convertToNull&useUnicode=true&characterEncoding=UTF-8
       username: root
-      password: jadiciswei
+      password: 123456
       initialSize: 5
       filters: stat
       maxActive: 8
