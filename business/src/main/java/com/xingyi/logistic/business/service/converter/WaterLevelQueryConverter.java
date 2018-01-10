@@ -3,15 +3,11 @@ package com.xingyi.logistic.business.service.converter;
 import com.xingyi.logistic.business.db.entity.WaterLevelDBQuery;
 import com.xingyi.logistic.business.model.WaterLevelQuery;
 import com.xingyi.logistic.business.service.base.QueryConditionConverter;
-import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Component;
+import org.springframework.beans.BeanUtils;
 
-/**
- * 水位
- */
 @Component
-public class WaterLevelQueryConverter extends QueryConditionConverter<WaterLevelQuery, WaterLevelDBQuery> {
-
+public class WaterLevelQueryConverter extends QueryConditionConverter<WaterLevelQuery,WaterLevelDBQuery>{
     @Override
     public WaterLevelDBQuery toDOCondition(WaterLevelQuery src) {
         WaterLevelDBQuery dst = new WaterLevelDBQuery();
@@ -21,5 +17,4 @@ public class WaterLevelQueryConverter extends QueryConditionConverter<WaterLevel
         }
         return dst;
     }
-
 }

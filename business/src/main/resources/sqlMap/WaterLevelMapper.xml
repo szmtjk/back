@@ -3,32 +3,37 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.xingyi.logistic.business.db.dao.WaterLevelDAO">
     <resultMap id="AllColumnMap" type="com.xingyi.logistic.business.db.entity.WaterLevelDO">
+        <result property="id" column="id"/>
         <result property="name" column="name"/>
-        <result property="level" column="longitude"/>
-        <result property="status" column="latitude"/>
+        <result property="level" column="level"/>
+        <result property="status" column="status"/>
         <result property="description" column="description"/>
         <result property="creator" column="creator"/>
         <result property="created" column="created"/>
         <result property="updated" column="updated"/>
+        <result property="isDeleted" column="isDeleted"/>
     </resultMap>
 
     <sql id="all_column">
-        `name`
+        `id`
+        ,`name`
         ,`level`
         ,`status`
         ,`description`
         ,`creator`
         ,`created`
         ,`updated`
+        ,`isDeleted`
     </sql>
 
     <insert id="insertSelective" useGeneratedKeys="true" keyProperty="pojo.id">
-        INSERT INTO WaterLevel
+        INSERT INTO waterlevel
         <trim prefix="(" suffix=")" suffixOverrides=",">
             <if test="pojo.name!=null"> `name`,</if>
             <if test="pojo.level!=null"> `level`,</if>
             <if test="pojo.status!=null"> `status`,</if>
             <if test="pojo.description!=null"> `description`,</if>
+            <if test="pojo.creator!=null"> `creator`,</if>
             `created`,
             `updated`
         </trim>
@@ -38,6 +43,7 @@
             <if test="pojo.level!=null">#{pojo.level},</if>
             <if test="pojo.status!=null">#{pojo.status},</if>
             <if test="pojo.description!=null">#{pojo.description},</if>
+            <if test="pojo.creator!=null">#{pojo.creator},</if>
             UNIX_TIMESTAMP(now()),
             UNIX_TIMESTAMP(now())
         </trim>
@@ -45,36 +51,34 @@
 
     <!--auto generated Code-->
     <update id="update">
-        UPDATE WaterLevel
+        UPDATE waterlevel
         <set>
             <if test="pojo.name!=null">`name` = #{pojo.name},</if>
-            <if test="pojo.level!=null">`longitude` = #{pojo.level},</if>
+            <if test="pojo.level!=null">`level` = #{pojo.level},</if>
             <if test="pojo.status!=null">`status` = #{pojo.status},</if>
             <if test="pojo.description!=null">`description` = #{pojo.description},</if>
+            <if test="pojo.isDeleted!=null">`isDeleted` = #{pojo.isDeleted},</if>
             `updated` = UNIX_TIMESTAMP(now())
         </set>
-        WHERE `id` = #{pojo.id} and `isDeleted` = 0
-        LIMIT 1
+        WHERE `id` = #{pojo.id}
     </update>
 
     <update id="del" parameterType="java.lang.Long">
-        UPDATE WaterLevel
+        UPDATE waterlevel
         SET `isDeleted` = 1 ,
         `updated` = UNIX_TIMESTAMP(now())
-        WHERE `id` = #{id} and `isDeleted` = 0
-        LIMIT 1
+        WHERE `id` = #{id}
     </update>
 
     <select id="getById" parameterType="java.lang.Long" resultMap="AllColumnMap">
         SELECT <include refid="all_column"/>
-        FROM `WaterLevel`
-        WHERE `id` = #{id} and `isDeleted` = 0
-        LIMIT 1
+        FROM `waterlevel`
+        WHERE `id` = #{id}
     </select>
 
     <select id="getExistCount" resultType="java.lang.Integer" parameterType="Map" >
         SELECT  count(id)
-        FROM  `WaterLevel`
+        FROM  `waterlevel`
         where `isDeleted` = 0
         <if test="pojo.id != null"> AND `id` != #{pojo.id} </if>
         <if test="pojo.name != null"> AND `name` = #{pojo.name} </if>
@@ -83,14 +87,14 @@
 
     <select id="getCount" resultType="java.lang.Integer" parameterType="Map" >
         SELECT  count(id)
-        FROM  `WaterLevel`
+        FROM  `waterlevel`
         <include refid="pageQueryWhereCommon"/>
         limit 1
     </select>
 
     <select id="queryByPage" resultMap="AllColumnMap" parameterType="Map">
         select <include refid="all_column"/>
-        from `WaterLevel`
+        from `waterlevel`
         <include refid="pageQueryWhereCommon"/>
         order by `id` desc
         <include refid="pageCommon"/>
@@ -100,7 +104,7 @@
         where `isDeleted` = 0
         <if test="pojo.id != null"> AND `id` = #{pojo.id} </if>
         <if test="pojo.key != null">
-            AND (`name` like concat('%', #{pojo.key}, '%') )
+            AND (`name` like concat('%', #{pojo.key}, '%'))
         </if>
     </sql>
 

@@ -6,18 +6,15 @@ import com.xingyi.logistic.business.service.base.ModelConverter;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Component;
 
-/**
- * 水位
- */
 @Component
-public class WaterLevelConverter extends ModelConverter<WaterLevelDO, WaterLevel> {
+public class WaterLevelConverter extends ModelConverter<WaterLevelDO,WaterLevel>{
     @Override
     public WaterLevelDO toDataObject(WaterLevel src) {
-        WaterLevelDO dst = new WaterLevelDO();
+        WaterLevelDO wld = new WaterLevelDO();
         if (src != null) {
-            BeanUtils.copyProperties(src, dst);
+            BeanUtils.copyProperties(src, wld);
         }
-        return dst;
+        return wld;
     }
 
     @Override
