@@ -11,77 +11,81 @@
  Target Server Version : 50718
  File Encoding         : utf-8
 
- Date: 01/01/2018 18:10:40 PM
+ Date: 01/10/2018 23:53:57 PM
 */
 
 SET NAMES utf8mb4;
 SET FOREIGN_KEY_CHECKS = 0;
 
 -- ----------------------------
---  Table structure for `Port`
+--  Table structure for `BigShipState`
 -- ----------------------------
-CREATE TABLE IF NOT EXISTS `Port` (
+CREATE TABLE IF NOT EXISTS `BigShipState` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `portNo` varchar(20) NOT NULL DEFAULT '' COMMENT '港口编号',
-  `name` varchar(30) NOT NULL DEFAULT '' COMMENT '名称',
-  `portType` tinyint(2) NOT NULL DEFAULT '0' COMMENT '港口类型 1：集装箱 2：其他',
-  `company` varchar(50) NOT NULL DEFAULT '' COMMENT '所属公司',
-  `longitude` int(11) NOT NULL DEFAULT '0' COMMENT '经度',
-  `latitude` int(11) NOT NULL DEFAULT '0' COMMENT '纬度',
-  `radius` int(11) NOT NULL DEFAULT '0' COMMENT '港口半径',
-  `description` varchar(100) NOT NULL DEFAULT '' COMMENT '备注',
-  `creator` int(11) NOT NULL DEFAULT '0',
-  `created` int(11) NOT NULL DEFAULT '0',
-  `updated` int(11) NOT NULL DEFAULT '0',
-  `isDeleted` tinyint(2) NOT NULL DEFAULT '0' COMMENT '删除标记  0：未删除  1：已删除',
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COMMENT='港口';
-
-CREATE TABLE IF NOT EXISTS `WaterLevel` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `name` varchar(50) NOT NULL DEFAULT '' COMMENT '水位名称',
-  `level` int(11) NOT NULL DEFAULT '0' COMMENT '水位',
+  `pch` varchar(20) COLLATE utf8_bin NOT NULL DEFAULT '' COMMENT '批次号',
+  `arriveLocation` varchar(30) COLLATE utf8_bin NOT NULL DEFAULT '' COMMENT '到达位置',
+  `arriveTime` int(11) NOT NULL DEFAULT '0' COMMENT '到达时间',
+  `departTime` int(11) NOT NULL DEFAULT '0' COMMENT '离港时间',
   `status` tinyint(2) NOT NULL DEFAULT '0' COMMENT '状态  1：启用  2：禁用',
-  `description` varchar(100) NOT NULL DEFAULT '' COMMENT '备注',
   `creator` int(11) NOT NULL DEFAULT '0',
   `created` int(11) NOT NULL DEFAULT '0',
+  `updater` int(11) NOT NULL DEFAULT '0',
   `updated` int(11) NOT NULL DEFAULT '0',
-  `isDeleted` int(11) NOT NULL DEFAULT '0',
+  `isDeleted` tinyint(2) NOT NULL DEFAULT '0',
+  `description` varchar(100) COLLATE utf8_bin NOT NULL DEFAULT '',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='水位'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin COMMENT='大轮动态';
 
-CREATE TABLE IF NOT EXISTS`DangerZone` (
+-- ----------------------------
+--  Table structure for `Contract`
+-- ----------------------------
+CREATE TABLE IF NOT EXISTS `Contract` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `name` varchar(50) NOT NULL DEFAULT '',
-  `longitude` int(11) NOT NULL DEFAULT '0' COMMENT '经度',
-  `latitude` int(11) NOT NULL DEFAULT '0' COMMENT '维度',
-  `radius` int(11) NOT NULL DEFAULT '0' COMMENT '半径',
-  `alarmDistance` int(11) NOT NULL DEFAULT '0' COMMENT '报警距离',
-  `status` tinyint(2) NOT NULL DEFAULT '0' COMMENT '状态  1：启用 2：禁用',
+  `contractNo` varchar(50) NOT NULL DEFAULT '' COMMENT '合同编号',
+  `name` varchar(50) NOT NULL DEFAULT '' COMMENT '合同名称',
+  `partyA` int(11) NOT NULL DEFAULT '0' COMMENT '合同甲方 从客户信息中选',
+  `partyB` varchar(50) NOT NULL DEFAULT '' COMMENT '合同乙方',
+  `validSDate` date NOT NULL DEFAULT '1970-01-01' COMMENT '合同有效期起始日期',
+  `validEDate` date NOT NULL DEFAULT '1970-01-01' COMMENT '合同有效期截止日期',
+  `deposit` int(11) NOT NULL DEFAULT '0' COMMENT '保证金',
+  `depositDate` date NOT NULL DEFAULT '1970-01-01' COMMENT '保证金缴纳日期',
+  `depositFinanceDate` date NOT NULL DEFAULT '1970-01-01' COMMENT '保证金交财务日期',
+  `type` tinyint(2) NOT NULL DEFAULT '0' COMMENT '合同类型  1：短期  2：长期',
+  `signDepartment` int(11) NOT NULL DEFAULT '0' COMMENT '合同签订部门',
+  `signPerson` int(11) NOT NULL DEFAULT '0' COMMENT '合同签订人员',
+  `cheyun` int(11) NOT NULL DEFAULT '0' COMMENT '车辆运费',
+  `status` tinyint(2) NOT NULL DEFAULT '0' COMMENT '状态 1：启用  2：禁用',
   `description` varchar(100) NOT NULL DEFAULT '',
   `creator` int(11) NOT NULL DEFAULT '0',
   `created` int(11) NOT NULL DEFAULT '0',
+  `updater` int(11) NOT NULL DEFAULT '0',
   `updated` int(11) NOT NULL DEFAULT '0',
-  `isDeleted` tinyint(4) NOT NULL DEFAULT '0',
+  `isDeleted` tinyint(2) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='危险区域'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='合同信息';
 
-CREATE TABLE IF NOT EXISTS`DangerZoneSpeed` (
+-- ----------------------------
+--  Table structure for `ContractFlow`
+-- ----------------------------
+CREATE TABLE IF NOT EXISTS `ContractFlow` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `name` varchar(50) NOT NULL DEFAULT '',
-  `coordinate` varchar(512) NOT NULL DEFAULT '0' COMMENT '经纬度集合',
-  `minSpeed` int(11) NOT NULL DEFAULT '0' COMMENT '最小速度',
-  `maxSpeed` int(11) NOT NULL DEFAULT '0' COMMENT '最大速度',
-  `status` tinyint(2) NOT NULL DEFAULT '0' COMMENT '状态  1：启用 2：禁用',
-  `description` varchar(100) NOT NULL DEFAULT '',
+  `contractId` int(11) NOT NULL DEFAULT '0' COMMENT '合同id',
+  `flowId` int(11) NOT NULL DEFAULT '0' COMMENT '流向id',
+  `unitPrice` int(11) NOT NULL DEFAULT '0' COMMENT '运价',
+  `ticketStatus` tinyint(4) NOT NULL DEFAULT '0' COMMENT '开票与否  1：开  2：不开',
+  `lastUnitPrice` int(11) NOT NULL DEFAULT '0' COMMENT '上期合同运价',
   `creator` int(11) NOT NULL DEFAULT '0',
   `created` int(11) NOT NULL DEFAULT '0',
+  `updater` int(11) NOT NULL DEFAULT '0',
   `updated` int(11) NOT NULL DEFAULT '0',
   `isDeleted` tinyint(4) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC COMMENT='危险区域速度'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='合同流向';
 
-CREATE TABLE IF NOT EXISTS`Customer` (
+-- ----------------------------
+--  Table structure for `Customer`
+-- ----------------------------
+CREATE TABLE IF NOT EXISTS `Customer` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `customerNo` varchar(20) NOT NULL DEFAULT '' COMMENT '客户单位编号',
   `fullName` varchar(50) NOT NULL DEFAULT '' COMMENT '客户单位名称',
@@ -112,11 +116,106 @@ CREATE TABLE IF NOT EXISTS`Customer` (
   `description` varchar(100) NOT NULL DEFAULT '',
   `creator` int(11) NOT NULL DEFAULT '0',
   `created` int(11) NOT NULL DEFAULT '0',
+  `updater` int(11) NOT NULL DEFAULT '0',
   `updated` int(11) NOT NULL DEFAULT '0',
   `isDeleted` tinyint(2) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='客户信息'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='客户信息';
 
+-- ----------------------------
+--  Table structure for `CustomerTask`
+-- ----------------------------
+CREATE TABLE IF NOT EXISTS `CustomerTask` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `customerId` int(11) NOT NULL DEFAULT '0',
+  `contractId` int(11) NOT NULL DEFAULT '0' COMMENT '合同id',
+  `totalLoad` int(11) NOT NULL DEFAULT '0' COMMENT '总载重',
+  `description` varchar(100) COLLATE utf8_bin NOT NULL DEFAULT '',
+  `creator` int(11) NOT NULL DEFAULT '0',
+  `created` int(11) NOT NULL DEFAULT '0',
+  `updater` int(11) NOT NULL DEFAULT '0',
+  `updated` int(11) NOT NULL DEFAULT '0',
+  `isDeleted` int(11) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin COMMENT='客户任务';
+
+-- ----------------------------
+--  Table structure for `CustomerTaskFlow`
+-- ----------------------------
+CREATE TABLE IF NOT EXISTS `CustomerTaskFlow` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `taskId` int(11) NOT NULL DEFAULT '0' COMMENT '客户任务id',
+  `goodsName` varchar(30) COLLATE utf8_bin NOT NULL DEFAULT '' COMMENT '货物名称',
+  `goodsType` tinyint(2) NOT NULL DEFAULT '0' COMMENT '货物类型  1：熟料  2：散装  3：集装箱',
+  `totalWeight` int(11) NOT NULL DEFAULT '0' COMMENT '总吨位',
+  `direction` varchar(20) COLLATE utf8_bin NOT NULL,
+  `sender` varchar(30) COLLATE utf8_bin NOT NULL DEFAULT '' COMMENT '发送方',
+  `receiver` varchar(30) COLLATE utf8_bin NOT NULL DEFAULT '' COMMENT '收货单位',
+  `loadingDate` date NOT NULL DEFAULT '1900-01-01' COMMENT '装货日期',
+  `dischargeDate` date NOT NULL DEFAULT '1900-01-01' COMMENT '卸货日期',
+  `startPortId` int(11) NOT NULL DEFAULT '0' COMMENT '装货港口',
+  `endPortId` int(11) NOT NULL DEFAULT '0' COMMENT '卸货港口id',
+  `loadType` tinyint(2) NOT NULL DEFAULT '0' COMMENT '装货途径  1：大轮  2：场地',
+  `bigShipPC` varchar(20) COLLATE utf8_bin NOT NULL DEFAULT '' COMMENT '大轮批次',
+  `totalLoad` int(11) NOT NULL DEFAULT '0' COMMENT '总载重',
+  `arriveLocation` varchar(30) COLLATE utf8_bin NOT NULL DEFAULT '' COMMENT '到达位置',
+  `bigShipArriveTime` int(11) NOT NULL DEFAULT '0' COMMENT '大轮预计达到时间',
+  `bigShipDepartTime` int(11) NOT NULL DEFAULT '0' COMMENT '大轮预计离开时间',
+  `selfPick` tinyint(2) NOT NULL DEFAULT '0' COMMENT '是否自提  1：是 2：否',
+  `sailingArea` smallint(6) NOT NULL DEFAULT '0' COMMENT '航行区域',
+  `shipSuggestUnitPrice` int(10) NOT NULL DEFAULT '0' COMMENT '船户参考运价',
+  `sailingFlag` tinyint(2) NOT NULL DEFAULT '0' COMMENT '航次标识  1：正常  2：散装回程货  3：安吉货',
+  `status` tinyint(2) NOT NULL DEFAULT '0' COMMENT '状态 1：启用  2：禁用',
+  `description` varchar(100) COLLATE utf8_bin NOT NULL,
+  `creator` int(11) NOT NULL DEFAULT '0',
+  `created` int(11) NOT NULL DEFAULT '0',
+  `updated` int(11) NOT NULL DEFAULT '1',
+  `isDeleted` int(11) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin COMMENT='客户任务流向';
+
+-- ----------------------------
+--  Table structure for `DangerZone`
+-- ----------------------------
+CREATE TABLE IF NOT EXISTS `DangerZone` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(50) NOT NULL DEFAULT '',
+  `longitude` int(11) NOT NULL DEFAULT '0' COMMENT '经度',
+  `latitude` int(11) NOT NULL DEFAULT '0' COMMENT '维度',
+  `radius` int(11) NOT NULL DEFAULT '0' COMMENT '半径',
+  `alarmDistance` int(11) NOT NULL DEFAULT '0' COMMENT '报警距离',
+  `status` tinyint(2) NOT NULL DEFAULT '0' COMMENT '状态  1：启用 2：禁用',
+  `description` varchar(100) NOT NULL DEFAULT '',
+  `creator` int(11) NOT NULL DEFAULT '0',
+  `created` int(11) NOT NULL DEFAULT '0',
+  `updater` int(11) NOT NULL DEFAULT '0',
+  `updated` int(11) NOT NULL DEFAULT '0',
+  `isDeleted` tinyint(4) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='危险区域';
+
+-- ----------------------------
+--  Table structure for `DangerZoneSpeed`
+-- ----------------------------
+CREATE TABLE IF NOT EXISTS `DangerZoneSpeed` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(50) NOT NULL DEFAULT '',
+  `coordinate` varchar(512) NOT NULL DEFAULT '0' COMMENT '经纬度集合',
+  `minSpeed` int(11) NOT NULL DEFAULT '0' COMMENT '最小速度',
+  `maxSpeed` int(11) NOT NULL DEFAULT '0' COMMENT '最大速度',
+  `status` tinyint(2) NOT NULL DEFAULT '0' COMMENT '状态  1：启用 2：禁用',
+  `description` varchar(100) NOT NULL DEFAULT '',
+  `creator` int(11) NOT NULL DEFAULT '0',
+  `created` int(11) NOT NULL DEFAULT '0',
+  `updater` int(11) NOT NULL DEFAULT '0',
+  `updated` int(11) NOT NULL DEFAULT '0',
+  `isDeleted` tinyint(4) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC COMMENT='危险区域速度';
+
+-- ----------------------------
+--  Table structure for `Flow`
+-- ----------------------------
 CREATE TABLE IF NOT EXISTS `Flow` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(30) NOT NULL DEFAULT '',
@@ -130,79 +229,111 @@ CREATE TABLE IF NOT EXISTS `Flow` (
   `description` varchar(100) NOT NULL DEFAULT '' COMMENT '备注',
   `creator` int(11) NOT NULL DEFAULT '0',
   `created` int(11) NOT NULL DEFAULT '0',
+  `updater` int(11) NOT NULL DEFAULT '0',
   `updated` int(11) NOT NULL DEFAULT '0',
   `isDeleted` tinyint(2) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='流向信息'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='流向信息';
 
-CREATE TABLE IF NOT EXISTS `Contract` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `contractNo` varchar(50) NOT NULL DEFAULT '' COMMENT '合同编号',
-  `name` varchar(50) NOT NULL DEFAULT '' COMMENT '合同名称',
-  `partyA` int(11) NOT NULL DEFAULT '0' COMMENT '合同甲方 从客户信息中选',
-  `partyB` varchar(50) NOT NULL DEFAULT '' COMMENT '合同乙方',
-  `validSDate` date NOT NULL DEFAULT '1900-01-01' COMMENT '合同有效期起始日期',
-  `validEDate` date NOT NULL DEFAULT '1900-01-01' COMMENT '合同有效期截止日期',
-  `deposit` int(11) NOT NULL DEFAULT '0' COMMENT '保证金',
-  `depositDate` date NOT NULL DEFAULT '1900-01-01' COMMENT '保证金缴纳日期',
-  `depositFinanceDate` date NOT NULL DEFAULT '1900-01-01' COMMENT '保证金交财务日期',
-  `type` tinyint(2) NOT NULL DEFAULT '0' COMMENT '合同类型  1：短期  2：长期',
-  `signDepartment` int(11) NOT NULL DEFAULT '0' COMMENT '合同签订部门',
-  `signPerson` int(11) NOT NULL DEFAULT '0' COMMENT '合同签订人员',
-  `cheyun` int(11) NOT NULL DEFAULT '0' COMMENT '车运什么鬼？',
-  `status` tinyint(2) NOT NULL DEFAULT '0' COMMENT '状态 1：启用  2：禁用',
-  `description` varchar(100) NOT NULL DEFAULT '',
+-- ----------------------------
+--  Table structure for `Order`
+-- ----------------------------
+CREATE TABLE IF NOT EXISTS `Order` (
+  `int` int(11) NOT NULL AUTO_INCREMENT,
+  `customerTaksFlowId` int(11) NOT NULL DEFAULT '0' COMMENT '客户任务流向ID',
+  `orderNo` varchar(30) NOT NULL DEFAULT '' COMMENT '订单自定义编号',
+  `orderType` tinyint(4) NOT NULL DEFAULT '0' COMMENT '订单类型',
+  `shipId` int(11) NOT NULL DEFAULT '0' COMMENT '船舶id',
+  `shipType` tinyint(3) NOT NULL DEFAULT '0' COMMENT '船舶类型  1：自由 2：挂靠  3：临调',
+  `preWeight` int(11) NOT NULL DEFAULT '0' COMMENT '预报吨位',
+  `preLoad` int(11) NOT NULL DEFAULT '0' COMMENT '预发吨位',
+  `preArriveTime` int(11) NOT NULL DEFAULT '0' COMMENT '预计到港时间',
+  `preSettleAmount` double NOT NULL DEFAULT '0' COMMENT '预结算金额',
+  `settleType` tinyint(3) NOT NULL DEFAULT '0' COMMENT '结算方式  1：按实发吨位  2：按实收吨位   11：现金结算  12：定期结算',
+  `status` tinyint(4) NOT NULL DEFAULT '0' COMMENT '订单状态',
   `creator` int(11) NOT NULL DEFAULT '0',
   `created` int(11) NOT NULL DEFAULT '0',
-  `updated` int(11) NOT NULL DEFAULT '0',
-  `isDeleted` tinyint(2) NOT NULL DEFAULT '0',
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='合同信息'
-
-CREATE TABLE IF NOT EXISTS `ContractFlow` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `contractId` int(11) NOT NULL DEFAULT '0' COMMENT '合同id',
-  `flowId` int(11) NOT NULL DEFAULT '0' COMMENT '流向id',
-  `unitPrice` int(11) NOT NULL DEFAULT '0' COMMENT '运价',
-  `ticketStatus` tinyint(4) NOT NULL DEFAULT '0' COMMENT '开票与否  1：开  2：不开',
-  `lastUnitPrice` int(11) NOT NULL DEFAULT '0' COMMENT '上期合同运价',
-  `creator` int(11) NOT NULL DEFAULT '0',
-  `created` int(11) NOT NULL DEFAULT '0',
+  `updater` int(11) NOT NULL DEFAULT '0',
   `updated` int(11) NOT NULL DEFAULT '0',
   `isDeleted` tinyint(4) NOT NULL DEFAULT '0',
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='合同流向'
+  PRIMARY KEY (`int`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='订单';
 
-CREATE TABLE IF NOT EXISTS `TransferPrice` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `customerId` int(11) NOT NULL DEFAULT '0' COMMENT '客户id',
-  `contractId` int(11) NOT NULL DEFAULT '0' COMMENT '合同id',
-  `priceType` tinyint(2) NOT NULL DEFAULT '0' COMMENT '运价类型',
+-- ----------------------------
+--  Table structure for `OrderDispatchInfo`
+-- ----------------------------
+CREATE TABLE IF NOT EXISTS `OrderDispatchInfo` (
+  `int` int(11) NOT NULL AUTO_INCREMENT,
+  `customerTaksFlowId` int(11) NOT NULL DEFAULT '0' COMMENT '客户任务流向ID',
+  `dispatchWeight` int(11) NOT NULL DEFAULT '0' COMMENT '调度吨位',
+  `bookSDate` date NOT NULL DEFAULT '1900-01-01' COMMENT '预约抢单有效截止日期',
+  `bookEDate` date NOT NULL DEFAULT '1900-01-01' COMMENT '预约抢单有效截止日期',
+  `specialTip` varchar(100) NOT NULL DEFAULT '' COMMENT '特殊要求',
+  `maxShipWeightMax` int(11) NOT NULL DEFAULT '0' COMMENT '最大船舶吨位',
+  `waterLevel` float NOT NULL DEFAULT '0' COMMENT '水位',
+  `status` tinyint(4) NOT NULL DEFAULT '0' COMMENT '发布状态  1：待发布  2：已发布  3：已取消',
   `creator` int(11) NOT NULL DEFAULT '0',
   `created` int(11) NOT NULL DEFAULT '0',
+  `updater` int(11) NOT NULL DEFAULT '0',
   `updated` int(11) NOT NULL DEFAULT '0',
-  `isDeleted` tinyint(2) NOT NULL DEFAULT '0',
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='运价信息'
+  `isDeleted` tinyint(4) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`int`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='余量临调信息';
 
-CREATE TABLE IF NOT EXISTS `TransferFlowPrice` (
+-- ----------------------------
+--  Table structure for `Port`
+-- ----------------------------
+CREATE TABLE IF NOT EXISTS `Port` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `transferPriceId` int(11) NOT NULL DEFAULT '0' COMMENT '运价信息id',
-  `flowId` int(11) NOT NULL DEFAULT '0' COMMENT '流向编号',
-  `unitPrice` int(11) NOT NULL DEFAULT '0' COMMENT '运价',
-  `suggestUnitPrice` int(11) NOT NULL DEFAULT '0' COMMENT '参考运价',
-  `startDate` date NOT NULL DEFAULT '1900-01-01' COMMENT '执行开始日期',
-  `endDate` date NOT NULL DEFAULT '1900-01-01' COMMENT '执行结束日期',
-  `creatorId` int(11) NOT NULL DEFAULT '0',
+  `portNo` varchar(20) NOT NULL DEFAULT '' COMMENT '港口编号',
+  `name` varchar(30) NOT NULL DEFAULT '' COMMENT '名称',
+  `portType` tinyint(2) NOT NULL DEFAULT '0' COMMENT '港口类型 1：集装箱 2：其他',
+  `company` varchar(50) NOT NULL DEFAULT '' COMMENT '所属公司',
+  `longitude` int(11) NOT NULL DEFAULT '0' COMMENT '经度',
+  `latitude` int(11) NOT NULL DEFAULT '0' COMMENT '纬度',
+  `radius` int(11) NOT NULL DEFAULT '0' COMMENT '港口半径',
+  `description` varchar(100) NOT NULL DEFAULT '' COMMENT '备注',
+  `creator` int(11) NOT NULL DEFAULT '0',
   `created` int(11) NOT NULL DEFAULT '0',
+  `updater` int(11) NOT NULL DEFAULT '0',
+  `updated` int(11) NOT NULL DEFAULT '0',
+  `isDeleted` tinyint(2) NOT NULL DEFAULT '0' COMMENT '删除标记  0：未删除  1：已删除',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8 COMMENT='港口';
+
+-- ----------------------------
+--  Table structure for `SailingInfo`
+-- ----------------------------
+CREATE TABLE IF NOT EXISTS `SailingInfo` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `shipId` int(11) NOT NULL DEFAULT '0' COMMENT '船id',
+  `orderId` int(11) NOT NULL DEFAULT '0' COMMENT '订单id',
+  `status` tinyint(2) NOT NULL DEFAULT '0' COMMENT '航次信息类型  1：空船到港  2：空船装后  3:重船到港  4：重船卸后',
+  `arriveSPortTime` int(11) NOT NULL DEFAULT '0' COMMENT '实际到装货港时间',
+  `loadTime` int(11) NOT NULL DEFAULT '0' COMMENT '实际装货时间',
+  `loadWeight` int(11) NOT NULL DEFAULT '0' COMMENT '装货吨位',
+  `preArriveEPortTime` int(11) NOT NULL DEFAULT '0' COMMENT '预计到卸货港时间',
+  `actualArriveEPortTime` int(11) NOT NULL DEFAULT '0' COMMENT '实际到达卸货港时间',
+  `dischargeTime` int(11) NOT NULL DEFAULT '0' COMMENT '实际卸货时间',
+  `dischargeWeight` int(11) NOT NULL DEFAULT '0' COMMENT '实际卸货重量',
+  `dischargeDelayFee` float NOT NULL DEFAULT '0' COMMENT '卸货延迟费用',
+  `allowance` float NOT NULL DEFAULT '0' COMMENT '异常补助',
+  `description` varchar(100) COLLATE utf8_bin NOT NULL DEFAULT '',
+  `creator` int(11) NOT NULL DEFAULT '0',
+  `created` int(11) NOT NULL DEFAULT '0',
+  `updater` int(11) NOT NULL DEFAULT '0',
   `updated` int(11) NOT NULL DEFAULT '0',
   `isDeleted` tinyint(2) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='运价流向信息'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin COMMENT='航次信息';
 
+-- ----------------------------
+--  Table structure for `Ship`
+-- ----------------------------
 CREATE TABLE IF NOT EXISTS `Ship` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `shipNo` varchar(30) NOT NULL DEFAULT '' COMMENT '船号',
+  `shipFlag` tinyint(3) NOT NULL DEFAULT '0' COMMENT '船舶类型  1：自由船舶  2：挂靠船舶',
   `shipType` tinyint(3) NOT NULL DEFAULT '0' COMMENT '船舶类型 1：干货船   2：多用途船',
   `length` float NOT NULL DEFAULT '0' COMMENT '船长',
   `width` float NOT NULL DEFAULT '0' COMMENT '船宽',
@@ -236,89 +367,16 @@ CREATE TABLE IF NOT EXISTS `Ship` (
   `description` varchar(100) NOT NULL DEFAULT '',
   `creator` int(11) NOT NULL DEFAULT '0',
   `created` int(11) NOT NULL DEFAULT '0',
+  `updater` int(11) NOT NULL DEFAULT '0',
   `updated` int(11) NOT NULL DEFAULT '0',
   `isDeleted` tinyint(2) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COMMENT='船舶'
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COMMENT='船舶';
 
-CREATE TABLE `BigShipState` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `pch` varchar(20) COLLATE utf8_bin NOT NULL DEFAULT '' COMMENT '批次号',
-  `arriveLocation` varchar(30) COLLATE utf8_bin NOT NULL DEFAULT '' COMMENT '到达位置',
-  `arriveTime` int(11) NOT NULL DEFAULT '0' COMMENT '到达时间',
-  `departTime` int(11) NOT NULL DEFAULT '0' COMMENT '离港时间',
-  `status` tinyint(2) NOT NULL DEFAULT '0' COMMENT '状态  1：启用  2：禁用',
-  `creator` int(11) NOT NULL DEFAULT '0',
-  `created` int(11) NOT NULL DEFAULT '0',
-  `updated` int(11) NOT NULL DEFAULT '0',
-  `isDeleted` tinyint(2) NOT NULL DEFAULT '0',
-  `description` varchar(100) COLLATE utf8_bin NOT NULL DEFAULT '',
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin COMMENT='大轮动态';
-
-CREATE TABLE `CustomerTask` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `customerId` int(11) NOT NULL DEFAULT '0',
-  `contractId` int(11) NOT NULL DEFAULT '0' COMMENT '合同id',
-  `totalLoad` int(11) NOT NULL DEFAULT '0' COMMENT '总载重',
-  `description` varchar(100) COLLATE utf8_bin NOT NULL DEFAULT '',
-  `creator` int(11) NOT NULL DEFAULT '0',
-  `created` int(11) NOT NULL DEFAULT '0',
-  `updated` int(11) NOT NULL DEFAULT '0',
-  `isDeleted` int(11) NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin COMMENT='客户任务';
-
-CREATE TABLE `CustomerTaskFlow` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `taskId` int(11) NOT NULL DEFAULT '0' COMMENT '客户任务id',
-  `goodsName` varchar(30) COLLATE utf8_bin NOT NULL DEFAULT '' COMMENT '货物名称',
-  `goodsType` tinyint(2) NOT NULL DEFAULT '0' COMMENT '货物类型  1：熟料  2：散装  3：集装箱',
-  `totalWeight` int(11) NOT NULL DEFAULT '0' COMMENT '总吨位',
-  `direction` varchar(20) COLLATE utf8_bin NOT NULL,
-  `sender` varchar(30) COLLATE utf8_bin NOT NULL DEFAULT '' COMMENT '发送方',
-  `receiver` varchar(30) COLLATE utf8_bin NOT NULL DEFAULT '' COMMENT '收货单位',
-  `loadingDate` date NOT NULL DEFAULT '1900-01-01' COMMENT '装货日期',
-  `dischargeDate` date NOT NULL DEFAULT '1900-01-01' COMMENT '卸货日期',
-  `loadType` tinyint(2) NOT NULL DEFAULT '0' COMMENT '装货途径  1：大轮  2：场地',
-  `bigShipPC` varchar(20) COLLATE utf8_bin NOT NULL DEFAULT '' COMMENT '大轮批次',
-  `totalLoad` int(11) NOT NULL DEFAULT '0' COMMENT '总载重',
-  `arriveLocation` varchar(30) COLLATE utf8_bin NOT NULL DEFAULT '' COMMENT '到达位置',
-  `bigShipArriveTime` int(11) NOT NULL DEFAULT '0' COMMENT '大轮预计达到时间',
-  `bigShipDepartTime` int(11) NOT NULL DEFAULT '0' COMMENT '大轮预计离开时间',
-  `selfPick` tinyint(2) NOT NULL DEFAULT '0' COMMENT '是否自提  1：是 2：否',
-  `sailingArea` smallint(6) NOT NULL DEFAULT '0' COMMENT '航行区域',
-  `shipSuggestUnitPrice` int(10) NOT NULL DEFAULT '0' COMMENT '船户参考运价',
-  `sailingFlag` tinyint(2) NOT NULL DEFAULT '0' COMMENT '航次标识  1：正常  2：散装回程货  3：安吉货',
-  `status` tinyint(2) NOT NULL DEFAULT '0' COMMENT '状态 1：启用  2：禁用',
-  `description` varchar(100) COLLATE utf8_bin NOT NULL,
-  `creator` int(11) NOT NULL DEFAULT '0',
-  `created` int(11) NOT NULL DEFAULT '0',
-  `updated` int(11) NOT NULL DEFAULT '1',
-  `isDeleted` int(11) NOT NULL DEFAULT '0',
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin COMMENT='客户任务流向';
-
-CREATE TABLE `SailingInfo` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `shipId` int(11) NOT NULL DEFAULT '0' COMMENT '船id',
-  `type` tinyint(2) NOT NULL DEFAULT '0' COMMENT '航次信息类型  1：空船到港  2：空船装后  3:重船到港  4：重船卸后',
-  `arriveTime` int(11) NOT NULL DEFAULT '0' COMMENT '到港时间',
-  `departTime` int(11) NOT NULL DEFAULT '0' COMMENT '出发时间',
-  `loadTime` int(11) NOT NULL DEFAULT '0' COMMENT '实际装货时间',
-  `loadWeight` int(11) NOT NULL DEFAULT '0' COMMENT '装货吨位',
-  `dischargeTime` int(11) NOT NULL DEFAULT '0' COMMENT '卸货时间',
-  `dischargeWeight` int(11) NOT NULL DEFAULT '0' COMMENT '卸货重量',
-  `dsichargeDelayFee` int(11) NOT NULL DEFAULT '0' COMMENT '卸货延迟费用',
-  `description` varchar(100) COLLATE utf8_bin NOT NULL DEFAULT '',
-  `creator` int(11) NOT NULL DEFAULT '0',
-  `created` int(11) NOT NULL DEFAULT '0',
-  `updated` int(11) NOT NULL DEFAULT '0',
-  `isDeleted` tinyint(2) NOT NULL DEFAULT '0',
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin COMMENT='航次信息';
-
-CREATE TABLE `ShipStaff` (
+-- ----------------------------
+--  Table structure for `ShipStaff`
+-- ----------------------------
+CREATE TABLE IF NOT EXISTS `ShipStaff` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(20) COLLATE utf8_bin NOT NULL DEFAULT '',
   `mobile` varchar(15) COLLATE utf8_bin NOT NULL DEFAULT '' COMMENT '手机号',
@@ -333,9 +391,88 @@ CREATE TABLE `ShipStaff` (
   `description` varchar(100) COLLATE utf8_bin NOT NULL DEFAULT '',
   `creator` int(11) NOT NULL DEFAULT '0',
   `created` int(11) NOT NULL DEFAULT '0',
+  `updater` int(11) NOT NULL DEFAULT '0',
   `updated` int(11) NOT NULL DEFAULT '0',
   `isDeleted` tinyint(2) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin COMMENT='船舶人员';
+
+-- ----------------------------
+--  Table structure for `TempDispatchShip`
+-- ----------------------------
+CREATE TABLE IF NOT EXISTS `TempDispatchShip` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `shipNo` varchar(30) COLLATE utf8_bin NOT NULL DEFAULT '' COMMENT '船号',
+  `name` varchar(20) COLLATE utf8_bin NOT NULL DEFAULT '',
+  `mobile` varchar(15) COLLATE utf8_bin NOT NULL DEFAULT '' COMMENT '手机号',
+  `preLoad` int(11) NOT NULL DEFAULT '0' COMMENT '预报吨位',
+  `identity` varchar(18) COLLATE utf8_bin NOT NULL DEFAULT '' COMMENT '身份证号',
+  `bankCardNo` varchar(30) COLLATE utf8_bin NOT NULL DEFAULT '' COMMENT '银行卡号',
+  `bankName` varchar(30) COLLATE utf8_bin NOT NULL DEFAULT '' COMMENT '银行名称',
+  `idPhoto` varchar(50) COLLATE utf8_bin NOT NULL DEFAULT '0' COMMENT '身份证照片',
+  `bankCardPhoto` varchar(50) COLLATE utf8_bin NOT NULL DEFAULT '0' COMMENT '银行照片',
+  `shipPhoto` varchar(50) COLLATE utf8_bin NOT NULL DEFAULT '' COMMENT '船舶照片',
+  `from` tinyint(2) NOT NULL DEFAULT '0' COMMENT '信息来源  1：后台新增  2:APP新增',
+  `status` tinyint(2) NOT NULL DEFAULT '0' COMMENT '状态  1：启用  2：禁用',
+  `description` varchar(100) COLLATE utf8_bin NOT NULL DEFAULT '',
+  `creator` int(11) NOT NULL DEFAULT '0',
+  `created` int(11) NOT NULL DEFAULT '0',
+  `updater` int(11) NOT NULL DEFAULT '0',
+  `updated` int(11) NOT NULL DEFAULT '0',
+  `isDeleted` tinyint(2) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin COMMENT='船舶人员';
+
+-- ----------------------------
+--  Table structure for `TransferFlowPrice`
+-- ----------------------------
+CREATE TABLE IF NOT EXISTS `TransferFlowPrice` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `transferPriceId` int(11) NOT NULL DEFAULT '0' COMMENT '运价信息id',
+  `flowId` int(11) NOT NULL DEFAULT '0' COMMENT '流向编号',
+  `unitPrice` int(11) NOT NULL DEFAULT '0' COMMENT '运价',
+  `suggestUnitPrice` int(11) NOT NULL DEFAULT '0' COMMENT '参考运价',
+  `startDate` date NOT NULL DEFAULT '1900-01-01' COMMENT '执行开始日期',
+  `endDate` date NOT NULL DEFAULT '1900-01-01' COMMENT '执行结束日期',
+  `creatorId` int(11) NOT NULL DEFAULT '0',
+  `created` int(11) NOT NULL,
+  `updater` int(11) NOT NULL DEFAULT '0',
+  `updated` int(11) NOT NULL DEFAULT '0',
+  `isDeleted` tinyint(2) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='运价流向信息';
+
+-- ----------------------------
+--  Table structure for `TransferPrice`
+-- ----------------------------
+CREATE TABLE IF NOT EXISTS `TransferPrice` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `customerId` int(11) NOT NULL DEFAULT '0' COMMENT '客户id',
+  `contractId` int(11) NOT NULL DEFAULT '0' COMMENT '合同id',
+  `priceType` tinyint(2) NOT NULL DEFAULT '0' COMMENT '运价类型',
+  `creator` int(11) NOT NULL DEFAULT '0',
+  `created` int(11) NOT NULL DEFAULT '0',
+  `updater` int(11) NOT NULL DEFAULT '0',
+  `updated` int(11) NOT NULL DEFAULT '0',
+  `isDeleted` tinyint(2) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='运价信息';
+
+-- ----------------------------
+--  Table structure for `WaterLevel`
+-- ----------------------------
+CREATE TABLE IF NOT EXISTS `WaterLevel` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(50) NOT NULL DEFAULT '' COMMENT '水位名称',
+  `level` int(11) NOT NULL DEFAULT '0' COMMENT '水位',
+  `status` tinyint(2) NOT NULL DEFAULT '0' COMMENT '状态  1：启用  2：禁用',
+  `description` varchar(100) NOT NULL DEFAULT '' COMMENT '备注',
+  `creator` int(11) NOT NULL DEFAULT '0',
+  `created` int(11) NOT NULL DEFAULT '0',
+  `updater` int(11) NOT NULL DEFAULT '0',
+  `updated` int(11) NOT NULL DEFAULT '0',
+  `isDeleted` int(11) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='水位';
 
 SET FOREIGN_KEY_CHECKS = 1;
