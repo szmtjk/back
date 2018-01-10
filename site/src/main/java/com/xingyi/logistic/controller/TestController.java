@@ -12,7 +12,7 @@ public class TestController extends BaseController {
 
     @RequestMapping("/hi")
     public String testHi() {
-        return "hi, i'm ok 2";
+        return "hi, i'm ok 2 2";
     }
 
 }
