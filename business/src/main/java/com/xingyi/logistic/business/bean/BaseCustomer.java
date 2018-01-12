@@ -16,16 +16,12 @@ public class BaseCustomer extends BaseModelAndDO {
     @NotNullEmpty
     private String fullName;//客户单位名称
 
-    @NotNullEmpty
     private String simpleName;//单位简称
 
-    @NotNullEmpty
     private String contact;//单位联系人
 
-    @NotNullEmpty
     private String phone;//单位电话
 
-    @NotNullEmpty
     private String email;//邮箱
 
     @AllowedNumber(values = {1, 2})
@@ -33,47 +29,24 @@ public class BaseCustomer extends BaseModelAndDO {
 
     private Integer goodsType;//货物分类  按位标识是否支持该类型，2字节存储  从第0位到8位使用，高位缺省，0位:熟料  1位:电煤  2位：集装箱  3~7位保留填0，8位：其他  0：未选中  1：选中
 
-    @NotNullEmpty
     private String contact1;
-
-    @NotNullEmpty
     private String title1;
-
-    @NotNullEmpty
     private String phone1;
-
-    @NotNullEmpty
     private String weChat1;
-
-    @NotNullEmpty
     private String qq1;
-    @NotNullEmpty
     private String email1;
-    @NotNullEmpty
     private String contact2;
-    @NotNullEmpty
     private String title2;
-    @NotNullEmpty
     private String phone2;
-    @NotNullEmpty
     private String weChat2;
-    @NotNullEmpty
     private String qq2;
-    @NotNullEmpty
     private String email2;
-    @NotNullEmpty
     private String contact3;
-    @NotNullEmpty
     private String title3;
-    @NotNullEmpty
     private String phone3;
-    @NotNullEmpty
     private String weChat3;
-    @NotNullEmpty
     private String qq3;
-    @NotNullEmpty
     private String email3;
-    @NotNullEmpty
     private String description;
 
     public String getCustomerNo() {

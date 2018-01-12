@@ -127,7 +127,7 @@
         where `isDeleted` = 0
         <if test="pojo.id != null"> AND `id` = #{pojo.id} </if>
         <if test="pojo.key != null">
-            (`name` like concat('%', #{pojo.key}, '%') )
+                AND (`name` like concat('%', #{pojo.key}, '%') )
         </if>
     </sql>
 

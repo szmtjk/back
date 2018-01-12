@@ -14,10 +14,10 @@ public class BaseFlow extends BaseModelAndDO {
    private String name;
    private Long startFlow;//起始流向
     private Long endFlow;//
-    private Long startPortId;//
+    private Long startPortId;//起始港口
     private Long endPortId;//
-    private Integer sailingArea;//
-    private Integer waterLevelPoint;//
+    private Integer sailingArea;//航行区域 按位存储信息
+    private Integer waterLevelPoint;//水位点
     @AllowedNumber(values = {1, 2})
     private Integer status; //状态  1：启用 2：禁用
     private String description;
