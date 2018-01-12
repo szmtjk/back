@@ -3,6 +3,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.xingyi.logistic.business.db.dao.DangerZoneSpeedDAO">
     <resultMap id="AllColumnMap" type="com.xingyi.logistic.business.db.entity.DangerZoneSpeedDO">
+        <result property="id" column="id"/>
         <result property="name" column="name"/>
         <result property="coordinate" column="coordinate"/>
         <result property="minSpeed" column="minSpeed"/>
@@ -15,7 +16,8 @@
     </resultMap>
 
     <sql id="all_column">
-        `name`
+        `id`
+        ,`name`
         ,`coordinate`
         ,`minSpeed`
         ,`maxSpeed`
@@ -56,9 +58,9 @@
         UPDATE DangerZoneSpeed
         <set>
             <if test="pojo.name!=null">`name` = #{pojo.name},</if>
-            <if test="pojo.coordinate!=null">`longitude` = #{pojo.coordinate},</if>
-            <if test="pojo.minSpeed!=null">`latitude` = #{pojo.minSpeed},</if>
-            <if test="pojo.maxSpeed!=null">`radius` = #{pojo.maxSpeed},</if>
+            <if test="pojo.coordinate!=null">`coordinate` = #{pojo.coordinate},</if>
+            <if test="pojo.minSpeed!=null">`minSpeed` = #{pojo.minSpeed},</if>
+            <if test="pojo.maxSpeed!=null">`maxSpeed` = #{pojo.maxSpeed},</if>
             <if test="pojo.status!=null">`status` = #{pojo.status},</if>
             <if test="pojo.description!=null">`description` = #{pojo.description},</if>
             `updated` = UNIX_TIMESTAMP(now())

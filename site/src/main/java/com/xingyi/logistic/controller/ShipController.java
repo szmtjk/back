@@ -1,11 +1,8 @@
 package com.xingyi.logistic.controller;
 
-import com.xingyi.logistic.business.model.Port;
-import com.xingyi.logistic.business.model.PortQuery;
 import com.xingyi.logistic.business.model.Ship;
 import com.xingyi.logistic.business.model.ShipQuery;
 import com.xingyi.logistic.business.service.BaseService;
-import com.xingyi.logistic.business.service.PortService;
 import com.xingyi.logistic.business.service.ShipService;
 import com.xingyi.logistic.common.bean.JsonRet;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,7 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
- * Created by Jadic on 2017/12/31.
+ * 船舶
  */
 @RestController
 @RequestMapping("/ship")
