@@ -1,26 +1,21 @@
 package com.xingyi.logistic.business.bean;
 
 /**
- * Created by Jadic on 2017/12/31.
+ * 船舶人员
  */
 public class BaseShipStaff extends BaseModelAndDO {
 
-    private String portNo;//港口编号
-    private String name;//名称
-    private Integer portType;//港口类型 1：集装箱 2：其他
-    private String company;//所属公司
-    private Long longitude;//经度
-    private Long latitude;//纬度
-    private Long radius;//港口半径
+    private String name;//姓名
+    private String mobile;//手机号
+    private Integer gender;//性别 1：男  2：女
+    private String identity;//身份证号
+    private String birthday;//生日
+    private String residence;//户籍
+    private Integer shipId;//所属
+    private Integer title;//岗位  1：船长  2：驾驶员  3：轮机员  4：水手
+    private Integer isOwner;//是否承包人  1：是  2：否
+    private Integer status;//状态  1：启用  2：禁用
     private String description;//备注
-
-    public String getPortNo() {
-        return portNo;
-    }
-
-    public void setPortNo(String portNo) {
-        this.portNo = portNo;
-    }
 
     public String getName() {
         return name;
@@ -30,44 +25,76 @@ public class BaseShipStaff extends BaseModelAndDO {
         this.name = name;
     }
 
-    public Integer getPortType() {
-        return portType;
+    public String getMobile() {
+        return mobile;
     }
 
-    public void setPortType(Integer portType) {
-        this.portType = portType;
+    public void setMobile(String mobile) {
+        this.mobile = mobile;
     }
 
-    public String getCompany() {
-        return company;
+    public Integer getGender() {
+        return gender;
     }
 
-    public void setCompany(String company) {
-        this.company = company;
+    public void setGender(Integer gender) {
+        this.gender = gender;
     }
 
-    public Long getLongitude() {
-        return longitude;
+    public String getIdentity() {
+        return identity;
     }
 
-    public void setLongitude(Long longitude) {
-        this.longitude = longitude;
+    public void setIdentity(String identity) {
+        this.identity = identity;
     }
 
-    public Long getLatitude() {
-        return latitude;
+    public String getBirthday() {
+        return birthday;
     }
 
-    public void setLatitude(Long latitude) {
-        this.latitude = latitude;
+    public void setBirthday(String birthday) {
+        this.birthday = birthday;
     }
 
-    public Long getRadius() {
-        return radius;
+    public String getResidence() {
+        return residence;
     }
 
-    public void setRadius(Long radius) {
-        this.radius = radius;
+    public void setResidence(String residence) {
+        this.residence = residence;
+    }
+
+    public Integer getShipId() {
+        return shipId;
+    }
+
+    public void setShipId(Integer shipId) {
+        this.shipId = shipId;
+    }
+
+    public Integer getTitle() {
+        return title;
+    }
+
+    public void setTitle(Integer title) {
+        this.title = title;
+    }
+
+    public Integer getIsOwner() {
+        return isOwner;
+    }
+
+    public void setIsOwner(Integer isOwner) {
+        this.isOwner = isOwner;
+    }
+
+    public Integer getStatus() {
+        return status;
+    }
+
+    public void setStatus(Integer status) {
+        this.status = status;
     }
 
     public String getDescription() {
