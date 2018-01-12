@@ -203,7 +203,7 @@ CREATE TABLE IF NOT EXISTS `CustomerTaskFlow` (
   `description` varchar(100) COLLATE utf8_bin NOT NULL,
   `creator` int(11) NOT NULL DEFAULT '0',
   `created` int(11) NOT NULL DEFAULT '0',
-  `updated` int(11) NOT NULL DEFAULT '1',
+  `updated` int(11) NOT NULL DEFAULT '0',
   `isDeleted` int(11) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin COMMENT='客户任务流向';
@@ -521,7 +521,7 @@ CREATE TABLE IF NOT EXISTS `TransferFlowPrice` (
   `suggestUnitPrice` int(11) NOT NULL DEFAULT '0' COMMENT '参考运价',
   `startDate` date NOT NULL DEFAULT '1900-01-01' COMMENT '执行开始日期',
   `endDate` date NOT NULL DEFAULT '1900-01-01' COMMENT '执行结束日期',
-  `creatorId` int(11) NOT NULL DEFAULT '0',
+  `creator` int(11) NOT NULL DEFAULT '0',
   `created` int(11) NOT NULL,
   `updater` int(11) NOT NULL DEFAULT '0',
   `updated` int(11) NOT NULL DEFAULT '0',
