@@ -27,7 +27,7 @@
     </sql>
 
     <insert id="insertSelective" useGeneratedKeys="true" keyProperty="pojo.id">
-        INSERT INTO waterlevel
+        INSERT INTO WaterLevel
         <trim prefix="(" suffix=")" suffixOverrides=",">
             <if test="pojo.name!=null"> `name`,</if>
             <if test="pojo.level!=null"> `level`,</if>
@@ -51,7 +51,7 @@
 
     <!--auto generated Code-->
     <update id="update">
-        UPDATE waterlevel
+        UPDATE WaterLevel
         <set>
             <if test="pojo.name!=null">`name` = #{pojo.name},</if>
             <if test="pojo.level!=null">`level` = #{pojo.level},</if>
@@ -64,7 +64,7 @@
     </update>
 
     <update id="del" parameterType="java.lang.Long">
-        UPDATE waterlevel
+        UPDATE WaterLevel
         SET `isDeleted` = 1 ,
         `updated` = UNIX_TIMESTAMP(now())
         WHERE `id` = #{id}
@@ -72,13 +72,13 @@
 
     <select id="getById" parameterType="java.lang.Long" resultMap="AllColumnMap">
         SELECT <include refid="all_column"/>
-        FROM `waterlevel`
+        FROM `WaterLevel`
         WHERE `id` = #{id}
     </select>
 
     <select id="getExistCount" resultType="java.lang.Integer" parameterType="Map" >
         SELECT  count(id)
-        FROM  `waterlevel`
+        FROM  `WaterLevel`
         where `isDeleted` = 0
         <if test="pojo.id != null"> AND `id` != #{pojo.id} </if>
         <if test="pojo.name != null"> AND `name` = #{pojo.name} </if>
@@ -87,14 +87,14 @@
 
     <select id="getCount" resultType="java.lang.Integer" parameterType="Map" >
         SELECT  count(id)
-        FROM  `waterlevel`
+        FROM  `WaterLevel`
         <include refid="pageQueryWhereCommon"/>
         limit 1
     </select>
 
     <select id="queryByPage" resultMap="AllColumnMap" parameterType="Map">
         select <include refid="all_column"/>
-        from `waterlevel`
+        from `WaterLevel`
         <include refid="pageQueryWhereCommon"/>
         order by `id` desc
         <include refid="pageCommon"/>
