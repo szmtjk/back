@@ -4,13 +4,16 @@
 <mapper namespace="com.xingyi.logistic.business.db.dao.ShipStaffDAO">
     <resultMap id="AllColumnMap" type="com.xingyi.logistic.business.db.entity.ShipStaffDO">
         <result property="id" column="id"/>
-        <result property="portNo" column="portNo"/>
         <result property="name" column="name"/>
-        <result property="portType" column="portType"/>
-        <result property="company" column="company"/>
-        <result property="longitude" column="longitude"/>
-        <result property="latitude" column="latitude"/>
-        <result property="radius" column="radius"/>
+        <result property="mobile" column="mobile"/>
+        <result property="gender" column="gender"/>
+        <result property="identity" column="identity"/>
+        <result property="birthday" column="birthday"/>
+        <result property="residence" column="residence"/>
+        <result property="shipId" column="shipId"/>
+        <result property="title" column="title"/>
+        <result property="isOwner" column="isOwner"/>
+        <result property="status" column="status"/>
         <result property="description" column="description"/>
         <result property="creator" column="creator"/>
         <result property="created" column="created"/>
@@ -19,13 +22,16 @@
 
     <sql id="all_column">
         `id`
-        ,`portNo`
         ,`name`
-        ,`portType`
-        ,`company`
-        ,`longitude`
-        ,`latitude`
-        ,`radius`
+        ,`mobile`
+        ,`gender`
+        ,`identity`
+        ,`birthday`
+        ,`residence`
+        ,`shipId`
+        ,`title`
+        ,`isOwner`
+        ,`status`
         ,`description`
         ,`creator`
         ,`created`
@@ -35,26 +41,32 @@
     <insert id="insertSelective" useGeneratedKeys="true" keyProperty="pojo.id">
         INSERT INTO ShipStaff
         <trim prefix="(" suffix=")" suffixOverrides=",">
-            <if test="pojo.portNo!=null"> `portNo`,</if>
             <if test="pojo.name!=null"> `name`,</if>
-            <if test="pojo.portType!=null"> `portType`,</if>
-            <if test="pojo.company!=null"> `company`,</if>
-            <if test="pojo.longitude!=null"> `longitude`,</if>
-            <if test="pojo.latitude!=null"> `latitude`,</if>
-            <if test="pojo.radius!=null"> `radius`,</if>
+            <if test="pojo.mobile!=null"> `mobile`,</if>
+            <if test="pojo.gender!=null"> `gender`,</if>
+            <if test="pojo.identity!=null"> `identity`,</if>
+            <if test="pojo.birthday!=null"> `birthday`,</if>
+            <if test="pojo.residence!=null"> `residence`,</if>
+            <if test="pojo.shipId!=null"> `shipId`,</if>
+            <if test="pojo.title!=null"> `title`,</if>
+            <if test="pojo.isOwner!=null"> `isOwner`,</if>
+            <if test="pojo.status!=null"> `status`,</if>
             <if test="pojo.description!=null"> `description`,</if>
             `created`,
             `updated`
         </trim>
         VALUES
         <trim prefix="(" suffix=")" suffixOverrides=",">
-            <if test="pojo.portNo!=null">#{pojo.portNo},</if>
             <if test="pojo.name!=null">#{pojo.name},</if>
-            <if test="pojo.portType!=null">#{pojo.portType},</if>
-            <if test="pojo.company!=null">#{pojo.company},</if>
-            <if test="pojo.longitude!=null">#{pojo.longitude},</if>
-            <if test="pojo.latitude!=null">#{pojo.latitude},</if>
-            <if test="pojo.radius!=null">#{pojo.radius},</if>
+            <if test="pojo.mobile!=null">#{pojo.mobile},</if>
+            <if test="pojo.gender!=null">#{pojo.gender},</if>
+            <if test="pojo.identity!=null">#{pojo.identity},</if>
+            <if test="pojo.birthday!=null">#{pojo.birthday},</if>
+            <if test="pojo.residence!=null">#{pojo.residence},</if>
+            <if test="pojo.shipId!=null">#{pojo.shipId},</if>
+            <if test="pojo.title!=null">#{pojo.title},</if>
+            <if test="pojo.isOwner!=null">#{pojo.isOwner},</if>
+            <if test="pojo.status!=null">#{pojo.status},</if>
             <if test="pojo.description!=null">#{pojo.description},</if>
             UNIX_TIMESTAMP(now()),
             UNIX_TIMESTAMP(now())
@@ -65,13 +77,16 @@
     <update id="update">
         UPDATE ShipStaff
         <set>
-            <if test="pojo.portNo!=null">`portNo` = #{pojo.portNo},</if>
             <if test="pojo.name!=null">`name` = #{pojo.name},</if>
-            <if test="pojo.portType!=null">`portType` = #{pojo.portType},</if>
-            <if test="pojo.company!=null">`company` = #{pojo.company},</if>
-            <if test="pojo.longitude!=null">`longitude` = #{pojo.longitude},</if>
-            <if test="pojo.latitude!=null">`latitude` = #{pojo.latitude},</if>
-            <if test="pojo.radius!=null">`radius` = #{pojo.radius},</if>
+            <if test="pojo.mobile!=null">`mobile` = #{pojo.mobile},</if>
+            <if test="pojo.gender!=null">`gender` = #{pojo.gender},</if>
+            <if test="pojo.identity!=null">`identity` = #{pojo.identity},</if>
+            <if test="pojo.birthday!=null">`birthday` = #{pojo.birthday},</if>
+            <if test="pojo.residence!=null">`residence` = #{pojo.residence},</if>
+            <if test="pojo.shipId!=null">`shipId` = #{pojo.shipId},</if>
+            <if test="pojo.title!=null">`title` = #{pojo.title},</if>
+            <if test="pojo.isOwner!=null">`isOwner` = #{pojo.isOwner},</if>
+            <if test="pojo.status!=null">`status` = #{pojo.status},</if>
             <if test="pojo.description!=null">`description` = #{pojo.description},</if>
             `updated` = UNIX_TIMESTAMP(now())
         </set>
@@ -122,7 +137,7 @@
         where `isDeleted` = 0
         <if test="pojo.id != null"> AND `id` = #{pojo.id} </if>
         <if test="pojo.key != null">
-            (`name` like concat('%', #{pojo.key}, '%') or `portNo` like concat('%', #{pojo.key}, '%'))
+           AND  (`name` like concat('%', #{pojo.key}, '%') or `mobile` like concat('%', #{pojo.key}, '%'))
         </if>
     </sql>
 

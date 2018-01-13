@@ -3,6 +3,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.xingyi.logistic.business.db.dao.CustomerDAO">
     <resultMap id="AllColumnMap" type="com.xingyi.logistic.business.db.entity.CustomerDO">
+        <result property="id" column="id"/>
         <result property="customerNo" column="customerNo"/>
         <result property="fullName" column="fullName"/>
         <result property="simpleName" column="simpleName"/>
