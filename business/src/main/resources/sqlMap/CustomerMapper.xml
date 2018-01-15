@@ -1,0 +1,233 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!--  Generate by autoSQLMap Powered by duxing@Taobao -->
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.xingyi.logistic.business.db.dao.CustomerDAO">
+    <resultMap id="AllColumnMap" type="com.xingyi.logistic.business.db.entity.CustomerDO">
+        <result property="id" column="id"/>
+        <result property="customerNo" column="customerNo"/>
+        <result property="fullName" column="fullName"/>
+        <result property="simpleName" column="simpleName"/>
+        <result property="contact" column="contact"/>
+        <result property="phone" column="phone"/>
+        <result property="email" column="email"/>
+        <result property="type" column="type"/>
+        <result property="goodsType" column="goodsType"/>
+        <result property="contact1" column="contact1"/>
+        <result property="title1" column="title1"/>
+        <result property="phone1" column="phone1"/>
+        <result property="weChat1" column="weChat1"/>
+        <result property="qq1" column="qq1"/>
+        <result property="email1" column="email1"/>
+        <result property="contact2" column="contact2"/>
+        <result property="title2" column="title2"/>
+        <result property="phone2" column="phone2"/>
+        <result property="weChat2" column="weChat2"/>
+        <result property="qq2" column="qq2"/>
+        <result property="email2" column="email2"/>
+        <result property="contact3" column="contact3"/>
+        <result property="title3" column="title3"/>
+        <result property="phone3" column="phone3"/>
+        <result property="weChat3" column="weChat3"/>
+        <result property="qq3" column="qq3"/>
+        <result property="email3" column="email3"/>
+        <result property="description" column="description"/>
+        <result property="creator" column="creator"/>
+        <result property="created" column="created"/>
+        <result property="updated" column="updated"/>
+    </resultMap>
+
+    <sql id="all_column">
+        `id`
+        ,`customerNo`
+        ,`fullName`
+        ,`simpleName`
+        ,`contact`
+        ,`phone`
+        ,`email`
+        ,`type`
+        ,`goodsType`
+        ,`contact1`
+        ,`title1`
+        ,`phone1`
+        ,`weChat1`
+        ,`qq1`
+        ,`email1`
+        ,`contact2`
+        ,`title2`
+        ,`phone2`
+        ,`weChat2`
+        ,`qq2`
+        ,`email2`
+        ,`contact3`
+        ,`title3`
+        ,`phone3`
+        ,`weChat3`
+        ,`qq3`
+        ,`description`
+        ,`creator`
+        ,`created`
+        ,`updated`
+    </sql>
+
+    <insert id="insertSelective" useGeneratedKeys="true" keyProperty="pojo.id">
+        INSERT INTO Customer
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="pojo.customerNo!=null"> `customerNo`,</if>
+            <if test="pojo.fullName!=null"> `fullName`,</if>
+            <if test="pojo.simpleName!=null"> `simpleName`,</if>
+            <if test="pojo.contact!=null"> `contact`,</if>
+            <if test="pojo.phone!=null"> `phone`,</if>
+            <if test="pojo.email!=null"> `email`,</if>
+            <if test="pojo.type!=null"> `type`,</if>
+            <if test="pojo.goodsType!=null"> `goodsType`,</if>
+            <if test="pojo.contact1!=null"> `contact1`,</if>
+            <if test="pojo.title1!=null"> `title1`,</if>
+            <if test="pojo.phone1!=null"> `phone1`,</if>
+            <if test="pojo.weChat1!=null"> `weChat1`,</if>
+            <if test="pojo.qq1!=null"> `qq1`,</if>
+            <if test="pojo.email1!=null"> `email1`,</if>
+            <if test="pojo.contact2!=null"> `contact2`,</if>
+            <if test="pojo.title2!=null"> `title2`,</if>
+            <if test="pojo.phone2!=null"> `phone2`,</if>
+            <if test="pojo.weChat2!=null"> `weChat2`,</if>
+            <if test="pojo.qq2!=null"> `qq2`,</if>
+            <if test="pojo.email2!=null"> `email2`,</if>
+            <if test="pojo.contact3!=null"> `contact3`,</if>
+            <if test="pojo.title3!=null"> `title3`,</if>
+            <if test="pojo.phone3!=null"> `phone3`,</if>
+            <if test="pojo.weChat3!=null"> `weChat3`,</if>
+            <if test="pojo.qq3!=null"> `qq3`,</if>
+            <if test="pojo.email3!=null"> `email3`,</if>
+            <if test="pojo.description!=null"> `description`,</if>
+            `created`,
+            `updated`
+        </trim>
+        VALUES
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="pojo.customerNo!=null">#{pojo.customerNo},</if>
+            <if test="pojo.fullName!=null">#{pojo.fullName},</if>
+            <if test="pojo.simpleName!=null">#{pojo.simpleName},</if>
+            <if test="pojo.contact!=null">#{pojo.contact},</if>
+            <if test="pojo.phone!=null">#{pojo.phone},</if>
+            <if test="pojo.email!=null">#{pojo.email},</if>
+            <if test="pojo.type!=null">#{pojo.type},</if>
+            <if test="pojo.goodsType!=null">#{pojo.goodsType},</if>
+            <if test="pojo.contact1!=null">#{pojo.contact1},</if>
+            <if test="pojo.title1!=null">#{pojo.title1},</if>
+            <if test="pojo.phone1!=null">#{pojo.phone1},</if>
+            <if test="pojo.weChat1!=null">#{pojo.weChat1},</if>
+            <if test="pojo.qq1!=null">#{pojo.qq1},</if>
+            <if test="pojo.email1!=null">#{pojo.email1},</if>
+            <if test="pojo.contact2!=null">#{pojo.contact2},</if>
+            <if test="pojo.title2!=null">#{pojo.title2},</if>
+            <if test="pojo.phone2!=null">#{pojo.phone2},</if>
+            <if test="pojo.weChat2!=null">#{pojo.weChat2},</if>
+            <if test="pojo.qq2!=null">#{pojo.qq2},</if>
+            <if test="pojo.email2!=null">#{pojo.email2},</if>
+            <if test="pojo.contact3!=null">#{pojo.contact3},</if>
+            <if test="pojo.title3!=null">#{pojo.title3},</if>
+            <if test="pojo.phone3!=null">#{pojo.phone3},</if>
+            <if test="pojo.weChat3!=null">#{pojo.weChat3},</if>
+            <if test="pojo.qq3!=null">#{pojo.qq3},</if>
+            <if test="pojo.email3!=null">#{pojo.email3},</if>
+            <if test="pojo.description!=null">#{pojo.description},</if>
+            UNIX_TIMESTAMP(now()),
+            UNIX_TIMESTAMP(now())
+        </trim>
+    </insert>
+
+    <!--auto generated Code-->
+    <update id="update">
+        UPDATE Customer
+        <set>
+            <if test="pojo.customerNo!=null">`customerNo` = #{pojo.customerNo},</if>
+            <if test="pojo.fullName!=null">`fullName` = #{pojo.fullName},</if>
+            <if test="pojo.simpleName!=null">`simpleName` = #{pojo.simpleName},</if>
+            <if test="pojo.contact!=null">`contact` = #{pojo.contact},</if>
+            <if test="pojo.phone!=null">`phone` = #{pojo.phone},</if>
+            <if test="pojo.email!=null">`email` = #{pojo.email},</if>
+            <if test="pojo.type!=null">`type` = #{pojo.type},</if>
+            <if test="pojo.goodsType!=null">`goodsType` = #{pojo.goodsType},</if>
+            <if test="pojo.contact1!=null">`contact1` = #{pojo.contact1},</if>
+            <if test="pojo.title1!=null">`title1` = #{pojo.title1},</if>
+            <if test="pojo.phone1!=null">`phone1` = #{pojo.phone1},</if>
+            <if test="pojo.weChat1!=null">`weChat1` = #{pojo.weChat1},</if>
+            <if test="pojo.qq1!=null">`qq1` = #{pojo.qq1},</if>
+            <if test="pojo.email1!=null">`email1` = #{pojo.email1},</if>
+            <if test="pojo.contact2!=null">`contact2` = #{pojo.contact2},</if>
+            <if test="pojo.title2!=null">`title2` = #{pojo.title2},</if>
+            <if test="pojo.phone2!=null">`phone2` = #{pojo.phone2},</if>
+            <if test="pojo.weChat2!=null">`weChat2` = #{pojo.weChat2},</if>
+            <if test="pojo.qq2!=null">`qq2` = #{pojo.qq2},</if>
+            <if test="pojo.email2!=null">`email2` = #{pojo.email2},</if>
+            <if test="pojo.contact3!=null">`contact3` = #{pojo.contact3},</if>
+            <if test="pojo.title3!=null">`title3` = #{pojo.title3},</if>
+            <if test="pojo.phone3!=null">`phone3` = #{pojo.phone3},</if>
+            <if test="pojo.weChat3!=null">`weChat3` = #{pojo.weChat3},</if>
+            <if test="pojo.qq3!=null">`qq3` = #{pojo.qq3},</if>
+            <if test="pojo.email3!=null">`email3` = #{pojo.email3},</if>
+            <if test="pojo.description!=null">`description` = #{pojo.description},</if>
+            `updated` = UNIX_TIMESTAMP(now())
+        </set>
+        WHERE `id` = #{pojo.id} and `isDeleted` = 0
+        LIMIT 1
+    </update>
+
+    <update id="del" parameterType="java.lang.Long">
+        UPDATE Customer
+        SET `isDeleted` = 1 ,
+        `updated` = UNIX_TIMESTAMP(now())
+        WHERE `id` = #{id} and `isDeleted` = 0
+        LIMIT 1
+    </update>
+
+    <select id="getById" parameterType="java.lang.Long" resultMap="AllColumnMap">
+        SELECT <include refid="all_column"/>
+        FROM `Customer`
+        WHERE `id` = #{id} and `isDeleted` = 0
+        LIMIT 1
+    </select>
+
+    <select id="getExistCount" resultType="java.lang.Integer" parameterType="Map" >
+        SELECT  count(id)
+        FROM  `Customer`
+        where `isDeleted` = 0
+        <if test="pojo.id != null"> AND `id` != #{pojo.id} </if>
+        <if test="pojo.customerNo != null"> AND `customerNo` = #{pojo.customerNo} </if>
+        limit 1
+    </select>
+
+    <select id="getCount" resultType="java.lang.Integer" parameterType="Map" >
+        SELECT  count(id)
+        FROM  `Customer`
+        <include refid="pageQueryWhereCommon"/>
+        limit 1
+    </select>
+
+    <select id="queryByPage" resultMap="AllColumnMap" parameterType="Map">
+        select <include refid="all_column"/>
+        from `Customer`
+        <include refid="pageQueryWhereCommon"/>
+        order by `id` desc
+        <include refid="pageCommon"/>
+    </select>
+
+    <sql id="pageQueryWhereCommon">
+        where `isDeleted` = 0
+        <if test="pojo.id != null"> AND `id` = #{pojo.id} </if>
+        <if test="pojo.key != null">
+            AND (`customerNo` like concat('%', #{pojo.key}, '%') or `fullName` like concat('%', #{pojo.key}, '%')  or `simpleName` like concat('%', #{pojo.key}, '%')  or `contact` like concat('%', #{pojo.key}, '%')  or `phone` like concat('%', #{pojo.key}, '%'))
+        </if>
+    </sql>
+
+    <sql id="pageCommon">
+        <choose>
+            <when test="pojo.startRow != null and pojo.startRow gt -1 and pojo.limitNum != null and pojo.limitNum gt 0">
+                limit #{pojo.startRow}, #{pojo.limitNum}
+            </when>
+            <otherwise>
+                limit 100
+            </otherwise>
+        </choose>
+    </sql>
+</mapper>

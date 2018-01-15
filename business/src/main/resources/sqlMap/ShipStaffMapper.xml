@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!--  Generate by autoSQLMap Powered by duxing@Taobao -->
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.xingyi.logistic.business.db.dao.ShipStaffDAO">
+    <resultMap id="AllColumnMap" type="com.xingyi.logistic.business.db.entity.ShipStaffDO">
+        <result property="id" column="id"/>
+        <result property="name" column="name"/>
+        <result property="mobile" column="mobile"/>
+        <result property="gender" column="gender"/>
+        <result property="identity" column="identity"/>
+        <result property="birthday" column="birthday"/>
+        <result property="residence" column="residence"/>
+        <result property="shipId" column="shipId"/>
+        <result property="title" column="title"/>
+        <result property="isOwner" column="isOwner"/>
+        <result property="status" column="status"/>
+        <result property="description" column="description"/>
+        <result property="creator" column="creator"/>
+        <result property="created" column="created"/>
+        <result property="updated" column="updated"/>
+    </resultMap>
+
+    <sql id="all_column">
+        `id`
+        ,`name`
+        ,`mobile`
+        ,`gender`
+        ,`identity`
+        ,`birthday`
+        ,`residence`
+        ,`shipId`
+        ,`title`
+        ,`isOwner`
+        ,`status`
+        ,`description`
+        ,`creator`
+        ,`created`
+        ,`updated`
+    </sql>
+
+    <insert id="insertSelective" useGeneratedKeys="true" keyProperty="pojo.id">
+        INSERT INTO ShipStaff
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="pojo.name!=null"> `name`,</if>
+            <if test="pojo.mobile!=null"> `mobile`,</if>
+            <if test="pojo.gender!=null"> `gender`,</if>
+            <if test="pojo.identity!=null"> `identity`,</if>
+            <if test="pojo.birthday!=null"> `birthday`,</if>
+            <if test="pojo.residence!=null"> `residence`,</if>
+            <if test="pojo.shipId!=null"> `shipId`,</if>
+            <if test="pojo.title!=null"> `title`,</if>
+            <if test="pojo.isOwner!=null"> `isOwner`,</if>
+            <if test="pojo.status!=null"> `status`,</if>
+            <if test="pojo.description!=null"> `description`,</if>
+            `created`,
+            `updated`
+        </trim>
+        VALUES
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="pojo.name!=null">#{pojo.name},</if>
+            <if test="pojo.mobile!=null">#{pojo.mobile},</if>
+            <if test="pojo.gender!=null">#{pojo.gender},</if>
+            <if test="pojo.identity!=null">#{pojo.identity},</if>
+            <if test="pojo.birthday!=null">#{pojo.birthday},</if>
+            <if test="pojo.residence!=null">#{pojo.residence},</if>
+            <if test="pojo.shipId!=null">#{pojo.shipId},</if>
+            <if test="pojo.title!=null">#{pojo.title},</if>
+            <if test="pojo.isOwner!=null">#{pojo.isOwner},</if>
+            <if test="pojo.status!=null">#{pojo.status},</if>
+            <if test="pojo.description!=null">#{pojo.description},</if>
+            UNIX_TIMESTAMP(now()),
+            UNIX_TIMESTAMP(now())
+        </trim>
+    </insert>
+
+    <!--auto generated Code-->
+    <update id="update">
+        UPDATE ShipStaff
+        <set>
+            <if test="pojo.name!=null">`name` = #{pojo.name},</if>
+            <if test="pojo.mobile!=null">`mobile` = #{pojo.mobile},</if>
+            <if test="pojo.gender!=null">`gender` = #{pojo.gender},</if>
+            <if test="pojo.identity!=null">`identity` = #{pojo.identity},</if>
+            <if test="pojo.birthday!=null">`birthday` = #{pojo.birthday},</if>
+            <if test="pojo.residence!=null">`residence` = #{pojo.residence},</if>
+            <if test="pojo.shipId!=null">`shipId` = #{pojo.shipId},</if>
+            <if test="pojo.title!=null">`title` = #{pojo.title},</if>
+            <if test="pojo.isOwner!=null">`isOwner` = #{pojo.isOwner},</if>
+            <if test="pojo.status!=null">`status` = #{pojo.status},</if>
+            <if test="pojo.description!=null">`description` = #{pojo.description},</if>
+            `updated` = UNIX_TIMESTAMP(now())
+        </set>
+        WHERE `id` = #{pojo.id} and `isDeleted` = 0
+        LIMIT 1
+    </update>
+
+    <update id="del" parameterType="java.lang.Long">
+        UPDATE ShipStaff
+        SET `isDeleted` = 1 ,
+        `updated` = UNIX_TIMESTAMP(now())
+        WHERE `id` = #{id} and `isDeleted` = 0
+        LIMIT 1
+    </update>
+
+    <select id="getById" parameterType="java.lang.Long" resultMap="AllColumnMap">
+        SELECT <include refid="all_column"/>
+        FROM `ShipStaff`
+        WHERE `id` = #{id} and `isDeleted` = 0
+        LIMIT 1
+    </select>
+
+    <select id="getExistCount" resultType="java.lang.Integer" parameterType="Map" >
+        SELECT  count(id)
+        FROM  `ShipStaff`
+        where `isDeleted` = 0
+        <if test="pojo.id != null"> AND `id` != #{pojo.id} </if>
+        <if test="pojo.name != null"> AND `name` = #{pojo.name} </if>
+        limit 1
+    </select>
+
+    <select id="getCount" resultType="java.lang.Integer" parameterType="Map" >
+        SELECT  count(id)
+        FROM  `ShipStaff`
+        <include refid="pageQueryWhereCommon"/>
+        limit 1
+    </select>
+
+    <select id="queryByPage" resultMap="AllColumnMap" parameterType="Map">
+        select <include refid="all_column"/>
+        from `ShipStaff`
+        <include refid="pageQueryWhereCommon"/>
+        order by `id` desc
+        <include refid="pageCommon"/>
+    </select>
+
+    <sql id="pageQueryWhereCommon">
+        where `isDeleted` = 0
+        <if test="pojo.id != null"> AND `id` = #{pojo.id} </if>
+        <if test="pojo.key != null">
+           AND  (`name` like concat('%', #{pojo.key}, '%') or `mobile` like concat('%', #{pojo.key}, '%'))
+        </if>
+    </sql>
+
+    <sql id="pageCommon">
+        <choose>
+            <when test="pojo.startRow != null and pojo.startRow gt -1 and pojo.limitNum != null and pojo.limitNum gt 0">
+                limit #{pojo.startRow}, #{pojo.limitNum}
+            </when>
+            <otherwise>
+                limit 100
+            </otherwise>
+        </choose>
+    </sql>
+</mapper>

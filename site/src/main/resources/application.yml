@@ -15,7 +15,7 @@ server:
   contextPath: /xyl
 
 logging:
-  config: logback.xml
+  config: classpath:logback.xml
 
 fee:
   rule: 0
@@ -31,9 +31,9 @@ druid:
       role: master
       driverClassName: com.mysql.jdbc.Driver
       mapperLocations: classpath*:sqlMap/**/*Mapper.xml
-      url: jdbc:mysql://127.0.0.1:3306/xyl?zeroDateTimeBehavior=convertToNull&useUnicode=true&characterEncoding=UTF-8
+      url: jdbc:mysql://47.100.45.229:3306/xyl?zeroDateTimeBehavior=convertToNull&useUnicode=true&characterEncoding=UTF-8
       username: root
-      password: jadiciswei
+      password: uAiqwVwjJ8-i
       initialSize: 5
       filters: stat
       maxActive: 8

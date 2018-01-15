@@ -12,7 +12,11 @@ public abstract class QueryConditionConverter <S extends BaseQueryPage, T extend
     public abstract T toDOCondition(S s);
 
     protected void paginationConvert(S src, T target) {
-        int page = PrimitiveUtil.getPrimitive(src.getPage(), 1);
+        Integer pageNumber = src.getPage();
+        if (src.getQueryParamFlag() == 1) {
+            pageNumber = src.getPageIndex() + 1;
+        }
+        int page = PrimitiveUtil.getPrimitive(pageNumber, 1);
         int pageSize = PrimitiveUtil.getPrimitive(src.getPageSize(), 10);
         target.setLimitNum(pageSize);
         target.setStartRow((page - 1) * pageSize);

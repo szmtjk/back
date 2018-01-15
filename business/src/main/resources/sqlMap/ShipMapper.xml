@@ -1,0 +1,264 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!--  Generate by autoSQLMap Powered by duxing@Taobao -->
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.xingyi.logistic.business.db.dao.ShipDAO">
+    <resultMap id="AllColumnMap" type="com.xingyi.logistic.business.db.entity.ShipDO">
+        <result property="id" column="id"/>
+        <result property="shipNo" column="shipNo"/>
+        <result property="shipFlag" column="shipFlag"/>
+        <result property="shipType" column="shipType"/>
+        <result property="length" column="length"/>
+        <result property="width" column="width"/>
+        <result property="depth" column="depth"/>
+        <result property="totalWeight" column="totalWeight"/>
+        <result property="netWeight" column="netWeight"/>
+        <result property="loadWeight" column="loadWeight"/>
+        <result property="feeWeight" column="feeWeight"/>
+        <result property="levelAWeight" column="levelAWeight"/>
+        <result property="levelBWeight" column="levelBWeight"/>
+        <result property="levelCWeight" column="levelCWeight"/>
+        <result property="buildDate" column="buildDate"/>
+        <result property="customerId" column="customerId"/>
+        <result property="checkRegisterNo" column="checkRegisterNo"/>
+        <result property="checkNo" column="checkNo"/>
+        <result property="shipID" column="shipID"/>
+        <result property="sailingAreaA" column="sailingAreaA"/>
+        <result property="sailingAreaB" column="sailingAreaB"/>
+        <result property="sailingAreaC" column="sailingAreaC"/>
+        <result property="firstRegisterNo" column="firstRegisterNo"/>
+        <result property="sailingDepth" column="sailingDepth"/>
+        <result property="buildFactory" column="buildFactory"/>
+        <result property="aisID" column="aisID"/>
+        <result property="gpsDeviceId" column="gpsDeviceId"/>
+        <result property="oldShipName" column="oldShipName"/>
+        <result property="runType" column="runType"/>
+        <result property="rebuildDate" column="rebuildDate"/>
+        <result property="insuranceDate" column="insuranceDate"/>
+        <result property="checkDate" column="checkDate"/>
+        <result property="repairDate" column="repairDate"/>
+        <result property="description" column="description"/>
+        <result property="creator" column="creator"/>
+        <result property="created" column="created"/>
+        <result property="updated" column="updated"/>
+    </resultMap>
+
+    <sql id="all_column">
+        `id`
+        ,`shipNo`
+        ,`shipFlag`
+        ,`shipType`
+        ,`length`
+        ,`width`
+        ,`depth`
+        ,`totalWeight`
+        ,`netWeight`
+        ,`loadWeight`
+        ,`feeWeight`
+        ,`levelAWeight`
+        ,`levelBWeight`
+        ,`levelCWeight`
+        ,`buildDate`
+        ,`customerId`
+        ,`checkRegisterNo`
+        ,`checkNo`
+        ,`shipID`
+        ,`sailingAreaA`
+        ,`sailingAreaB`
+        ,`sailingAreaC`
+        ,`firstRegisterNo`
+        ,`sailingDepth`
+        ,`buildFactory`
+        ,`aisID`
+        ,`gpsDeviceId`
+        ,`oldShipName`
+        ,`runType`
+        ,`rebuildDate`
+        ,`insuranceDate`
+        ,`checkDate`
+        ,`repairDate`
+        ,`description`
+        ,`creator`
+        ,`created`
+        ,`updated`
+    </sql>
+
+    <insert id="insertSelective" useGeneratedKeys="true" keyProperty="pojo.id">
+        INSERT INTO Ship
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="pojo.shipNo!=null"> `shipNo`,</if>
+            <if test="pojo.shipFlag!=null"> `shipFlag`,</if>
+            <if test="pojo.shipType!=null"> `shipType`,</if>
+            <if test="pojo.length!=null"> `length`,</if>
+            <if test="pojo.width!=null"> `width`,</if>
+            <if test="pojo.depth!=null"> `depth`,</if>
+            <if test="pojo.totalWeight!=null"> `totalWeight`,</if>
+            <if test="pojo.netWeight!=null"> `netWeight`,</if>
+            <if test="pojo.loadWeight!=null"> `loadWeight`,</if>
+            <if test="pojo.feeWeight!=null"> `feeWeight`,</if>
+            <if test="pojo.levelAWeight!=null"> `levelAWeight`,</if>
+            <if test="pojo.levelBWeight!=null"> `levelBWeight`,</if>
+            <if test="pojo.levelCWeight!=null"> `levelCWeight`,</if>
+            <if test="pojo.buildDate!=null"> `buildDate`,</if>
+            <if test="pojo.customerId!=null"> `customerId`,</if>
+            <if test="pojo.checkRegisterNo!=null"> `checkRegisterNo`,</if>
+            <if test="pojo.checkNo!=null"> `checkNo`,</if>
+            <if test="pojo.shipID!=null"> `shipID`,</if>
+            <if test="pojo.sailingAreaA!=null"> `sailingAreaA`,</if>
+            <if test="pojo.sailingAreaB!=null"> `sailingAreaB`,</if>
+            <if test="pojo.sailingAreaC!=null"> `sailingAreaC`,</if>
+            <if test="pojo.firstRegisterNo!=null"> `firstRegisterNo`,</if>
+            <if test="pojo.sailingDepth!=null"> `sailingDepth`,</if>
+            <if test="pojo.buildFactory!=null"> `buildFactory`,</if>
+            <if test="pojo.aisID!=null"> `aisID`,</if>
+            <if test="pojo.gpsDeviceId!=null"> `gpsDeviceId`,</if>
+            <if test="pojo.oldShipName!=null"> `oldShipName`,</if>
+            <if test="pojo.runType!=null"> `runType`,</if>
+            <if test="pojo.rebuildDate!=null"> `rebuildDate`,</if>
+            <if test="pojo.insuranceDate!=null"> `insuranceDate`,</if>
+            <if test="pojo.checkDate!=null"> `checkDate`,</if>
+            <if test="pojo.repairDate!=null"> `repairDate`,</if>
+            <if test="pojo.description!=null"> `description`,</if>
+            `created`,
+            `updated`
+        </trim>
+        VALUES
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="pojo.shipNo!=null">#{pojo.shipNo},</if>
+            <if test="pojo.shipFlag!=null">#{pojo.shipFlag},</if>
+            <if test="pojo.shipType!=null">#{pojo.shipType},</if>
+            <if test="pojo.length!=null">#{pojo.length},</if>
+            <if test="pojo.width!=null">#{pojo.width},</if>
+            <if test="pojo.depth!=null">#{pojo.depth},</if>
+            <if test="pojo.totalWeight!=null">#{pojo.totalWeight},</if>
+            <if test="pojo.netWeight!=null">#{pojo.netWeight},</if>
+            <if test="pojo.loadWeight!=null">#{pojo.loadWeight},</if>
+            <if test="pojo.feeWeight!=null">#{pojo.feeWeight},</if>
+            <if test="pojo.levelAWeight!=null">#{pojo.levelAWeight},</if>
+            <if test="pojo.levelBWeight!=null">#{pojo.levelBWeight},</if>
+            <if test="pojo.levelCWeight!=null">#{pojo.levelCWeight},</if>
+            <if test="pojo.buildDate!=null">#{pojo.buildDate},</if>
+            <if test="pojo.customerId!=null">#{pojo.customerId},</if>
+            <if test="pojo.checkRegisterNo!=null">#{pojo.checkRegisterNo},</if>
+            <if test="pojo.checkNo!=null">#{pojo.checkNo},</if>
+            <if test="pojo.shipID!=null">#{pojo.shipID},</if>
+            <if test="pojo.sailingAreaA!=null">#{pojo.sailingAreaA},</if>
+            <if test="pojo.sailingAreaB!=null">#{pojo.sailingAreaB},</if>
+            <if test="pojo.sailingAreaC!=null">#{pojo.sailingAreaC},</if>
+            <if test="pojo.firstRegisterNo!=null">#{pojo.firstRegisterNo},</if>
+            <if test="pojo.sailingDepth!=null">#{pojo.sailingDepth},</if>
+            <if test="pojo.buildFactory!=null">#{pojo.buildFactory},</if>
+            <if test="pojo.aisID!=null">#{pojo.aisID},</if>
+            <if test="pojo.gpsDeviceId!=null">#{pojo.gpsDeviceId},</if>
+            <if test="pojo.oldShipName!=null">#{pojo.oldShipName},</if>
+            <if test="pojo.runType!=null">#{pojo.runType},</if>
+            <if test="pojo.rebuildDate!=null">#{pojo.rebuildDate},</if>
+            <if test="pojo.insuranceDate!=null">#{pojo.insuranceDate},</if>
+            <if test="pojo.checkDate!=null">#{pojo.checkDate},</if>
+            <if test="pojo.repairDate!=null">#{pojo.repairDate},</if>
+            <if test="pojo.description!=null">#{pojo.description},</if>
+            UNIX_TIMESTAMP(now()),
+            UNIX_TIMESTAMP(now())
+        </trim>
+    </insert>
+
+    <!--auto generated Code-->
+    <update id="update">
+        UPDATE Ship
+        <set>
+            <if test="pojo.shipNo!=null"> `shipNo` = #{pojo.shipNo},</if>
+            <if test="pojo.shipFlag!=null"> `shipFlag`= #{pojo.shipFlag},</if>
+            <if test="pojo.shipType!=null"> `shipType`= #{pojo.shipType},</if>
+            <if test="pojo.length!=null"> `length`= #{pojo.length},</if>
+            <if test="pojo.width!=null"> `width`= #{pojo.width},</if>
+            <if test="pojo.depth!=null"> `depth`= #{pojo.depth},</if>
+            <if test="pojo.totalWeight!=null"> `totalWeight`= #{pojo.totalWeight},</if>
+            <if test="pojo.netWeight!=null"> `netWeight`= #{pojo.netWeight},</if>
+            <if test="pojo.loadWeight!=null"> `loadWeight`= #{pojo.loadWeight},</if>
+            <if test="pojo.feeWeight!=null"> `feeWeight`= #{pojo.feeWeight},</if>
+            <if test="pojo.levelAWeight!=null"> `levelAWeight`= #{pojo.levelAWeight},</if>
+            <if test="pojo.levelBWeight!=null"> `levelBWeight`= #{pojo.levelBWeight},</if>
+            <if test="pojo.levelCWeight!=null"> `levelCWeight`= #{pojo.levelCWeight},</if>
+            <if test="pojo.buildDate!=null"> `buildDate`= #{pojo.buildDate},</if>
+            <if test="pojo.customerId!=null"> `customerId`= #{pojo.customerId},</if>
+            <if test="pojo.checkRegisterNo!=null"> `checkRegisterNo`= #{pojo.checkRegisterNo},</if>
+            <if test="pojo.checkNo!=null"> `checkNo`= #{pojo.checkNo},</if>
+            <if test="pojo.shipID!=null"> `shipID`= #{pojo.shipID},</if>
+            <if test="pojo.sailingAreaA!=null"> `sailingAreaA`= #{pojo.sailingAreaA},</if>
+            <if test="pojo.sailingAreaB!=null"> `sailingAreaB`= #{pojo.sailingAreaB},</if>
+            <if test="pojo.sailingAreaC!=null"> `sailingAreaC`= #{pojo.sailingAreaC},</if>
+            <if test="pojo.firstRegisterNo!=null"> `firstRegisterNo`= #{pojo.firstRegisterNo},</if>
+            <if test="pojo.sailingDepth!=null"> `sailingDepth`= #{pojo.sailingDepth},</if>
+            <if test="pojo.buildFactory!=null"> `buildFactory`= #{pojo.buildFactory},</if>
+            <if test="pojo.aisID!=null"> `aisID`= #{pojo.aisID},</if>
+            <if test="pojo.gpsDeviceId!=null"> `gpsDeviceId`= #{pojo.gpsDeviceId},</if>
+            <if test="pojo.oldShipName!=null"> `oldShipName`= #{pojo.oldShipName},</if>
+            <if test="pojo.runType!=null"> `runType`= #{pojo.runType},</if>
+            <if test="pojo.rebuildDate!=null"> `rebuildDate`= #{pojo.rebuildDate},</if>
+            <if test="pojo.insuranceDate!=null"> `insuranceDate`= #{pojo.insuranceDate},</if>
+            <if test="pojo.checkDate!=null"> `checkDate`= #{pojo.checkDate},</if>
+            <if test="pojo.repairDate!=null"> `repairDate`= #{pojo.repairDate},</if>
+            <if test="pojo.description!=null"> `description`= #{pojo.description},</if>
+            `updated` = UNIX_TIMESTAMP(now())
+        </set>
+        WHERE `id` = #{pojo.id} and `isDeleted` = 0
+        LIMIT 1
+    </update>
+
+    <update id="del" parameterType="java.lang.Long">
+        UPDATE Ship
+        SET `isDeleted` = 1 ,
+        `updated` = UNIX_TIMESTAMP(now())
+        WHERE `id` = #{id} and `isDeleted` = 0
+        LIMIT 1
+    </update>
+
+    <select id="getById" parameterType="java.lang.Long" resultMap="AllColumnMap">
+        SELECT <include refid="all_column"/>
+        FROM `Ship`
+        WHERE `id` = #{id} and `isDeleted` = 0
+        LIMIT 1
+    </select>
+
+    <select id="getExistCount" resultType="java.lang.Integer" parameterType="Map" >
+        SELECT  count(id)
+        FROM  `Ship`
+        where `isDeleted` = 0
+        <if test="pojo.id != null"> AND `id` != #{pojo.id} </if>
+        <if test="pojo.shipNo != null"> AND `shipNo` = #{pojo.shipNo} </if>
+        limit 1
+    </select>
+
+    <select id="getCount" resultType="java.lang.Integer" parameterType="Map" >
+        SELECT  count(id)
+        FROM  `Ship`
+        <include refid="pageQueryWhereCommon"/>
+        limit 1
+    </select>
+
+    <select id="queryByPage" resultMap="AllColumnMap" parameterType="Map">
+        select <include refid="all_column"/>
+        from `Ship`
+        <include refid="pageQueryWhereCommon"/>
+        order by `id` desc
+        <include refid="pageCommon"/>
+    </select>
+
+    <sql id="pageQueryWhereCommon">
+        where `isDeleted` = 0
+        <if test="pojo.id != null"> AND `id` = #{pojo.id} </if>
+        <if test="pojo.key != null">
+            AND (`shipNo` like concat('%', #{pojo.key}, '%') )
+        </if>
+    </sql>
+
+    <sql id="pageCommon">
+        <choose>
+            <when test="pojo.startRow != null and pojo.startRow gt -1 and pojo.limitNum != null and pojo.limitNum gt 0">
+                limit #{pojo.startRow}, #{pojo.limitNum}
+            </when>
+            <otherwise>
+                limit 100
+            </otherwise>
+        </choose>
+    </sql>
+</mapper>
