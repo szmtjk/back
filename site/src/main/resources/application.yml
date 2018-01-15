@@ -15,7 +15,7 @@ server:
   contextPath: /xyl
 
 logging:
-  config: logback.xml
+  config: classpath:logback.xml
 
 fee:
   rule: 0

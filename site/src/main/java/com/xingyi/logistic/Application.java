@@ -2,8 +2,8 @@ package com.xingyi.logistic;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
-import org.springframework.boot.context.web.ErrorPageFilter;
-import org.springframework.boot.context.web.SpringBootServletInitializer;
+import org.springframework.boot.web.support.ErrorPageFilter;
+import org.springframework.boot.web.support.SpringBootServletInitializer;
 import org.springframework.web.context.WebApplicationContext;
 
 /**
