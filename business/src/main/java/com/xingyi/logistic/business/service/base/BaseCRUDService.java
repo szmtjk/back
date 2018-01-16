@@ -63,7 +63,11 @@ public abstract class BaseCRUDService<DO extends BaseModelAndDO, Model, DBQueryP
                 ret.setErrTip(ErrCode.DATA_REPEATED);
                 return ret;
             }
-            if (dao.insertSelective(dataObject) > 0) {
+            if (dao.insertSelective(dataObject) > 0) {//TODO transaction
+                if (!isBizOperationAfterAddPassed(ret, model, dataObject)) {
+                    ret.setErrTip(ErrCode.ADD_SUB_ERR);
+                    return ret;
+                }
                 ret.setSuccessData(dataObject.getId());
                 return ret;
             } else {
@@ -201,6 +205,10 @@ public abstract class BaseCRUDService<DO extends BaseModelAndDO, Model, DBQueryP
      * @return true 允许删除
      */
     protected boolean isBizDelAllowed(JsonRet<?> ret, Long id) {
+        return true;
+    }
+
+    protected boolean isBizOperationAfterAddPassed(JsonRet<?> ret, Model model, DO dataObj) {
         return true;
     }
 

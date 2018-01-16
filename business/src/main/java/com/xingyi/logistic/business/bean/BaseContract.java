@@ -3,9 +3,6 @@ package com.xingyi.logistic.business.bean;
 import com.xingyi.logistic.common.annotation.AllowedNumber;
 import com.xingyi.logistic.common.annotation.NotNullEmpty;
 
-import javax.validation.constraints.NotNull;
-import java.util.Date;
-
 /**
  * Created by Jadic on 2017/12/31.
  */
@@ -15,19 +12,19 @@ public class BaseContract extends BaseModelAndDO {
     @NotNullEmpty
     private String name;
 
-    private String partyA;
+    private Integer partyA;
 
     private String partyB;
 
-    private Date validsDate;
+    private String validSDate;
 
-    private Date valideDate;
+    private String validEDate;
 
     private Long deposit;
 
-    private Date depositDate;
+    private String depositDate;
 
-    private Date depositFinanceDate;
+    private String depositFinanceDate;
 
     @AllowedNumber(values = {1, 2})
     private Integer type; //合同类型  1：短期  2：长期
@@ -67,11 +64,11 @@ public class BaseContract extends BaseModelAndDO {
         this.name = name;
     }
 
-    public String getPartyA() {
+    public Integer getPartyA() {
         return partyA;
     }
 
-    public void setPartyA(String partyA) {
+    public void setPartyA(Integer partyA) {
         this.partyA = partyA;
     }
 
@@ -83,20 +80,20 @@ public class BaseContract extends BaseModelAndDO {
         this.partyB = partyB;
     }
 
-    public Date getValidsDate() {
-        return validsDate;
+    public String getValidSDate() {
+        return validSDate;
     }
 
-    public void setValidsDate(Date validsDate) {
-        this.validsDate = validsDate;
+    public void setValidSDate(String validSDate) {
+        this.validSDate = validSDate;
     }
 
-    public Date getValideDate() {
-        return valideDate;
+    public String getValidEDate() {
+        return validEDate;
     }
 
-    public void setValideDate(Date valideDate) {
-        this.valideDate = valideDate;
+    public void setValidEDate(String validEDate) {
+        this.validEDate = validEDate;
     }
 
     public Long getDeposit() {
@@ -107,19 +104,19 @@ public class BaseContract extends BaseModelAndDO {
         this.deposit = deposit;
     }
 
-    public Date getDepositDate() {
+    public String getDepositDate() {
         return depositDate;
     }
 
-    public void setDepositDate(Date depositDate) {
+    public void setDepositDate(String depositDate) {
         this.depositDate = depositDate;
     }
 
-    public Date getDepositFinanceDate() {
+    public String getDepositFinanceDate() {
         return depositFinanceDate;
     }
 
-    public void setDepositFinanceDate(Date depositFinanceDate) {
+    public void setDepositFinanceDate(String depositFinanceDate) {
         this.depositFinanceDate = depositFinanceDate;
     }
 

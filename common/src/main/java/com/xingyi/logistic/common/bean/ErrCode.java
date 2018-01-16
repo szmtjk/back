@@ -15,6 +15,7 @@ public enum ErrCode {
     MODIFY_ERR(20005, "修改错误"),
     DEL_ERR(20006, "删除错误"),
     GET_ERR(20007, "查询错误"),
+    ADD_SUB_ERR(20008, "新增子数据错误"),
     ;
     private int code;
     private String msg;

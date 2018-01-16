@@ -8,8 +8,8 @@
         <result property="name" column="name"/>
         <result property="partyA" column="partyA"/>
         <result property="partyB" column="partyB"/>
-        <result property="validsDate" column="validsDate"/>
-        <result property="valideDate" column="valideDate"/>
+        <result property="validSDate" column="validSDate"/>
+        <result property="validEDate" column="validEDate"/>
         <result property="deposit" column="deposit"/>
         <result property="depositDate" column="depositDate"/>
         <result property="depositFinanceDate" column="depositFinanceDate"/>
@@ -30,8 +30,8 @@
         ,`name`
         ,`partyA`
         ,`partyB`
-        ,`validsDate`
-        ,`valideDate`
+        ,`validSDate`
+        ,`validEDate`
         ,`deposit`
         ,`depositDate`
         ,`depositFinanceDate`
@@ -52,9 +52,9 @@
             <if test="pojo.contractNo!=null"> `contractNo`,</if>
             <if test="pojo.name!=null"> `name`,</if>
             <if test="pojo.partyA!=null"> `partyA`,</if>
-            <if test="pojo.partyB!=null"> `contact`,</if>
-            <if test="pojo.validsDate!=null"> `validsDate`,</if>
-            <if test="pojo.valideDate!=null"> `valideDate`,</if>
+            <if test="pojo.partyB!=null"> `partyB`,</if>
+            <if test="pojo.validSDate!=null"> `validSDate`,</if>
+            <if test="pojo.validEDate!=null"> `validEDate`,</if>
             <if test="pojo.deposit!=null"> `deposit`,</if>
             <if test="pojo.depositDate!=null"> `depositDate`,</if>
             <if test="pojo.depositFinanceDate!=null"> `depositFinanceDate`,</if>
@@ -73,8 +73,8 @@
             <if test="pojo.name!=null">#{pojo.name},</if>
             <if test="pojo.partyA!=null">#{pojo.partyA},</if>
             <if test="pojo.partyB!=null">#{pojo.partyB},</if>
-            <if test="pojo.validsDate!=null">#{pojo.validsDate},</if>
-            <if test="pojo.valideDate!=null">#{pojo.valideDate},</if>
+            <if test="pojo.validSDate!=null">#{pojo.validSDate},</if>
+            <if test="pojo.validEDate!=null">#{pojo.validEDate},</if>
             <if test="pojo.deposit!=null">#{pojo.deposit},</if>
             <if test="pojo.depositDate!=null">#{pojo.depositDate},</if>
             <if test="pojo.depositFinanceDate!=null">#{pojo.depositFinanceDate},</if>
@@ -97,8 +97,8 @@
             <if test="pojo.name!=null">`name`= #{pojo.name},</if>
             <if test="pojo.partyA!=null">`partyA`= #{pojo.partyA},</if>
             <if test="pojo.partyB!=null">`partyB`= #{pojo.partyB},</if>
-            <if test="pojo.validsDate!=null">`validsDate`= #{pojo.validsDate},</if>
-            <if test="pojo.valideDate!=null">`valideDate`= #{pojo.valideDate},</if>
+            <if test="pojo.validSDate!=null">`validSDate`= #{pojo.validSDate},</if>
+            <if test="pojo.validEDate!=null">`validEDate`= #{pojo.validEDate},</if>
             <if test="pojo.deposit!=null">`deposit` = #{pojo.deposit},</if>
             <if test="pojo.depositDate!=null">`depositDate` = #{pojo.depositDate},</if>
             <if test="pojo.depositFinanceDate!=null">`depositFinanceDate` = #{pojo.depositFinanceDate},</if>
@@ -134,7 +134,7 @@
         FROM  `Contract`
         where `isDeleted` = 0
         <if test="pojo.id != null"> AND `id` != #{pojo.id} </if>
-        <!--<if test="pojo.name != null"> AND `name` != #{pojo.name} </if>-->
+        <if test="pojo.name != null"> AND `name` = #{pojo.name} </if>
         limit 1
     </select>
 

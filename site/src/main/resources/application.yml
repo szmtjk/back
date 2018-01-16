@@ -49,7 +49,3 @@ spring:
 ---
 spring:
   profiles: prd
-
-druid:
-  datasource:
-    password: 5678rtyU
