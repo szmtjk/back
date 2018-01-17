@@ -2,11 +2,8 @@ package com.xingyi.logistic.controller;
 
 import com.xingyi.logistic.business.model.Contract;
 import com.xingyi.logistic.business.model.ContractQuery;
-import com.xingyi.logistic.business.model.Port;
-import com.xingyi.logistic.business.model.PortQuery;
 import com.xingyi.logistic.business.service.BaseService;
 import com.xingyi.logistic.business.service.ContractService;
-import com.xingyi.logistic.business.service.PortService;
 import com.xingyi.logistic.common.bean.JsonRet;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -21,7 +18,6 @@ public class ContractController extends BaseCRUDController<Contract, ContractQue
 
     @Autowired
     private ContractService contractService;
-
 
     @Override
     public JsonRet<Long> add(Contract contract) {

@@ -1,27 +1,27 @@
 package com.xingyi.logistic.business.service.impl;
 
+import com.alibaba.fastjson.TypeReference;
 import com.xingyi.logistic.business.db.dao.ContractDAO;
-import com.xingyi.logistic.business.db.dao.ShipDAO;
 import com.xingyi.logistic.business.db.dao.base.BaseDAO;
 import com.xingyi.logistic.business.db.entity.ContractDBQuery;
 import com.xingyi.logistic.business.db.entity.ContractDO;
-import com.xingyi.logistic.business.db.entity.ShipDBQuery;
-import com.xingyi.logistic.business.db.entity.ShipDO;
 import com.xingyi.logistic.business.model.Contract;
+import com.xingyi.logistic.business.model.ContractFlow;
 import com.xingyi.logistic.business.model.ContractQuery;
-import com.xingyi.logistic.business.model.Ship;
-import com.xingyi.logistic.business.model.ShipQuery;
+import com.xingyi.logistic.business.service.ContractFlowService;
 import com.xingyi.logistic.business.service.ContractService;
-import com.xingyi.logistic.business.service.ShipService;
 import com.xingyi.logistic.business.service.base.BaseCRUDService;
 import com.xingyi.logistic.business.service.base.ModelConverter;
 import com.xingyi.logistic.business.service.base.QueryConditionConverter;
 import com.xingyi.logistic.business.service.converter.ContractConverter;
 import com.xingyi.logistic.business.service.converter.ContractQueryConverter;
-import com.xingyi.logistic.business.service.converter.ShipConverter;
-import com.xingyi.logistic.business.service.converter.ShipQueryConverter;
+import com.xingyi.logistic.business.util.JsonUtil;
+import com.xingyi.logistic.common.bean.JsonRet;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
+
+import java.util.List;
 
 /**
  * 合同信息
@@ -33,10 +33,26 @@ public class ContractServiceImpl extends BaseCRUDService<ContractDO, Contract, C
     private ContractDAO contractDAO ;
 
     @Autowired
+    private ContractFlowService contractFlowService;
+
+    @Autowired
     private ContractConverter contractConverter;
 
     @Autowired
     private ContractQueryConverter contractQueryConverter;
+
+    @Override
+    protected boolean isBizOperationAfterAddPassed(JsonRet<?> ret, Contract contract, ContractDO dataObj) {
+        if (!StringUtils.isEmpty(contract.getContractFlows())) {
+            List<ContractFlow> contractFlows = JsonUtil.toObject(contract.getContractFlows(), new TypeReference<List<ContractFlow>>() {
+            });
+            for (ContractFlow contractFlow : contractFlows) {
+                contractFlow.setContractId(dataObj.getId());
+                contractFlowService.add(contractFlow);
+            }
+        }
+        return true;
+    }
 
     @Override
     protected ModelConverter<ContractDO, Contract> getModelConverter() {
