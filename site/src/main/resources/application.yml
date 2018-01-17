@@ -53,3 +53,9 @@ spring:
 druid:
   datasource:
     password: 5678rtyU
+
+---
+#activemq
+spring:
+  activemq:
+    broker-url: tcp://183.246.204.251:61689
