@@ -22,6 +22,26 @@ public class GpsRealController extends BaseCRUDController<ShipCurrentGps, ShipCu
     @Autowired
     private ShipCurrentGpsService shipCurrentGpsService;
 
+
+    /**
+     * 加载客户
+     * @return
+     */
+    @RequestMapping("/loadCustomer")
+    public List<Combox> loadCustomer()
+    {
+        return shipCurrentGpsService.queryComboxCustomerInfo();
+    }
+
+    /**
+     * 加载设备
+     */
+    @RequestMapping("/loadShip")
+    public List<Combox> loadShip()
+    {
+        return shipCurrentGpsService.queryComboxShipInfo();
+    }
+
     /**
      * 加载所有港口数据
      * @return

@@ -16,6 +16,18 @@ public interface ShipCurrentGpsService extends BaseService<ShipCurrentGps, ShipC
     public List<ShipCurrentGps> getShipCurrentGpsAll();
 
     /**
+     * 加载所有设备
+     * @return
+     */
+    public List<Combox> queryComboxShipInfo();
+
+    /**
+     * 加载客户
+     * @return
+     */
+    public List<Combox> queryComboxCustomerInfo();
+
+    /**
      * 加载所有船与设备的关系
      * @return
      */
