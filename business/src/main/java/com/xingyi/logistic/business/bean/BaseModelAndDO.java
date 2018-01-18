@@ -6,10 +6,10 @@ package com.xingyi.logistic.business.bean;
 public class BaseModelAndDO {
 
     private Long id;
-    private Long creatorId;
     private String creator;
     private Long created;
     private Long updated;
+    private Long updater;
 
     public Long getId() {
         return id;
@@ -19,12 +19,12 @@ public class BaseModelAndDO {
         this.id = id;
     }
 
-    public Long getCreatorId() {
-        return creatorId;
+    public Long getUpdater() {
+        return updater;
     }
 
-    public void setCreatorId(Long creatorId) {
-        this.creatorId = creatorId;
+    public void setUpdater(Long updater) {
+        this.updater = updater;
     }
 
     public String getCreator() {
