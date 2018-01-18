@@ -2,20 +2,11 @@ spring:
   profiles:
     active: @profiles@
 
-tempUser:
-  userNamePass:
-    - hjj@hjj001
-    - hzh@hzh002
-    - pzh@pzh003
-    - guest@guest001
 ---
 # You can change the default http port
 server:
   port: 16721
   contextPath: /xyl
-
-logging:
-  config: classpath:logback.xml
 
 fee:
   rule: 0
@@ -41,6 +32,16 @@ druid:
       maxWait: 50000
       validationQuery: SELECT 1
 
+
+# active mq
+spring:
+  activemq:
+    broker-url: tcp://183.246.204.251:61689
+
+xyl:
+  upload:
+    baseDir: ./upload
+
 # Different profiles' configuration
 ---
 spring:
@@ -50,17 +51,3 @@ spring:
 spring:
   profiles: prd
 
-druid:
-  datasource:
-    password: 5678rtyU
-
----
-#activemq
-spring:
-  activemq:
-    broker-url: tcp://183.246.204.251:61689
-
----
-xyl:
-  upload:
-    baseDir: ./upload
