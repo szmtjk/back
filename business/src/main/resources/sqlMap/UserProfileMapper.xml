@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!--  Generate by autoSQLMap Powered by duxing@Taobao -->
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.xingyi.logistic.authentication.db.dao.UserProfileDAO">
+    <resultMap id="AllColumnMap" type="com.xingyi.logistic.authentication.db.entity.UserProfileDO">
+        <result property="id" column="id"/>
+        <result property="nickName" column="nickName"/>
+        <result property="realName" column="realName"/>
+        <result property="gender" column="gender"/>
+        <result property="birthDay" column="birthDay"/>
+    </resultMap>
+
+    <sql id="all_column">
+        `id`
+        ,`nickName`
+        ,`realName`
+        ,`gender`
+        ,`birthDay`
+    </sql>
+
+    <insert id="insertSelective" useGeneratedKeys="true" keyProperty="pojo.id">
+        INSERT INTO UserProfile
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="pojo.nickName!=null"> `nickName`,</if>
+            <if test="pojo.realName!=null"> `realName`,</if>
+            <if test="pojo.birthDay!=null"> `birthDay`,</if>
+            `gender`
+        </trim>
+        VALUES
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="pojo.nickName!=null">#{pojo.nickName},</if>
+            <if test="pojo.realName!=null">#{pojo.realName},</if>
+            <if test="pojo.birthDay!=null">#{pojo.birthDay},</if>
+            #{pojo.gender},
+        </trim>
+    </insert>
+
+</mapper>
