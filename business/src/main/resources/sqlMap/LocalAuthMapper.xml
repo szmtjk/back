@@ -8,6 +8,12 @@
         <result property="loginName" column="loginName"/>
         <result property="passwd" column="passwd"/>
         <result property="salt" column="salt"/>
+        <result property="creator" column="creator"/>
+        <result property="creatorName" column="creatorName"/>
+        <result property="created" column="created"/>
+        <result property="updater" column="updater"/>
+        <result property="updaterName" column="updaterName"/>
+        <result property="updated" column="updated"/>
         <result property="isDeleted" column="isDeleted"/>
     </resultMap>
 
@@ -17,6 +23,12 @@
         ,`loginName`
         ,`passwd`
         ,`salt`
+        ,`creator`
+        ,`creatorName`
+        ,`created`
+        ,`updater`
+        ,`updaterName`
+        ,`updated`
         ,`isDeleted`
     </sql>
 
@@ -27,6 +39,10 @@
             <if test="pojo.loginName!=null"> `loginName`,</if>
             <if test="pojo.passwd!=null"> `passwd`,</if>
             <if test="pojo.salt!=null"> `salt`,</if>
+            <if test="pojo.creator!=null"> `creator`,</if>
+            <if test="pojo.creatorName!=null"> `creatorName`,</if>
+            `created`,
+            `updated`,
             `isDeleted`
         </trim>
         VALUES
@@ -35,6 +51,9 @@
             <if test="pojo.loginName!=null">#{pojo.loginName},</if>
             <if test="pojo.passwd!=null">#{pojo.passwd},</if>
             <if test="pojo.salt!=null">#{pojo.salt},</if>
+            <if test="pojo.creatorName!=null">#{pojo.creatorName},</if>
+            UNIX_TIMESTAMP(now()),
+            UNIX_TIMESTAMP(now()),
             0
         </trim>
     </insert>
@@ -46,14 +65,17 @@
             <if test="pojo.loginName!=null">`loginName` = #{pojo.loginName},</if>
             <if test="pojo.passwd!=null">`passwd` = #{pojo.passwd},</if>
             <if test="pojo.salt!=null">`salt` = #{pojo.salt},</if>
+            <if test="pojo.updaterName!=null">`updaterName` = #{pojo.updaterName},</if>
             <if test="pojo.isDeleted!=null">`isDeleted` = #{pojo.isDeleted},</if>
+            `updated` = UNIX_TIMESTAMP(now())
         </set>
         WHERE `id` = #{pojo.id}
     </update>
 
     <update id="del" parameterType="java.lang.Long">
         UPDATE LocalAuth
-        SET `isDeleted` = 1
+        SET `isDeleted` = 1,
+        `updated` = UNIX_TIMESTAMP(now())
         WHERE `id` = #{id}
     </update>
 

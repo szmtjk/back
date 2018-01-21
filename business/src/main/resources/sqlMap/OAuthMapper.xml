@@ -9,6 +9,12 @@
         <result property="oauthId" column="oauthId"/>
         <result property="accessToken" column="accessToken"/>
         <result property="oauthExpires" column="oauthExpires"/>
+        <result property="creator" column="creator"/>
+        <result property="creatorName" column="creatorName"/>
+        <result property="created" column="created"/>
+        <result property="updater" column="updater"/>
+        <result property="updaterName" column="updaterName"/>
+        <result property="updated" column="updated"/>
         <result property="isDeleted" column="isDeleted"/>
     </resultMap>
 
@@ -19,6 +25,12 @@
         ,`oauthId`
         ,`accessToken`
         ,`oauthExpires`
+        ,`creator`
+        ,`creatorName`
+        ,`created`
+        ,`updater`
+        ,`updaterName`
+        ,`updated`
         ,`isDeleted`
     </sql>
 
@@ -30,6 +42,10 @@
             <if test="pojo.oauthId!=null"> `oauthId`,</if>
             <if test="pojo.accessToken!=null"> `accessToken`,</if>
             <if test="pojo.oauthExpires!=null"> `oauthExpires`,</if>
+            <if test="pojo.creator!=null"> `creator`,</if>
+            <if test="pojo.creatorName!=null"> `creatorName`,</if>
+            `created`,
+            `updated`,
             `isDeleted`
         </trim>
         VALUES
@@ -39,6 +55,9 @@
             <if test="pojo.oauthId!=null">#{pojo.oauthId},</if>
             <if test="pojo.accessToken!=null">#{pojo.accessToken},</if>
             <if test="pojo.oauthExpires!=null">#{pojo.oauthExpires},</if>
+            <if test="pojo.creatorName!=null">#{pojo.creatorName},</if>
+            UNIX_TIMESTAMP(now()),
+            UNIX_TIMESTAMP(now()),
             0
         </trim>
     </insert>
@@ -51,14 +70,17 @@
             <if test="pojo.oauthId!=null">`oauthId` = #{pojo.oauthId},</if>
             <if test="pojo.accessToken!=null">`accessToken` = #{pojo.accessToken},</if>
             <if test="pojo.oauthExpires!=null">`oauthExpires` = #{pojo.oauthExpires},</if>
+            <if test="pojo.updaterName!=null">`updaterName` = #{pojo.updaterName},</if>
             <if test="pojo.isDeleted!=null">`isDeleted` = #{pojo.isDeleted},</if>
+            `updated` = UNIX_TIMESTAMP(now())
         </set>
         WHERE `id` = #{pojo.id}
     </update>
 
     <update id="del" parameterType="java.lang.Long">
         UPDATE OAuth
-        SET `isDeleted` = 1
+        SET `isDeleted` = 1,
+        `updated` = UNIX_TIMESTAMP(now())
         WHERE `id` = #{id}
     </update>
 
