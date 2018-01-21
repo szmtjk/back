@@ -1,88 +1,87 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!--  Generate by autoSQLMap Powered by duxing@Taobao -->
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.xingyi.logistic.authentication.db.dao.UserProfileDAO">
-    <resultMap id="AllColumnMap" type="com.xingyi.logistic.authentication.db.entity.UserProfileDO">
+<mapper namespace="com.xingyi.logistic.authentication.db.dao.LocalAuthDAO">
+    <resultMap id="AllColumnMap" type="com.xingyi.logistic.authentication.db.entity.LocalAuthDO">
         <result property="id" column="id"/>
-        <result property="nickName" column="nickName"/>
-        <result property="realName" column="realName"/>
-        <result property="gender" column="gender"/>
-        <result property="birthDay" column="birthDay"/>
+        <result property="userId" column="userId"/>
+        <result property="loginName" column="loginName"/>
+        <result property="passwd" column="passwd"/>
+        <result property="salt" column="salt"/>
         <result property="isDeleted" column="isDeleted"/>
     </resultMap>
 
     <sql id="all_column">
         `id`
-        ,`nickName`
-        ,`realName`
-        ,`gender`
-        ,`birthDay`
+        ,`userId`
+        ,`loginName`
+        ,`passwd`
+        ,`salt`
         ,`isDeleted`
     </sql>
 
     <insert id="insertSelective" useGeneratedKeys="true" keyProperty="pojo.id">
-        INSERT INTO UserProfile
+        INSERT INTO LocalAuth
         <trim prefix="(" suffix=")" suffixOverrides=",">
-            <if test="pojo.nickName!=null"> `nickName`,</if>
-            <if test="pojo.realName!=null"> `realName`,</if>
-            <if test="pojo.birthDay!=null"> `birthDay`,</if>
-            `gender`,
+            <if test="pojo.userId!=null"> `userId`,</if>
+            <if test="pojo.loginName!=null"> `loginName`,</if>
+            <if test="pojo.passwd!=null"> `passwd`,</if>
+            <if test="pojo.salt!=null"> `salt`,</if>
             `isDeleted`
         </trim>
         VALUES
         <trim prefix="(" suffix=")" suffixOverrides=",">
-            <if test="pojo.nickName!=null">#{pojo.nickName},</if>
-            <if test="pojo.realName!=null">#{pojo.realName},</if>
-            <if test="pojo.birthDay!=null">#{pojo.birthDay},</if>
-            #{pojo.gender},
+            <if test="pojo.userId!=null">#{pojo.userId},</if>
+            <if test="pojo.loginName!=null">#{pojo.loginName},</if>
+            <if test="pojo.passwd!=null">#{pojo.passwd},</if>
+            <if test="pojo.salt!=null">#{pojo.salt},</if>
             0
         </trim>
     </insert>
 
     <update id="update">
-        UPDATE UserProfile
+        UPDATE LocalAuth
         <set>
-            <if test="pojo.nickName!=null">`nickName` = #{pojo.nickName},</if>
-            <if test="pojo.realName!=null">`realName` = #{pojo.realName},</if>
-            <if test="pojo.birthDay!=null">`birthDay` = #{pojo.birthDay},</if>
+            <if test="pojo.userId!=null">`userId` = #{pojo.userId},</if>
+            <if test="pojo.loginName!=null">`loginName` = #{pojo.loginName},</if>
+            <if test="pojo.passwd!=null">`passwd` = #{pojo.passwd},</if>
+            <if test="pojo.salt!=null">`salt` = #{pojo.salt},</if>
             <if test="pojo.isDeleted!=null">`isDeleted` = #{pojo.isDeleted},</if>
-            `gender` = #{pojo.gender}
         </set>
         WHERE `id` = #{pojo.id}
     </update>
 
     <update id="del" parameterType="java.lang.Long">
-        UPDATE UserProfile
-        SET `isDeleted` = 1 ,
-        `updated` = UNIX_TIMESTAMP(now())
+        UPDATE LocalAuth
+        SET `isDeleted` = 1
         WHERE `id` = #{id}
     </update>
 
     <select id="getById" parameterType="java.lang.Long" resultMap="AllColumnMap">
         SELECT <include refid="all_column"/>
-        FROM `UserProfile`
+        FROM `LocalAuth`
         WHERE `id` = #{id}
     </select>
 
     <select id="getExistCount" resultType="java.lang.Integer" parameterType="Map" >
         SELECT  count(id)
-        FROM  `UserProfile`
+        FROM  `LocalAuth`
         where `isDeleted` = 0
         <if test="pojo.id != null"> AND `id` != #{pojo.id} </if>
-        <if test="pojo.nickName != null"> AND `nickName` = #{pojo.nickName} </if>
+        <if test="pojo.loginName != null"> AND `loginName` = #{pojo.loginName} </if>
         limit 1
     </select>
 
     <select id="getCount" resultType="java.lang.Integer" parameterType="Map" >
         SELECT  count(id)
-        FROM  `UserProfile`
+        FROM  `LocalAuth`
         <include refid="pageQueryWhereCommon"/>
         limit 1
     </select>
 
     <select id="queryByPage" resultMap="AllColumnMap" parameterType="Map">
         select <include refid="all_column"/>
-        from `UserProfile`
+        from `LocalAuth`
         <include refid="pageQueryWhereCommon"/>
         order by `id` desc
         <include refid="pageCommon"/>
@@ -92,7 +91,7 @@
         where `isDeleted` = 0
         <if test="pojo.id != null"> AND `id` = #{pojo.id} </if>
         <if test="pojo.key != null">
-            AND (`nickName` like concat('%', #{pojo.key}, '%'))
+            AND (`loginName` like concat('%', #{pojo.key}, '%'))
         </if>
     </sql>
 

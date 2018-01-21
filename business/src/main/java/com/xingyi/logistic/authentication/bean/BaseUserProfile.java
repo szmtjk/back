@@ -11,6 +11,15 @@ public class BaseUserProfile extends BaseModelAndDO {
 	private String realName;
 	private int gender;
 	private String birthDay;
+	private Integer isDeleted;
+
+	public Integer getIsDeleted() {
+		return isDeleted;
+	}
+
+	public void setIsDeleted(Integer isDeleted) {
+		this.isDeleted = isDeleted;
+	}
 
 	public String getNickName() {
 		return nickName;
