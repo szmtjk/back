@@ -3,7 +3,7 @@ package com.xingyi.logistic.authentication.bean;
 import com.xingyi.logistic.business.bean.BaseModelAndDO;
 
 public class BaseLocalAuth extends BaseModelAndDO {
-    private Integer userId;
+    private Long userId;
     private String loginName;
     private String passwd;
     private String salt;
@@ -17,11 +17,11 @@ public class BaseLocalAuth extends BaseModelAndDO {
         this.isDeleted = isDeleted;
     }
 
-    public Integer getUserId() {
+    public Long getUserId() {
         return userId;
     }
 
-    public void setUserId(Integer userId) {
+    public void setUserId(Long userId) {
         this.userId = userId;
     }
 
