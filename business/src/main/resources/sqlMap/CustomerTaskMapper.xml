@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!--  Generate by autoSQLMap Powered by duxing@Taobao -->
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.xingyi.logistic.business.db.dao.CustomerTaskDAO">
+    <resultMap id="AllColumnMap" type="com.xingyi.logistic.business.db.entity.CustomerTaskDO">
+        <result property="id" column="id"/>
+        <result property="customerId" column="customerId"/>
+        <result property="contractId" column="contractId"/>
+        <result property="totalLoad" column="totalLoad"/>
+        <result property="description" column="description"/>
+        <result property="creator" column="creator"/>
+        <result property="created" column="created"/>
+        <result property="updated" column="updated"/>
+    </resultMap>
+
+    <sql id="all_column">
+        `id`
+        ,`customerId`
+        ,`contractId`
+        ,`totalLoad`
+        ,`description`
+        ,`creator`
+        ,`created`
+        ,`updated`
+    </sql>
+
+    <resultMap id="mRetComboxMap" type="com.xingyi.logistic.business.model.Combox">
+        <result property="id" column="id"/>
+        <result property="name" column="name"/>
+    </resultMap>
+
+    <insert id="insertSelective" useGeneratedKeys="true" keyProperty="pojo.id">
+        INSERT INTO CustomerTask
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="pojo.customerId!=null"> `customerId`,</if>
+            <if test="pojo.contractId!=null"> `contractId`,</if>
+            <if test="pojo.totalLoad!=null"> `totalLoad`,</if>
+            <if test="pojo.description!=null"> `description`,</if>
+            `created`,
+            `updated`
+        </trim>
+        VALUES
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="pojo.customerId!=null">#{pojo.customerId},</if>
+            <if test="pojo.contractId!=null">#{pojo.contractId},</if>
+            <if test="pojo.totalLoad!=null">#{pojo.totalLoad},</if>
+            <if test="pojo.description!=null">#{pojo.description},</if>
+            UNIX_TIMESTAMP(now()),
+            UNIX_TIMESTAMP(now())
+        </trim>
+    </insert>
+
+    <!--auto generated Code-->
+    <update id="update">
+        UPDATE CustomerTask
+        <set>
+            <if test="pojo.customerId!=null">`customerId` = #{pojo.customerId},</if>
+            <if test="pojo.contractId!=null">`contractId` = #{pojo.contractId},</if>
+            <if test="pojo.totalLoad!=null">`totalLoad` = #{pojo.totalLoad},</if>
+            <if test="pojo.description!=null">`description` = #{pojo.description},</if>
+            `updated` = UNIX_TIMESTAMP(now())
+        </set>
+        WHERE `id` = #{pojo.id} and `isDeleted` = 0
+        LIMIT 1
+    </update>
+
+    <update id="del" parameterType="java.lang.Long">
+        UPDATE CustomerTask
+        SET `isDeleted` = 1 ,
+        `updated` = UNIX_TIMESTAMP(now())
+        WHERE `id` = #{id} and `isDeleted` = 0
+        LIMIT 1
+    </update>
+
+    <select id="getById" parameterType="java.lang.Long" resultMap="AllColumnMap">
+        SELECT <include refid="all_column"/>
+        FROM `CustomerTask`
+        WHERE `id` = #{id} and `isDeleted` = 0
+        LIMIT 1
+    </select>
+
+    <select id="getExistCount" resultType="java.lang.Integer" parameterType="Map" >
+        SELECT  count(id)
+        FROM  `CustomerTask`
+        where `isDeleted` = 0
+        <if test="pojo.id != null"> AND `id` != #{pojo.id} </if>
+        <if test="pojo.customerId != null"> AND `customerId` = #{pojo.customerId} </if>
+        <if test="pojo.contractId != null"> AND `contractId` = #{pojo.contractId} </if>
+        limit 1
+    </select>
+
+    <select id="getCount" resultType="java.lang.Integer" parameterType="Map" >
+        SELECT  count(id)
+        FROM  `CustomerTask`
+        <include refid="pageQueryWhereCommon"/>
+        limit 1
+    </select>
+
+    <select id="queryByPage" resultMap="AllColumnMap" parameterType="Map">
+        select <include refid="all_column"/>
+        from `CustomerTask`
+        <include refid="pageQueryWhereCommon"/>
+        order by `id` desc
+        <include refid="pageCommon"/>
+    </select>
+
+    <sql id="pageQueryWhereCommon">
+        where `isDeleted` = 0
+        <if test="pojo.id != null"> AND `id` = #{pojo.id} </if>
+        <if test="pojo.key != null">
+            AND (`customerId` like concat('%', #{pojo.key}, '%'))
+        </if>
+    </sql>
+
+    <sql id="pageCommon">
+        <choose>
+            <when test="pojo.startRow != null and pojo.startRow gt -1 and pojo.limitNum != null and pojo.limitNum gt 0">
+                limit #{pojo.startRow}, #{pojo.limitNum}
+            </when>
+            <otherwise>
+                limit 100
+            </otherwise>
+        </choose>
+    </sql>
+
+    <select id="queryComboxCustomerInfo" resultMap="mRetComboxMap" parameterType="Map">
+        select id AS ID, name AS NAME
+        from `Contract`
+    </select>
+
+    <select id="loadContractById" resultMap="mRetComboxMap" parameterType="Map">
+        select a.partyA AS ID, b.fullName AS NAME
+        from `Contract` a, `Customer` b
+         WHERE  a.partyA = b.customerNo
+        <if test="pojo.key != null"> AND a.id = #{pojo.key} </if>
+    </select>
+
+    <select id="loadContractFlowByContractId" resultMap="mRetComboxMap" parameterType="Map">
+        select a.flowId AS ID, b.name AS NAME
+        from `ContractFlow` a, `Flow` b
+        WHERE  a.flowId = b.id
+        <if test="pojo.key != null"> AND a.contractId = #{pojo.key} </if>
+    </select>
+
+</mapper>

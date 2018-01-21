@@ -1,0 +1,221 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!--  Generate by autoSQLMap Powered by duxing@Taobao -->
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.xingyi.logistic.business.db.dao.CustomerTaskFlowDAO">
+    <resultMap id="AllColumnMap" type="com.xingyi.logistic.business.db.entity.CustomerTaskFlowDO">
+        <result property="id" column="id"/>
+        <result property="taskId" column="taskId"/>
+        <result property="flowId" column="flowId"/>
+        <result property="goodsName" column="goodsName"/>
+        <result property="goodsType" column="goodsType"/>
+        <result property="totalWeight" column="totalWeight"/>
+        <result property="direction" column="direction"/>
+        <result property="sender" column="sender"/>
+        <result property="receiver" column="receiver"/>
+        <result property="loadingDate" column="loadingDate"/>
+        <result property="dischargeDate" column="dischargeDate"/>
+        <result property="startPortId" column="startPortId"/>
+        <result property="endPortId" column="endPortId"/>
+        <result property="loadType" column="loadType"/>
+        <result property="bigShipPC" column="bigShipPC"/>
+        <result property="totalLoad" column="totalLoad"/>
+        <result property="arriveLocation" column="arriveLocation"/>
+        <result property="bigShipArriveTime" column="bigShipArriveTime"/>
+        <result property="bigShipDepartTime" column="bigShipDepartTime"/>
+        <result property="selfPick" column="selfPick"/>
+        <result property="sailingArea" column="sailingArea"/>
+        <result property="shipSuggestUnitPrice" column="shipSuggestUnitPrice"/>
+        <result property="sailingFlag" column="sailingFlag"/>
+        <result property="status" column="status"/>
+        <result property="description" column="description"/>
+        <result property="creator" column="creator"/>
+        <result property="created" column="created"/>
+        <result property="updated" column="updated"/>
+    </resultMap>
+
+    <sql id="all_column">
+        `id`
+        ,`taskId`
+        ,`flowId`
+        ,`goodsName`
+        ,`goodsType`
+        ,`totalWeight`
+        ,`direction`
+        ,`sender`
+        ,`receiver`
+        ,`loadingDate`
+        ,`dischargeDate`
+        ,`startPortId`
+        ,`endPortId`
+        ,`loadType`
+        ,`bigShipPC`
+        ,`totalLoad`
+        ,`arriveLocation`
+        ,`bigShipArriveTime`
+        ,`bigShipDepartTime`
+        ,`selfPick`
+        ,`sailingArea`
+        ,`shipSuggestUnitPrice`
+        ,`sailingFlag`
+        ,`status`
+        ,`description`
+        ,`creator`
+        ,`created`
+        ,`updated`
+    </sql>
+
+    <insert id="insertSelective" useGeneratedKeys="true" keyProperty="pojo.id">
+        INSERT INTO CustomerTaskFlow
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="pojo.taskId!=null"> `taskId`,</if>
+            <if test="pojo.flowId!=null"> `flowId`,</if>
+            <if test="pojo.goodsName!=null"> `goodsName`,</if>
+            <if test="pojo.goodsType!=null"> `goodsType`,</if>
+            <if test="pojo.totalWeight!=null"> `totalWeight`,</if>
+            <if test="pojo.direction!=null"> `direction`,</if>
+            <if test="pojo.sender!=null"> `sender`,</if>
+            <if test="pojo.receiver!=null"> `receiver`,</if>
+            <if test="pojo.loadingDate!=null"> `loadingDate`,</if>
+            <if test="pojo.dischargeDate!=null"> `dischargeDate`,</if>
+            <if test="pojo.startPortId!=null"> `startPortId`,</if>
+            <if test="pojo.endPortId!=null"> `endPortId`,</if>
+            <if test="pojo.loadType!=null"> `loadType`,</if>
+            <if test="pojo.bigShipPC!=null"> `bigShipPC`,</if>
+            <if test="pojo.totalLoad!=null"> `totalLoad`,</if>
+            <if test="pojo.arriveLocation!=null"> `arriveLocation`,</if>
+            <if test="pojo.bigShipArriveTime!=null"> `bigShipArriveTime`,</if>
+            <if test="pojo.bigShipDepartTime!=null"> `bigShipDepartTime`,</if>
+            <if test="pojo.selfPick!=null"> `selfPick`,</if>
+            <if test="pojo.sailingArea!=null"> `sailingArea`,</if>
+            <if test="pojo.shipSuggestUnitPrice!=null"> `shipSuggestUnitPrice`,</if>
+            <if test="pojo.sailingFlag!=null"> `sailingFlag`,</if>
+            <if test="pojo.status!=null"> `status`,</if>
+            <if test="pojo.description!=null"> `description`,</if>
+            `created`,
+            `updated`
+        </trim>
+        VALUES
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="pojo.taskId!=null">#{pojo.taskId},</if>
+            <if test="pojo.flowId!=null">#{pojo.flowId},</if>
+            <if test="pojo.goodsName!=null">#{pojo.goodsName},</if>
+            <if test="pojo.goodsType!=null">#{pojo.goodsType},</if>
+            <if test="pojo.totalWeight!=null">#{pojo.totalWeight},</if>
+            <if test="pojo.direction!=null">#{pojo.direction},</if>
+            <if test="pojo.sender!=null">#{pojo.sender},</if>
+            <if test="pojo.receiver!=null">#{pojo.receiver},</if>
+            <if test="pojo.loadingDate!=null">#{pojo.loadingDate},</if>
+            <if test="pojo.dischargeDate!=null">#{pojo.dischargeDate},</if>
+            <if test="pojo.startPortId!=null">#{pojo.startPortId},</if>
+            <if test="pojo.endPortId!=null">#{pojo.endPortId},</if>
+            <if test="pojo.loadType!=null">#{pojo.loadType},</if>
+            <if test="pojo.bigShipPC!=null">#{pojo.bigShipPC},</if>
+            <if test="pojo.totalLoad!=null">#{pojo.totalLoad},</if>
+            <if test="pojo.arriveLocation!=null">#{pojo.arriveLocation},</if>
+            <if test="pojo.bigShipArriveTime!=null">#{pojo.bigShipArriveTime},</if>
+            <if test="pojo.bigShipDepartTime!=null">#{pojo.bigShipDepartTime},</if>
+            <if test="pojo.selfPick!=null">#{pojo.selfPick},</if>
+            <if test="pojo.sailingArea!=null">#{pojo.sailingArea},</if>
+            <if test="pojo.shipSuggestUnitPrice!=null">#{pojo.shipSuggestUnitPrice},</if>
+            <if test="pojo.sailingFlag!=null">#{pojo.sailingFlag},</if>
+            <if test="pojo.status!=null">#{pojo.status},</if>
+            <if test="pojo.description!=null">#{pojo.description},</if>
+            UNIX_TIMESTAMP(now()),
+            UNIX_TIMESTAMP(now())
+        </trim>
+    </insert>
+
+    <!--auto generated Code-->
+    <update id="update">
+        UPDATE CustomerTaskFlow
+        <set>
+            <if test="pojo.taskId!=null">`taskId` = #{pojo.taskId},</if>
+            <if test="pojo.flowId!=null">`flowId` = #{pojo.flowId},</if>
+            <if test="pojo.goodsName!=null">`goodsName` = #{pojo.goodsName},</if>
+            <if test="pojo.goodsType!=null">`goodsType` = #{pojo.goodsType},</if>
+            <if test="pojo.totalWeight!=null">`totalWeight` = #{pojo.totalWeight},</if>
+            <if test="pojo.direction!=null">`direction` = #{pojo.direction},</if>
+            <if test="pojo.sender!=null">`sender` = #{pojo.sender},</if>
+            <if test="pojo.receiver!=null">`receiver` = #{pojo.receiver},</if>
+            <if test="pojo.loadingDate!=null">`loadingDate` = #{pojo.loadingDate},</if>
+            <if test="pojo.dischargeDate!=null">`dischargeDate` = #{pojo.dischargeDate},</if>
+            <if test="pojo.startPortId!=null">`startPortId` = #{pojo.startPortId},</if>
+            <if test="pojo.endPortId!=null">`endPortId` = #{pojo.endPortId},</if>
+            <if test="pojo.loadType!=null">`loadType` = #{pojo.loadType},</if>
+            <if test="pojo.bigShipPC!=null">`bigShipPC` = #{pojo.bigShipPC},</if>
+            <if test="pojo.totalLoad!=null">`totalLoad` = #{pojo.totalLoad},</if>
+            <if test="pojo.arriveLocation!=null">`arriveLocation` = #{pojo.arriveLocation},</if>
+            <if test="pojo.bigShipArriveTime!=null">`bigShipArriveTime` = #{pojo.bigShipArriveTime},</if>
+            <if test="pojo.bigShipDepartTime!=null">`bigShipDepartTime` = #{pojo.bigShipDepartTime},</if>
+            <if test="pojo.selfPick!=null">`selfPick` = #{pojo.selfPick},</if>
+            <if test="pojo.sailingArea!=null">`sailingArea` = #{pojo.sailingArea},</if>
+            <if test="pojo.shipSuggestUnitPrice!=null">`shipSuggestUnitPrice` = #{pojo.shipSuggestUnitPrice},</if>
+            <if test="pojo.sailingFlag!=null">`sailingFlag` = #{pojo.sailingFlag},</if>
+            <if test="pojo.status!=null">`status` = #{pojo.status},</if>
+            <if test="pojo.description!=null">`description` = #{pojo.description},</if>
+            `updated` = UNIX_TIMESTAMP(now())
+        </set>
+        WHERE `id` = #{pojo.id} and `isDeleted` = 0
+        LIMIT 1
+    </update>
+
+    <update id="del" parameterType="java.lang.Long">
+        UPDATE CustomerTaskFlow
+        SET `isDeleted` = 1 ,
+        `updated` = UNIX_TIMESTAMP(now())
+        WHERE `id` = #{id} and `isDeleted` = 0
+        LIMIT 1
+    </update>
+
+    <select id="getById" parameterType="java.lang.Long" resultMap="AllColumnMap">
+        SELECT <include refid="all_column"/>
+        FROM `CustomerTaskFlow`
+        WHERE `id` = #{id} and `isDeleted` = 0
+        LIMIT 1
+    </select>
+
+    <select id="getExistCount" resultType="java.lang.Integer" parameterType="Map" >
+        SELECT  count(id)
+        FROM  `CustomerTaskFlow`
+        where `isDeleted` = 0
+        <if test="pojo.id != null"> AND `id` != #{pojo.id} </if>
+        <if test="pojo.flowId != null"> AND `flowId` = #{pojo.flowId} </if>
+        <if test="pojo.goodsType != null"> AND `goodsType` = #{pojo.goodsType} </if>
+        <if test="pojo.goodsName != null"> AND `goodsName` = #{pojo.goodsName} </if>
+        limit 1
+    </select>
+
+    <select id="getCount" resultType="java.lang.Integer" parameterType="Map" >
+        SELECT  count(id)
+        FROM  `CustomerTaskFlow`
+        <include refid="pageQueryWhereCommon"/>
+        limit 1
+    </select>
+
+    <select id="queryByPage" resultMap="AllColumnMap" parameterType="Map">
+        select <include refid="all_column"/>
+        from `CustomerTaskFlow`
+        <include refid="pageQueryWhereCommon"/>
+        order by `id` desc
+        <include refid="pageCommon"/>
+    </select>
+
+    <sql id="pageQueryWhereCommon">
+        where `isDeleted` = 0
+        <if test="pojo.id != null"> AND `id` = #{pojo.id} </if>
+        <if test="pojo.key != null">
+            AND (`taskId` like concat('%', #{pojo.key}, '%'))
+        </if>
+    </sql>
+
+    <sql id="pageCommon">
+        <choose>
+            <when test="pojo.startRow != null and pojo.startRow gt -1 and pojo.limitNum != null and pojo.limitNum gt 0">
+                limit #{pojo.startRow}, #{pojo.limitNum}
+            </when>
+            <otherwise>
+                limit 100
+            </otherwise>
+        </choose>
+    </sql>
+</mapper>

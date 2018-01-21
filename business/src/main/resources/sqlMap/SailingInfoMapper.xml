@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!--  Generate by autoSQLMap Powered by duxing@Taobao -->
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.xingyi.logistic.business.db.dao.SailingInfoDAO">
+    <resultMap id="AllColumnMap" type="com.xingyi.logistic.business.db.entity.SailingInfoDO">
+        <result property="id" column="id"/>
+        <result property="shipId" column="shipId"/>
+        <result property="orderId" column="orderId"/>
+        <result property="`status" column="`status"/>
+        <result property="arriveSPortTime" column="arriveSPortTime"/>
+        <result property="loadTime" column="loadTime"/>
+        <result property="loadWeight" column="loadWeight"/>
+        <result property="preArriveEPortTime" column="preArriveEPortTime"/>
+        <result property="actualArriveEPortTime" column="actualArriveEPortTime"/>
+        <result property="dischargeTime" column="dischargeTime"/>
+        <result property="dischargeWeight" column="dischargeWeight"/>
+        <result property="dischargeDelayFee" column="dischargeDelayFee"/>
+        <result property="allowance" column="allowance"/>
+        <result property="departPortTime" column="departPortTime"/>
+        <result property="description" column="description"/>
+        <result property="creator" column="creator"/>
+        <result property="created" column="created"/>
+        <result property="updated" column="updated"/>
+    </resultMap>
+
+    <sql id="all_column">
+        `id`
+        ,`shipId`
+        ,`orderId`
+        ,`status`
+        ,`arriveSPortTime`
+        ,`loadTime`
+        ,`loadWeight`
+        ,`preArriveEPortTime`
+        ,`actualArriveEPortTime`
+        ,`dischargeTime`
+        ,`dischargeWeight`
+        ,`dischargeDelayFee`
+        ,`allowance`
+        ,`departPortTime`
+        ,`description`
+        ,`creator`
+        ,`created`
+        ,`updated`
+    </sql>
+
+    <insert id="insertSelective" useGeneratedKeys="true" keyProperty="pojo.id">
+        INSERT INTO SailingInfo
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="pojo.shipId!=null"> `shipId`,</if>
+            <if test="pojo.orderId!=null"> `orderId`,</if>
+            <if test="pojo.status!=null"> `status`,</if>
+            <if test="pojo.arriveSPortTime!=null"> `arriveSPortTime`,</if>
+            <if test="pojo.loadTime!=null"> `loadTime`,</if>
+            <if test="pojo.loadWeight!=null"> `loadWeight`,</if>
+            <if test="pojo.preArriveEPortTime!=null"> `preArriveEPortTime`,</if>
+            <if test="pojo.actualArriveEPortTime!=null"> `actualArriveEPortTime`,</if>
+            <if test="pojo.dischargeTime!=null"> `dischargeTime`,</if>
+            <if test="pojo.dischargeWeight!=null"> `dischargeWeight`,</if>
+            <if test="pojo.dischargeDelayFee!=null"> `dischargeDelayFee`,</if>
+            <if test="pojo.allowance!=null"> `allowance`,</if>
+            <if test="pojo.departPortTime!=null"> `departPortTime`,</if>
+            <if test="pojo.description!=null"> `description`,</if>
+            `created`,
+            `updated`
+        </trim>
+        VALUES
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="pojo.shipId!=null">#{pojo.shipId},</if>
+            <if test="pojo.orderId!=null">#{pojo.orderId},</if>
+            <if test="pojo.status!=null">#{pojo.status},</if>
+            <if test="pojo.arriveSPortTime!=null">#{pojo.arriveSPortTime},</if>
+            <if test="pojo.loadTime!=null">#{pojo.loadTime},</if>
+            <if test="pojo.loadWeight!=null">#{pojo.loadWeight},</if>
+            <if test="pojo.preArriveEPortTime!=null">#{pojo.preArriveEPortTime},</if>
+            <if test="pojo.actualArriveEPortTime!=null">#{pojo.actualArriveEPortTime},</if>
+            <if test="pojo.dischargeTime!=null">#{pojo.dischargeTime},</if>
+            <if test="pojo.dischargeWeight!=null">#{pojo.dischargeWeight},</if>
+            <if test="pojo.dischargeDelayFee!=null">#{pojo.dischargeDelayFee},</if>
+            <if test="pojo.allowance!=null">#{pojo.allowance},</if>
+            <if test="pojo.departPortTime!=null">#{pojo.departPortTime},</if>
+            <if test="pojo.description!=null">#{pojo.description},</if>
+            UNIX_TIMESTAMP(now()),
+            UNIX_TIMESTAMP(now())
+        </trim>
+    </insert>
+
+    <!--auto generated Code-->
+    <update id="update">
+        UPDATE SailingInfo
+        <set>
+            <if test="pojo.shipId!=null">`shipId` =#{pojo.shipId},</if>
+            <if test="pojo.orderId!=null">`orderId` =#{pojo.orderId},</if>
+            <if test="pojo.status!=null">`status` =#{pojo.status},</if>
+            <if test="pojo.arriveSPortTime!=null">`arriveSPortTime` =#{pojo.arriveSPortTime},</if>
+            <if test="pojo.loadTime!=null">`loadTime` =#{pojo.loadTime},</if>
+            <if test="pojo.loadWeight!=null">`loadWeight` =#{pojo.loadWeight},</if>
+            <if test="pojo.preArriveEPortTime!=null">`preArriveEPortTime` =#{pojo.preArriveEPortTime},</if>
+            <if test="pojo.actualArriveEPortTime!=null">`actualArriveEPortTime` =#{pojo.actualArriveEPortTime},</if>
+            <if test="pojo.dischargeTime!=null">`dischargeTime` =#{pojo.dischargeTime},</if>
+            <if test="pojo.dischargeWeight!=null">`dischargeWeight` =#{pojo.dischargeWeight},</if>
+            <if test="pojo.dischargeDelayFee!=null">`dischargeDelayFee` =#{pojo.dischargeDelayFee},</if>
+            <if test="pojo.allowance!=null">`allowance` =#{pojo.allowance},</if>
+            <if test="pojo.departPortTime!=null">`departPortTime` =#{pojo.departPortTime},</if>
+            <if test="pojo.description!=null">`description` = #{pojo.description},</if>
+            `updated` = UNIX_TIMESTAMP(now())
+        </set>
+        WHERE `id` = #{pojo.id} and `isDeleted` = 0
+        LIMIT 1
+    </update>
+
+    <update id="del" parameterType="java.lang.Long">
+        UPDATE SailingInfo
+        SET `isDeleted` = 1 ,
+        `updated` = UNIX_TIMESTAMP(now())
+        WHERE `id` = #{id} and `isDeleted` = 0
+        LIMIT 1
+    </update>
+
+    <select id="getById" parameterType="java.lang.Long" resultMap="AllColumnMap">
+        SELECT <include refid="all_column"/>
+        FROM `SailingInfo`
+        WHERE `id` = #{id} and `isDeleted` = 0
+        LIMIT 1
+    </select>
+
+    <select id="getExistCount" resultType="java.lang.Integer" parameterType="Map" >
+        SELECT  count(id)
+        FROM  `SailingInfo`
+        where `isDeleted` = 0
+        <if test="pojo.id != null"> AND `id` != #{pojo.id} </if>
+        <if test="pojo.shipId != null"> AND `shipId` = #{pojo.shipId} </if>
+        <if test="pojo.orderId != null"> AND `orderId` = #{pojo.orderId} </if>
+        limit 1
+    </select>
+
+    <select id="getCount" resultType="java.lang.Integer" parameterType="Map" >
+        SELECT  count(id)
+        FROM  `SailingInfo`
+        <include refid="pageQueryWhereCommon"/>
+        limit 1
+    </select>
+
+    <select id="queryByPage" resultMap="AllColumnMap" parameterType="Map">
+        select <include refid="all_column"/>
+        from `SailingInfo`
+        <include refid="pageQueryWhereCommon"/>
+        order by `id` desc
+        <include refid="pageCommon"/>
+    </select>
+
+    <sql id="pageQueryWhereCommon">
+        where `isDeleted` = 0
+        <if test="pojo.id != null"> AND `id` = #{pojo.id} </if>
+        <if test="pojo.key != null">
+            AND (`shipId` like concat('%', #{pojo.key}, '%') or `orderId` like concat('%', #{pojo.key}, '%'))
+        </if>
+    </sql>
+
+    <sql id="pageCommon">
+        <choose>
+            <when test="pojo.startRow != null and pojo.startRow gt -1 and pojo.limitNum != null and pojo.limitNum gt 0">
+                limit #{pojo.startRow}, #{pojo.limitNum}
+            </when>
+            <otherwise>
+                limit 100
+            </otherwise>
+        </choose>
+    </sql>
+</mapper>

@@ -83,7 +83,7 @@ public class JdbcDao {
 	
 	public static void main(String args[]) {
 //		System.out.println(changeCol("c_qwe_qwe"));
-		getColum("select * from Contract");
+		getColum("select * from CustomerTaskFlow");
 	}
 
 	public static String replaceString(String ostr){
