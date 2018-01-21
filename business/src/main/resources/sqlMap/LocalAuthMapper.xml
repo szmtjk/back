@@ -51,6 +51,7 @@
             <if test="pojo.loginName!=null">#{pojo.loginName},</if>
             <if test="pojo.passwd!=null">#{pojo.passwd},</if>
             <if test="pojo.salt!=null">#{pojo.salt},</if>
+            <if test="pojo.creator!=null"> `creator`,</if>
             <if test="pojo.creatorName!=null">#{pojo.creatorName},</if>
             UNIX_TIMESTAMP(now()),
             UNIX_TIMESTAMP(now()),

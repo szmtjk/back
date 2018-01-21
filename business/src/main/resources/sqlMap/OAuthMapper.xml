@@ -55,6 +55,7 @@
             <if test="pojo.oauthId!=null">#{pojo.oauthId},</if>
             <if test="pojo.accessToken!=null">#{pojo.accessToken},</if>
             <if test="pojo.oauthExpires!=null">#{pojo.oauthExpires},</if>
+            <if test="pojo.creator!=null"> `creator`,</if>
             <if test="pojo.creatorName!=null">#{pojo.creatorName},</if>
             UNIX_TIMESTAMP(now()),
             UNIX_TIMESTAMP(now()),
