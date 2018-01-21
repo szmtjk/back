@@ -7,6 +7,8 @@ import com.xingyi.logistic.business.bean.BaseDBQueryPage;
  */
 public class ContractFlowDBQuery extends BaseDBQueryPage {
 
+    private Integer contractId;
+
     private String key;
 
     public String getKey() {
@@ -15,5 +17,13 @@ public class ContractFlowDBQuery extends BaseDBQueryPage {
 
     public void setKey(String key) {
         this.key = key;
+    }
+
+    public Integer getContractId() {
+        return contractId;
+    }
+
+    public void setContractId(Integer contractId) {
+        this.contractId = contractId;
     }
 }

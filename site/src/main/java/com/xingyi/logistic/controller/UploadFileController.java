@@ -47,14 +47,14 @@ public class UploadFileController extends BaseController{
             file.mkdirs();
         }
         // 程序 写出 上传服务器!
-        FileOutputStream fileOutputStream = new FileOutputStream(realPath + "\\" + newFileName);
+        FileOutputStream fileOutputStream = new FileOutputStream(realPath + "/" + newFileName);
         // 复制多功能文件(图片)以及关闭流
         IOUtils.copy(inputStream, fileOutputStream);
 
         inputStream.close();
         fileOutputStream.close();
         Map<String, Object> params = new HashMap<>();
-        params.put("newFileName", newFileName);
+        params.put("filePath","http://xingyi.nandasoft-its.com:8080/xyl/upload/"+newFileName);
         return JsonRet.getSuccessRet(params);
     }
 
@@ -82,7 +82,7 @@ public class UploadFileController extends BaseController{
         // 从服务器上下载图片,要找到图片在服务器中的真实位置
         String realPath = request.getRealPath(this.baseDir);
         // 从服务器上读入程序中
-        InputStream fileInputStream = new FileInputStream(realPath + "\\" + fileName);
+        InputStream fileInputStream = new FileInputStream(realPath + "/" + fileName);
         // 从程序中写出下载到客户端
         OutputStream outputStream = response.getOutputStream();
         // copy以及关闭流资源

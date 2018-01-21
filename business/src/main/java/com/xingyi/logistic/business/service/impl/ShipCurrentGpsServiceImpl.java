@@ -52,6 +52,26 @@ public class ShipCurrentGpsServiceImpl extends BaseCRUDService<ShipCurrentGpsDO,
         return doList.stream().map(getModelConverter()::toModel).collect(Collectors.toList());
     }
 
+    /**
+     * 加载所有设备
+     * @return
+     */
+    public List<Combox> queryComboxShipInfo()
+    {
+        return shipCurrentGpsDAO.queryComboxShipInfo();
+    }
+
+
+    /**
+     * 加载客户
+     * @return
+     */
+    public List<Combox> queryComboxCustomerInfo()
+    {
+        return shipCurrentGpsDAO.queryComboxCustomerInfo();
+    }
+
+
     public List<ShipDev> getShipDev()
     {
         return shipCurrentGpsDAO.getShipDev();

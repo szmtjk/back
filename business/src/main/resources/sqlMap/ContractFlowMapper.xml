@@ -106,6 +106,7 @@
     <sql id="pageQueryWhereCommon">
         where `isDeleted` = 0
         <if test="pojo.id != null"> AND `id` = #{pojo.id} </if>
+        <if test="pojo.contractId != null"> AND `contractId` = #{pojo.contractId} </if>
         <!--<if test="pojo.key != null">
             AND (`partyA` like concat('%', #{pojo.key}, '%') or `partyB` like concat('%', #{pojo.key}, '%')  or `name` like concat('%', #{pojo.key}, '%')  or `contractNo` like concat('%', #{pojo.key}, '%')  )
         </if>-->

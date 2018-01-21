@@ -35,9 +35,8 @@ public class BaseWaterLevel extends BaseModelAndDO{
     private String description;
 
     /**
-     *
+     * 是否已删除
      */
-    @NotNull
     private Integer isDeleted;
 
     public String getName() {

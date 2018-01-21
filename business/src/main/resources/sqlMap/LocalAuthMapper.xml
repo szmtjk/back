@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!--  Generate by autoSQLMap Powered by duxing@Taobao -->
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.xingyi.logistic.authentication.db.dao.LocalAuthDAO">
+    <resultMap id="AllColumnMap" type="com.xingyi.logistic.authentication.db.entity.LocalAuthDO">
+        <result property="id" column="id"/>
+        <result property="userId" column="userId"/>
+        <result property="loginName" column="loginName"/>
+        <result property="passwd" column="passwd"/>
+        <result property="salt" column="salt"/>
+        <result property="isDeleted" column="isDeleted"/>
+    </resultMap>
+
+    <sql id="all_column">
+        `id`
+        ,`userId`
+        ,`loginName`
+        ,`passwd`
+        ,`salt`
+        ,`isDeleted`
+    </sql>
+
+    <insert id="insertSelective" useGeneratedKeys="true" keyProperty="pojo.id">
+        INSERT INTO LocalAuth
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="pojo.userId!=null"> `userId`,</if>
+            <if test="pojo.loginName!=null"> `loginName`,</if>
+            <if test="pojo.passwd!=null"> `passwd`,</if>
+            <if test="pojo.salt!=null"> `salt`,</if>
+            `isDeleted`
+        </trim>
+        VALUES
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="pojo.userId!=null">#{pojo.userId},</if>
+            <if test="pojo.loginName!=null">#{pojo.loginName},</if>
+            <if test="pojo.passwd!=null">#{pojo.passwd},</if>
+            <if test="pojo.salt!=null">#{pojo.salt},</if>
+            0
+        </trim>
+    </insert>
+
+    <update id="update">
+        UPDATE LocalAuth
+        <set>
+            <if test="pojo.userId!=null">`userId` = #{pojo.userId},</if>
+            <if test="pojo.loginName!=null">`loginName` = #{pojo.loginName},</if>
+            <if test="pojo.passwd!=null">`passwd` = #{pojo.passwd},</if>
+            <if test="pojo.salt!=null">`salt` = #{pojo.salt},</if>
+            <if test="pojo.isDeleted!=null">`isDeleted` = #{pojo.isDeleted},</if>
+        </set>
+        WHERE `id` = #{pojo.id}
+    </update>
+
+    <update id="del" parameterType="java.lang.Long">
+        UPDATE LocalAuth
+        SET `isDeleted` = 1
+        WHERE `id` = #{id}
+    </update>
+
+    <select id="getById" parameterType="java.lang.Long" resultMap="AllColumnMap">
+        SELECT <include refid="all_column"/>
+        FROM `LocalAuth`
+        WHERE `id` = #{id}
+    </select>
+
+    <select id="getExistCount" resultType="java.lang.Integer" parameterType="Map" >
+        SELECT  count(id)
+        FROM  `LocalAuth`
+        where `isDeleted` = 0
+        <if test="pojo.id != null"> AND `id` != #{pojo.id} </if>
+        <if test="pojo.loginName != null"> AND `loginName` = #{pojo.loginName} </if>
+        limit 1
+    </select>
+
+    <select id="getCount" resultType="java.lang.Integer" parameterType="Map" >
+        SELECT  count(id)
+        FROM  `LocalAuth`
+        <include refid="pageQueryWhereCommon"/>
+        limit 1
+    </select>
+
+    <select id="queryByPage" resultMap="AllColumnMap" parameterType="Map">
+        select <include refid="all_column"/>
+        from `LocalAuth`
+        <include refid="pageQueryWhereCommon"/>
+        order by `id` desc
+        <include refid="pageCommon"/>
+    </select>
+
+    <sql id="pageQueryWhereCommon">
+        where `isDeleted` = 0
+        <if test="pojo.id != null"> AND `id` = #{pojo.id} </if>
+        <if test="pojo.key != null">
+            AND (`loginName` like concat('%', #{pojo.key}, '%'))
+        </if>
+    </sql>
+
+    <sql id="pageCommon">
+        <choose>
+            <when test="pojo.startRow != null and pojo.startRow gt -1 and pojo.limitNum != null and pojo.limitNum gt 0">
+                limit #{pojo.startRow}, #{pojo.limitNum}
+            </when>
+            <otherwise>
+                limit 100
+            </otherwise>
+        </choose>
+    </sql>
+
+</mapper>

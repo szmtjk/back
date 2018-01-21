@@ -35,7 +35,8 @@
             <if test="pojo.description!=null"> `description`,</if>
             <if test="pojo.creator!=null"> `creator`,</if>
             `created`,
-            `updated`
+            `updated`,
+            `isDeleted`
         </trim>
         VALUES
         <trim prefix="(" suffix=")" suffixOverrides=",">
@@ -45,7 +46,8 @@
             <if test="pojo.description!=null">#{pojo.description},</if>
             <if test="pojo.creator!=null">#{pojo.creator},</if>
             UNIX_TIMESTAMP(now()),
-            UNIX_TIMESTAMP(now())
+            UNIX_TIMESTAMP(now()),
+            0
         </trim>
     </insert>
 

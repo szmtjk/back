@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!--  Generate by autoSQLMap Powered by duxing@Taobao -->
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.xingyi.logistic.business.db.dao.TempDispatchShipDAO">
+    <resultMap id="AllColumnMap" type="com.xingyi.logistic.business.db.entity.TempDispatchShipDO">
+        <result property="id" column="id"/>
+        <result property="shipNo" column="shipNo"/>
+        <result property="name" column="name"/>
+        <result property="mobile" column="mobile"/>
+        <result property="preLoad" column="preLoad"/>
+        <result property="identity" column="identity"/>
+        <result property="bankCardNo" column="bankCardNo"/>
+        <result property="bankName" column="bankName"/>
+        <result property="idPhoto" column="idPhoto"/>
+        <result property="bankCardPhoto" column="bankCardPhoto"/>
+        <result property="shipPhoto" column="shipPhoto"/>
+        <result property="from" column="from"/>
+        <result property="status" column="status"/>
+        <result property="description" column="description"/>
+        <result property="creator" column="creator"/>
+        <result property="created" column="created"/>
+        <result property="updated" column="updated"/>
+    </resultMap>
+
+    <sql id="all_column">
+        `id`
+        ,`shipNo`
+        ,`name`
+        ,`mobile`
+        ,`preLoad`
+        ,`identity`
+        ,`bankCardNo`
+        ,`bankName`
+        ,`idPhoto`
+        ,`bankCardPhoto`
+        ,`shipPhoto`
+        ,`from`
+        ,`status`
+        ,`description`
+        ,`creator`
+        ,`created`
+        ,`updated`
+    </sql>
+
+    <insert id="insertSelective" useGeneratedKeys="true" keyProperty="pojo.id">
+        INSERT INTO TempDispatchShip
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="pojo.shipNo!=null"> `shipNo`,</if>
+            <if test="pojo.name!=null"> `name`,</if>
+            <if test="pojo.mobile!=null"> `mobile`,</if>
+            <if test="pojo.preLoad!=null"> `preLoad`,</if>
+            <if test="pojo.identity!=null"> `identity`,</if>
+            <if test="pojo.bankCardNo!=null"> `bankCardNo`,</if>
+            <if test="pojo.bankName!=null"> `bankName`,</if>
+            <if test="pojo.idPhoto!=null"> `idPhoto`,</if>
+            <if test="pojo.bankCardPhoto!=null"> `bankCardPhoto`,</if>
+            <if test="pojo.shipPhoto!=null"> `shipPhoto`,</if>
+            <if test="pojo.from!=null"> `from`,</if>
+            <if test="pojo.status!=null"> `status`,</if>
+            <if test="pojo.description!=null"> `description`,</if>
+            `created`,
+            `updated`
+        </trim>
+        VALUES
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="pojo.shipNo!=null">#{pojo.shipNo},</if>
+            <if test="pojo.name!=null">#{pojo.name},</if>
+            <if test="pojo.mobile!=null">#{pojo.mobile},</if>
+            <if test="pojo.preLoad!=null">#{pojo.preLoad},</if>
+            <if test="pojo.identity!=null">#{pojo.identity},</if>
+            <if test="pojo.bankCardNo!=null">#{pojo.bankCardNo},</if>
+            <if test="pojo.bankName!=null">#{pojo.bankName},</if>
+            <if test="pojo.idPhoto!=null">#{pojo.idPhoto},</if>
+            <if test="pojo.bankCardPhoto!=null">#{pojo.bankCardPhoto},</if>
+            <if test="pojo.shipPhoto!=null">#{pojo.shipPhoto},</if>
+            <if test="pojo.from!=null">#{pojo.from},</if>
+            <if test="pojo.status!=null">#{pojo.status},</if>
+            <if test="pojo.description!=null">#{pojo.description},</if>
+            UNIX_TIMESTAMP(now()),
+            UNIX_TIMESTAMP(now())
+        </trim>
+    </insert>
+
+    <!--auto generated Code-->
+    <update id="update">
+        UPDATE TempDispatchShip
+        <set>
+            <if test="pojo.shipNo!=null"> `shipNo` = #{pojo.shipNo},</if>
+            <if test="pojo.name!=null"> `name`= #{pojo.name},</if>
+            <if test="pojo.mobile!=null"> `mobile`= #{pojo.mobile},</if>
+            <if test="pojo.preLoad!=null"> `preLoad`= #{pojo.preLoad},</if>
+            <if test="pojo.identity!=null"> `identity`= #{pojo.identity},</if>
+            <if test="pojo.bankCardNo!=null"> `bankCardNo`= #{pojo.bankCardNo},</if>
+            <if test="pojo.bankName!=null"> `bankName`= #{pojo.bankName},</if>
+            <if test="pojo.idPhoto!=null"> `idPhoto`= #{pojo.idPhoto},</if>
+            <if test="pojo.bankCardPhoto!=null"> `bankCardPhoto`= #{pojo.bankCardPhoto},</if>
+            <if test="pojo.shipPhoto!=null"> `shipPhoto`= #{pojo.shipPhoto},</if>
+            <if test="pojo.from!=null"> `from`= #{pojo.from},</if>
+            <if test="pojo.status!=null"> `status`= #{pojo.status},</if>
+            <if test="pojo.description!=null"> `description`= #{pojo.description},</if>
+            `updated` = UNIX_TIMESTAMP(now())
+        </set>
+        WHERE `id` = #{pojo.id} and `isDeleted` = 0
+        LIMIT 1
+    </update>
+
+    <update id="del" parameterType="java.lang.Long">
+        UPDATE TempDispatchShip
+        SET `isDeleted` = 1 ,
+        `updated` = UNIX_TIMESTAMP(now())
+        WHERE `id` = #{id} and `isDeleted` = 0
+        LIMIT 1
+    </update>
+
+    <select id="getById" parameterType="java.lang.Long" resultMap="AllColumnMap">
+        SELECT <include refid="all_column"/>
+        FROM `TempDispatchShip`
+        WHERE `id` = #{id} and `isDeleted` = 0
+        LIMIT 1
+    </select>
+
+    <select id="getExistCount" resultType="java.lang.Integer" parameterType="Map" >
+        SELECT  count(id)
+        FROM  `TempDispatchShip`
+        where `isDeleted` = 0
+        <if test="pojo.id != null"> AND `id` != #{pojo.id} </if>
+        <if test="pojo.name != null"> AND `shipNo` = #{pojo.name} </if>
+        limit 1
+    </select>
+
+    <select id="getCount" resultType="java.lang.Integer" parameterType="Map" >
+        SELECT  count(id)
+        FROM  `TempDispatchShip`
+        <include refid="pageQueryWhereCommon"/>
+        limit 1
+    </select>
+
+    <select id="queryByPage" resultMap="AllColumnMap" parameterType="Map">
+        select <include refid="all_column"/>
+        from `TempDispatchShip`
+        <include refid="pageQueryWhereCommon"/>
+        order by `id` desc
+        <include refid="pageCommon"/>
+    </select>
+
+    <sql id="pageQueryWhereCommon">
+        where `isDeleted` = 0
+        <if test="pojo.id != null"> AND `id` = #{pojo.id} </if>
+        <if test="pojo.key != null">
+            AND (`name` like concat('%', #{pojo.key}, '%') )
+        </if>
+    </sql>
+
+    <sql id="pageCommon">
+        <choose>
+            <when test="pojo.startRow != null and pojo.startRow gt -1 and pojo.limitNum != null and pojo.limitNum gt 0">
+                limit #{pojo.startRow}, #{pojo.limitNum}
+            </when>
+            <otherwise>
+                limit 100
+            </otherwise>
+        </choose>
+    </sql>
+</mapper>

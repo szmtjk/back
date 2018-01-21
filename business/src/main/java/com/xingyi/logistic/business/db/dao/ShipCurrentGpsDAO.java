@@ -18,6 +18,17 @@ public interface ShipCurrentGpsDAO extends BaseDAO<ShipCurrentGpsDO, ShipCurrent
     List<ShipDev> getShipDev();
 
     /**
+     * 加载所有设备
+     * @return
+     */
+    public List<Combox> queryComboxShipInfo();
+    /**
+     * 加载客户
+     * @return
+     */
+    public List<Combox> queryComboxCustomerInfo();
+
+    /**
      * 加载所有港口
      * @return
      */

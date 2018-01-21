@@ -59,6 +59,11 @@
         <result property="maxSpeed" column="maxSpeed"/>
     </resultMap>
 
+    <resultMap id="mRetComboxMap" type="com.xingyi.logistic.business.model.Combox">
+        <result property="id" column="id"/>
+        <result property="name" column="name"/>
+    </resultMap>
+
     <sql id="all_column">
         `id`
         ,`shipNo`
@@ -206,4 +211,15 @@
             <if test="pojo.shipNo != null"> or devId like concat('%', #{pojo.devId}, '%') </if>
         </where>
     </select>
+
+    <select id="queryComboxShipInfo" resultMap="mRetComboxMap" parameterType="Map">
+        select shipNo AS ID, gpsDeviceId AS NAME
+        from `Ship`
+    </select>
+
+    <select id="queryComboxCustomerInfo" resultMap="mRetComboxMap" parameterType="Map">
+        select id AS ID, fullName AS NAME
+        from `Customer`
+    </select>
+
 </mapper>
