@@ -6,6 +6,7 @@ import com.xingyi.logistic.authentication.authenticator.AuthenticateChain;
 import com.xingyi.logistic.authentication.authenticator.impl.LocalAuthenticator;
 import com.xingyi.logistic.authentication.authenticator.impl.OAuthAuthenticator;
 import com.xingyi.logistic.common.bean.JsonRet;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.core.annotation.Order;
 
 import javax.servlet.*;
@@ -39,7 +40,10 @@ public class AuthenticationFilter implements Filter {
 
 		if(!requestPath.startsWith("/signin") && !requestPath.startsWith("/signout") ){
 			//认证
-			String token = httpRequest.getParameter("token");
+			String token = httpRequest.getHeader("token");
+			if(StringUtils.isBlank(token)){
+				token = httpRequest.getParameter("token");
+			}
 
 			AuthenticateChain authenticateChain = new AuthenticateChain();
 			authenticateChain.addAuthenticator(new LocalAuthenticator())
