@@ -9,7 +9,7 @@ import com.xingyi.logistic.authentication.service.LocalAuthService;
 import com.xingyi.logistic.authentication.service.UserProfileService;
 import com.xingyi.logistic.authentication.util.ApplicationContextUtil;
 import com.xingyi.logistic.authentication.util.SessionUtil;
-import com.xingyi.logistic.authentication.util.TokenUtil;
+import com.xingyi.logistic.authentication.util.DigestUtil;
 import com.xingyi.logistic.common.bean.ErrCode;
 import com.xingyi.logistic.common.bean.JsonRet;
 import org.apache.commons.lang3.StringUtils;
@@ -46,7 +46,7 @@ public class LocalAuthenticator implements Authenticator {
 		LocalAuth localAuth = localAuthJsonRet.getData();
 		String loginName = localAuth.getLoginName();
 		String localPasswd = localAuth.getPasswd();
-		String realMd5 = TokenUtil.build(String.valueOf(userId),loginName,localPasswd,String.valueOf(expire));
+		String realMd5 = DigestUtil.md5(String.valueOf(userId),loginName,localPasswd,String.valueOf(expire));
 
 		if(!StringUtils.equals(md5,realMd5)){
 			return jsonRet;

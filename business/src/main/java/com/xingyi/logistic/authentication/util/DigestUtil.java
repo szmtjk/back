@@ -9,12 +9,12 @@ import java.util.Arrays;
  * @author tsingtao_tung
  * Created At: 2018/1/21 下午9:40.
  */
-public final class TokenUtil {
-	private TokenUtil(){
+public final class DigestUtil {
+	private DigestUtil(){
 
 	}
 
-	public static String build(String... src){
+	public static String md5(String... src){
 		if(ArrayUtils.isEmpty(src)){
 			return null;
 		}

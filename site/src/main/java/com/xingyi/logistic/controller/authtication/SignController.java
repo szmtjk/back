@@ -6,7 +6,7 @@ import com.xingyi.logistic.authentication.model.UserProfile;
 import com.xingyi.logistic.authentication.security.User;
 import com.xingyi.logistic.authentication.service.LocalAuthService;
 import com.xingyi.logistic.authentication.service.UserProfileService;
-import com.xingyi.logistic.authentication.util.TokenUtil;
+import com.xingyi.logistic.authentication.util.DigestUtil;
 import com.xingyi.logistic.common.bean.ErrCode;
 import com.xingyi.logistic.common.bean.JsonRet;
 import com.xingyi.logistic.controller.BaseController;
@@ -68,7 +68,7 @@ public class SignController extends BaseController {
 
 		//下发 Token
 		long expire = System.currentTimeMillis() + this.tokenExpire;
-		String md5 = TokenUtil.build(String.valueOf(userId),signName,localPasswd,String.valueOf(expire));
+		String md5 = DigestUtil.md5(String.valueOf(userId),signName,localPasswd,String.valueOf(expire));
 		String token = userId + ":" + md5 + ":" + expire;
 		token = Base64Utils.encodeToString(token.getBytes());
 		//MTpjM2E0MjY2Y2Y4YzVmNDk1Y2EyYTk5ODA4ZjJmY2Y1ODoxNTE5MTUyMTUyODg0 正确
