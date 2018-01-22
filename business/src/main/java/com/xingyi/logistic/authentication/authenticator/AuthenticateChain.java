@@ -28,9 +28,21 @@ public class AuthenticateChain implements Authenticator {
 			return JsonRet.getErrRet(ErrCode.AUTHTICATION_TOKEN_ERROR.getCode(),ErrCode.AUTHTICATION_TOKEN_ERROR.getMsg());
 		}
 
-		//验证 token 是否过期
 		token = new String(Base64Utils.decodeFromString(token));
-		long expire = Long.valueOf(token.split(":")[2]);
+		String[] tokenMembers = token.split(":");
+
+		String userId = tokenMembers[0];
+		if(StringUtils.isBlank(userId) || !StringUtils.isNumeric(userId)){
+			return JsonRet.getErrRet(ErrCode.AUTHTICATION_TOKEN_ERROR.getCode(),ErrCode.AUTHTICATION_TOKEN_ERROR.getMsg());
+		}
+
+		String expireStr = tokenMembers[2];
+		if(StringUtils.isBlank(expireStr) || !StringUtils.isNumeric(expireStr)){
+			return JsonRet.getErrRet(ErrCode.AUTHTICATION_TOKEN_ERROR.getCode(),ErrCode.AUTHTICATION_TOKEN_ERROR.getMsg());
+		}
+
+		long expire = Long.valueOf(expireStr);
+		//验证 token 是否过期
 		if(0 < (System.currentTimeMillis() - expire)){
 			return JsonRet.getErrRet(ErrCode.AUTHTICATION_TOKEN_EXPIRE.getCode(),ErrCode.AUTHTICATION_TOKEN_EXPIRE.getMsg());
 		}
