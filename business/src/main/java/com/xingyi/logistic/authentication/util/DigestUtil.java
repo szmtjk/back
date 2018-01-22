@@ -29,7 +29,7 @@ public final class DigestUtil {
 
 		Arrays.sort(chars);
 
-		String token = DigestUtils.md5DigestAsHex(new String(chars).getBytes());
-		return token;
+		String md5 = DigestUtils.md5DigestAsHex(new String(chars).getBytes());
+		return md5;
 	}
 }
