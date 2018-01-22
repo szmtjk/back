@@ -1,6 +1,7 @@
 package com.xingyi.logistic.authentication.util;
 
 import com.xingyi.logistic.authentication.security.SecuritySession;
+import com.xingyi.logistic.authentication.security.Subject;
 
 /**
  * @author tsingtao_tung
@@ -14,5 +15,9 @@ public final class SessionUtil {
 
 	public static SecuritySession getSession(){
 		return SecuritySession.getInstance();
+	}
+
+	public static Subject getSubject(){
+		return getSession().getSubject();
 	}
 }

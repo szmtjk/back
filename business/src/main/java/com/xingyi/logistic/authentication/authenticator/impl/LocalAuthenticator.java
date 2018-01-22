@@ -2,8 +2,13 @@ package com.xingyi.logistic.authentication.authenticator.impl;
 
 import com.xingyi.logistic.authentication.authenticator.Authenticator;
 import com.xingyi.logistic.authentication.model.LocalAuth;
+import com.xingyi.logistic.authentication.model.UserProfile;
+import com.xingyi.logistic.authentication.security.Subject;
+import com.xingyi.logistic.authentication.security.User;
 import com.xingyi.logistic.authentication.service.LocalAuthService;
+import com.xingyi.logistic.authentication.service.UserProfileService;
 import com.xingyi.logistic.authentication.util.ApplicationContextUtil;
+import com.xingyi.logistic.authentication.util.SessionUtil;
 import com.xingyi.logistic.authentication.util.TokenUtil;
 import com.xingyi.logistic.common.bean.ErrCode;
 import com.xingyi.logistic.common.bean.JsonRet;
@@ -15,9 +20,11 @@ import org.apache.commons.lang3.StringUtils;
  */
 public class LocalAuthenticator implements Authenticator {
 
+	private UserProfileService userProfileService;
 	private LocalAuthService localAuthService;
 
 	public LocalAuthenticator(){
+		this.userProfileService = (UserProfileService) ApplicationContextUtil.getBean("userProfileServiceImpl");
 		this.localAuthService = (LocalAuthService) ApplicationContextUtil.getBean("localAuthServiceImpl");
 	}
 
@@ -44,6 +51,17 @@ public class LocalAuthenticator implements Authenticator {
 		if(!StringUtils.equals(md5,realMd5)){
 			return jsonRet;
 		}
+
+		this.bindUserToSession(userId);
+
 		return JsonRet.getSuccessRet(null);
+	}
+
+	private void bindUserToSession(Long userId) {
+		JsonRet<UserProfile> profileJsonRet = this.userProfileService.getById(userId);
+		UserProfile profile = profileJsonRet.getData();
+		User user = new User(profile);
+		Subject subject = new Subject(user, true);
+		SessionUtil.getSession().setSubject(subject);
 	}
 }

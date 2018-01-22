@@ -3,11 +3,9 @@ package com.xingyi.logistic.controller.authtication;
 import com.xingyi.logistic.authentication.model.LocalAuth;
 import com.xingyi.logistic.authentication.model.LocalAuthQuery;
 import com.xingyi.logistic.authentication.model.UserProfile;
-import com.xingyi.logistic.authentication.security.Subject;
 import com.xingyi.logistic.authentication.security.User;
 import com.xingyi.logistic.authentication.service.LocalAuthService;
 import com.xingyi.logistic.authentication.service.UserProfileService;
-import com.xingyi.logistic.authentication.util.SessionUtil;
 import com.xingyi.logistic.authentication.util.TokenUtil;
 import com.xingyi.logistic.common.bean.ErrCode;
 import com.xingyi.logistic.common.bean.JsonRet;
@@ -66,11 +64,7 @@ public class SignController extends BaseController {
 		Long userId = localAuth.getUserId();
 		JsonRet<UserProfile> profileJsonRet = this.userProfileService.getById(userId);
 		UserProfile profile = profileJsonRet.getData();
-
-		//将用户信息绑定到当前线程
 		User user = new User(profile);
-		Subject subject = new Subject(user,true);
-		SessionUtil.getSession().setSubject(subject);
 
 		//下发 Token
 		long expire = System.currentTimeMillis() + this.tokenExpire;
