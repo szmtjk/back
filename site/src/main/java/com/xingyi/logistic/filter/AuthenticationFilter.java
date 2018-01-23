@@ -14,7 +14,6 @@ import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.io.PrintWriter;
 
 /**
  * @author tsingtao_tung
@@ -32,7 +31,7 @@ public class AuthenticationFilter implements Filter {
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
 		response.setCharacterEncoding("UTF-8");
 		response.setContentType("application/json; charset=utf-8");
-		PrintWriter writer = response.getWriter();
+		ServletOutputStream out = response.getOutputStream();
 
 		//跨域设置
 		HttpServletResponse httpServletResponse = (HttpServletResponse) response;
@@ -64,10 +63,10 @@ public class AuthenticationFilter implements Filter {
 			boolean isAuthenticated = jsonRet.isSuccess();
 
 			if(!isAuthenticated){
-				writer.print(JSON.toJSONString(jsonRet,SerializerFeature.WriteMapNullValue));
+				out.print(JSON.toJSONString(jsonRet,SerializerFeature.WriteMapNullValue));
 
-				writer.flush();
-				writer.close();
+				out.flush();
+				out.close();
 			}else{
 				chain.doFilter(request,response);
 			}

@@ -1,10 +1,10 @@
 package com.xingyi.logistic.controller.authtication;
 
-import com.xingyi.logistic.authentication.model.LocalAuth;
-import com.xingyi.logistic.authentication.model.LocalAuthQuery;
-import com.xingyi.logistic.authentication.model.UserProfile;
+import com.xingyi.logistic.authentication.model.*;
 import com.xingyi.logistic.authentication.security.User;
+import com.xingyi.logistic.authentication.service.ActionResourcesService;
 import com.xingyi.logistic.authentication.service.LocalAuthService;
+import com.xingyi.logistic.authentication.service.RolesService;
 import com.xingyi.logistic.authentication.service.UserProfileService;
 import com.xingyi.logistic.authentication.util.DigestUtil;
 import com.xingyi.logistic.common.bean.ErrCode;
@@ -33,6 +33,10 @@ public class SignController extends BaseController {
 	private LocalAuthService localAuthService;
 	@Autowired
 	private UserProfileService userProfileService;
+	@Autowired
+	private RolesService rolesService;
+	@Autowired
+	private ActionResourcesService resourcesService;
 
 	@Value("#{30L * 24L * 3600L * 1000L}")
 	private long tokenExpire;
@@ -65,6 +69,10 @@ public class SignController extends BaseController {
 		JsonRet<UserProfile> profileJsonRet = this.userProfileService.getById(userId);
 		UserProfile profile = profileJsonRet.getData();
 		User user = new User(profile);
+		List<Roles> rolesList = this.rolesService.queryByUserId(userId);
+		user.setRoles(rolesList);
+		List<ActionResources> resources = this.resourcesService.queryByUserId(userId);
+		user.setResources(resources);
 
 		//下发 Token
 		long expire = System.currentTimeMillis() + this.tokenExpire;
