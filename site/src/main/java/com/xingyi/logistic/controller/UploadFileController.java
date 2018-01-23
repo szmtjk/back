@@ -54,7 +54,7 @@ public class UploadFileController extends BaseController{
         inputStream.close();
         fileOutputStream.close();
         Map<String, Object> params = new HashMap<>();
-        params.put("filePath",this.baseDir + "/" + newFileName);
+        params.put("filePath","http://xingyi.nandasoft-its.com:8080/xyl/upload/"+newFileName);
         return JsonRet.getSuccessRet(params);
     }
 

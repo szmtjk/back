@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!--  Generate by autoSQLMap Powered by duxing@Taobao -->
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.xingyi.logistic.authentication.db.dao.RoleResourcesDAO">
+    <resultMap id="AllColumnMap" type="com.xingyi.logistic.authentication.db.entity.RoleResourcesDO">
+        <result property="id" column="id"/>
+        <result property="roleId" column="roleId"/>
+        <result property="resourceId" column="resourceId"/>
+        <result property="isDeleted" column="isDeleted"/>
+        <result property="creator" column="creator"/>
+        <result property="creatorName" column="creatorName"/>
+        <result property="created" column="created"/>
+        <result property="updater" column="updater"/>
+        <result property="updaterName" column="updaterName"/>
+        <result property="updated" column="updated"/>
+    </resultMap>
+
+    <sql id="all_column">
+        `id`
+        ,`roleId`
+        ,`resourceId`
+        ,`isDeleted`
+        ,`creator`
+        ,`creatorName`
+        ,`created`
+        ,`updater`
+        ,`updaterName`
+        ,`updated`
+        ,`isDeleted`
+    </sql>
+
+    <insert id="insertSelective" useGeneratedKeys="true" keyProperty="pojo.id">
+        INSERT INTO RoleResources
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="pojo.roleId!=null"> `roleId`,</if>
+            <if test="pojo.resourceId!=null"> `resourceId`,</if>
+            <if test="pojo.remark!=null"> `remark`,</if>
+            <if test="pojo.creator!=null"> `creator`,</if>
+            <if test="pojo.creatorName!=null"> `creatorName`,</if>
+            <if test="pojo.updater!=null"> `updater`,</if>
+            <if test="pojo.updaterName!=null"> `updaterName`,</if>
+            `created`,
+            `updated`,
+            `isDeleted`
+        </trim>
+        VALUES
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="pojo.roleId!=null">#{pojo.roleId},</if>
+            <if test="pojo.resourceId!=null">#{pojo.resourceId},</if>
+            <if test="pojo.remark!=null">#{pojo.remark},</if>
+            <if test="pojo.creator!=null">#{pojo.creator},</if>
+            <if test="pojo.creatorName!=null">#{pojo.creatorName},</if>
+            <if test="pojo.updater!=null">#{pojo.updater},</if>
+            <if test="pojo.updaterName!=null">#{pojo.updaterName},</if>
+            UNIX_TIMESTAMP(now()),
+            UNIX_TIMESTAMP(now()),
+            0
+        </trim>
+    </insert>
+
+    <!--auto generated Code-->
+    <update id="update">
+        UPDATE RoleResources
+        <set>
+            <if test="pojo.roleId!=null">`roleId` = #{pojo.roleId},</if>
+            <if test="pojo.resourceId!=null">`resourceId` = #{pojo.resourceId},</if>
+            <if test="pojo.remark!=null">`remark` = #{pojo.remark},</if>
+            <if test="pojo.updaterName!=null">`updaterName` = #{pojo.updaterName},</if>
+            <if test="pojo.updater!=null">`updater` = #{pojo.updater},</if>
+            <if test="pojo.isDeleted!=null">`isDeleted` = #{pojo.isDeleted},</if>
+            `updated` = UNIX_TIMESTAMP(now())
+        </set>
+        WHERE `id` = #{pojo.id}
+    </update>
+
+    <update id="del" parameterType="java.lang.Long">
+        UPDATE RoleResources
+        SET `isDeleted` = 1,
+        `updated` = UNIX_TIMESTAMP(now())
+        WHERE `id` = #{id}
+    </update>
+
+    <select id="getById" parameterType="java.lang.Long" resultMap="AllColumnMap">
+        SELECT <include refid="all_column"/>
+        FROM `RoleResources`
+        WHERE `id` = #{id}
+    </select>
+
+    <select id="getExistCount" resultType="java.lang.Integer" parameterType="Map" >
+        SELECT  count(id)
+        FROM  `RoleResources`
+        where `isDeleted` = 0
+        <if test="pojo.id != null"> AND `id` != #{pojo.id} </if>
+        <if test="pojo.roleId != null"> AND `name` = #{pojo.name} </if>
+        limit 1
+    </select>
+
+    <select id="getCount" resultType="java.lang.Integer" parameterType="Map" >
+        SELECT  count(id)
+        FROM  `RoleResources`
+        <include refid="pageQueryWhereCommon"/>
+        limit 1
+    </select>
+
+    <select id="queryByPage" resultMap="AllColumnMap" parameterType="Map">
+        select <include refid="all_column"/>
+        from `RoleResources`
+        <include refid="pageQueryWhereCommon"/>
+        order by `id` desc
+        <include refid="pageCommon"/>
+    </select>
+
+    <sql id="pageQueryWhereCommon">
+        where `isDeleted` = 0
+        <if test="pojo.id != null"> AND `id` = #{pojo.id} </if>
+        <if test="pojo.key != null">
+            AND (`name` like concat('%', #{pojo.key}, '%'))
+        </if>
+    </sql>
+
+    <sql id="pageCommon">
+        <choose>
+            <when test="pojo.startRow != null and pojo.startRow gt -1 and pojo.limitNum != null and pojo.limitNum gt 0">
+                limit #{pojo.startRow}, #{pojo.limitNum}
+            </when>
+            <otherwise>
+                limit 100
+            </otherwise>
+        </choose>
+    </sql>
+</mapper>

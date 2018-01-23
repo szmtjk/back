@@ -16,6 +16,12 @@ public enum ErrCode {
     DEL_ERR(20006, "删除错误"),
     GET_ERR(20007, "查询错误"),
     ADD_SUB_ERR(20008, "新增子数据错误"),
+
+	AUTHTICATION_NOT_EXIST(90000,"账号不存在"),
+	AUTHTICATION_PASSWD_ERROR(90001,"密码错误"),
+	AUTHTICATION_TOKEN_EXPIRE(90002,"Token已过期"),
+	AUTHTICATION_TOKEN_ERROR(90003,"非法Token"),
+	AUTHTICATION_FAIL(99999,"认证失败")
     ;
     private int code;
     private String msg;

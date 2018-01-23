@@ -3,6 +3,7 @@ package com.xingyi.logistic;
 import com.xingyi.logistic.config.JsonParamArgumentResolver;
 import com.xingyi.logistic.converter.MycMessageConvertor;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.web.servlet.ServletComponentScan;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.converter.HttpMessageConverter;
@@ -20,6 +21,7 @@ import java.util.List;
  */
 @Configuration
 @ComponentScan("com.xingyi.logistic")
+@ServletComponentScan
 @SpringBootApplication
 public class MycWebConfig extends WebMvcConfigurerAdapter {
 

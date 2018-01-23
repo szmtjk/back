@@ -37,6 +37,10 @@ druid:
 spring:
   activemq:
     broker-url: tcp://183.246.204.251:61689
+  http:
+    multipart:
+      maxFileSize: 10Mb
+      maxRequestSize: 100Mb
 
 xyl:
   upload:
