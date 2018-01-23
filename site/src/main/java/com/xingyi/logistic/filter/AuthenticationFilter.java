@@ -14,6 +14,7 @@ import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.io.PrintWriter;
 
 /**
  * @author tsingtao_tung
@@ -31,7 +32,6 @@ public class AuthenticationFilter implements Filter {
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
 		response.setCharacterEncoding("UTF-8");
 		response.setContentType("application/json; charset=utf-8");
-		ServletOutputStream out = response.getOutputStream();
 
 		//跨域设置
 		HttpServletResponse httpServletResponse = (HttpServletResponse) response;
@@ -48,7 +48,8 @@ public class AuthenticationFilter implements Filter {
 		String ctx = httpRequest.getContextPath();
 		String requestPath = requestURI.replace(ctx,"");
 
-		if(!requestPath.startsWith("/signin") && !requestPath.startsWith("/signout") ){
+		if(!requestPath.startsWith("/signin")){
+			PrintWriter out = response.getWriter();
 			//认证
 			String token = httpRequest.getHeader("token");
 			if(StringUtils.isBlank(token)){
