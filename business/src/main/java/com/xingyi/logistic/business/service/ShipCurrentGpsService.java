@@ -53,6 +53,20 @@ public interface ShipCurrentGpsService extends BaseService<ShipCurrentGps, ShipC
 
 
     /**
+     * 加载行次任务表数据
+     * @return
+     */
+    public List<SailingData> querySailingInfo();
+
+
+    /**
+     * 加载调度计划
+     * @return
+     */
+    public List<DispatchData> queryDispatchInfo();
+
+
+    /**
      * 根据相关条件查询实时定位数据
      * @param shipCurrentGpsQuery
      * @return

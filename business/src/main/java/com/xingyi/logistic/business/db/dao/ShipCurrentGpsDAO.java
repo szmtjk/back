@@ -46,6 +46,20 @@ public interface ShipCurrentGpsDAO extends BaseDAO<ShipCurrentGpsDO, ShipCurrent
      */
     public List<DangerZoneSpeed> getLoadDangerZoneSpeed();
 
+    /**
+     * 加载行次任务表数据
+     * @return
+     */
+    public List<SailingData> querySailingInfo();
+
+
+
+    /**
+     * 加载调度计划
+     * @return
+     */
+    public List<DispatchData> queryDispatchInfo();
+
 
     /**
      * 根据相关条件查询实时定位数据

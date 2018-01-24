@@ -45,6 +45,7 @@ public class ManageShipCurrentGps
         mShipCurrentGps.setLatitude(new Double(Double.parseDouble(xmlMap.get("lat")) * 1000000).longValue());
         mShipCurrentGps.setLongitude(new Double(Double.parseDouble(xmlMap.get("lng")) * 1000000).longValue());
         mShipCurrentGps.setSpeed(Long.parseLong(xmlMap.get("speed")));
+        mShipCurrentGps.setRunkm(xmlMap.get("runkm"));
         mShipCurrentGps.setAngle(Long.parseLong(xmlMap.get("angle")));
         mShipCurrentGps.setGpsTime(xmlMap.get("occurtime"));
         mShipCurrentGps.setAreaId(Long.parseLong(xmlMap.get("areacode")));
@@ -98,6 +99,12 @@ public class ManageShipCurrentGps
         mShipCurrentGps.setAlarmType(Long.parseLong(xmlMap.get("state")));
         mShipCurrentGps.setFieldcode(xmlMap.get("fieldcode"));
         mShipCurrentGps.setServertime(xmlMap.get("servertime"));
+
+       /* mShipCurrentGps.setLatitude(new Double(Double.parseDouble(xmlMap.get("lat")) * 1000000).longValue());
+        mShipCurrentGps.setLongitude(new Double(Double.parseDouble(xmlMap.get("lng")) * 1000000).longValue());
+        mShipCurrentGps.setSpeed(Long.parseLong(xmlMap.get("speed")));
+        mShipCurrentGps.setAngle(Long.parseLong(xmlMap.get("angle")));*/
+
     }
 
 
