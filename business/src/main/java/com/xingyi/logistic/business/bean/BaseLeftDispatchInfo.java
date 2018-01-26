@@ -38,7 +38,7 @@ public class BaseLeftDispatchInfo extends BaseModelAndDO{
     private String endportname;
 
     @NotNullEmpty
-    private Integer loadingTime;
+    private String loadingTime;
 
     /**
      * 预约抢单有效开始日期
@@ -154,11 +154,11 @@ public class BaseLeftDispatchInfo extends BaseModelAndDO{
         this.endportname = endportname;
     }
 
-    public Integer getLoadingTime() {
+    public String getLoadingTime() {
         return loadingTime;
     }
 
-    public void setLoadingTime(Integer loadingTime) {
+    public void setLoadingTime(String loadingTime) {
         this.loadingTime = loadingTime;
     }
 
