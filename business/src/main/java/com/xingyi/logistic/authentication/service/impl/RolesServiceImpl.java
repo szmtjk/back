@@ -14,6 +14,10 @@ import com.xingyi.logistic.business.service.base.QueryConditionConverter;
 import com.xingyi.logistic.business.service.converter.RolesQueryConverter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.CollectionUtils;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Service
 public class RolesServiceImpl extends BaseCRUDService<RolesDO,Roles,RolesDBQuery,RolesQuery> implements RolesService {
@@ -41,4 +45,16 @@ public class RolesServiceImpl extends BaseCRUDService<RolesDO,Roles,RolesDBQuery
     protected QueryConditionConverter<RolesQuery, RolesDBQuery> getConditionConverter() {
         return this.rolesQueryConverter;
     }
+
+	@Override
+	public List<Roles> queryByUserId(Long userId) {
+    	List<Roles> roles = new ArrayList<Roles>();
+    	List<RolesDO> rolesDOList = this.rolesDAO.queryByUserId(userId);
+    	if(!CollectionUtils.isEmpty(rolesDOList)){
+    		for(RolesDO rolesDO:rolesDOList){
+    			roles.add(this.rolesConverter.toModel(rolesDO));
+		    }
+	    }
+		return roles;
+	}
 }

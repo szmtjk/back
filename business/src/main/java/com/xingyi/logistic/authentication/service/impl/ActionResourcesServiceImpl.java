@@ -14,6 +14,10 @@ import com.xingyi.logistic.business.service.base.QueryConditionConverter;
 import com.xingyi.logistic.business.service.converter.ActionResourcesQueryConverter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.CollectionUtils;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Service
 public class ActionResourcesServiceImpl extends BaseCRUDService<ActionResourcesDO,ActionResources,ActionResourcesDBQuery,ActionResourcesQuery> implements ActionResourcesService {
@@ -41,4 +45,16 @@ public class ActionResourcesServiceImpl extends BaseCRUDService<ActionResourcesD
     protected QueryConditionConverter<ActionResourcesQuery, ActionResourcesDBQuery> getConditionConverter() {
         return this.actionResourcesQueryConverter;
     }
+
+	@Override
+	public List<ActionResources> queryByUserId(Long userId) {
+    	List<ActionResources> resources = new ArrayList<ActionResources>();
+    	List<ActionResourcesDO> resourcesDOList = this.actionResourcesDAO.queryByUserId(userId);
+    	if(!CollectionUtils.isEmpty(resourcesDOList)){
+    		for(ActionResourcesDO resourcesDO:resourcesDOList){
+    			resources.add(this.actionResourcesConverter.toModel(resourcesDO));
+		    }
+	    }
+		return resources;
+	}
 }

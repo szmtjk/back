@@ -153,4 +153,27 @@
             </otherwise>
         </choose>
     </sql>
+
+    <select id="queryByUserId" parameterType="java.lang.Long" resultMap="AllColumnMap">
+        SELECT
+            res.*
+        FROM
+            ActionResources res ,
+            RoleResources rr
+        WHERE
+            res.isDeleted = 0
+        AND
+            res.id = rr.resourceId
+        AND rr.roleId IN(
+            SELECT
+                r.id
+            FROM
+                Roles r ,
+                UserRoles ur
+            WHERE
+                r.isDeleted = 0
+            AND r.id = ur.roleId
+            AND ur.userId = #{userId}
+        )
+    </select>
 </mapper>

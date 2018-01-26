@@ -104,6 +104,26 @@ public class ShipCurrentGpsServiceImpl extends BaseCRUDService<ShipCurrentGpsDO,
         return shipCurrentGpsDAO.getLoadDangerZoneSpeed();
     }
 
+    /**
+     * 加载行次任务表数据
+     * @return
+     */
+    public List<SailingData> querySailingInfo()
+    {
+        return shipCurrentGpsDAO.querySailingInfo();
+    }
+
+
+
+    /**
+     * 加载调度计划
+     * @return
+     */
+    public List<DispatchData> queryDispatchInfo()
+    {
+        return shipCurrentGpsDAO.queryDispatchInfo();
+    }
+
 
     /**
      * 根据相关条件查询实时定位数据

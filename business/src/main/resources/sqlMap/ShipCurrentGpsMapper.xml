@@ -5,6 +5,7 @@
 
     <resultMap id="AllColumnMap" type="com.xingyi.logistic.business.db.entity.ShipCurrentGpsDO">
         <result property="id" column="id"/>
+        <result property="shipId" column="shipId"/>
         <result property="shipNo" column="shipNo"/>
         <result property="devId" column="devId"/>
         <result property="longitude" column="longitude"/>
@@ -13,6 +14,7 @@
         <result property="gpsTime" column="gpsTime"/>
         <result property="speed" column="speed"/>
         <result property="angle" column="angle"/>
+        <result property="runkm" column="runkm"/>
         <result property="alarmType" column="alarmType"/>
         <result property="areaId" column="areaId"/>
         <result property="inOrOut" column="inOrOut"/>
@@ -64,14 +66,51 @@
         <result property="name" column="name"/>
     </resultMap>
 
+    <resultMap id="mRetSailingMap" type="com.xingyi.logistic.business.model.SailingData">
+        <result property="id" column="id"/>
+        <result property="shipId" column="shipId"/>
+        <result property="status" column="status"/>
+        <result property="actualArriveEPortTime" column="actualArriveEPortTime"/>
+        <result property="loadTime" column="loadTime"/>
+        <result property="loadWeight" column="loadWeight"/>
+        <result property="preArriveEPortTime" column="preArriveEPortTime"/>
+        <result property="departPortTime" column="departPortTime"/>
+        <result property="actualArriveEPortTime" column="actualArriveEPortTime"/>
+        <result property="dischargeTime" column="dischargeTime"/>
+        <result property="dischargeWeight" column="dischargeWeight"/>
+        <result property="dischargeDelayFee" column="dischargeDelayFee"/>
+        <result property="goodsName" column="goodsName"/>
+        <result property="startPortId" column="startPortId"/>
+        <result property="endPortId" column="endPortId"/>
+    </resultMap>
+
+    <resultMap id="mRetDispatchMap" type="com.xingyi.logistic.business.model.DispatchData">
+        <result property="id" column="id"/>
+        <result property="shipId" column="shipId"/>
+        <result property="status" column="status"/>
+        <result property="orderNo" column="orderNo"/>
+        <result property="dispatchType" column="dispatchType"/>
+        <result property="shipType" column="shipType"/>
+        <result property="settleType" column="settleType"/>
+        <result property="preWeight" column="preWeight"/>
+        <result property="preLoad" column="preLoad"/>
+        <result property="preArriveTime" column="preArriveTime"/>
+        <result property="preSettleAmount" column="preSettleAmount"/>
+        <result property="goodsName" column="goodsName"/>
+        <result property="startPortId" column="startPortId"/>
+        <result property="endPortId" column="endPortId"/>
+    </resultMap>
+
     <sql id="all_column">
         `id`
+        ,'0' AS shipId
         ,`shipNo`
         ,`devId`
         ,`longitude`
         ,`latitude`
         ,`gpsTime`
         ,`speed`
+        ,`runkm`
         ,`angle`
         ,`alarmType`
         ,`areaId`
@@ -94,6 +133,7 @@
             <if test="pojo.gpsTime!=null"> `gpsTime`,</if>
             <if test="pojo.speed!=null"> `speed`,</if>
             <if test="pojo.angle!=null"> `angle`,</if>
+            <if test="pojo.runkm!=null"> `runkm`,</if>
             <if test="pojo.alarmType!=null"> `alarmType`,</if>
             <if test="pojo.areaId!=null"> `areaId`,</if>
             <if test="pojo.inOrOut!=null"> `inOrOut`,</if>
@@ -115,6 +155,7 @@
             <if test="pojo.gpsTime!=null">#{pojo.gpsTime},</if>
             <if test="pojo.speed!=null">#{pojo.speed},</if>
             <if test="pojo.angle!=null">#{pojo.angle},</if>
+            <if test="pojo.runkm!=null">#{pojo.runkm},</if>
             <if test="pojo.alarmType!=null">#{pojo.alarmType},</if>
             <if test="pojo.areaId!=null">#{pojo.areaId},</if>
             <if test="pojo.inOrOut!=null">#{pojo.inOrOut},</if>
@@ -139,6 +180,7 @@
             <if test="pojo.gpsTime!=null">`gpsTime` = #{pojo.gpsTime},</if>
             <if test="pojo.speed!=null">`speed` = #{pojo.speed},</if>
             <if test="pojo.angle!=null">`angle` = #{pojo.angle},</if>
+            <if test="pojo.runkm!=null">`runkm` = #{pojo.runkm},</if>
             <if test="pojo.alarmType!=null">`alarmType` = #{pojo.alarmType},</if>
             <if test="pojo.areaId!=null">`areaId` = #{pojo.areaId},</if>
             <if test="pojo.inOrOut!=null">`inOrOut` = #{pojo.inOrOut},</if>
@@ -204,12 +246,12 @@
     </select>
 
     <select id="queryShipCurrentGpsInfo" resultMap="AllColumnMap" parameterType="Map">
-        select *
-        from `ShipCurrentGps`
-        <where>
-            <if test="pojo.shipNo != null"> AND shipNo like concat('%', #{pojo.shipNo}, '%') </if>
-            <if test="pojo.shipNo != null"> or devId like concat('%', #{pojo.devId}, '%') </if>
-        </where>
+        select A2.shipNo, A1.*, A2.id as shipId
+        from `ShipCurrentGps` A1
+        INNER JOIN Ship  A2 ON A1.devId = A2.gpsDeviceId
+        WHERE A1.longitude != 0 AND A1.longitude is not NULL
+        <if test="pojo.shipNo != null"> AND A2.shipNo like concat('%', #{pojo.shipNo}, '%') </if>
+        <if test="pojo.shipNo != null"> AND A1.devId like concat('%', #{pojo.devId}, '%') </if>
     </select>
 
     <select id="queryComboxShipInfo" resultMap="mRetComboxMap" parameterType="Map">
@@ -222,4 +264,31 @@
         from `Customer`
     </select>
 
+
+    <!-- 加载航次信息表-->
+    <select id="querySailingInfo" resultMap="mRetSailingMap" parameterType="Map">
+        <![CDATA[
+        SELECT A1.ID, A1.shipId, A1.`status`, A1.actualArriveEPortTime, A1.loadTime, A1.loadWeight,
+        A1.preArriveEPortTime, A1.departPortTime, A1.actualArriveEPortTime, A1.dischargeTime,
+        A1.dischargeWeight, A1.dischargeDelayFee, A3.goodsName, A4.startPortId, A4.endPortId
+        FROM SailingInfo A1
+        LEFT  JOIN DispatchInfo A2 ON A1.orderId=A2.id
+        LEFT JOIN CustomerTaskFlow A3 ON A2.customerTaskFlowId=A3.id
+        LEFT JOIN Flow A4 ON A4.ID=A3.flowId
+        WHERE A1.status <5
+        AND A1.isDeleted = 0
+        ]]>
+    </select>
+
+    <!-- 加载航次信息表-->
+    <select id="queryDispatchInfo" resultMap="mRetDispatchMap" parameterType="Map">
+        <![CDATA[
+        SELECT A1.id, A1.orderNo, A1.dispatchType, A1.shipId, A1.shipType, A1.preWeight, A1.preLoad, A1.preArriveTime, A1.preSettleAmount, A1.settleType, A3.goodsName, A4.startPortId, A4.endPortId
+        FROM DispatchInfo A1
+        LEFT JOIN CustomerTaskFlow A3 ON A1.customerTaskFlowId=A3.id
+        LEFT JOIN Flow A4 ON A4.ID=A3.flowId
+        WHERE A1.status <5
+        AND A1.isDeleted = 0
+        ]]>
+    </select>
 </mapper>

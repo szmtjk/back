@@ -86,6 +86,26 @@ public class GpsRealController extends BaseCRUDController<ShipCurrentGps, ShipCu
     }
 
 
+    /**
+     * 加载行次任务表数据
+     * @return
+     */
+    @RequestMapping("/loadSailing")
+    public List<SailingData> loadSailing()
+    {
+        return shipCurrentGpsService.querySailingInfo();
+    }
+
+    /**
+     * 加载订单计划
+     * @return
+     */
+    @RequestMapping("/loadDispatch")
+    public List<DispatchData> loadDispatch()
+    {
+        return shipCurrentGpsService.queryDispatchInfo();
+    }
+
     @Override
     protected BaseService<ShipCurrentGps, ShipCurrentGpsQuery> getBaseService()
     {

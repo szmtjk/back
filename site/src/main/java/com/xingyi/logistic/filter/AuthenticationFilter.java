@@ -32,7 +32,6 @@ public class AuthenticationFilter implements Filter {
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
 		response.setCharacterEncoding("UTF-8");
 		response.setContentType("application/json; charset=utf-8");
-		PrintWriter writer = response.getWriter();
 
 		//跨域设置
 		HttpServletResponse httpServletResponse = (HttpServletResponse) response;
@@ -42,14 +41,14 @@ public class AuthenticationFilter implements Filter {
 		httpServletResponse.setHeader("Access-Control-Allow-Methods", "POST, GET, PUT, OPTIONS, DELETE, PATCH");
 		//Access-Control-Max-Age 用于 CORS 相关配置的缓存
 		httpServletResponse.setHeader("Access-Control-Max-Age", "3600");
-		httpServletResponse.setHeader("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+		httpServletResponse.setHeader("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, token");
 
 		HttpServletRequest httpRequest = (HttpServletRequest) request;
 		String requestURI = httpRequest.getRequestURI();
 		String ctx = httpRequest.getContextPath();
 		String requestPath = requestURI.replace(ctx,"");
 
-		if(!requestPath.startsWith("/signin") && !requestPath.startsWith("/signout") ){
+		if(!requestPath.startsWith("/signin")){
 			//认证
 			String token = httpRequest.getHeader("token");
 			if(StringUtils.isBlank(token)){
@@ -64,10 +63,11 @@ public class AuthenticationFilter implements Filter {
 			boolean isAuthenticated = jsonRet.isSuccess();
 
 			if(!isAuthenticated){
-				writer.print(JSON.toJSONString(jsonRet,SerializerFeature.WriteMapNullValue));
+				PrintWriter out = response.getWriter();
+				out.print(JSON.toJSONString(jsonRet,SerializerFeature.WriteMapNullValue));
 
-				writer.flush();
-				writer.close();
+				out.flush();
+				out.close();
 			}else{
 				chain.doFilter(request,response);
 			}

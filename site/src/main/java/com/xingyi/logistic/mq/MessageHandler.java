@@ -39,5 +39,12 @@ public class MessageHandler
     {
         gpsServer.executeLeaveStationTask(msg);
     }
+
+    @JmsListener(destination = "SENDCMDSP.QUEUE")
+    public void receiveSendCmdSpQueue(String msg)
+    {
+        gpsServer.executeSendCmdSpTask(msg);
+    }
+
 }
 

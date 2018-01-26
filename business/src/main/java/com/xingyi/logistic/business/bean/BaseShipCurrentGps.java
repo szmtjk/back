@@ -4,11 +4,13 @@ package com.xingyi.logistic.business.bean;
  * Created by WCL on 2018/1/12.
  */
 public class BaseShipCurrentGps extends BaseModelAndDO {
+    private Long shipId;
     //定位数据
     private String shipNo;
     private String devId;
     private long longitude;
     private long latitude;
+    private String runkm;//当天行驶里程
     private String gpsTime;
     private long speed;
     private long angle;
@@ -184,13 +186,31 @@ public class BaseShipCurrentGps extends BaseModelAndDO {
         this.isSaveDb = isSaveDb;
     }
 
+    public String getRunkm() {
+        return runkm;
+    }
+
+    public void setRunkm(String runkm) {
+        this.runkm = runkm;
+    }
+
+    public Long getShipId() {
+        return shipId;
+    }
+
+    public void setShipId(Long shipId) {
+        this.shipId = shipId;
+    }
+
     @Override
     public String toString() {
         return "BaseShipCurrentGps{" +
+                "shipId='" + shipId + '\'' +
                 "shipNo='" + shipNo + '\'' +
                 ", devId='" + devId + '\'' +
                 ", longitude=" + longitude +
                 ", latitude=" + latitude +
+                ", runkm=" + runkm +
                 ", gpsTime='" + gpsTime + '\'' +
                 ", speed=" + speed +
                 ", angle=" + angle +

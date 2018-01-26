@@ -1,10 +1,12 @@
 package com.xingyi.logistic.mq;
 
 import com.xingyi.logistic.business.model.DispatchPlan;
+import com.xingyi.logistic.business.model.TerminalMsg;
+import com.xingyi.logistic.business.model.TextMessageSend;
+import com.xingyi.logistic.util.DateUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jms.core.JmsMessagingTemplate;
 import org.springframework.stereotype.Component;
-import org.springframework.stereotype.Service;
 
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
@@ -56,9 +58,17 @@ public class SendMessageServer
      * 下发文本调度
      * @param obj
      */
-    public void funTerminalMsg(Object obj)
+    public void funTerminalMsg(TerminalMsg terminalMsg)
     {
-        String xmlObj = getXml(obj.getClass(), obj);
+
+        TextMessageSend mObj = new TextMessageSend();
+        mObj.setTextmessageid(terminalMsg.getId());
+        mObj.setDevicecode(terminalMsg.getDeviceId());
+        mObj.setTextmessage(terminalMsg.getContent());
+        mObj.setTextmessagetitle(terminalMsg.getTitle());
+        mObj.setServertime(DateUtils.getCurrentSystemTime());
+        String xmlObj = getXml(TextMessageSend.class, mObj);
+        System.out.println(xmlObj);
         jmsMessagingTemplate.convertAndSend(SEND_TERMINAL_MSG_QUEUE, xmlObj);
     }
 

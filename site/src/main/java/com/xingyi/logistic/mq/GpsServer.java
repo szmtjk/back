@@ -1,5 +1,6 @@
 package com.xingyi.logistic.mq;
 
+import com.xingyi.logistic.business.model.SendCmdSp;
 import com.xingyi.logistic.business.model.ShipCurrentGps;
 import com.xingyi.logistic.business.model.ShipCurrentGpsQuery;
 import com.xingyi.logistic.business.model.ShipDev;
@@ -22,6 +23,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.Executors;
+import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -33,6 +35,8 @@ import java.util.concurrent.atomic.AtomicInteger;
 public class GpsServer extends BaseCRUDController<ShipCurrentGps, ShipCurrentGpsQuery>
 {
     private static ManageShipCurrentGps manageShipCurrentGps = new ManageShipCurrentGps();
+
+    private static LinkedBlockingQueue<Map<String, String>> rec_queue = new LinkedBlockingQueue<>();
 
     public ManageShipDev mManageShipDev = new ManageShipDev();
     @Autowired
@@ -52,6 +56,11 @@ public class GpsServer extends BaseCRUDController<ShipCurrentGps, ShipCurrentGps
         System.out.println("shipCurrentGpsService---------------------" + shiGpsFlys.size());
         SaveThread mSaveThread = new SaveThread();
         mSaveThread.start();
+
+        SaveSendCmdSpThread mSaveSendCmdSpThread = new SaveSendCmdSpThread();
+        mSaveSendCmdSpThread.start();
+
+
     }
 
 
@@ -91,6 +100,21 @@ public class GpsServer extends BaseCRUDController<ShipCurrentGps, ShipCurrentGps
         //System.out.println("--------------出");
         //System.out.println(xml);
         manageShipCurrentGps.addLeaveStation(dealXml(xml));
+    }
+
+    /**
+     * 通用应答
+     * @param xml
+     */
+    @Async
+    public void executeSendCmdSpTask(String xml)
+    {
+        Map<String, String> xmlMap = dealXml(xml);
+        try {
+            rec_queue.put(xmlMap);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
     }
 
     /**
@@ -190,6 +214,38 @@ public class GpsServer extends BaseCRUDController<ShipCurrentGps, ShipCurrentGps
         }
     }
 
+
+    class SaveSendCmdSpThread extends  Thread
+    {
+        public SaveSendCmdSpThread()
+        {
+            this.setName("--SaveSendCmdSpThread");
+        }
+        @Override
+        public void run()
+        {
+            Map<String, String> xmlMap = null;
+            SendCmdSp sendCmdSp = new SendCmdSp();
+            while (true)
+            {
+                try
+                {
+                    xmlMap = rec_queue.take();
+                    sendCmdSp.setType(Integer.parseInt(xmlMap.get("cmdtype")));
+                    sendCmdSp.setCmd(Integer.parseInt(xmlMap.get("cmd")));
+                    sendCmdSp.setErrorcode(xmlMap.get("errorcode"));
+                    sendCmdSp.setStime(xmlMap.get("occurtime"));
+                    sendCmdSp.setStatus(Integer.parseInt(xmlMap.get("success")));
+                    //Thread.sleep(5000);
+                }
+                catch (Exception e)
+                {
+                    e.printStackTrace();
+                }
+                System.out.println("SaveSendCmdSpThread----"+ rec_queue.size()+"----------------" + rec_queue.size());
+            }
+        }
+    }
 
     private Runnable mTimeLoading = new Runnable()
     {
