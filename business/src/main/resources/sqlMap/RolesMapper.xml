@@ -38,6 +38,8 @@
             <if test="pojo.remark!=null"> `remark`,</if>
             <if test="pojo.creator!=null"> `creator`,</if>
             <if test="pojo.creatorName!=null"> `creatorName`,</if>
+            <if test="pojo.updater!=null"> `updater`,</if>
+            <if test="pojo.updaterName!=null"> `updaterName`,</if>
             `created`,
             `updated`,
             `isDeleted`
@@ -49,6 +51,8 @@
             <if test="pojo.remark!=null">#{pojo.remark},</if>
             <if test="pojo.creator!=null">#{pojo.creator},</if>
             <if test="pojo.creatorName!=null">#{pojo.creatorName},</if>
+            <if test="pojo.updater!=null">#{pojo.updater},</if>
+            <if test="pojo.updaterName!=null">#{pojo.updaterName},</if>
             UNIX_TIMESTAMP(now()),
             UNIX_TIMESTAMP(now()),
             0

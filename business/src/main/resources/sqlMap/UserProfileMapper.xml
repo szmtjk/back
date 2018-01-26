@@ -41,6 +41,8 @@
             <if test="pojo.birthDay!=null"> `birthDay`,</if>
             <if test="pojo.creator!=null"> `creator`,</if>
             <if test="pojo.creatorName!=null"> `creatorName`,</if>
+            <if test="pojo.updater!=null"> `updater`,</if>
+            <if test="pojo.updaterName!=null"> `updaterName`,</if>
             `gender`,
             `created`,
             `updated`,
@@ -53,6 +55,8 @@
             <if test="pojo.birthDay!=null">#{pojo.birthDay},</if>
             <if test="pojo.creator!=null">#{pojo.creator},</if>
             <if test="pojo.creatorName!=null">#{pojo.creatorName},</if>
+            <if test="pojo.updater!=null">#{pojo.updater},</if>
+            <if test="pojo.updaterName!=null">#{pojo.updaterName},</if>
             #{pojo.gender},
             UNIX_TIMESTAMP(now()),
             UNIX_TIMESTAMP(now()),
@@ -66,6 +70,7 @@
             <if test="pojo.nickName!=null">`nickName` = #{pojo.nickName},</if>
             <if test="pojo.realName!=null">`realName` = #{pojo.realName},</if>
             <if test="pojo.birthDay!=null">`birthDay` = #{pojo.birthDay},</if>
+            <if test="pojo.updater!=null">`updater` = #{pojo.updater},</if>
             <if test="pojo.updaterName!=null">`updaterName` = #{pojo.updaterName},</if>
             <if test="pojo.isDeleted!=null">`isDeleted` = #{pojo.isDeleted},</if>
             `updated` = UNIX_TIMESTAMP(now()),
