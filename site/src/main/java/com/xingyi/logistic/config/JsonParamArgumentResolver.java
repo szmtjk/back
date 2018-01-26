@@ -13,6 +13,7 @@ import org.springframework.web.method.support.HandlerMethodArgumentResolver;
 import org.springframework.web.method.support.ModelAndViewContainer;
 
 import javax.servlet.http.HttpServletRequest;
+import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
@@ -63,6 +64,17 @@ public class JsonParamArgumentResolver implements HandlerMethodArgumentResolver 
         Map<String, Object> params = new HashMap<>();
         for (String key : httpRequest.getParameterMap().keySet()) {
             params.put(key, httpRequest.getParameter(key));
+        }
+        if (params.isEmpty()) {
+            StringBuilder jsonBuilder = new StringBuilder();
+            String line;
+            BufferedReader br = httpRequest.getReader();
+
+            while ((line = br.readLine()) != null) {
+                jsonBuilder.append(line);
+            }
+
+            return jsonBuilder.toString();
         }
         return JsonUtil.toJson(params);
     }

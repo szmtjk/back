@@ -27,6 +27,7 @@
         <result property="shipSuggestUnitPrice" column="shipSuggestUnitPrice"/>
         <result property="sailingFlag" column="sailingFlag"/>
         <result property="status" column="status"/>
+        <result property="taskStatus" column="taskStatus"/>
         <result property="description" column="description"/>
         <result property="creator" column="creator"/>
         <result property="created" column="created"/>
@@ -58,6 +59,7 @@
         ,`shipSuggestUnitPrice`
         ,`sailingFlag`
         ,`status`
+        ,`taskStatus`
         ,`description`
         ,`creator`
         ,`created`
@@ -90,6 +92,7 @@
             <if test="pojo.shipSuggestUnitPrice!=null"> `shipSuggestUnitPrice`,</if>
             <if test="pojo.sailingFlag!=null"> `sailingFlag`,</if>
             <if test="pojo.status!=null"> `status`,</if>
+            <if test="pojo.taskStatus!=null"> `taskStatus`,</if>
             <if test="pojo.description!=null"> `description`,</if>
             `created`,
             `updated`
@@ -119,6 +122,7 @@
             <if test="pojo.shipSuggestUnitPrice!=null">#{pojo.shipSuggestUnitPrice},</if>
             <if test="pojo.sailingFlag!=null">#{pojo.sailingFlag},</if>
             <if test="pojo.status!=null">#{pojo.status},</if>
+            <if test="pojo.taskStatus!=null">#{pojo.taskStatus},</if>
             <if test="pojo.description!=null">#{pojo.description},</if>
             UNIX_TIMESTAMP(now()),
             UNIX_TIMESTAMP(now())
@@ -152,6 +156,7 @@
             <if test="pojo.shipSuggestUnitPrice!=null">`shipSuggestUnitPrice` = #{pojo.shipSuggestUnitPrice},</if>
             <if test="pojo.sailingFlag!=null">`sailingFlag` = #{pojo.sailingFlag},</if>
             <if test="pojo.status!=null">`status` = #{pojo.status},</if>
+            <if test="pojo.taskStatus!=null">`taskStatus` = #{pojo.taskStatus},</if>
             <if test="pojo.description!=null">`description` = #{pojo.description},</if>
             `updated` = UNIX_TIMESTAMP(now())
         </set>
