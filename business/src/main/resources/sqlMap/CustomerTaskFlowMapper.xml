@@ -12,8 +12,8 @@
         <result property="direction" column="direction"/>
         <result property="sender" column="sender"/>
         <result property="receiver" column="receiver"/>
-        <result property="loadingDate" column="loadingDate"/>
-        <result property="dischargeDate" column="dischargeDate"/>
+        <result property="loadingTime" column="loadingTime"/>
+        <result property="dischargeTime" column="dischargeTime"/>
         <result property="startPortId" column="startPortId"/>
         <result property="endPortId" column="endPortId"/>
         <result property="loadType" column="loadType"/>
@@ -44,8 +44,8 @@
         ,`direction`
         ,`sender`
         ,`receiver`
-        ,`loadingDate`
-        ,`dischargeDate`
+        ,`loadingTime`
+        ,`dischargeTime`
         ,`startPortId`
         ,`endPortId`
         ,`loadType`
@@ -77,8 +77,8 @@
             <if test="pojo.direction!=null"> `direction`,</if>
             <if test="pojo.sender!=null"> `sender`,</if>
             <if test="pojo.receiver!=null"> `receiver`,</if>
-            <if test="pojo.loadingDate!=null"> `loadingDate`,</if>
-            <if test="pojo.dischargeDate!=null"> `dischargeDate`,</if>
+            <if test="pojo.loadingTime!=null"> `loadingTime`,</if>
+            <if test="pojo.dischargeTime!=null"> `dischargeTime`,</if>
             <if test="pojo.startPortId!=null"> `startPortId`,</if>
             <if test="pojo.endPortId!=null"> `endPortId`,</if>
             <if test="pojo.loadType!=null"> `loadType`,</if>
@@ -107,8 +107,8 @@
             <if test="pojo.direction!=null">#{pojo.direction},</if>
             <if test="pojo.sender!=null">#{pojo.sender},</if>
             <if test="pojo.receiver!=null">#{pojo.receiver},</if>
-            <if test="pojo.loadingDate!=null">#{pojo.loadingDate},</if>
-            <if test="pojo.dischargeDate!=null">#{pojo.dischargeDate},</if>
+            <if test="pojo.loadingTime!=null">#{pojo.loadingTime},</if>
+            <if test="pojo.dischargeTime!=null">#{pojo.dischargeTime},</if>
             <if test="pojo.startPortId!=null">#{pojo.startPortId},</if>
             <if test="pojo.endPortId!=null">#{pojo.endPortId},</if>
             <if test="pojo.loadType!=null">#{pojo.loadType},</if>
@@ -141,8 +141,8 @@
             <if test="pojo.direction!=null">`direction` = #{pojo.direction},</if>
             <if test="pojo.sender!=null">`sender` = #{pojo.sender},</if>
             <if test="pojo.receiver!=null">`receiver` = #{pojo.receiver},</if>
-            <if test="pojo.loadingDate!=null">`loadingDate` = #{pojo.loadingDate},</if>
-            <if test="pojo.dischargeDate!=null">`dischargeDate` = #{pojo.dischargeDate},</if>
+            <if test="pojo.loadingTime!=null">`loadingTime` = #{pojo.loadingTime},</if>
+            <if test="pojo.dischargeTime!=null">`dischargeTime` = #{pojo.dischargeTime},</if>
             <if test="pojo.startPortId!=null">`startPortId` = #{pojo.startPortId},</if>
             <if test="pojo.endPortId!=null">`endPortId` = #{pojo.endPortId},</if>
             <if test="pojo.loadType!=null">`loadType` = #{pojo.loadType},</if>

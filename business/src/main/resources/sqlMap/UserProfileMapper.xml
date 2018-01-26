@@ -130,23 +130,4 @@
         </choose>
     </sql>
 
-    <select id="queryList" resultMap="AllColumnMap" parameterType="Map">
-
-    </select>
-
-    <sql id="queryListWhereCommon">
-        where `isDeleted` = 0
-            AND `gender` = #{pojo.gender}
-        <if test="pojo.id != null"> AND `id` = #{pojo.id} </if>
-        <if test="pojo.nickName != null">
-            AND (`nickName` like concat('%', #{pojo.nickName}, '%'))
-        </if>
-        <if test="pojo.realName != null">
-            AND (`realName` like concat('%', #{pojo.realName}, '%'))
-        </if>
-        <if test="pojo.gender != null">
-            AND (`realName` like concat('%', #{pojo.realName}, '%'))
-        </if>
-    </sql>
-
 </mapper>

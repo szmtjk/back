@@ -7,4 +7,9 @@ import com.xxx.boot.jdbc.annotation.Dao;
 
 @Dao
 public interface UserRolesDAO extends BaseDAO<UserRolesDO,UserRolesDBQuery> {
+    /**
+     * 删除指定用户的角色配置
+     * @param userId
+     */
+    public void deleteByUserId(Long userId);
 }
