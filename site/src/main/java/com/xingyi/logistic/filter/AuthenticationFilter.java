@@ -15,6 +15,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @author tsingtao_tung
@@ -48,7 +50,10 @@ public class AuthenticationFilter implements Filter {
 		String ctx = httpRequest.getContextPath();
 		String requestPath = requestURI.replace(ctx,"");
 
-		if(!requestPath.startsWith("/signin")){
+        List<String> excludePath = new ArrayList<String>();
+        excludePath.add("");
+
+		if(!requestPath.startsWith("/signin") && !excludePath.contains(requestPath)){
 			//认证
 			String token = httpRequest.getHeader("token");
 			if(StringUtils.isBlank(token)){
