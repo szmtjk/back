@@ -149,8 +149,9 @@ public class DispatchInfoServiceImpl extends BaseCRUDService<DispatchInfoDO, Dis
             delList.forEach(o->dispatchInfoDAO.del(o.getId()));
             addList.forEach(o->dispatchInfoDAO.insertSelective(dispatchInfoConverter.toDataObject(o)));
             dispatchInfoDAO.updateCustomerTaskStatus(dispatchInfoParam.getCustomerTaskFlowId());
+            ret.setSuccessData(true);
         } catch (Exception e) {
-
+            LOG.error("confirmDispatchInfoPlan err, param:{}", JsonUtil.toJson(dispatchInfoParam), e);
         }
         return ret;
     }

@@ -11,6 +11,7 @@ import com.xingyi.logistic.business.service.DispatchInfoService;
 import com.xingyi.logistic.common.bean.JsonRet;
 import com.xingyi.logistic.config.JsonParam;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -43,6 +44,10 @@ public class DispatchController extends BaseCRUDController<DispatchInfo, Dispatc
 
     @RequestMapping("/confirmPlan")
     public JsonRet<Boolean> confirmDispatchInfoPlan(@JsonParam DispatchInfoParam dispatchInfoParam) {
+        return dispatchInfoService.confirmDispatchInfoPlan(dispatchInfoParam);
+    }
+    @RequestMapping("/confirmPlanTest")
+    public JsonRet<Boolean> confirmDispatchInfoPlan2(@RequestBody DispatchInfoParam dispatchInfoParam) {
         return dispatchInfoService.confirmDispatchInfoPlan(dispatchInfoParam);
     }
 

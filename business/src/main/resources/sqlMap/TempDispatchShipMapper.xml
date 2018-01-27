@@ -43,7 +43,7 @@
     </sql>
 
     <insert id="insertSelective" useGeneratedKeys="true" keyProperty="pojo.id">
-        INSERT INTO TempDispatchShip
+        INSERT INTO Ship
         <trim prefix="(" suffix=")" suffixOverrides=",">
             <if test="pojo.shipNo!=null"> `shipNo`,</if>
             <if test="pojo.name!=null"> `name`,</if>
@@ -58,6 +58,7 @@
             <if test="pojo.from!=null"> `from`,</if>
             <if test="pojo.status!=null"> `status`,</if>
             <if test="pojo.description!=null"> `description`,</if>
+            `shipFlag`,
             `created`,
             `updated`
         </trim>
@@ -76,6 +77,7 @@
             <if test="pojo.from!=null">#{pojo.from},</if>
             <if test="pojo.status!=null">#{pojo.status},</if>
             <if test="pojo.description!=null">#{pojo.description},</if>
+            3,
             UNIX_TIMESTAMP(now()),
             UNIX_TIMESTAMP(now())
         </trim>
@@ -83,7 +85,7 @@
 
     <!--auto generated Code-->
     <update id="update">
-        UPDATE TempDispatchShip
+        UPDATE Ship
         <set>
             <if test="pojo.shipNo!=null"> `shipNo` = #{pojo.shipNo},</if>
             <if test="pojo.name!=null"> `name`= #{pojo.name},</if>
@@ -105,23 +107,23 @@
     </update>
 
     <update id="del" parameterType="java.lang.Long">
-        UPDATE TempDispatchShip
+        UPDATE Ship
         SET `isDeleted` = 1 ,
         `updated` = UNIX_TIMESTAMP(now())
-        WHERE `id` = #{id} and `isDeleted` = 0
+        WHERE `id` = #{id} and `isDeleted` = 0 and `shipFlag` = 3
         LIMIT 1
     </update>
 
     <select id="getById" parameterType="java.lang.Long" resultMap="AllColumnMap">
         SELECT <include refid="all_column"/>
-        FROM `TempDispatchShip`
-        WHERE `id` = #{id} and `isDeleted` = 0
+        FROM `Ship`
+        WHERE `id` = #{id} and `isDeleted` = 0 and `shipFlag` = 3
         LIMIT 1
     </select>
 
     <select id="getExistCount" resultType="java.lang.Integer" parameterType="Map" >
         SELECT  count(id)
-        FROM  `TempDispatchShip`
+        FROM  `Ship`
         where `isDeleted` = 0
         <if test="pojo.id != null"> AND `id` != #{pojo.id} </if>
         <if test="pojo.name != null"> AND `shipNo` = #{pojo.name} </if>
@@ -130,21 +132,21 @@
 
     <select id="getCount" resultType="java.lang.Integer" parameterType="Map" >
         SELECT  count(id)
-        FROM  `TempDispatchShip`
+        FROM  `Ship`
         <include refid="pageQueryWhereCommon"/>
         limit 1
     </select>
 
     <select id="queryByPage" resultMap="AllColumnMap" parameterType="Map">
         select <include refid="all_column"/>
-        from `TempDispatchShip`
+        from `Ship`
         <include refid="pageQueryWhereCommon"/>
         order by `id` desc
         <include refid="pageCommon"/>
     </select>
 
     <sql id="pageQueryWhereCommon">
-        where `isDeleted` = 0
+        where `isDeleted` = 0 and `shipFlag` = 3
         <if test="pojo.id != null"> AND `id` = #{pojo.id} </if>
         <if test="pojo.key != null">
             AND (`name` like concat('%', #{pojo.key}, '%') )
