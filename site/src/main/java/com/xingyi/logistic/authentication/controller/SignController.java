@@ -1,11 +1,7 @@
-package com.xingyi.logistic.controller.authtication;
+package com.xingyi.logistic.authentication.controller;
 
 import com.xingyi.logistic.authentication.model.*;
-import com.xingyi.logistic.authentication.security.User;
-import com.xingyi.logistic.authentication.service.ActionResourcesService;
 import com.xingyi.logistic.authentication.service.LocalAuthService;
-import com.xingyi.logistic.authentication.service.RolesService;
-import com.xingyi.logistic.authentication.service.UserProfileService;
 import com.xingyi.logistic.authentication.util.DigestUtil;
 import com.xingyi.logistic.authentication.util.SessionUtil;
 import com.xingyi.logistic.common.bean.ErrCode;

@@ -1,4 +1,4 @@
-package com.xingyi.logistic.controller.authtication;
+package com.xingyi.logistic.authentication.controller;
 
 import com.xingyi.logistic.authentication.model.OAuth;
 import com.xingyi.logistic.authentication.model.OAuthQuery;
