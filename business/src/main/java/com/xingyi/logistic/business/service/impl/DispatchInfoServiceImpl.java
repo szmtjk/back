@@ -145,9 +145,21 @@ public class DispatchInfoServiceImpl extends BaseCRUDService<DispatchInfoDO, Dis
         List<DispatchFlagInfo> delList = dispatchInfoParam.getPlanList().stream().filter(o->o.getFlag() == 2).collect(Collectors.toList());
         List<DispatchFlagInfo> addList = dispatchInfoParam.getPlanList().stream().filter(o->o.getFlag() == 3).collect(Collectors.toList());
         try {
-            updateList.forEach(o->dispatchInfoDAO.update(dispatchInfoConverter.toDataObject(o)));
-            delList.forEach(o->dispatchInfoDAO.del(o.getId()));
-            addList.forEach(o->dispatchInfoDAO.insertSelective(dispatchInfoConverter.toDataObject(o)));
+            updateList.forEach(o->{
+                o.setCustomerTaskFlowId(dispatchInfoParam.getCustomerTaskFlowId());
+                dispatchInfoDAO.update(dispatchInfoConverter.toDataObject(o));
+            });
+
+            delList.forEach(o->{
+                o.setCustomerTaskFlowId(dispatchInfoParam.getCustomerTaskFlowId());
+                dispatchInfoDAO.del(o.getId());
+            });
+
+            addList.forEach(o->{
+                o.setCustomerTaskFlowId(dispatchInfoParam.getCustomerTaskFlowId());
+                dispatchInfoDAO.insertSelective(dispatchInfoConverter.toDataObject(o));
+            });
+
             dispatchInfoDAO.updateCustomerTaskStatus(dispatchInfoParam.getCustomerTaskFlowId());
             ret.setSuccessData(true);
         } catch (Exception e) {
