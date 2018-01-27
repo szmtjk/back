@@ -1,4 +1,4 @@
-package com.xingyi.logistic.authtication.controller;
+package com.xingyi.logistic.authentication.controller;
 
 import com.xingyi.logistic.authentication.model.DataDictionary;
 import com.xingyi.logistic.authentication.model.DataDictionaryQuery;
