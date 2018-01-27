@@ -1,4 +1,4 @@
-package com.xingyi.logistic.qiangdan;
+package com.xingyi.logistic.qiangdan.controller;
 
 import com.xingyi.logistic.business.service.BaseService;
 import com.xingyi.logistic.controller.BaseCRUDController;
