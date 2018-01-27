@@ -36,6 +36,8 @@
             <if test="pojo.creator!=null"> `creator`,</if>
             <if test="pojo.creatorName!=null"> `creatorName`,</if>
             `created`,
+            <if test="pojo.updater!=null"> `updater`,</if>
+            <if test="pojo.updaterName!=null"> `updaterName`,</if>
             `updated`,
             `isDeleted`
         </trim>
@@ -46,6 +48,8 @@
             <if test="pojo.creator!=null">#{pojo.creator},</if>
             <if test="pojo.creatorName!=null">#{pojo.creatorName},</if>
             UNIX_TIMESTAMP(now()),
+            <if test="pojo.updater!=null">#{pojo.updater},</if>
+            <if test="pojo.updaterName!=null">#{pojo.updaterName},</if>
             UNIX_TIMESTAMP(now()),
             0
         </trim>
@@ -119,4 +123,8 @@
             </otherwise>
         </choose>
     </sql>
+
+    <delete id="deleteByUserId" parameterType="java.lang.Long">
+        DELETE FROM `UserRoles` WHERE userId = #{userId}
+    </delete>
 </mapper>

@@ -22,6 +22,7 @@
         <result property="checkRegisterNo" column="checkRegisterNo"/>
         <result property="checkNo" column="checkNo"/>
         <result property="shipID" column="shipID"/>
+        <result property="sailingArea" column="sailingArea"/>
         <result property="sailingAreaA" column="sailingAreaA"/>
         <result property="sailingAreaB" column="sailingAreaB"/>
         <result property="sailingAreaC" column="sailingAreaC"/>
@@ -42,44 +43,93 @@
         <result property="updated" column="updated"/>
     </resultMap>
 
+    <resultMap id="ShipWithStaffColumnMap" type="com.xingyi.logistic.business.db.entity.ShipWithStaffDO">
+        <result property="id" column="id"/>
+        <result property="shipNo" column="shipNo"/>
+        <result property="shipFlag" column="shipFlag"/>
+        <result property="shipType" column="shipType"/>
+        <result property="length" column="length"/>
+        <result property="width" column="width"/>
+        <result property="depth" column="depth"/>
+        <result property="totalWeight" column="totalWeight"/>
+        <result property="netWeight" column="netWeight"/>
+        <result property="loadWeight" column="loadWeight"/>
+        <result property="feeWeight" column="feeWeight"/>
+        <result property="levelAWeight" column="levelAWeight"/>
+        <result property="levelBWeight" column="levelBWeight"/>
+        <result property="levelCWeight" column="levelCWeight"/>
+        <result property="buildDate" column="buildDate"/>
+        <result property="customerId" column="customerId"/>
+        <result property="checkRegisterNo" column="checkRegisterNo"/>
+        <result property="checkNo" column="checkNo"/>
+        <result property="shipID" column="shipID"/>
+        <result property="sailingAreaA" column="sailingAreaA"/>
+        <result property="sailingAreaB" column="sailingAreaB"/>
+        <result property="sailingAreaC" column="sailingAreaC"/>
+        <result property="firstRegisterNo" column="firstRegisterNo"/>
+        <result property="sailingDepth" column="sailingDepth"/>
+        <result property="buildFactory" column="buildFactory"/>
+        <result property="aisID" column="aisID"/>
+        <result property="gpsDeviceId" column="gpsDeviceId"/>
+        <result property="oldShipName" column="oldShipName"/>
+        <result property="runType" column="runType"/>
+        <result property="rebuildDate" column="rebuildDate"/>
+        <result property="insuranceDate" column="insuranceDate"/>
+        <result property="checkDate" column="checkDate"/>
+        <result property="repairDate" column="repairDate"/>
+        <result property="description" column="description"/>
+        <result property="creator" column="creator"/>
+        <result property="created" column="created"/>
+        <result property="updated" column="updated"/>
+        <result property="captain" column="captain"/>
+        <result property="name" column="name"/>
+    </resultMap>
+
     <sql id="all_column">
-        `id`
-        ,`shipNo`
-        ,`shipFlag`
-        ,`shipType`
-        ,`length`
-        ,`width`
-        ,`depth`
-        ,`totalWeight`
-        ,`netWeight`
-        ,`loadWeight`
-        ,`feeWeight`
-        ,`levelAWeight`
-        ,`levelBWeight`
-        ,`levelCWeight`
-        ,`buildDate`
-        ,`customerId`
-        ,`checkRegisterNo`
-        ,`checkNo`
-        ,`shipID`
-        ,`sailingAreaA`
-        ,`sailingAreaB`
-        ,`sailingAreaC`
-        ,`firstRegisterNo`
-        ,`sailingDepth`
-        ,`buildFactory`
-        ,`aisID`
-        ,`gpsDeviceId`
-        ,`oldShipName`
-        ,`runType`
-        ,`rebuildDate`
-        ,`insuranceDate`
-        ,`checkDate`
-        ,`repairDate`
-        ,`description`
-        ,`creator`
-        ,`created`
-        ,`updated`
+        a.`id`
+        ,a.`shipNo`
+        ,a.`shipFlag`
+        ,a.`shipType`
+        ,a.`length`
+        ,a.`width`
+        ,a.`depth`
+        ,a.`totalWeight`
+        ,a.`netWeight`
+        ,a.`loadWeight`
+        ,a.`feeWeight`
+        ,a.`levelAWeight`
+        ,a.`levelBWeight`
+        ,a.`levelCWeight`
+        ,a.`buildDate`
+        ,a.`customerId`
+        ,a.`checkRegisterNo`
+        ,a.`checkNo`
+        ,a.`shipID`
+        ,a.`sailingArea`
+        ,a.`sailingAreaA`
+        ,a.`sailingAreaB`
+        ,a.`sailingAreaC`
+        ,a.`firstRegisterNo`
+        ,a.`sailingDepth`
+        ,a.`buildFactory`
+        ,a.`aisID`
+        ,a.`gpsDeviceId`
+        ,a.`oldShipName`
+        ,a.`runType`
+        ,a.`rebuildDate`
+        ,a.`insuranceDate`
+        ,a.`checkDate`
+        ,a.`repairDate`
+        ,a.`description`
+        ,a.`creator`
+        ,a.`created`
+        ,a.`updated`
+    </sql>
+
+    <sql id="all_column_staff">
+        <include refid="all_column"/>
+        ,b.`name` as captain
+        ,b.`mobile`
     </sql>
 
     <insert id="insertSelective" useGeneratedKeys="true" keyProperty="pojo.id">
@@ -214,7 +264,7 @@
 
     <select id="getById" parameterType="java.lang.Long" resultMap="AllColumnMap">
         SELECT <include refid="all_column"/>
-        FROM `Ship`
+        FROM `Ship` a
         WHERE `id` = #{id} and `isDeleted` = 0
         LIMIT 1
     </select>
@@ -237,14 +287,29 @@
 
     <select id="queryByPage" resultMap="AllColumnMap" parameterType="Map">
         select <include refid="all_column"/>
-        from `Ship`
+        from `Ship` a
         <include refid="pageQueryWhereCommon"/>
         order by `id` desc
         <include refid="pageCommon"/>
     </select>
 
+    <select id="queryWithStaff" resultMap="ShipWithStaffColumnMap" parameterType="Map">
+        select <include refid="all_column_staff"/>
+        from `Ship` a
+        left join `ShipStaff` b on b.shipId = a.id
+        where a.isDeleted = 0
+        <if test="pojo.key != null">
+            AND (a.`shipNo` like concat('%', #{pojo.key}, '%') )
+        </if>
+        <if test="pojo.shipTypes != null">
+            <!--<foreach collection="shipTypes" open="(" close=")" item="shipType" separator=",">-->
+
+            <!--</foreach>-->
+        </if>
+    </select>
+
     <sql id="pageQueryWhereCommon">
-        where `isDeleted` = 0
+        where `isDeleted` = 0 and `shipFlag` &lt; 3
         <if test="pojo.id != null"> AND `id` = #{pojo.id} </if>
         <if test="pojo.key != null">
             AND (`shipNo` like concat('%', #{pojo.key}, '%') )

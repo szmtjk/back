@@ -41,6 +41,8 @@
             <if test="pojo.parentId!=null"> `parentId`,</if>
             <if test="pojo.creator!=null"> `creator`,</if>
             <if test="pojo.creatorName!=null"> `creatorName`,</if>
+            <if test="pojo.updater!=null"> `updater`,</if>
+            <if test="pojo.updaterName!=null"> `updaterName`,</if>
             `created`,
             `updated`,
             `isDeleted`
@@ -53,6 +55,8 @@
             <if test="pojo.parentId!=null">#{pojo.parentId},</if>
             <if test="pojo.creator!=null">#{pojo.creator},</if>
             <if test="pojo.creatorName!=null">#{pojo.creatorName},</if>
+            <if test="pojo.updater!=null">#{pojo.updater},</if>
+            <if test="pojo.updaterName!=null">#{pojo.updaterName},</if>
             UNIX_TIMESTAMP(now()),
             UNIX_TIMESTAMP(now()),
             0
@@ -91,7 +95,7 @@
         FROM  `DataDictionary`
         where `isDeleted` = 0
         <if test="pojo.id != null"> AND `id` != #{pojo.id} </if>
-        <if test="pojo.name != null"> AND `name` = #{pojo.name} </if>
+        <if test="pojo.code != null"> AND `code` = #{pojo.code} </if>
         limit 1
     </select>
 

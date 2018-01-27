@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!--  Generate by autoSQLMap Powered by duxing@Taobao -->
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.xingyi.logistic.qiangdan.db.dao.ReservationDAO">
+    <resultMap id="AllColumnMap" type="com.xingyi.logistic.qiangdan.db.entity.ReservationDO">
+        <result property="id" column="id"/>
+        <result property="userId" column="userId"/>
+        <result property="shipLongitude" column="shipLongitude"/>
+        <result property="shipLatitude" column="shipLatitude"/>
+        <result property="preLoad" column="preLoad"/>
+        <result property="preArrivePortTime" column="preArrivePortTime"/>
+        <result property="shipEmptyPhoto" column="shipEmptyPhoto"/>
+        <result property="shipReference" column="shipReference"/>
+        <result property="status" column="status"/>
+    </resultMap>
+
+    <sql id="all_column">
+        `id`
+        ,`userId`
+        ,`shipLongitude`
+        ,`shipLatitude`
+        ,`preLoad`
+        ,`preArrivePortTime`
+        ,`shipEmptyPhoto`
+        ,`shipReference`
+        ,`status`
+    </sql>
+
+    <insert id="insertSelective" useGeneratedKeys="true" keyProperty="pojo.id">
+        INSERT INTO Reservation
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="pojo.userId!=null"> `userId`,</if>
+            <if test="pojo.shipLongitude!=null"> `shipLongitude`,</if>
+            <if test="pojo.shipLatitude!=null"> `shipLatitude`,</if>
+            <if test="pojo.preLoad!=null"> `preLoad`,</if>
+            <if test="pojo.preArrivePortTime!=null"> `preArrivePortTime`,</if>
+            <if test="pojo.shipEmptyPhoto!=null"> `shipEmptyPhoto`,</if>
+            <if test="pojo.shipReference!=null"> `shipReference`,</if>
+            `status`
+        </trim>
+        VALUES
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="pojo.userId!=null">#{pojo.userId},</if>
+            <if test="pojo.shipLongitude!=null">#{pojo.lng},</if>
+            <if test="pojo.shipLatitude!=null">#{pojo.lat},</if>
+            <if test="pojo.preLoad!=null">#{pojo.preLoad},</if>
+            <if test="pojo.preArrivePortTime!=null">#{pojo.preArrivePortTime},</if>
+            <if test="pojo.shipEmptyPhoto!=null">#{pojo.shipEmptyPhoto},</if>
+            <if test="pojo.shipReference!=null">#{pojo.shipReference},</if>
+            1
+        </trim>
+    </insert>
+
+    <!--auto generated Code-->
+    <update id="update">
+        UPDATE Reservation
+        <set>
+            <if test="pojo.userId!=null">`userId` = #{pojo.userId},</if>
+            <if test="pojo.shipLongitude!=null">`shipLongitude` = #{pojo.lng},</if>
+            <if test="pojo.shipLatitude!=null">`shipLatitude` = #{pojo.lat},</if>
+            <if test="pojo.preLoad!=null">`preLoad` = #{pojo.preLoad},</if>
+            <if test="pojo.preArrivePortTime!=null">`preArrivePortTime` = #{pojo.preArrivePortTime},</if>
+            <if test="pojo.shipEmptyPhoto!=null">`shipEmptyPhoto` = #{pojo.shipEmptyPhoto},</if>
+            <if test="pojo.shipReference!=null">`shipReference` = #{pojo.shipReference},</if>
+        </set>
+        WHERE `id` = #{pojo.id}
+    </update>
+
+    <update id="del" parameterType="java.lang.Long">
+        UPDATE Reservation
+        SET `status` = 0
+        WHERE `id` = #{id}
+    </update>
+
+    <select id="getById" parameterType="java.lang.Long" resultMap="AllColumnMap">
+        SELECT <include refid="all_column"/>
+        FROM `Reservation`
+        WHERE `id` = #{id}
+    </select>
+
+    <select id="getExistCount" resultType="java.lang.Integer" parameterType="Map" >
+        SELECT  count(id)
+        FROM  `Reservation`
+        where `status` = 1
+        <if test="pojo.id != null"> AND `id` != #{pojo.id} </if>
+        <if test="pojo.userId != null"> AND `userId` = #{pojo.userId} </if>
+        limit 1
+    </select>
+
+    <select id="getCount" resultType="java.lang.Integer" parameterType="Map" >
+        SELECT  count(id)
+        FROM  `Reservation`
+        <include refid="pageQueryWhereCommon"/>
+        limit 1
+    </select>
+
+    <select id="queryByPage" resultMap="AllColumnMap" parameterType="Map">
+        select <include refid="all_column"/>
+        from `Reservation`
+        <include refid="pageQueryWhereCommon"/>
+        order by `id` desc
+        <include refid="pageCommon"/>
+    </select>
+
+    <sql id="pageQueryWhereCommon">
+        where `status` = 0
+        <if test="pojo.id != null"> AND `id` = #{pojo.id} </if>
+        <if test="pojo.key != null">
+            AND (`userId` like concat('%', #{pojo.key}, '%'))
+        </if>
+    </sql>
+
+    <sql id="pageCommon">
+        <choose>
+            <when test="pojo.startRow != null and pojo.startRow gt -1 and pojo.limitNum != null and pojo.limitNum gt 0">
+                limit #{pojo.startRow}, #{pojo.limitNum}
+            </when>
+            <otherwise>
+                limit 100
+            </otherwise>
+        </choose>
+    </sql>
+</mapper>

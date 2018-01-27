@@ -28,9 +28,9 @@ public class BaseCustomerTaskFlow extends BaseModelAndDO {
 
     private String receiver;//收货单位
 
-    private String loadingDate;//装货日期
+    private Long loadingTime;//装货日期
 
-    private String dischargeDate;//卸货日期
+    private Long dischargeTime;//卸货日期
 
     private Long startPortId;//装货港口
 
@@ -60,8 +60,25 @@ public class BaseCustomerTaskFlow extends BaseModelAndDO {
     private Integer sailingFlag;//航次标识  1：正常  2：散装回程货  3：安吉货
     @AllowedNumber(values = {1, 2})
     private Integer status;
+    private Integer taskStatus;
 
     private String description;//状态 1：启用  2：禁用
+
+    public Long getLoadingTime() {
+        return loadingTime;
+    }
+
+    public void setLoadingTime(Long loadingTime) {
+        this.loadingTime = loadingTime;
+    }
+
+    public Long getDischargeTime() {
+        return dischargeTime;
+    }
+
+    public void setDischargeTime(Long dischargeTime) {
+        this.dischargeTime = dischargeTime;
+    }
 
     public Long getTaskId() {
         return taskId;
@@ -127,21 +144,6 @@ public class BaseCustomerTaskFlow extends BaseModelAndDO {
         this.receiver = receiver;
     }
 
-    public String getLoadingDate() {
-        return loadingDate;
-    }
-
-    public void setLoadingDate(String loadingDate) {
-        this.loadingDate = loadingDate;
-    }
-
-    public String getDischargeDate() {
-        return dischargeDate;
-    }
-
-    public void setDischargeDate(String dischargeDate) {
-        this.dischargeDate = dischargeDate;
-    }
 
     public Long getStartPortId() {
         return startPortId;
@@ -245,6 +247,14 @@ public class BaseCustomerTaskFlow extends BaseModelAndDO {
 
     public void setStatus(Integer status) {
         this.status = status;
+    }
+
+    public Integer getTaskStatus() {
+        return taskStatus;
+    }
+
+    public void setTaskStatus(Integer taskStatus) {
+        this.taskStatus = taskStatus;
     }
 
     public String getDescription() {

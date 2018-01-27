@@ -1,0 +1,191 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!--  Generate by autoSQLMap Powered by duxing@Taobao -->
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.xingyi.logistic.business.db.dao.LeftDispatchInfoDAO">
+    <resultMap id="AllColumnMap" type="com.xingyi.logistic.business.db.entity.LeftDispatchInfoDO">
+        <result property="id" column="id"/>
+        <result property="leftdispatchid" column="leftdispatchid"/>
+        <result property="customerTaksFlowId" column="customerTaksFlowId"/>
+        <result property="goodsname" column="goodsname"/>
+        <result property="dispatchWeight" column="dispatchWeight"/>
+        <result property="startportid" column="startportid"/>
+        <result property="startportname" column="startportname"/>
+        <result property="endportid" column="endportid"/>
+        <result property="endportname" column="endportname"/>
+        <result property="loadingTime" column="loadingTime"/>
+        <result property="bookSTime" column="bookSTime"/>
+        <result property="bookETime" column="bookETime"/>
+        <result property="specialTip" column="specialTip"/>
+        <result property="minShipWeight" column="minShipWeight"/>
+        <result property="maxShipWeight" column="maxShipWeight"/>
+        <result property="maxshipnum" column="maxshipnum"/>
+        <result property="waterLevel" column="waterLevel"/>
+        <result property="status" column="status"/>
+        <result property="creator" column="creator"/>
+        <result property="created" column="created"/>
+        <result property="updated" column="updated"/>
+        <result property="isDeleted" column="isDeleted"/>
+        <result property="updater" column="updater"/>
+    </resultMap>
+
+    <sql id="all_column">
+        `id`
+        ,`leftdispatchid`
+        ,`customerTaksFlowId`
+        ,`goodsname`
+        ,`dispatchWeight`
+        ,`startportid`
+        ,`startportname`
+        ,`endportid`
+        ,`endportname`
+        ,`loadingTime`
+        ,`bookSTime`
+        ,`bookETime`
+        ,`specialTip`
+        ,`minShipWeight`
+        ,`maxShipWeight`
+        ,`maxshipnum`
+        ,`waterLevel`
+        ,`status`
+        ,`creator`
+        ,`created`
+        ,`updated`
+        ,`isDeleted`
+        ,`updater`
+    </sql>
+
+    <insert id="insertSelective" useGeneratedKeys="true" keyProperty="pojo.id">
+        INSERT INTO LeftDispatchInfo
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="pojo.leftdispatchid!=null"> `leftdispatchid`,</if>
+            <if test="pojo.customerTaksFlowId!=null"> `customerTaksFlowId`,</if>
+            <if test="pojo.goodsname!=null"> `goodsname`,</if>
+            <if test="pojo.dispatchWeight!=null"> `dispatchWeight`,</if>
+            <if test="pojo.startportid!=null"> `startportid`,</if>
+            <if test="pojo.startportname!=null"> `startportname`,</if>
+            <if test="pojo.endportid!=null"> `endportid`,</if>
+            <if test="pojo.endportname!=null"> `endportname`,</if>
+            <if test="pojo.loadingTime!=null"> `loadingTime`,</if>
+            <if test="pojo.bookSTime!=null"> `bookSTime`,</if>
+            <if test="pojo.bookETime!=null"> `bookETime`,</if>
+            <if test="pojo.specialTip!=null"> `specialTip`,</if>
+            <if test="pojo.minShipWeight!=null"> `minShipWeight`,</if>
+            <if test="pojo.maxShipWeight!=null"> `maxShipWeight`,</if>
+            <if test="pojo.maxshipnum!=null"> `maxshipnum`,</if>
+            <if test="pojo.waterLevel!=null"> `waterLevel`,</if>
+            <if test="pojo.creator!=null"> `creator`,</if>
+            <if test="pojo.updater!=null"> `updater`,</if>
+            `status`,
+            `created`,
+            `updated`,
+            `isDeleted`
+        </trim>
+        VALUES
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="pojo.leftdispatchid!=null">#{pojo.leftdispatchid},</if>
+            <if test="pojo.customerTaksFlowId!=null">#{pojo.customerTaksFlowId},</if>
+            <if test="pojo.goodsname!=null">#{pojo.goodsname},</if>
+            <if test="pojo.dispatchWeight!=null">#{pojo.dispatchWeight},</if>
+            <if test="pojo.startportid!=null">#{pojo.startportid},</if>
+            <if test="pojo.startportname!=null">#{pojo.startportname},</if>
+            <if test="pojo.endportid!=null">#{pojo.endportid},</if>
+            <if test="pojo.endportname!=null">#{pojo.endportname},</if>
+            <if test="pojo.loadingTime!=null">#{pojo.loadingTime},</if>
+            <if test="pojo.bookSTime!=null">#{pojo.bookSTime},</if>
+            <if test="pojo.bookETime!=null">#{pojo.bookETime},</if>
+            <if test="pojo.specialTip!=null">#{pojo.specialTip},</if>
+            <if test="pojo.minShipWeight!=null">#{pojo.minShipWeight},</if>
+            <if test="pojo.maxShipWeight!=null">#{pojo.maxShipWeight},</if>
+            <if test="pojo.maxshipnum!=null">#{pojo.maxshipnum},</if>
+            <if test="pojo.waterLevel!=null">#{pojo.waterLevel},</if>
+            <if test="pojo.creator!=null">#{pojo.creator},</if>
+            <if test="pojo.updater!=null">#{pojo.updater},</if>
+            1,
+            UNIX_TIMESTAMP(now()),
+            UNIX_TIMESTAMP(now()),
+            0
+        </trim>
+    </insert>
+
+    <!--auto generated Code-->
+    <update id="update">
+        UPDATE LeftDispatchInfo
+        <set>
+            <if test="pojo.leftdispatchid!=null">`leftdispatchid` = #{pojo.leftdispatchid},</if>
+            <if test="pojo.customerTaksFlowId!=null">`customerTaksFlowId` = #{pojo.customerTaksFlowId},</if>
+            <if test="pojo.goodsname!=null">`goodsname` = #{pojo.goodsname},</if>
+            <if test="pojo.dispatchWeight!=null">`dispatchWeight` = #{pojo.dispatchWeight},</if>
+            <if test="pojo.startportid!=null">`startportid` = #{pojo.startportid},</if>
+            <if test="pojo.startportname!=null">`startportname` = #{pojo.startportname},</if>
+            <if test="pojo.endportid!=null">`endportid` = #{pojo.endportid},</if>
+            <if test="pojo.endportname!=null">`endportname` = #{pojo.endportname},</if>
+            <if test="pojo.loadingTime!=null">`loadingTime` = #{pojo.loadingTime},</if>
+            <if test="pojo.bookSTime!=null">`bookSTime` = #{pojo.bookSTime},</if>
+            <if test="pojo.bookETime!=null">`bookETime` = #{pojo.bookETime},</if>
+            <if test="pojo.specialTip!=null">`specialTip` = #{pojo.specialTip},</if>
+            <if test="pojo.minShipWeight!=null">`minShipWeight` = #{pojo.minShipWeight},</if>
+            <if test="pojo.maxShipWeight!=null">`maxShipWeight` = #{pojo.maxShipWeight},</if>
+            <if test="pojo.maxshipnum!=null">`maxshipnum` = #{pojo.maxshipnum},</if>
+            <if test="pojo.waterLevel!=null">`waterLevel` = #{pojo.waterLevel},</if>
+            <if test="pojo.updater!=null">`updater` = #{pojo.updater},</if>
+            `updated` = UNIX_TIMESTAMP(now())
+        </set>
+        WHERE `id` = #{pojo.id}
+    </update>
+
+    <update id="del" parameterType="java.lang.Long">
+        UPDATE LeftDispatchInfo
+        SET `isDeleted` = 1 ,
+        `updated` = UNIX_TIMESTAMP(now())
+        WHERE `id` = #{id}
+    </update>
+
+    <select id="getById" parameterType="java.lang.Long" resultMap="AllColumnMap">
+        SELECT <include refid="all_column"/>
+        FROM `LeftDispatchInfo`
+        WHERE `id` = #{id}
+    </select>
+
+    <select id="getExistCount" resultType="java.lang.Integer" parameterType="Map" >
+        SELECT  count(id)
+        FROM  `LeftDispatchInfo`
+        where `isDeleted` = 0
+        <if test="pojo.id != null"> AND `id` != #{pojo.id} </if>
+        <if test="pojo.customerTaksFlowId != null"> AND `customerTaksFlowId` = #{pojo.customerTaksFlowId} </if>
+        limit 1
+    </select>
+
+    <select id="getCount" resultType="java.lang.Integer" parameterType="Map" >
+        SELECT  count(id)
+        FROM  `LeftDispatchInfo`
+        <include refid="pageQueryWhereCommon"/>
+        limit 1
+    </select>
+
+    <select id="queryByPage" resultMap="AllColumnMap" parameterType="Map">
+        select <include refid="all_column"/>
+        from `LeftDispatchInfo`
+        <include refid="pageQueryWhereCommon"/>
+        order by `id` desc
+        <include refid="pageCommon"/>
+    </select>
+
+    <sql id="pageQueryWhereCommon">
+        where `isDeleted` = 0
+        <if test="pojo.id != null"> AND `id` = #{pojo.id} </if>
+        <if test="pojo.key != null">
+            AND (`customerTaksFlowId` like concat('%', #{pojo.key}, '%'))
+        </if>
+    </sql>
+
+    <sql id="pageCommon">
+        <choose>
+            <when test="pojo.startRow != null and pojo.startRow gt -1 and pojo.limitNum != null and pojo.limitNum gt 0">
+                limit #{pojo.startRow}, #{pojo.limitNum}
+            </when>
+            <otherwise>
+                limit 100
+            </otherwise>
+        </choose>
+    </sql>
+</mapper>

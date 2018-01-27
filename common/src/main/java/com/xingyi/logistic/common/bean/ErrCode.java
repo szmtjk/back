@@ -17,6 +17,8 @@ public enum ErrCode {
     GET_ERR(20007, "查询错误"),
     ADD_SUB_ERR(20008, "新增子数据错误"),
 
+    AUTHORITY_SETTING_ERR(89999,"权限设置错误"),
+
 	AUTHTICATION_NOT_EXIST(90000,"账号不存在"),
 	AUTHTICATION_PASSWD_ERROR(90001,"密码错误"),
 	AUTHTICATION_TOKEN_EXPIRE(90002,"Token已过期"),

@@ -3,8 +3,6 @@ package com.xingyi.logistic.business.bean;
 import com.xingyi.logistic.common.annotation.AllowedNumber;
 import com.xingyi.logistic.common.annotation.NotNullEmpty;
 
-import java.util.Date;
-
 /**
  * 船舶
  */
@@ -23,14 +21,15 @@ public class BaseShip extends BaseModelAndDO {
     private Long netWeight;//净重
     private Long loadWeight;//载重吨位
     private Long feeWeight;//计费吨位
-    private Long levelAWeight;//A级吨位
-    private Long levelBWeight;//B级吨位
-    private Long levelCWeight;//C级吨位
+    private Integer levelAWeight;//A级吨位
+    private Integer levelBWeight;//B级吨位
+    private Integer levelCWeight;//C级吨位
     private String buildDate;//建成日期
     private Long customerId;//船舶所属单位
     private String checkRegisterNo;//船检登记号
     private String checkNo;//船检编号
     private String shipID;//船舶识别码
+    private Integer sailingArea;//航行区域
     private String sailingAreaA;//A级航区
     private String sailingAreaB;//B级航区
     private String sailingAreaC;//C级航区
@@ -137,27 +136,27 @@ public class BaseShip extends BaseModelAndDO {
         this.feeWeight = feeWeight;
     }
 
-    public Long getLevelAWeight() {
+    public Integer getLevelAWeight() {
         return levelAWeight;
     }
 
-    public void setLevelAWeight(Long levelAWeight) {
+    public void setLevelAWeight(Integer levelAWeight) {
         this.levelAWeight = levelAWeight;
     }
 
-    public Long getLevelBWeight() {
+    public Integer getLevelBWeight() {
         return levelBWeight;
     }
 
-    public void setLevelBWeight(Long levelBWeight) {
+    public void setLevelBWeight(Integer levelBWeight) {
         this.levelBWeight = levelBWeight;
     }
 
-    public Long getLevelCWeight() {
+    public Integer getLevelCWeight() {
         return levelCWeight;
     }
 
-    public void setLevelCWeight(Long levelCWeight) {
+    public void setLevelCWeight(Integer levelCWeight) {
         this.levelCWeight = levelCWeight;
     }
 
@@ -199,6 +198,14 @@ public class BaseShip extends BaseModelAndDO {
 
     public void setShipID(String shipID) {
         this.shipID = shipID;
+    }
+
+    public Integer getSailingArea() {
+        return sailingArea;
+    }
+
+    public void setSailingArea(Integer sailingArea) {
+        this.sailingArea = sailingArea;
     }
 
     public String getSailingAreaA() {

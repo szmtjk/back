@@ -41,6 +41,8 @@
             <if test="pojo.salt!=null"> `salt`,</if>
             <if test="pojo.creator!=null"> `creator`,</if>
             <if test="pojo.creatorName!=null"> `creatorName`,</if>
+            <if test="pojo.updater!=null"> `updater`,</if>
+            <if test="pojo.updaterName!=null"> `updaterName`,</if>
             `created`,
             `updated`,
             `isDeleted`
@@ -53,6 +55,8 @@
             <if test="pojo.salt!=null">#{pojo.salt},</if>
             <if test="pojo.creator!=null"> `creator`,</if>
             <if test="pojo.creatorName!=null">#{pojo.creatorName},</if>
+            <if test="pojo.updater!=null">#{pojo.updater},</if>
+            <if test="pojo.updaterName!=null">#{pojo.updaterName},</if>
             UNIX_TIMESTAMP(now()),
             UNIX_TIMESTAMP(now()),
             0

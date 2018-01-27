@@ -1,12 +1,9 @@
-package com.xingyi.logistic.controller.authtication;
+package com.xingyi.logistic.authentication.controller;
 
 import com.xingyi.logistic.authentication.model.*;
-import com.xingyi.logistic.authentication.security.User;
-import com.xingyi.logistic.authentication.service.ActionResourcesService;
 import com.xingyi.logistic.authentication.service.LocalAuthService;
-import com.xingyi.logistic.authentication.service.RolesService;
-import com.xingyi.logistic.authentication.service.UserProfileService;
 import com.xingyi.logistic.authentication.util.DigestUtil;
+import com.xingyi.logistic.authentication.util.SessionUtil;
 import com.xingyi.logistic.common.bean.ErrCode;
 import com.xingyi.logistic.common.bean.JsonRet;
 import com.xingyi.logistic.controller.BaseController;
@@ -31,12 +28,6 @@ import java.util.Map;
 public class SignController extends BaseController {
 	@Autowired
 	private LocalAuthService localAuthService;
-	@Autowired
-	private UserProfileService userProfileService;
-	@Autowired
-	private RolesService rolesService;
-	@Autowired
-	private ActionResourcesService resourcesService;
 
 	@Value("#{30L * 24L * 3600L * 1000L}")
 	private long tokenExpire;
@@ -66,13 +57,6 @@ public class SignController extends BaseController {
 		}
 
 		Long userId = localAuth.getUserId();
-		JsonRet<UserProfile> profileJsonRet = this.userProfileService.getById(userId);
-		UserProfile profile = profileJsonRet.getData();
-		User user = new User(profile);
-		List<Roles> rolesList = this.rolesService.queryByUserId(userId);
-		user.setRoles(rolesList);
-		List<ActionResources> resources = this.resourcesService.queryByUserId(userId);
-		user.setResources(resources);
 
 		//下发 Token
 		long expire = System.currentTimeMillis() + this.tokenExpire;
@@ -85,9 +69,17 @@ public class SignController extends BaseController {
 		//MTpjMDNkNDI4NWJiMGM5ZTBkNzE3OTNhMWFjOTBkMGMwZXg6MTUxOTE1NzYzNzA2OQ== 非法,篡改 MD5
 
 		Map<String,Object> params = new HashMap<String,Object>();
-		params.put("user",user);
 		params.put("token",token);
 
 		return JsonRet.getSuccessRet(params);
 	}
+
+    /**
+     * 退出系统
+     */
+    @RequestMapping("/signout")
+	public JsonRet<Object> signout(){
+        SessionUtil.getSession().removeSubject();
+	    return JsonRet.getSuccessRet(null);
+    }
 }
