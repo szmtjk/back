@@ -7,6 +7,7 @@ import com.xingyi.logistic.business.bean.BaseDBQueryPage;
  */
 public class TransferFlowPriceDBQuery extends BaseDBQueryPage {
 
+    private Long transferPriceId;
     private String key;
 
     public String getKey() {
@@ -15,5 +16,13 @@ public class TransferFlowPriceDBQuery extends BaseDBQueryPage {
 
     public void setKey(String key) {
         this.key = key;
+    }
+
+    public Long getTransferPriceId() {
+        return transferPriceId;
+    }
+
+    public void setTransferPriceId(Long transferPriceId) {
+        this.transferPriceId = transferPriceId;
     }
 }

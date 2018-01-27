@@ -15,6 +15,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @author tsingtao_tung
@@ -48,7 +50,21 @@ public class AuthenticationFilter implements Filter {
 		String ctx = httpRequest.getContextPath();
 		String requestPath = requestURI.replace(ctx,"");
 
-		if(!requestPath.startsWith("/signin")){
+        List<String> excludePath = new ArrayList<String>();
+        excludePath.add("/reservation/getList");
+		excludePath.add("/reservation/add");
+		excludePath.add("/reservation/modify");
+		excludePath.add("/reservation/del");
+		excludePath.add("/TempDispatchShip/getList");
+		excludePath.add("/TempDispatchShip/add");
+		excludePath.add("/TempDispatchShip/modify");
+		excludePath.add("/TempDispatchShip/del");
+		excludePath.add("/leftDispatchInfo/getList");
+		excludePath.add("/leftDispatchInfo/add");
+		excludePath.add("/leftDispatchInfo/modify");
+		excludePath.add("/leftDispatchInfo/del");
+
+		if(!requestPath.startsWith("/signin") && !excludePath.contains(requestPath)){
 			//认证
 			String token = httpRequest.getHeader("token");
 			if(StringUtils.isBlank(token)){

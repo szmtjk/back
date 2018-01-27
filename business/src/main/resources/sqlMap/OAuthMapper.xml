@@ -8,6 +8,9 @@
         <result property="oauthName" column="oauthName"/>
         <result property="oauthId" column="oauthId"/>
         <result property="accessToken" column="accessToken"/>
+        <result property="refreshToken" column="refreshToken"/>
+        <result property="scope" column="scope"/>
+        <result property="unionId" column="unionId"/>
         <result property="oauthExpires" column="oauthExpires"/>
         <result property="creator" column="creator"/>
         <result property="creatorName" column="creatorName"/>
@@ -24,6 +27,9 @@
         ,`oauthName`
         ,`oauthId`
         ,`accessToken`
+        ,`refreshToken`
+        ,`scope`
+        ,`unionId`
         ,`oauthExpires`
         ,`creator`
         ,`creatorName`
@@ -41,6 +47,9 @@
             <if test="pojo.oauthName!=null"> `oauthName`,</if>
             <if test="pojo.oauthId!=null"> `oauthId`,</if>
             <if test="pojo.accessToken!=null"> `accessToken`,</if>
+            <if test="pojo.refreshToken!=null"> `refreshToken`,</if>
+            <if test="pojo.scope!=null"> `scope`,</if>
+            <if test="pojo.unionId!=null"> `unionId`,</if>
             <if test="pojo.oauthExpires!=null"> `oauthExpires`,</if>
             <if test="pojo.creator!=null"> `creator`,</if>
             <if test="pojo.creatorName!=null"> `creatorName`,</if>
@@ -56,6 +65,9 @@
             <if test="pojo.oauthName!=null">#{pojo.oauthName},</if>
             <if test="pojo.oauthId!=null">#{pojo.oauthId},</if>
             <if test="pojo.accessToken!=null">#{pojo.accessToken},</if>
+            <if test="pojo.refreshToken!=null">#{pojo.refreshToken},</if>
+            <if test="pojo.scope!=null">#{pojo.scope},</if>
+            <if test="pojo.unionId!=null">#{pojo.unionId},</if>
             <if test="pojo.oauthExpires!=null">#{pojo.oauthExpires},</if>
             <if test="pojo.creator!=null"> `creator`,</if>
             <if test="pojo.creatorName!=null">#{pojo.creatorName},</if>
@@ -74,6 +86,9 @@
             <if test="pojo.oauthName!=null">`oauthName` = #{pojo.oauthName},</if>
             <if test="pojo.oauthId!=null">`oauthId` = #{pojo.oauthId},</if>
             <if test="pojo.accessToken!=null">`accessToken` = #{pojo.accessToken},</if>
+            <if test="pojo.refreshToken!=null">`refreshToken` = #{pojo.refreshToken},</if>
+            <if test="pojo.scope!=null">`scope` = #{pojo.scope},</if>
+            <if test="pojo.unionId!=null">`unionId` = #{pojo.unionId},</if>
             <if test="pojo.oauthExpires!=null">`oauthExpires` = #{pojo.oauthExpires},</if>
             <if test="pojo.updaterName!=null">`updaterName` = #{pojo.updaterName},</if>
             <if test="pojo.isDeleted!=null">`isDeleted` = #{pojo.isDeleted},</if>

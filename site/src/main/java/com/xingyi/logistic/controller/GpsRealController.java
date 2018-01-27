@@ -4,6 +4,7 @@ import com.xingyi.logistic.business.model.*;
 import com.xingyi.logistic.business.service.BaseService;
 import com.xingyi.logistic.business.service.ShipCurrentGpsService;
 import com.xingyi.logistic.config.JsonParam;
+import org.apache.catalina.servlet4preview.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -91,8 +92,11 @@ public class GpsRealController extends BaseCRUDController<ShipCurrentGps, ShipCu
      * @return
      */
     @RequestMapping("/loadSailing")
-    public List<SailingData> loadSailing()
+    public List<SailingData> loadSailing(HttpServletRequest request)
     {
+        System.out.println("===================");
+        System.out.println(request.getHeader("token"));
+        System.out.println("===================");
         return shipCurrentGpsService.querySailingInfo();
     }
 
