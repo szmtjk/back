@@ -7,8 +7,35 @@ public class BaseOAuth extends BaseModelAndDO {
     private String oauthName;
     private String oauthId;
     private String accessToken;
+    private String refreshToken;
+    private String unionId;
+    private String scope;
     private String oauthExpires;
     private Integer isDeleted;
+
+    public String getUnionId() {
+        return unionId;
+    }
+
+    public void setUnionId(String unionId) {
+        this.unionId = unionId;
+    }
+
+    public String getRefreshToken() {
+        return refreshToken;
+    }
+
+    public void setRefreshToken(String refreshToken) {
+        this.refreshToken = refreshToken;
+    }
+
+    public String getScope() {
+        return scope;
+    }
+
+    public void setScope(String scope) {
+        this.scope = scope;
+    }
 
     public Integer getIsDeleted() {
         return isDeleted;

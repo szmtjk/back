@@ -15,6 +15,11 @@
         <result property="updaterName" column="updaterName"/>
         <result property="updated" column="updated"/>
         <result property="isDeleted" column="isDeleted"/>
+        <result property="sex" column="sex"/>
+        <result property="province" column="province"/>
+        <result property="city" column="city"/>
+        <result property="country" column="country"/>
+        <result property="headImgUrl" column="headImgUrl"/>
     </resultMap>
 
     <sql id="all_column">
@@ -30,6 +35,11 @@
         ,`updaterName`
         ,`updated`
         ,`isDeleted`
+        ,`sex`
+        ,`province`
+        ,`city`
+        ,`country`
+        ,`headImgUrl`
     </sql>
 
     <insert id="insertSelective" useGeneratedKeys="true" keyProperty="pojo.id">
@@ -43,6 +53,11 @@
             <if test="pojo.creatorName!=null"> `creatorName`,</if>
             <if test="pojo.updater!=null"> `updater`,</if>
             <if test="pojo.updaterName!=null"> `updaterName`,</if>
+            <if test="pojo.sex!=null"> `sex`,</if>
+            <if test="pojo.province!=null"> `province`,</if>
+            <if test="pojo.city!=null"> `city`,</if>
+            <if test="pojo.country!=null"> `country`,</if>
+            <if test="pojo.headImgUrl!=null"> `headImgUrl`,</if>
             `created`,
             `updated`,
             `isDeleted`
@@ -57,6 +72,11 @@
             <if test="pojo.creatorName!=null">#{pojo.creatorName},</if>
             <if test="pojo.updater!=null">#{pojo.updater},</if>
             <if test="pojo.updaterName!=null">#{pojo.updaterName},</if>
+            <if test="pojo.sex!=null">#{pojo.sex},</if>
+            <if test="pojo.province!=null">#{pojo.province},</if>
+            <if test="pojo.city!=null">#{pojo.city},</if>
+            <if test="pojo.country!=null">#{pojo.country},</if>
+            <if test="pojo.headImgUrl!=null">#{pojo.headImgUrl},</if>
             UNIX_TIMESTAMP(now()),
             UNIX_TIMESTAMP(now()),
             0
@@ -74,6 +94,11 @@
             <if test="pojo.updater!=null">`updater` = #{pojo.updater},</if>
             <if test="pojo.updaterName!=null">`updaterName` = #{pojo.updaterName},</if>
             <if test="pojo.isDeleted!=null">`isDeleted` = #{pojo.isDeleted},</if>
+            <if test="pojo.isDeleted!=null">`sex` = #{pojo.sex},</if>
+            <if test="pojo.isDeleted!=null">`province` = #{pojo.province},</if>
+            <if test="pojo.isDeleted!=null">`city` = #{pojo.city},</if>
+            <if test="pojo.isDeleted!=null">`country` = #{pojo.country},</if>
+            <if test="pojo.isDeleted!=null">`headImgUrl` = #{pojo.headImgUrl},</if>
             `updated` = UNIX_TIMESTAMP(now())
         </set>
         WHERE `id` = #{pojo.id}
