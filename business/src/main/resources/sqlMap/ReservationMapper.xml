@@ -41,8 +41,8 @@
         VALUES
         <trim prefix="(" suffix=")" suffixOverrides=",">
             <if test="pojo.userId!=null">#{pojo.userId},</if>
-            <if test="pojo.shipLongitude!=null">#{pojo.shipLongitude},</if>
-            <if test="pojo.shipLatitude!=null">#{pojo.shipLatitude},</if>
+            <if test="pojo.shipLongitude!=null">#{pojo.lng},</if>
+            <if test="pojo.shipLatitude!=null">#{pojo.lat},</if>
             <if test="pojo.preLoad!=null">#{pojo.preLoad},</if>
             <if test="pojo.preArrivePortTime!=null">#{pojo.preArrivePortTime},</if>
             <if test="pojo.shipEmptyPhoto!=null">#{pojo.shipEmptyPhoto},</if>
@@ -56,8 +56,8 @@
         UPDATE Reservation
         <set>
             <if test="pojo.userId!=null">`userId` = #{pojo.userId},</if>
-            <if test="pojo.shipLongitude!=null">`shipLongitude` = #{pojo.shipLongitude},</if>
-            <if test="pojo.shipLatitude!=null">`shipLatitude` = #{pojo.shipLatitude},</if>
+            <if test="pojo.shipLongitude!=null">`shipLongitude` = #{pojo.lng},</if>
+            <if test="pojo.shipLatitude!=null">`shipLatitude` = #{pojo.lat},</if>
             <if test="pojo.preLoad!=null">`preLoad` = #{pojo.preLoad},</if>
             <if test="pojo.preArrivePortTime!=null">`preArrivePortTime` = #{pojo.preArrivePortTime},</if>
             <if test="pojo.shipEmptyPhoto!=null">`shipEmptyPhoto` = #{pojo.shipEmptyPhoto},</if>

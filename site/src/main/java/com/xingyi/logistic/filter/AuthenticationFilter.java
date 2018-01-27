@@ -51,7 +51,18 @@ public class AuthenticationFilter implements Filter {
 		String requestPath = requestURI.replace(ctx,"");
 
         List<String> excludePath = new ArrayList<String>();
-        excludePath.add("");
+        excludePath.add("/reservation/getList");
+		excludePath.add("/reservation/add");
+		excludePath.add("/reservation/modify");
+		excludePath.add("/reservation/del");
+		excludePath.add("/TempDispatchShip/getList");
+		excludePath.add("/TempDispatchShip/add");
+		excludePath.add("/TempDispatchShip/modify");
+		excludePath.add("/TempDispatchShip/del");
+		excludePath.add("/leftDispatchInfo/getList");
+		excludePath.add("/leftDispatchInfo/add");
+		excludePath.add("/leftDispatchInfo/modify");
+		excludePath.add("/leftDispatchInfo/del");
 
 		if(!requestPath.startsWith("/signin") && !excludePath.contains(requestPath)){
 			//认证
