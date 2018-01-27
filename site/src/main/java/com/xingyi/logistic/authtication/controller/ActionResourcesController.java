@@ -1,4 +1,4 @@
-package com.xingyi.logistic.controller.authtication;
+package com.xingyi.logistic.authtication.controller;
 
 import com.xingyi.logistic.authentication.model.ActionResources;
 import com.xingyi.logistic.authentication.model.ActionResourcesQuery;
