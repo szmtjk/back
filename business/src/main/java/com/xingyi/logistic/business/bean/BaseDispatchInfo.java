@@ -14,6 +14,7 @@ public class BaseDispatchInfo extends BaseModelAndDO {
     private Integer preLoad;
     private Integer preArriveTime;
     private Double preSettleAmount;
+    private Double actualTransferPrice;
     private Integer settleType;
     private Integer status;
     public Integer getCustomerTaskFlowId() {
@@ -86,6 +87,14 @@ public class BaseDispatchInfo extends BaseModelAndDO {
 
     public void setPreSettleAmount(Double preSettleAmount) {
         this.preSettleAmount = preSettleAmount;
+    }
+
+    public Double getActualTransferPrice() {
+        return actualTransferPrice;
+    }
+
+    public void setActualTransferPrice(Double actualTransferPrice) {
+        this.actualTransferPrice = actualTransferPrice;
     }
 
     public Integer getSettleType() {
