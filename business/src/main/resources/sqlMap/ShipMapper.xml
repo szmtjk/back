@@ -309,7 +309,7 @@
     </select>
 
     <sql id="pageQueryWhereCommon">
-        where `isDeleted` = 0
+        where `isDeleted` = 0 and `shipFlag` &lt; 3
         <if test="pojo.id != null"> AND `id` = #{pojo.id} </if>
         <if test="pojo.key != null">
             AND (`shipNo` like concat('%', #{pojo.key}, '%') )
