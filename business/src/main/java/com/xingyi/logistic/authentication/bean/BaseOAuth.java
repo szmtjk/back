@@ -10,40 +10,8 @@ public class BaseOAuth extends BaseModelAndDO {
     private String refreshToken;
     private String unionId;
     private String scope;
-    private String oauthExpires;
+    private Long oauthExpires;
     private Integer isDeleted;
-
-    public String getUnionId() {
-        return unionId;
-    }
-
-    public void setUnionId(String unionId) {
-        this.unionId = unionId;
-    }
-
-    public String getRefreshToken() {
-        return refreshToken;
-    }
-
-    public void setRefreshToken(String refreshToken) {
-        this.refreshToken = refreshToken;
-    }
-
-    public String getScope() {
-        return scope;
-    }
-
-    public void setScope(String scope) {
-        this.scope = scope;
-    }
-
-    public Integer getIsDeleted() {
-        return isDeleted;
-    }
-
-    public void setIsDeleted(Integer isDeleted) {
-        this.isDeleted = isDeleted;
-    }
 
     public Integer getUserId() {
         return userId;
@@ -77,11 +45,43 @@ public class BaseOAuth extends BaseModelAndDO {
         this.accessToken = accessToken;
     }
 
-    public String getOauthExpires() {
+    public String getRefreshToken() {
+        return refreshToken;
+    }
+
+    public void setRefreshToken(String refreshToken) {
+        this.refreshToken = refreshToken;
+    }
+
+    public String getUnionId() {
+        return unionId;
+    }
+
+    public void setUnionId(String unionId) {
+        this.unionId = unionId;
+    }
+
+    public String getScope() {
+        return scope;
+    }
+
+    public void setScope(String scope) {
+        this.scope = scope;
+    }
+
+    public Long getOauthExpires() {
         return oauthExpires;
     }
 
-    public void setOauthExpires(String oauthExpires) {
+    public void setOauthExpires(Long oauthExpires) {
         this.oauthExpires = oauthExpires;
+    }
+
+    public Integer getIsDeleted() {
+        return isDeleted;
+    }
+
+    public void setIsDeleted(Integer isDeleted) {
+        this.isDeleted = isDeleted;
     }
 }
