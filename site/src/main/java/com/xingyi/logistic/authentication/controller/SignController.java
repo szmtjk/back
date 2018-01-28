@@ -89,7 +89,7 @@ public class SignController extends BaseController {
 	}
 
     /**
-     * 微信授权回调接口
+     * 微信登录
      * @return
      */
     @RequestMapping(value = "/signin/oauth/weixin/{code}")
@@ -102,11 +102,6 @@ public class SignController extends BaseController {
         String accessToken = tokenResult.getAccess_token();
         String openId = tokenResult.getOpenid();
 
-        AppUser appUser = new AppUser();
-        JsonRet<Long> userAddRet = this.appUserService.add(appUser);
-        Long userId = userAddRet.getData();
-        appUser.setId(userId);
-
         OAuth oAuth = new OAuth();
         oAuth.setOauthName(OAuthType.WEIXIN.getCode());
         oAuth.setAccessToken(accessToken);
@@ -114,10 +109,34 @@ public class SignController extends BaseController {
         oAuth.setRefreshToken(tokenResult.getRefresh_token());
         oAuth.setScope(tokenResult.getScope());
         oAuth.setOauthExpires(tokenResult.getExpires_in());
-        oAuth.setUserId(userId);
-        JsonRet<Long> oAuthAddRet = this.oAuthService.add(oAuth);
-        Long oAuthId = oAuthAddRet.getData();
-        oAuth.setId(oAuthId);
+	    JsonRet<OAuth> oAuthSaveRet = this.oAuthService.save(oAuth);
+	    if(!oAuthSaveRet.isSuccess()){
+	    	return JsonRet.getErrRet(oAuthSaveRet.getErrCode(),oAuthSaveRet.getMsg());
+	    }
+
+	    AppUser appUser = null;
+		Long appUserId = oAuth.getUserId();
+	    if(null != appUserId){
+	    	JsonRet<AppUser> appUserGetRet = this.appUserService.getById(appUserId);
+	    	if(!appUserGetRet.isSuccess()){
+	    		return JsonRet.getErrRet(appUserGetRet.getErrCode(),appUserGetRet.getMsg());
+		    }
+		    appUser = appUserGetRet.getData();
+	    }else{
+		    appUser = new AppUser();
+		    JsonRet<Long> appUserAddRet = this.appUserService.add(appUser);
+		    if(!appUserAddRet.isSuccess()){
+			    return JsonRet.getErrRet(appUserAddRet.getErrCode(),appUserAddRet.getMsg());
+		    }
+		    appUserId = appUserAddRet.getData();
+		    appUser.setId(appUserId);
+
+		    oAuth.setUserId(appUserId);
+		    JsonRet<Boolean> oAuthModifyRet = this.oAuthService.modify(oAuth);
+		    if(!oAuthModifyRet.isSuccess()){
+			    return JsonRet.getErrRet(oAuthModifyRet.getErrCode(),oAuthModifyRet.getMsg());
+		    }
+	    }
 
         UserInfoResult userInfoResult = this.weiXinService.getUserInfo(accessToken,openId);
         if(userInfoResult.isSuccess()){
@@ -128,16 +147,21 @@ public class SignController extends BaseController {
             appUser.setProvince(userInfoResult.getProvince());
             appUser.setCountry(userInfoResult.getCountry());
             appUser.setHeadImgUrl(userInfoResult.getHeadimgurl());
-            this.appUserService.modify(appUser);
-
+            JsonRet<Boolean> appUserModifyRet = this.appUserService.modify(appUser);
+	        if(!appUserModifyRet.isSuccess()){
+		        return JsonRet.getErrRet(appUserModifyRet.getErrCode(),appUserModifyRet.getMsg());
+	        }
             oAuth.setUnionId(userInfoResult.getUnionid());
-            this.oAuthService.modify(oAuth);
+            JsonRet<Boolean> oAuthModifyRet = this.oAuthService.modify(oAuth);
+	        if(!oAuthModifyRet.isSuccess()){
+		        return JsonRet.getErrRet(oAuthModifyRet.getErrCode(),oAuthModifyRet.getMsg());
+	        }
         }
 
         //下发 Token
         long expire = System.currentTimeMillis() + this.tokenExpire;
-        String md5 = DigestUtil.md5(String.valueOf(userId),oAuth.getOauthId(),oAuth.getAccessToken(),String.valueOf(expire));
-        String token = userId + ":" + md5 + ":" + expire;
+        String md5 = DigestUtil.md5(String.valueOf(appUserId),oAuth.getOauthId(),oAuth.getAccessToken(),String.valueOf(expire));
+        String token = appUserId + ":" + md5 + ":" + expire;
         token = Base64Utils.encodeToString(token.getBytes());
         Map<String,Object> params = new HashMap<String,Object>();
         params.put("token",token);

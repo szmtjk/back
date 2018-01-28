@@ -115,7 +115,7 @@
         FROM  `OAuth`
         where `isDeleted` = 0
         <if test="pojo.id != null"> AND `id` != #{pojo.id} </if>
-        <if test="pojo.oauthName != null"> AND `oauthName` = #{pojo.oauthName} </if>
+        AND `oauthId` = #{pojo.oauthId}
         limit 1
     </select>
 
@@ -152,5 +152,9 @@
             </otherwise>
         </choose>
     </sql>
+
+    <select id="queryByOauthId" parameterType="java.lang.String" resultMap="AllColumnMap">
+        SELECT * FROM OAuth WHERE OAUTHID = #{oauthId}
+    </select>
 
 </mapper>
