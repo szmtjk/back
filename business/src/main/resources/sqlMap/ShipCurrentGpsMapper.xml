@@ -270,7 +270,8 @@
     <select id="queryComboxCustomerInfo" resultMap="mRetComboxMap" parameterType="Map">
         select id AS ID, fullName AS NAME
         from `Customer`
-         WHERE isDeleted = 0
+        WHERE isDeleted = 0
+        ORDER BY updated DESC
     </select>
 
 
