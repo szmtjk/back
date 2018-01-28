@@ -10,8 +10,8 @@ public class BaseFlow extends BaseModelAndDO {
 
     @NotNullEmpty
    private String name;
-   private Long startFlow;//起始流向
-    private Long endFlow;//
+   private String startFlow;//起始流向
+    private String endFlow;//
     private Long startPortId;//起始港口
     private Long endPortId;//
     private Integer sailingArea;//航行区域 按位存储信息
@@ -28,19 +28,19 @@ public class BaseFlow extends BaseModelAndDO {
         this.name = name;
     }
 
-    public Long getStartFlow() {
+    public String getStartFlow() {
         return startFlow;
     }
 
-    public void setStartFlow(Long startFlow) {
+    public void setStartFlow(String startFlow) {
         this.startFlow = startFlow;
     }
 
-    public Long getEndFlow() {
+    public String getEndFlow() {
         return endFlow;
     }
 
-    public void setEndFlow(Long endFlow) {
+    public void setEndFlow(String endFlow) {
         this.endFlow = endFlow;
     }
 
