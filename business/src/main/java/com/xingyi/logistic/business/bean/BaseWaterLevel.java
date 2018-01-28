@@ -31,7 +31,6 @@ public class BaseWaterLevel extends BaseModelAndDO{
     /**
      * 备注
      */
-    @NotNullEmpty
     private String description;
 
     /**
