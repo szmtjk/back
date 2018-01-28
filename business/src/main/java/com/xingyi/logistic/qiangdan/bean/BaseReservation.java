@@ -1,59 +1,72 @@
 package com.xingyi.logistic.qiangdan.bean;
 
 import com.xingyi.logistic.business.bean.BaseModelAndDO;
-import com.xingyi.logistic.common.annotation.NotNullEmpty;
 
-import javax.xml.ws.BindingType;
+import javax.validation.constraints.NotNull;
 
 public class BaseReservation extends BaseModelAndDO {
+
+    private Integer leftDispatchId;
 
     /**
      * 用户id
      */
-    @NotNullEmpty
+    @NotNull
     private Integer userId;
 
     /**
      * 船舶经度
      */
-    @NotNullEmpty
+    @NotNull
     private Integer shipLongitude;
 
     /**
      * 船舶纬度
      */
-    @NotNullEmpty
+    @NotNull
     private Integer shipLatitude;
 
     /**
      * 预报吨位
      */
-    @NotNullEmpty
+    @NotNull
     private Integer preLoad;
 
     /**
      * 预计到达港口时间
      */
-    @NotNullEmpty
+    @NotNull
     private Integer preArrivePortTime;
 
     /**
      * 空船照片
      */
-    @NotNullEmpty
     private String shipEmptyPhoto;
 
     /**
      * 参照物照片
      */
-    @NotNullEmpty
     private String shipReference;
 
     /**
      * 状态
      */
-    @NotNullEmpty
     private Integer status;
+
+    private Integer checkStatus;
+    private Double actualTransferPrice;
+    private Double preSettleAmount;
+    private String shipNo;
+    private String name;
+    private String mobile;
+
+    public Integer getLeftDispatchId() {
+        return leftDispatchId;
+    }
+
+    public void setLeftDispatchId(Integer leftDispatchId) {
+        this.leftDispatchId = leftDispatchId;
+    }
 
     public Integer getUserId() {
         return userId;
@@ -117,5 +130,53 @@ public class BaseReservation extends BaseModelAndDO {
 
     public void setStatus(Integer status) {
         this.status = status;
+    }
+
+    public Integer getCheckStatus() {
+        return checkStatus;
+    }
+
+    public void setCheckStatus(Integer checkStatus) {
+        this.checkStatus = checkStatus;
+    }
+
+    public Double getActualTransferPrice() {
+        return actualTransferPrice;
+    }
+
+    public void setActualTransferPrice(Double actualTransferPrice) {
+        this.actualTransferPrice = actualTransferPrice;
+    }
+
+    public Double getPreSettleAmount() {
+        return preSettleAmount;
+    }
+
+    public void setPreSettleAmount(Double preSettleAmount) {
+        this.preSettleAmount = preSettleAmount;
+    }
+
+    public String getShipNo() {
+        return shipNo;
+    }
+
+    public void setShipNo(String shipNo) {
+        this.shipNo = shipNo;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getMobile() {
+        return mobile;
+    }
+
+    public void setMobile(String mobile) {
+        this.mobile = mobile;
     }
 }

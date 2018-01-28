@@ -4,7 +4,11 @@
 <mapper namespace="com.xingyi.logistic.qiangdan.db.dao.ReservationDAO">
     <resultMap id="AllColumnMap" type="com.xingyi.logistic.qiangdan.db.entity.ReservationDO">
         <result property="id" column="id"/>
+        <result property="leftDispatchId" column="leftDispatchId"/>
         <result property="userId" column="userId"/>
+        <result property="shipNo" column="shipNo"/>
+        <result property="name" column="name"/>
+        <result property="mobile" column="mobile"/>
         <result property="shipLongitude" column="shipLongitude"/>
         <result property="shipLatitude" column="shipLatitude"/>
         <result property="preLoad" column="preLoad"/>
@@ -12,23 +16,34 @@
         <result property="shipEmptyPhoto" column="shipEmptyPhoto"/>
         <result property="shipReference" column="shipReference"/>
         <result property="status" column="status"/>
+        <result property="checkStatus" column="checkStatus"/>
+        <result property="actualTransferPrice" column="actualTransferPrice"/>
+        <result property="preSettleAmount" column="preSettleAmount"/>
     </resultMap>
 
     <sql id="all_column">
-        `id`
-        ,`userId`
-        ,`shipLongitude`
-        ,`shipLatitude`
-        ,`preLoad`
-        ,`preArrivePortTime`
-        ,`shipEmptyPhoto`
-        ,`shipReference`
-        ,`status`
+        a.`id`
+        ,a.`leftDispatchId`
+        ,a.`userId`
+        ,c.`shipNo`
+        ,c.`name`
+        ,c.`mobile`
+        ,a.`shipLongitude`
+        ,a.`shipLatitude`
+        ,a.`preLoad`
+        ,a.`preArrivePortTime`
+        ,a.`shipEmptyPhoto`
+        ,a.`shipReference`
+        ,a.`status`
+        ,a.`checkStatus`
+        ,a.`actualTransferPrice`
+        ,a.`preSettleAmount`
     </sql>
 
     <insert id="insertSelective" useGeneratedKeys="true" keyProperty="pojo.id">
         INSERT INTO Reservation
         <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="pojo.leftDispatchId!=null"> `leftDispatchId`,</if>
             <if test="pojo.userId!=null"> `userId`,</if>
             <if test="pojo.shipLongitude!=null"> `shipLongitude`,</if>
             <if test="pojo.shipLatitude!=null"> `shipLatitude`,</if>
@@ -36,17 +51,24 @@
             <if test="pojo.preArrivePortTime!=null"> `preArrivePortTime`,</if>
             <if test="pojo.shipEmptyPhoto!=null"> `shipEmptyPhoto`,</if>
             <if test="pojo.shipReference!=null"> `shipReference`,</if>
+            <if test="pojo.checkStatus!=null"> `checkStatus`,</if>
+            <if test="pojo.actualTransferPrice!=null"> `actualTransferPrice`,</if>
+            <if test="pojo.preSettleAmount!=null"> `preSettleAmount`,</if>
             `status`
         </trim>
         VALUES
         <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="pojo.leftDispatchId!=null">#{pojo.leftDispatchId},</if>
             <if test="pojo.userId!=null">#{pojo.userId},</if>
-            <if test="pojo.shipLongitude!=null">#{pojo.lng},</if>
-            <if test="pojo.shipLatitude!=null">#{pojo.lat},</if>
+            <if test="pojo.shipLongitude!=null">#{pojo.shipLongitude},</if>
+            <if test="pojo.shipLatitude!=null">#{pojo.shipLatitude},</if>
             <if test="pojo.preLoad!=null">#{pojo.preLoad},</if>
             <if test="pojo.preArrivePortTime!=null">#{pojo.preArrivePortTime},</if>
             <if test="pojo.shipEmptyPhoto!=null">#{pojo.shipEmptyPhoto},</if>
             <if test="pojo.shipReference!=null">#{pojo.shipReference},</if>
+            <if test="pojo.checkStatus!=null">#{pojo.checkStatus},</if>
+            <if test="pojo.actualTransferPrice!=null">#{pojo.actualTransferPrice},</if>
+            <if test="pojo.preSettleAmount!=null">#{pojo.preSettleAmount},</if>
             1
         </trim>
     </insert>
@@ -55,59 +77,70 @@
     <update id="update">
         UPDATE Reservation
         <set>
+            <if test="pojo.leftDispatchId!=null">`leftDispatchId` = #{pojo.leftDispatchId},</if>
             <if test="pojo.userId!=null">`userId` = #{pojo.userId},</if>
-            <if test="pojo.shipLongitude!=null">`shipLongitude` = #{pojo.lng},</if>
-            <if test="pojo.shipLatitude!=null">`shipLatitude` = #{pojo.lat},</if>
+            <if test="pojo.shipLongitude!=null">`shipLongitude` = #{pojo.shipLongitude},</if>
+            <if test="pojo.shipLatitude!=null">`shipLatitude` = #{pojo.shipLatitude},</if>
             <if test="pojo.preLoad!=null">`preLoad` = #{pojo.preLoad},</if>
             <if test="pojo.preArrivePortTime!=null">`preArrivePortTime` = #{pojo.preArrivePortTime},</if>
             <if test="pojo.shipEmptyPhoto!=null">`shipEmptyPhoto` = #{pojo.shipEmptyPhoto},</if>
             <if test="pojo.shipReference!=null">`shipReference` = #{pojo.shipReference},</if>
+            <if test="pojo.status!=null">`status` = #{pojo.status},</if>
+            <if test="pojo.checkStatus!=null">`checkStatus` = #{pojo.checkStatus},</if>
+            <if test="pojo.actualTransferPrice!=null">`actualTransferPrice` = #{pojo.actualTransferPrice},</if>
+            <if test="pojo.preSettleAmount!=null">`preSettleAmount` = #{pojo.preSettleAmount},</if>
         </set>
         WHERE `id` = #{pojo.id}
     </update>
 
     <update id="del" parameterType="java.lang.Long">
         UPDATE Reservation
-        SET `status` = 0
+        SET `isDeleted` = 1
         WHERE `id` = #{id}
     </update>
 
     <select id="getById" parameterType="java.lang.Long" resultMap="AllColumnMap">
         SELECT <include refid="all_column"/>
-        FROM `Reservation`
-        WHERE `id` = #{id}
+        FROM `Reservation` a
+        left join `AppUser` b on b.id = a.userId
+        left join `Ship` c on c.id = b.shipInfoId
+        WHERE a.`id` = #{id} `isDeleted` = 0
     </select>
 
     <select id="getExistCount" resultType="java.lang.Integer" parameterType="Map" >
         SELECT  count(id)
         FROM  `Reservation`
-        where `status` = 1
+        where `isDeleted` = 0 and `status` = 1
         <if test="pojo.id != null"> AND `id` != #{pojo.id} </if>
+        <if test="pojo.leftDispatchId != null"> AND `leftDispatchId` = #{pojo.leftDispatchId} </if>
         <if test="pojo.userId != null"> AND `userId` = #{pojo.userId} </if>
         limit 1
     </select>
 
     <select id="getCount" resultType="java.lang.Integer" parameterType="Map" >
         SELECT  count(id)
-        FROM  `Reservation`
+        FROM  `Reservation` a
         <include refid="pageQueryWhereCommon"/>
         limit 1
     </select>
 
     <select id="queryByPage" resultMap="AllColumnMap" parameterType="Map">
         select <include refid="all_column"/>
-        from `Reservation`
+        from `Reservation` a
+        left join `AppUser` b on b.id = a.userId
+        left join `Ship` c on c.id = b.shipInfoId
         <include refid="pageQueryWhereCommon"/>
+        and c.shipFlag = 3
         order by `id` desc
         <include refid="pageCommon"/>
     </select>
 
     <sql id="pageQueryWhereCommon">
-        where `status` = 0
-        <if test="pojo.id != null"> AND `id` = #{pojo.id} </if>
-        <if test="pojo.key != null">
-            AND (`userId` like concat('%', #{pojo.key}, '%'))
-        </if>
+        where a.`isDeleted` = 0
+        <if test="pojo.id != null"> AND a.`id` = #{pojo.id} </if>
+        <if test="pojo.status != null"> AND a.`status` = #{pojo.status} </if>
+        <if test="pojo.leftDispatchId != null"> AND a.`leftDispatchId` = #{pojo.leftDispatchId} </if>
+        <if test="pojo.userId != null"> AND a.`userId` = #{pojo.userId} </if>
     </sql>
 
     <sql id="pageCommon">
