@@ -1,9 +1,12 @@
 package com.xingyi.logistic.controller;
 
+import com.xingyi.logistic.business.model.LeftDispatch4CheckQuery;
 import com.xingyi.logistic.business.model.LeftDispatchInfo;
 import com.xingyi.logistic.business.model.LeftDispatchInfoQuery;
 import com.xingyi.logistic.business.service.BaseService;
 import com.xingyi.logistic.business.service.LeftDispatchInfoService;
+import com.xingyi.logistic.common.bean.JsonRet;
+import com.xingyi.logistic.config.JsonParam;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -17,6 +20,11 @@ public class LeftDispatchInfoController extends BaseCRUDController<LeftDispatchI
 
     @Autowired
     private LeftDispatchInfoService leftDispatchInfoService;
+
+    @RequestMapping("/getLeftDispatch4Check")
+    public JsonRet<Object> getLeftDispatch4Check(@JsonParam LeftDispatch4CheckQuery query) {
+        return leftDispatchInfoService.getLeftDispatch4Check(query);
+    }
 
     @Override
     protected BaseService<LeftDispatchInfo, LeftDispatchInfoQuery> getBaseService() {

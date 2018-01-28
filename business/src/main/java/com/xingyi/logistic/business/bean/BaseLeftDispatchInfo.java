@@ -5,40 +5,24 @@ import com.alibaba.fastjson.serializer.SerializerFeature;
 import com.xingyi.logistic.common.annotation.AllowedNumber;
 import com.xingyi.logistic.common.annotation.NotNullEmpty;
 
-public class BaseLeftDispatchInfo extends BaseModelAndDO{
+import javax.validation.constraints.NotNull;
 
-    @NotNullEmpty
-    private String leftdispatchid;
+public class BaseLeftDispatchInfo extends BaseModelAndDO{
 
     /**
      * 客户任务流向ID
      */
-    @NotNullEmpty
-    private Integer customerTaksFlowId;
+    @NotNull
+    private Integer customerTaskFlowId;
 
     @NotNullEmpty
-    private String goodsname;
+    private String goodsName;
 
     /**
      * 调度吨位
      */
-    @NotNullEmpty
+    @NotNull
     private Integer dispatchWeight;
-
-    @NotNullEmpty
-    private Integer startportid;
-
-    @NotNullEmpty
-    private Integer startportname;
-
-    @NotNullEmpty
-    private Integer endportid;
-
-    @NotNullEmpty
-    private String endportname;
-
-    @NotNullEmpty
-    private String loadingTime;
 
     /**
      * 预约抢单有效开始日期
@@ -55,23 +39,22 @@ public class BaseLeftDispatchInfo extends BaseModelAndDO{
     /**
      * 特殊要求
      */
-    @NotNullEmpty
     private String specialTip;
 
     /**
      * 最小船舶吨位
      */
-    @NotNullEmpty
+    @NotNull
     private Integer minShipWeight;
 
     /**
      * 最大船舶吨位
      */
-    @NotNullEmpty
+    @NotNull
     private Integer maxShipWeight;
 
-    @NotNullEmpty
-    private Integer maxshipnum;
+    @NotNull
+    private Integer maxShipNum;
 
     /**
      * 水位
@@ -85,33 +68,22 @@ public class BaseLeftDispatchInfo extends BaseModelAndDO{
     @AllowedNumber(values = {1, 2, 3}, message = "状态码错误")
     private Integer status;
 
-    /**
-     * 是否已删除
-     */
-    private Integer isDeleted;
+    private Integer taskStatus;
 
-    public String getLeftdispatchid() {
-        return leftdispatchid;
+    public Integer getCustomerTaskFlowId() {
+        return customerTaskFlowId;
     }
 
-    public void setLeftdispatchid(String leftdispatchid) {
-        this.leftdispatchid = leftdispatchid;
+    public void setCustomerTaskFlowId(Integer customerTaskFlowId) {
+        this.customerTaskFlowId = customerTaskFlowId;
     }
 
-    public Integer getCustomerTaksFlowId() {
-        return customerTaksFlowId;
+    public String getGoodsName() {
+        return goodsName;
     }
 
-    public void setCustomerTaksFlowId(Integer customerTaksFlowId) {
-        this.customerTaksFlowId = customerTaksFlowId;
-    }
-
-    public String getGoodsname() {
-        return goodsname;
-    }
-
-    public void setGoodsname(String goodsname) {
-        this.goodsname = goodsname;
+    public void setGoodsName(String goodsName) {
+        this.goodsName = goodsName;
     }
 
     public Integer getDispatchWeight() {
@@ -120,46 +92,6 @@ public class BaseLeftDispatchInfo extends BaseModelAndDO{
 
     public void setDispatchWeight(Integer dispatchWeight) {
         this.dispatchWeight = dispatchWeight;
-    }
-
-    public Integer getStartportid() {
-        return startportid;
-    }
-
-    public void setStartportid(Integer startportid) {
-        this.startportid = startportid;
-    }
-
-    public Integer getStartportname() {
-        return startportname;
-    }
-
-    public void setStartportname(Integer startportname) {
-        this.startportname = startportname;
-    }
-
-    public Integer getEndportid() {
-        return endportid;
-    }
-
-    public void setEndportid(Integer endportid) {
-        this.endportid = endportid;
-    }
-
-    public String getEndportname() {
-        return endportname;
-    }
-
-    public void setEndportname(String endportname) {
-        this.endportname = endportname;
-    }
-
-    public String getLoadingTime() {
-        return loadingTime;
-    }
-
-    public void setLoadingTime(String loadingTime) {
-        this.loadingTime = loadingTime;
     }
 
     public String getBookSTime() {
@@ -202,12 +134,12 @@ public class BaseLeftDispatchInfo extends BaseModelAndDO{
         this.maxShipWeight = maxShipWeight;
     }
 
-    public Integer getMaxshipnum() {
-        return maxshipnum;
+    public Integer getMaxShipNum() {
+        return maxShipNum;
     }
 
-    public void setMaxshipnum(Integer maxshipnum) {
-        this.maxshipnum = maxshipnum;
+    public void setMaxShipNum(Integer maxShipNum) {
+        this.maxShipNum = maxShipNum;
     }
 
     public float getWaterLevel() {
@@ -226,12 +158,12 @@ public class BaseLeftDispatchInfo extends BaseModelAndDO{
         this.status = status;
     }
 
-    public Integer getIsDeleted() {
-        return isDeleted;
+    public Integer getTaskStatus() {
+        return taskStatus;
     }
 
-    public void setIsDeleted(Integer isDeleted) {
-        this.isDeleted = isDeleted;
+    public void setTaskStatus(Integer taskStatus) {
+        this.taskStatus = taskStatus;
     }
 
     @Override
