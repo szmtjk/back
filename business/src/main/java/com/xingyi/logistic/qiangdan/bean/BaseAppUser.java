@@ -8,25 +8,21 @@ public class BaseAppUser extends BaseModelAndDO {
     /**
      * 用户名
      */
-    @NotNullEmpty
     private String userName;
 
     /**
      * 用户昵称
      */
-    @NotNullEmpty
     private String nickName;
 
     /**
      * 用户密码
      */
-    @NotNullEmpty
     private String userPass;
 
     /**
      * 临调船信息id
      */
-    @NotNullEmpty
     private Integer shipInfoId;
 
     /**
@@ -34,7 +30,7 @@ public class BaseAppUser extends BaseModelAndDO {
      */
     private Integer isDeleted;
 
-    private String sex;
+    private Integer sex;
 
     private String province;
 
@@ -44,11 +40,11 @@ public class BaseAppUser extends BaseModelAndDO {
 
     private String headImgUrl;
 
-    public String getSex() {
+    public Integer getSex() {
         return sex;
     }
 
-    public void setSex(String sex) {
+    public void setSex(Integer sex) {
         this.sex = sex;
     }
 

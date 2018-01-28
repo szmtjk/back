@@ -257,11 +257,21 @@
     <select id="queryComboxShipInfo" resultMap="mRetComboxMap" parameterType="Map">
         select shipNo AS ID, gpsDeviceId AS NAME
         from `Ship`
+        WHERE isDeleted = 0
+    </select>
+
+    <select id="queryDataDictInfo" resultMap="mRetComboxMap" parameterType="Map">
+        select id AS ID, value AS NAME
+        from `DataDictionary`
+        where code = #{pojo.code}
+        AND isDeleted = 0
     </select>
 
     <select id="queryComboxCustomerInfo" resultMap="mRetComboxMap" parameterType="Map">
         select id AS ID, fullName AS NAME
         from `Customer`
+        WHERE isDeleted = 0
+        ORDER BY updated DESC
     </select>
 
 

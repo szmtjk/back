@@ -1,5 +1,7 @@
 package com.xingyi.logistic.authentication.authenticator.impl;
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.serializer.SerializerFeature;
 import com.xingyi.logistic.authentication.authenticator.Authenticator;
 import com.xingyi.logistic.authentication.model.LocalAuth;
 import com.xingyi.logistic.authentication.model.UserProfile;
@@ -37,13 +39,11 @@ public class LocalAuthenticator implements Authenticator {
 		String md5 = tokenMembers[1];
 		long expire = Long.valueOf(tokenMembers[2]);
 
-		JsonRet<LocalAuth> localAuthJsonRet = this.localAuthService.getById(userId);
+		LocalAuth localAuth = this.localAuthService.queryByUserId(userId);
+		if(null == localAuth){
+		    return jsonRet;
+        }
 
-		if(!localAuthJsonRet.isSuccess()){
-			return jsonRet;
-		}
-
-		LocalAuth localAuth = localAuthJsonRet.getData();
 		String loginName = localAuth.getLoginName();
 		String localPasswd = localAuth.getPasswd();
 		String realMd5 = DigestUtil.md5(String.valueOf(userId),loginName,localPasswd,String.valueOf(expire));
@@ -58,10 +58,13 @@ public class LocalAuthenticator implements Authenticator {
 	}
 
 	private void bindUserToSession(Long userId) {
+		System.out.println(">>>>>>>>>>>>>>>>>>>>" + this.getClass().getName() + "开始绑定用户到 Session,userId=" + userId);
 		JsonRet<UserProfile> profileJsonRet = this.userProfileService.getById(userId);
+		System.out.println(">>>>>>>>>>>>>>>>>>>>" + this.getClass().getName() + "查询 userProfile=" + JSON.toJSONString(profileJsonRet,SerializerFeature.WriteMapNullValue));
 		UserProfile profile = profileJsonRet.getData();
 		User user = new User(profile);
 		Subject subject = new Subject(user, true);
 		SessionUtil.getSession().setSubject(subject);
+		System.out.println(">>>>>>>>>>>>>>>>>>>>>>" + this.getClass().getName() + "绑定用户到 Session 成功");
 	}
 }

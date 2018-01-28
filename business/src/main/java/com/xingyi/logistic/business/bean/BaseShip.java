@@ -29,12 +29,12 @@ public class BaseShip extends BaseModelAndDO {
     private String checkRegisterNo;//船检登记号
     private String checkNo;//船检编号
     private String shipID;//船舶识别码
-    private Integer sailingArea;//航行区域
+    private Integer sailingArea;//航行区域  1:A级  2:B级  4:C级 数字相加组合可表示多选
     private String sailingAreaA;//A级航区
     private String sailingAreaB;//B级航区
     private String sailingAreaC;//C级航区
     private String firstRegisterNo;//初次登记号
-    private Long sailingDepth;//航深
+    private Float sailingDepth;//航深
     private Long buildFactory;//制造厂家
     private String aisID;//AIS识别码
     private String gpsDeviceId;//GPS设备编号
@@ -47,6 +47,14 @@ public class BaseShip extends BaseModelAndDO {
     //@DateTimeFormat(pattern = "yyyy-MM-dd")
     private String repairDate;//维修日期
     private String description;//备注
+
+    public Float getSailingDepth() {
+        return sailingDepth;
+    }
+
+    public void setSailingDepth(Float sailingDepth) {
+        this.sailingDepth = sailingDepth;
+    }
 
     public String getFirstRegisterNo() {
         return firstRegisterNo;
@@ -230,14 +238,6 @@ public class BaseShip extends BaseModelAndDO {
 
     public void setSailingAreaC(String sailingAreaC) {
         this.sailingAreaC = sailingAreaC;
-    }
-
-    public Long getSailingDepth() {
-        return sailingDepth;
-    }
-
-    public void setSailingDepth(Long sailingDepth) {
-        this.sailingDepth = sailingDepth;
     }
 
     public Long getBuildFactory() {

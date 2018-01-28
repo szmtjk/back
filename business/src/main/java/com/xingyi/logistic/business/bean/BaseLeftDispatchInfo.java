@@ -21,7 +21,7 @@ public class BaseLeftDispatchInfo extends BaseModelAndDO{
     /**
      * 调度吨位
      */
-    @NotNull
+    @NotNullEmpty
     private Integer dispatchWeight;
 
     /**
@@ -59,7 +59,6 @@ public class BaseLeftDispatchInfo extends BaseModelAndDO{
     /**
      * 水位
      */
-    @NotNullEmpty
     private float waterLevel;
 
     /**
@@ -164,10 +163,5 @@ public class BaseLeftDispatchInfo extends BaseModelAndDO{
 
     public void setTaskStatus(Integer taskStatus) {
         this.taskStatus = taskStatus;
-    }
-
-    @Override
-    public String toString() {
-        return JSON.toJSONString(this, SerializerFeature.WriteMapNullValue);
     }
 }

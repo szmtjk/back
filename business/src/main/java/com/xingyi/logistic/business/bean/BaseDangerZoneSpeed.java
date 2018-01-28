@@ -12,11 +12,27 @@ public class BaseDangerZoneSpeed extends BaseModelAndDO {
     @NotNullEmpty
     private String name;
     private String coordinate;//经纬度集合
-    private Long minSpeed;//最小速度
-    private Long maxSpeed;//最大速度
+    private Float minSpeed;//最小速度
+    private Float maxSpeed;//最大速度
     @AllowedNumber(values = {1, 2})
     private Integer status; //状态  1：启用 2：禁用
     private String description;
+
+    public Float getMinSpeed() {
+        return minSpeed;
+    }
+
+    public void setMinSpeed(Float minSpeed) {
+        this.minSpeed = minSpeed;
+    }
+
+    public Float getMaxSpeed() {
+        return maxSpeed;
+    }
+
+    public void setMaxSpeed(Float maxSpeed) {
+        this.maxSpeed = maxSpeed;
+    }
 
     public String getName() {
         return name;
@@ -32,22 +48,6 @@ public class BaseDangerZoneSpeed extends BaseModelAndDO {
 
     public void setCoordinate(String coordinate) {
         this.coordinate = coordinate;
-    }
-
-    public Long getMinSpeed() {
-        return minSpeed;
-    }
-
-    public void setMinSpeed(Long minSpeed) {
-        this.minSpeed = minSpeed;
-    }
-
-    public Long getMaxSpeed() {
-        return maxSpeed;
-    }
-
-    public void setMaxSpeed(Long maxSpeed) {
-        this.maxSpeed = maxSpeed;
     }
 
     public Integer getStatus() {

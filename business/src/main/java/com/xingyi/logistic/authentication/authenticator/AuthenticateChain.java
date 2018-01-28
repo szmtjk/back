@@ -22,9 +22,11 @@ public class AuthenticateChain implements Authenticator {
 
 	@Override
 	public JsonRet<Object> authenticate(String token) {
+		System.out.println(">>>>>>>>>>>>>>>>>进入AuthenticateChain，入参 token=" + token);
 		JsonRet<Object> jsonRet = null;
 		//token 为空直接返回错误
 		if(StringUtils.isBlank(token)){
+			System.out.println(">>>>>>>>>>>>>>>>>AuthenticateChain， token为空，返回错误信息");
 			return JsonRet.getErrRet(ErrCode.AUTHTICATION_TOKEN_ERROR.getCode(),ErrCode.AUTHTICATION_TOKEN_ERROR.getMsg());
 		}
 

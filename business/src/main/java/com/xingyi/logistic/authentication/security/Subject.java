@@ -1,11 +1,16 @@
 package com.xingyi.logistic.authentication.security;
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.serializer.SerializerFeature;
+import com.xingyi.logistic.qiangdan.model.AppUser;
+
 /**
  * @author tsingtao_tung
  * Created At: 2018/1/21 下午10:54.
  */
 public class Subject {
 	private User user;
+	private AppUser appUser;
 	boolean isAuthenticated;
 
 	public Subject(){
@@ -35,5 +40,18 @@ public class Subject {
 
 	public void setAuthenticated(boolean authenticated) {
 		isAuthenticated = authenticated;
+	}
+
+	public AppUser getAppUser() {
+		return appUser;
+	}
+
+	public void setAppUser(AppUser appUser) {
+		this.appUser = appUser;
+	}
+
+	@Override
+	public String toString() {
+		return JSON.toJSONString(this,SerializerFeature.WriteMapNullValue);
 	}
 }

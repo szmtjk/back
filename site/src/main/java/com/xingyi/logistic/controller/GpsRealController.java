@@ -7,9 +7,11 @@ import com.xingyi.logistic.config.JsonParam;
 import org.apache.catalina.servlet4preview.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * 实时监控与轨迹回放相关的数据
@@ -110,10 +112,22 @@ public class GpsRealController extends BaseCRUDController<ShipCurrentGps, ShipCu
         return shipCurrentGpsService.queryDispatchInfo();
     }
 
+    /**
+     * 加载订单计划
+     * @return
+     */
+    @RequestMapping("/loadDataDict")
+    public List<Combox> loadDataDict(@RequestParam Map<String, String> map)
+    {
+        return shipCurrentGpsService.queryDataDictInfo(map);
+    }
+
     @Override
     protected BaseService<ShipCurrentGps, ShipCurrentGpsQuery> getBaseService()
     {
         return shipCurrentGpsService;
     }
+
+
 
 }

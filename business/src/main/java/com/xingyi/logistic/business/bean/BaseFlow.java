@@ -3,8 +3,6 @@ package com.xingyi.logistic.business.bean;
 import com.xingyi.logistic.common.annotation.AllowedNumber;
 import com.xingyi.logistic.common.annotation.NotNullEmpty;
 
-import javax.validation.constraints.NotNull;
-
 /**
  * 流向信息
  */
@@ -12,12 +10,12 @@ public class BaseFlow extends BaseModelAndDO {
 
     @NotNullEmpty
    private String name;
-   private Long startFlow;//起始流向
-    private Long endFlow;//
+   private String startFlow;//起始流向
+    private String endFlow;//
     private Long startPortId;//起始港口
     private Long endPortId;//
     private Integer sailingArea;//航行区域 按位存储信息
-    private Integer waterLevelPoint;//水位点
+    private String waterLevelPoint;//水位点
     @AllowedNumber(values = {1, 2})
     private Integer status; //状态  1：启用 2：禁用
     private String description;
@@ -30,19 +28,19 @@ public class BaseFlow extends BaseModelAndDO {
         this.name = name;
     }
 
-    public Long getStartFlow() {
+    public String getStartFlow() {
         return startFlow;
     }
 
-    public void setStartFlow(Long startFlow) {
+    public void setStartFlow(String startFlow) {
         this.startFlow = startFlow;
     }
 
-    public Long getEndFlow() {
+    public String getEndFlow() {
         return endFlow;
     }
 
-    public void setEndFlow(Long endFlow) {
+    public void setEndFlow(String endFlow) {
         this.endFlow = endFlow;
     }
 
@@ -70,11 +68,11 @@ public class BaseFlow extends BaseModelAndDO {
         this.sailingArea = sailingArea;
     }
 
-    public Integer getWaterLevelPoint() {
+    public String getWaterLevelPoint() {
         return waterLevelPoint;
     }
 
-    public void setWaterLevelPoint(Integer waterLevelPoint) {
+    public void setWaterLevelPoint(String waterLevelPoint) {
         this.waterLevelPoint = waterLevelPoint;
     }
 

@@ -1,5 +1,7 @@
 package com.xingyi.logistic.authentication.controller;
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.serializer.SerializerFeature;
 import com.xingyi.logistic.authentication.model.ActionResources;
 import com.xingyi.logistic.authentication.model.Roles;
 import com.xingyi.logistic.authentication.model.UserProfile;
@@ -69,13 +71,16 @@ public class UserController extends BaseCRUDController<UserProfile,UserProfileQu
 
     @RequestMapping("/info")
     public JsonRet<Object> info(){
-        Long userId = SessionUtil.getSubject().getUser().getProfile().getId();
-        JsonRet<UserProfile> profileJsonRet = this.userProfileService.getById(userId);
+    	UserProfile sessionProfile = SessionUtil.getProfile();
+	    System.out.println(">>>>>>>>>>>>>>>>>>>sessionProfile=" + JSON.toJSONString(sessionProfile,SerializerFeature.WriteMapNullValue));
+        Long sessionUserId = sessionProfile.getId();
+	    System.out.println(">>>>>>>>>>>>>>>>>>>sessionUserId=" + sessionUserId);
+        JsonRet<UserProfile> profileJsonRet = this.userProfileService.getById(sessionUserId);
         UserProfile profile = profileJsonRet.getData();
         User user = new User(profile);
-        List<Roles> rolesList = this.rolesService.queryByUserId(userId);
+        List<Roles> rolesList = this.rolesService.queryByUserId(profile.getId());
         user.setRoles(rolesList);
-        List<ActionResources> resources = this.resourcesService.queryByUserId(userId);
+        List<ActionResources> resources = this.resourcesService.queryByUserId(profile.getId());
         user.setResources(resources);
         return JsonRet.getSuccessRet(user);
     }

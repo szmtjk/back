@@ -3,7 +3,7 @@ package com.xingyi.logistic.authentication.bean;
 import com.xingyi.logistic.business.bean.BaseModelAndDO;
 
 public class BaseOAuth extends BaseModelAndDO {
-    private Integer userId;
+    private Long userId;
     private String oauthName;
     private String oauthId;
     private String accessToken;
@@ -13,11 +13,11 @@ public class BaseOAuth extends BaseModelAndDO {
     private Long oauthExpires;
     private Integer isDeleted;
 
-    public Integer getUserId() {
+    public Long getUserId() {
         return userId;
     }
 
-    public void setUserId(Integer userId) {
+    public void setUserId(Long userId) {
         this.userId = userId;
     }
 

@@ -15,6 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 /**
@@ -123,7 +124,15 @@ public class ShipCurrentGpsServiceImpl extends BaseCRUDService<ShipCurrentGpsDO,
     {
         return shipCurrentGpsDAO.queryDispatchInfo();
     }
-
+    /**
+     * 加载部门
+     * @param map
+     * @return
+     */
+    public List<Combox> queryDataDictInfo(Map<String, String> map)
+    {
+        return  shipCurrentGpsDAO.queryDataDictInfo(map);
+    }
 
     /**
      * 根据相关条件查询实时定位数据

@@ -125,13 +125,13 @@
 
     <select id="queryComboxCustomerInfo" resultMap="mRetComboxMap" parameterType="Map">
         select id AS ID, name AS NAME
-        from `Contract`
+        from `Contract` where `isDeleted` = 0
     </select>
 
     <select id="loadContractById" resultMap="mRetComboxMap" parameterType="Map">
         select a.partyA AS ID, b.fullName AS NAME
         from `Contract` a, `Customer` b
-         WHERE  a.partyA = b.customerNo
+         WHERE  a.partyA = b.id
         <if test="pojo.key != null"> AND a.id = #{pojo.key} </if>
     </select>
 

@@ -63,6 +63,7 @@
         <result property="checkRegisterNo" column="checkRegisterNo"/>
         <result property="checkNo" column="checkNo"/>
         <result property="shipID" column="shipID"/>
+        <result property="sailingArea" column="sailingArea"/>
         <result property="sailingAreaA" column="sailingAreaA"/>
         <result property="sailingAreaB" column="sailingAreaB"/>
         <result property="sailingAreaC" column="sailingAreaC"/>
@@ -153,6 +154,7 @@
             <if test="pojo.checkRegisterNo!=null"> `checkRegisterNo`,</if>
             <if test="pojo.checkNo!=null"> `checkNo`,</if>
             <if test="pojo.shipID!=null"> `shipID`,</if>
+            <if test="pojo.sailingArea!=null"> `sailingArea`,</if>
             <if test="pojo.sailingAreaA!=null"> `sailingAreaA`,</if>
             <if test="pojo.sailingAreaB!=null"> `sailingAreaB`,</if>
             <if test="pojo.sailingAreaC!=null"> `sailingAreaC`,</if>
@@ -191,6 +193,7 @@
             <if test="pojo.checkRegisterNo!=null">#{pojo.checkRegisterNo},</if>
             <if test="pojo.checkNo!=null">#{pojo.checkNo},</if>
             <if test="pojo.shipID!=null">#{pojo.shipID},</if>
+            <if test="pojo.sailingArea!=null">#{pojo.sailingArea},</if>
             <if test="pojo.sailingAreaA!=null">#{pojo.sailingAreaA},</if>
             <if test="pojo.sailingAreaB!=null">#{pojo.sailingAreaB},</if>
             <if test="pojo.sailingAreaC!=null">#{pojo.sailingAreaC},</if>
@@ -233,6 +236,7 @@
             <if test="pojo.checkRegisterNo!=null"> `checkRegisterNo`= #{pojo.checkRegisterNo},</if>
             <if test="pojo.checkNo!=null"> `checkNo`= #{pojo.checkNo},</if>
             <if test="pojo.shipID!=null"> `shipID`= #{pojo.shipID},</if>
+            <if test="pojo.sailingArea!=null"> `sailingArea`= #{pojo.sailingArea},</if>
             <if test="pojo.sailingAreaA!=null"> `sailingAreaA`= #{pojo.sailingAreaA},</if>
             <if test="pojo.sailingAreaB!=null"> `sailingAreaB`= #{pojo.sailingAreaB},</if>
             <if test="pojo.sailingAreaC!=null"> `sailingAreaC`= #{pojo.sailingAreaC},</if>
