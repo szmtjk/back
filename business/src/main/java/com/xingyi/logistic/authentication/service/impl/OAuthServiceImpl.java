@@ -16,7 +16,7 @@ import com.xingyi.logistic.common.bean.JsonRet;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-@Service
+@Service(value = "oauthServiceImpl")
 public class OAuthServiceImpl extends BaseCRUDService<OAuthDO,OAuth,OAuthDBQuery,OAuthQuery> implements OAuthService {
 
     @Autowired

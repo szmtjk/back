@@ -72,9 +72,9 @@ public class UserController extends BaseCRUDController<UserProfile,UserProfileQu
     @RequestMapping("/info")
     public JsonRet<Object> info(){
     	UserProfile sessionProfile = SessionUtil.getProfile();
-	    System.out.println("sessionProfile=" + JSON.toJSONString(sessionProfile,SerializerFeature.WriteMapNullValue));
+	    System.out.println(">>>>>>>>>>>>>>>>>>>sessionProfile=" + JSON.toJSONString(sessionProfile,SerializerFeature.WriteMapNullValue));
         Long sessionUserId = sessionProfile.getId();
-	    System.out.println("sessionUserId=" + sessionUserId);
+	    System.out.println(">>>>>>>>>>>>>>>>>>>sessionUserId=" + sessionUserId);
         JsonRet<UserProfile> profileJsonRet = this.userProfileService.getById(sessionUserId);
         UserProfile profile = profileJsonRet.getData();
         User user = new User(profile);

@@ -6,6 +6,7 @@ import com.xingyi.logistic.authentication.service.OAuthService;
 import com.xingyi.logistic.business.service.BaseService;
 import com.xingyi.logistic.controller.BaseCRUDController;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class OAuthController extends BaseCRUDController<OAuth,OAuthQuery>{
     @Autowired
+    @Qualifier(value = "oauthServiceImpl")
     private OAuthService oAuthService;
 
     @Override

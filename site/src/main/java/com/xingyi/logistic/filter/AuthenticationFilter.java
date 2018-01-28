@@ -15,8 +15,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * @author tsingtao_tung
@@ -53,9 +51,13 @@ public class AuthenticationFilter implements Filter {
 		if(!requestPath.startsWith("/signin")){
 			//认证
 			String token = httpRequest.getHeader("token");
+			System.out.println(">>>>>>>>>>>>>>>>>>从 Header 获取 Token:" + token);
 			if(StringUtils.isBlank(token)){
 				token = httpRequest.getParameter("token");
+				System.out.println(">>>>>>>>>>>>>>>>>>从 Request 获取 Token:" + token);
 			}
+
+			System.out.println(">>>>>>>>>>>>>>>>>>最终 获取 Token:" + token);
 
 			AuthenticateChain authenticateChain = new AuthenticateChain();
 			authenticateChain.addAuthenticator(new LocalAuthenticator())
