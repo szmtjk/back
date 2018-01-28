@@ -1,5 +1,6 @@
 package com.xingyi.logistic.controller;
 
+import com.xingyi.logistic.business.bean.BaseModelAndDO;
 import com.xingyi.logistic.business.bean.BaseQueryPage;
 import com.xingyi.logistic.business.service.BaseService;
 import com.xingyi.logistic.business.util.PrimitiveUtil;
@@ -19,7 +20,7 @@ import java.util.Map;
 /**
  * Created by Jadic on 2018/1/1.
  */
-public abstract class BaseCRUDController<Model, Condition extends BaseQueryPage> extends BaseController {
+public abstract class BaseCRUDController<Model extends BaseModelAndDO, Condition extends BaseQueryPage> extends BaseController {
 
     @RequestMapping(value = "/add", method = RequestMethod.POST)
     public JsonRet<Long> add(@JsonParam Model model) {

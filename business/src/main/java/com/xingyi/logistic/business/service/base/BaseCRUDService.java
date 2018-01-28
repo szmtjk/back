@@ -1,5 +1,7 @@
 package com.xingyi.logistic.business.service.base;
 
+import com.xingyi.logistic.authentication.model.UserProfile;
+import com.xingyi.logistic.authentication.util.SessionUtil;
 import com.xingyi.logistic.business.bean.BaseDBQueryPage;
 import com.xingyi.logistic.business.bean.BaseModelAndDO;
 import com.xingyi.logistic.business.bean.BaseQueryPage;
@@ -17,7 +19,7 @@ import java.util.stream.Collectors;
 /**
  * Created by Jadic on 2017/12/31.
  */
-public abstract class BaseCRUDService<DO extends BaseModelAndDO, Model, DBQueryPage extends BaseDBQueryPage, QueryPage extends BaseQueryPage> {
+public abstract class BaseCRUDService<DO extends BaseModelAndDO, Model extends BaseModelAndDO, DBQueryPage extends BaseDBQueryPage, QueryPage extends BaseQueryPage> {
 
     private static final Logger LOG = LoggerFactory.getLogger(BaseCRUDService.class);
 
@@ -55,6 +57,11 @@ public abstract class BaseCRUDService<DO extends BaseModelAndDO, Model, DBQueryP
             return ret;
         }
 
+        UserProfile profile = getCurrentUser();
+        if (profile != null) {
+            model.setCreator(profile.getId());
+            model.setUpdater(profile.getId());
+        }
         DO dataObject = getModelConverter().toDataObject(model);
         dataObject.setId(null);//新增时去除id值
         BaseDAO<DO, DBQueryPage> dao = getDAO();
@@ -88,6 +95,12 @@ public abstract class BaseCRUDService<DO extends BaseModelAndDO, Model, DBQueryP
 
         if (!isBizCheckPassed(ret, model)) {
             return ret;
+        }
+
+        UserProfile profile = getCurrentUser();
+        if (profile != null) {
+            model.setCreator(profile.getId());
+            model.setUpdater(profile.getId());
         }
 
         DO dataObject = getModelConverter().toDataObject(model);
@@ -217,4 +230,12 @@ public abstract class BaseCRUDService<DO extends BaseModelAndDO, Model, DBQueryP
     protected abstract BaseDAO<DO, DBQueryPage> getDAO();
 
     protected abstract QueryConditionConverter<QueryPage, DBQueryPage> getConditionConverter();
+
+    private UserProfile getCurrentUser() {
+        try {
+            return SessionUtil.getProfile();
+        } catch (Exception e) {
+            return null;
+        }
+    }
 }
