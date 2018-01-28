@@ -7,76 +7,48 @@ import com.xingyi.logistic.common.annotation.NotNullEmpty;
 
 public class BaseLeftDispatchInfo extends BaseModelAndDO{
 
-    @NotNullEmpty
     private String leftdispatchid;
 
     /**
      * 客户任务流向ID
      */
-    @NotNullEmpty
     private Integer customerTaksFlowId;
-
-    @NotNullEmpty
-    private String goodsname;
 
     /**
      * 调度吨位
      */
-    @NotNullEmpty
     private Integer dispatchWeight;
-
-    @NotNullEmpty
-    private Integer startportid;
-
-    @NotNullEmpty
-    private Integer startportname;
-
-    @NotNullEmpty
-    private Integer endportid;
-
-    @NotNullEmpty
-    private String endportname;
-
-    @NotNullEmpty
-    private String loadingTime;
 
     /**
      * 预约抢单有效开始日期
      */
-    @NotNullEmpty
     private String bookSTime;
 
     /**
      * 预约抢单有效截止日期
      */
-    @NotNullEmpty
     private String bookETime;
 
     /**
      * 特殊要求
      */
-    @NotNullEmpty
     private String specialTip;
 
     /**
      * 最小船舶吨位
      */
-    @NotNullEmpty
     private Integer minShipWeight;
 
     /**
      * 最大船舶吨位
      */
-    @NotNullEmpty
     private Integer maxShipWeight;
 
-    @NotNullEmpty
-    private Integer maxshipnum;
+    private Integer maxShipNum;
 
     /**
      * 水位
      */
-    @NotNullEmpty
     private float waterLevel;
 
     /**
@@ -106,60 +78,12 @@ public class BaseLeftDispatchInfo extends BaseModelAndDO{
         this.customerTaksFlowId = customerTaksFlowId;
     }
 
-    public String getGoodsname() {
-        return goodsname;
-    }
-
-    public void setGoodsname(String goodsname) {
-        this.goodsname = goodsname;
-    }
-
     public Integer getDispatchWeight() {
         return dispatchWeight;
     }
 
     public void setDispatchWeight(Integer dispatchWeight) {
         this.dispatchWeight = dispatchWeight;
-    }
-
-    public Integer getStartportid() {
-        return startportid;
-    }
-
-    public void setStartportid(Integer startportid) {
-        this.startportid = startportid;
-    }
-
-    public Integer getStartportname() {
-        return startportname;
-    }
-
-    public void setStartportname(Integer startportname) {
-        this.startportname = startportname;
-    }
-
-    public Integer getEndportid() {
-        return endportid;
-    }
-
-    public void setEndportid(Integer endportid) {
-        this.endportid = endportid;
-    }
-
-    public String getEndportname() {
-        return endportname;
-    }
-
-    public void setEndportname(String endportname) {
-        this.endportname = endportname;
-    }
-
-    public String getLoadingTime() {
-        return loadingTime;
-    }
-
-    public void setLoadingTime(String loadingTime) {
-        this.loadingTime = loadingTime;
     }
 
     public String getBookSTime() {
@@ -202,12 +126,12 @@ public class BaseLeftDispatchInfo extends BaseModelAndDO{
         this.maxShipWeight = maxShipWeight;
     }
 
-    public Integer getMaxshipnum() {
-        return maxshipnum;
+    public Integer getMaxShipNum() {
+        return maxShipNum;
     }
 
-    public void setMaxshipnum(Integer maxshipnum) {
-        this.maxshipnum = maxshipnum;
+    public void setMaxShipNum(Integer maxShipNum) {
+        this.maxShipNum = maxShipNum;
     }
 
     public float getWaterLevel() {
