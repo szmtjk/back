@@ -126,7 +126,8 @@
         FROM  `Ship`
         where `isDeleted` = 0
         <if test="pojo.id != null"> AND `id` != #{pojo.id} </if>
-        <if test="pojo.name != null"> AND `shipNo` = #{pojo.name} </if>
+        <if test="pojo.shipNo != null"> AND `shipNo` = #{pojo.shipNo} </if>
+        <if test="pojo.name != null"> AND `name` = #{pojo.name} </if>
         limit 1
     </select>
 
