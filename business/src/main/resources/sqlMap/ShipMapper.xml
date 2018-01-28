@@ -5,6 +5,7 @@
     <resultMap id="AllColumnMap" type="com.xingyi.logistic.business.db.entity.ShipDO">
         <result property="id" column="id"/>
         <result property="shipNo" column="shipNo"/>
+        <result property="sailingArea" column="sailingArea"/>
         <result property="shipFlag" column="shipFlag"/>
         <result property="shipType" column="shipType"/>
         <result property="length" column="length"/>
@@ -45,6 +46,7 @@
     <sql id="all_column">
         `id`
         ,`shipNo`
+        ,`sailingArea`
         ,`shipFlag`
         ,`shipType`
         ,`length`
@@ -86,6 +88,7 @@
         INSERT INTO Ship
         <trim prefix="(" suffix=")" suffixOverrides=",">
             <if test="pojo.shipNo!=null"> `shipNo`,</if>
+            <if test="pojo.sailingArea!=null"> `sailingArea`,</if>
             <if test="pojo.shipFlag!=null"> `shipFlag`,</if>
             <if test="pojo.shipType!=null"> `shipType`,</if>
             <if test="pojo.length!=null"> `length`,</if>
@@ -124,6 +127,7 @@
         VALUES
         <trim prefix="(" suffix=")" suffixOverrides=",">
             <if test="pojo.shipNo!=null">#{pojo.shipNo},</if>
+            <if test="pojo.sailingArea!=null">#{pojo.sailingArea},</if>
             <if test="pojo.shipFlag!=null">#{pojo.shipFlag},</if>
             <if test="pojo.shipType!=null">#{pojo.shipType},</if>
             <if test="pojo.length!=null">#{pojo.length},</if>
@@ -166,6 +170,7 @@
         UPDATE Ship
         <set>
             <if test="pojo.shipNo!=null"> `shipNo` = #{pojo.shipNo},</if>
+            <if test="pojo.sailingArea!=null"> `sailingArea` = #{pojo.sailingArea},</if>
             <if test="pojo.shipFlag!=null"> `shipFlag`= #{pojo.shipFlag},</if>
             <if test="pojo.shipType!=null"> `shipType`= #{pojo.shipType},</if>
             <if test="pojo.length!=null"> `length`= #{pojo.length},</if>

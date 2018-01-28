@@ -48,6 +48,15 @@ public class BaseShip extends BaseModelAndDO {
     //@DateTimeFormat(pattern = "yyyy-MM-dd")
     private String repairDate;//维修日期
     private String description;//备注
+    private Long  sailingArea;//航行区域  1:A级  2:B级  4:C级 数字相加组合可表示多选
+
+    public Long getSailingArea() {
+        return sailingArea;
+    }
+
+    public void setSailingArea(Long sailingArea) {
+        this.sailingArea = sailingArea;
+    }
 
     public String getFirstRegisterNo() {
         return firstRegisterNo;

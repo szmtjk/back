@@ -8,6 +8,7 @@
         <result property="flowId" column="flowId"/>
         <result property="goodsName" column="goodsName"/>
         <result property="goodsType" column="goodsType"/>
+        <result property="goodsSubType" column="goodsSubType"/>
         <result property="totalWeight" column="totalWeight"/>
         <result property="direction" column="direction"/>
         <result property="sender" column="sender"/>
@@ -23,6 +24,7 @@
         <result property="bigShipArriveTime" column="bigShipArriveTime"/>
         <result property="bigShipDepartTime" column="bigShipDepartTime"/>
         <result property="selfPick" column="selfPick"/>
+        <result property="selfBuckle" column="selfBuckle"/>
         <result property="sailingArea" column="sailingArea"/>
         <result property="shipSuggestUnitPrice" column="shipSuggestUnitPrice"/>
         <result property="sailingFlag" column="sailingFlag"/>
@@ -39,6 +41,7 @@
         ,`flowId`
         ,`goodsName`
         ,`goodsType`
+        ,`goodsSubType`
         ,`totalWeight`
         ,`direction`
         ,`sender`
@@ -54,6 +57,7 @@
         ,`bigShipArriveTime`
         ,`bigShipDepartTime`
         ,`selfPick`
+        ,`selfBuckle`
         ,`sailingArea`
         ,`shipSuggestUnitPrice`
         ,`sailingFlag`
@@ -71,6 +75,7 @@
             <if test="pojo.flowId!=null"> `flowId`,</if>
             <if test="pojo.goodsName!=null"> `goodsName`,</if>
             <if test="pojo.goodsType!=null"> `goodsType`,</if>
+            <if test="pojo.goodsSubType!=null"> `goodsSubType`,</if>
             <if test="pojo.totalWeight!=null"> `totalWeight`,</if>
             <if test="pojo.direction!=null"> `direction`,</if>
             <if test="pojo.sender!=null"> `sender`,</if>
@@ -86,6 +91,7 @@
             <if test="pojo.bigShipArriveTime!=null"> `bigShipArriveTime`,</if>
             <if test="pojo.bigShipDepartTime!=null"> `bigShipDepartTime`,</if>
             <if test="pojo.selfPick!=null"> `selfPick`,</if>
+            <if test="pojo.selfBuckle!=null"> `selfBuckle`,</if>
             <if test="pojo.sailingArea!=null"> `sailingArea`,</if>
             <if test="pojo.shipSuggestUnitPrice!=null"> `shipSuggestUnitPrice`,</if>
             <if test="pojo.sailingFlag!=null"> `sailingFlag`,</if>
@@ -100,6 +106,7 @@
             <if test="pojo.flowId!=null">#{pojo.flowId},</if>
             <if test="pojo.goodsName!=null">#{pojo.goodsName},</if>
             <if test="pojo.goodsType!=null">#{pojo.goodsType},</if>
+            <if test="pojo.goodsSubType!=null">#{pojo.goodsSubType},</if>
             <if test="pojo.totalWeight!=null">#{pojo.totalWeight},</if>
             <if test="pojo.direction!=null">#{pojo.direction},</if>
             <if test="pojo.sender!=null">#{pojo.sender},</if>
@@ -115,6 +122,7 @@
             <if test="pojo.bigShipArriveTime!=null">#{pojo.bigShipArriveTime},</if>
             <if test="pojo.bigShipDepartTime!=null">#{pojo.bigShipDepartTime},</if>
             <if test="pojo.selfPick!=null">#{pojo.selfPick},</if>
+            <if test="pojo.selfBuckle!=null">#{pojo.selfBuckle},</if>
             <if test="pojo.sailingArea!=null">#{pojo.sailingArea},</if>
             <if test="pojo.shipSuggestUnitPrice!=null">#{pojo.shipSuggestUnitPrice},</if>
             <if test="pojo.sailingFlag!=null">#{pojo.sailingFlag},</if>
@@ -133,6 +141,7 @@
             <if test="pojo.flowId!=null">`flowId` = #{pojo.flowId},</if>
             <if test="pojo.goodsName!=null">`goodsName` = #{pojo.goodsName},</if>
             <if test="pojo.goodsType!=null">`goodsType` = #{pojo.goodsType},</if>
+            <if test="pojo.goodsSubType!=null">`goodsSubType` = #{pojo.goodsSubType},</if>
             <if test="pojo.totalWeight!=null">`totalWeight` = #{pojo.totalWeight},</if>
             <if test="pojo.direction!=null">`direction` = #{pojo.direction},</if>
             <if test="pojo.sender!=null">`sender` = #{pojo.sender},</if>
@@ -148,6 +157,7 @@
             <if test="pojo.bigShipArriveTime!=null">`bigShipArriveTime` = #{pojo.bigShipArriveTime},</if>
             <if test="pojo.bigShipDepartTime!=null">`bigShipDepartTime` = #{pojo.bigShipDepartTime},</if>
             <if test="pojo.selfPick!=null">`selfPick` = #{pojo.selfPick},</if>
+            <if test="pojo.selfBuckle!=null">`selfBuckle` = #{pojo.selfBuckle},</if>
             <if test="pojo.sailingArea!=null">`sailingArea` = #{pojo.sailingArea},</if>
             <if test="pojo.shipSuggestUnitPrice!=null">`shipSuggestUnitPrice` = #{pojo.shipSuggestUnitPrice},</if>
             <if test="pojo.sailingFlag!=null">`sailingFlag` = #{pojo.sailingFlag},</if>

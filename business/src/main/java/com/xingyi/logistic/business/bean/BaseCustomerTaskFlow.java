@@ -63,6 +63,26 @@ public class BaseCustomerTaskFlow extends BaseModelAndDO {
 
     private String description;//状态 1：启用  2：禁用
 
+    private Integer goodsSubType; //货物子类
+
+    private Integer selfBuckle; //是否扣网片
+
+    public Integer getSelfBuckle() {
+        return selfBuckle;
+    }
+
+    public void setSelfBuckle(Integer selfBuckle) {
+        this.selfBuckle = selfBuckle;
+    }
+
+    public Integer getGoodsSubType() {
+        return goodsSubType;
+    }
+
+    public void setGoodsSubType(Integer goodsSubType) {
+        this.goodsSubType = goodsSubType;
+    }
+
     public Long getLoadingTime() {
         return loadingTime;
     }
