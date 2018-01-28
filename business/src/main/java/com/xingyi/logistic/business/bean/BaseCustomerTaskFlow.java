@@ -41,7 +41,7 @@ public class BaseCustomerTaskFlow extends BaseModelAndDO {
 
     private String bigShipPC;//大轮批次
 
-    private Long totalLoad;//总载重
+    private Float totalLoad;//总载重
 
     private String arriveLocation;//到达位置
 
@@ -54,7 +54,7 @@ public class BaseCustomerTaskFlow extends BaseModelAndDO {
 
     private Integer sailingArea;//航行区域
 
-    private Long shipSuggestUnitPrice;//船户参考运价
+    private Float shipSuggestUnitPrice;//船户参考运价
 
     @AllowedNumber(values = {1, 2, 3})
     private Integer sailingFlag;//航次标识  1：正常  2：散装回程货  3：安吉货
@@ -197,11 +197,11 @@ public class BaseCustomerTaskFlow extends BaseModelAndDO {
         this.bigShipPC = bigShipPC;
     }
 
-    public Long getTotalLoad() {
+    public Float getTotalLoad() {
         return totalLoad;
     }
 
-    public void setTotalLoad(Long totalLoad) {
+    public void setTotalLoad(Float totalLoad) {
         this.totalLoad = totalLoad;
     }
 
@@ -245,11 +245,11 @@ public class BaseCustomerTaskFlow extends BaseModelAndDO {
         this.sailingArea = sailingArea;
     }
 
-    public Long getShipSuggestUnitPrice() {
+    public Float getShipSuggestUnitPrice() {
         return shipSuggestUnitPrice;
     }
 
-    public void setShipSuggestUnitPrice(Long shipSuggestUnitPrice) {
+    public void setShipSuggestUnitPrice(Float shipSuggestUnitPrice) {
         this.shipSuggestUnitPrice = shipSuggestUnitPrice;
     }
 

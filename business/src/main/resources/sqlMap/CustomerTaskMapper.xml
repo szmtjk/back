@@ -140,6 +140,7 @@
         from `ContractFlow` a, `Flow` b
         WHERE  a.flowId = b.id
         <if test="pojo.key != null"> AND a.contractId = #{pojo.key} </if>
+        <if test="pojo.customerId != null"> AND a.flowId not in ( SELECT flowId from CustomerTaskFlow WHERE taskId = #{pojo.customerId} ) </if>
     </select>
 
 </mapper>
