@@ -133,4 +133,8 @@
         </choose>
     </sql>
 
+    <select id="queryByUserId" parameterType="java.lang.Long" resultMap="AllColumnMap">
+      SELECT * FROM LocalAuth WHERE userId = #{userId}
+    </select>
+
 </mapper>
