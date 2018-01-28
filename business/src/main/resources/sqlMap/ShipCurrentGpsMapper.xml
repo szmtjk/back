@@ -301,4 +301,21 @@
         AND A1.isDeleted = 0
         ]]>
     </select>
+
+    <!-- 加载最后一次 -->
+    <select id="queryContractFlowLastInfo" resultMap="mRetComboxMap" parameterType="Map">
+        <![CDATA[
+        SELECT A1.unitPrice AS ID, A1.unitPrice AS NAME
+        FROM ContractFlow A1
+        INNER JOIN Contract A2 ON A1.contractId=A2.id
+        WHERE A2.partyA in(select partyA from Contract where id=#{pojo.contractId})
+        AND A2.isDeleted = 0
+        AND A2.id <> #{pojo.contractId}
+        AND A1.flowId = #{pojo.flowId}
+        ORDER BY A2.validEDate DESC
+        LIMIT 1
+        ]]>
+    </select>
+
+
 </mapper>

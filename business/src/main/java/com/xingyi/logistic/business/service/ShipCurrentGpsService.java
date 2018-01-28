@@ -73,6 +73,14 @@ public interface ShipCurrentGpsService extends BaseService<ShipCurrentGps, ShipC
      */
     public List<Combox> queryDataDictInfo(Map<String, String> map);
 
+
+    /**
+     * 最后一次流量运价
+     * @return
+     */
+    public List<Combox> queryContractFlowLastInfo(Map<String, String> map);
+
+
     /**
      * 根据相关条件查询实时定位数据
      * @param shipCurrentGpsQuery

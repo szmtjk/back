@@ -135,6 +135,16 @@ public class ShipCurrentGpsServiceImpl extends BaseCRUDService<ShipCurrentGpsDO,
     }
 
     /**
+     * 最后一次流量运价
+     * @return
+     */
+    public List<Combox> queryContractFlowLastInfo(Map<String, String> map)
+    {
+        return  shipCurrentGpsDAO.queryContractFlowLastInfo(map);
+    }
+
+
+    /**
      * 根据相关条件查询实时定位数据
      * @param shipCurrentGpsQuery
      * @return

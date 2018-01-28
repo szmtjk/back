@@ -69,6 +69,13 @@ public interface ShipCurrentGpsDAO extends BaseDAO<ShipCurrentGpsDO, ShipCurrent
     public List<Combox> queryDataDictInfo(@Param("pojo")Map<String, String> map);
 
     /**
+     * 最后一次流量运价
+     * @return
+     */
+    public List<Combox> queryContractFlowLastInfo(@Param("pojo")Map<String, String> map);
+
+
+    /**
      * 根据相关条件查询实时定位数据
      * @param shipCurrentGpsQuery
      * @return

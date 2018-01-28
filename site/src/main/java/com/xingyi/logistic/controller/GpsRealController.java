@@ -122,6 +122,16 @@ public class GpsRealController extends BaseCRUDController<ShipCurrentGps, ShipCu
         return shipCurrentGpsService.queryDataDictInfo(map);
     }
 
+    /**
+     * 最后一次流量运价
+     * @return
+     */
+    @RequestMapping("/loadContractFlowLastInfo")
+    public List<Combox> loadContractFlowLastInfo(@RequestParam Map<String, String> map)
+    {
+        return shipCurrentGpsService.queryContractFlowLastInfo(map);
+    }
+
     @Override
     protected BaseService<ShipCurrentGps, ShipCurrentGpsQuery> getBaseService()
     {
