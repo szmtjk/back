@@ -96,9 +96,9 @@
     <sql id="pageQueryWhereCommon">
         where `isDeleted` = 0
         <if test="pojo.id != null"> AND `id` = #{pojo.id} </if>
-        <!--<if test="pojo.key != null">
-            (`name` like concat('%', #{pojo.key}, '%') or `portNo` like concat('%', #{pojo.key}, '%'))
-        </if>-->
+        <if test="pojo.key != null and pojo.key !=''">
+            AND `customerId` =  #{pojo.key}
+        </if>
     </sql>
 
     <sql id="pageCommon">
