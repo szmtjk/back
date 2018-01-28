@@ -8,9 +8,8 @@ public class SecuritySession {
 
 	private static class StaticSecuritySession{
 		private static SecuritySession instance = new SecuritySession();
+		private static Subject subject = null;
 	}
-
-	private ThreadLocal<Subject> subjectContext = new ThreadLocal<Subject>();
 
 	private SecuritySession(){
 
@@ -21,14 +20,14 @@ public class SecuritySession {
 	}
 
 	public void setSubject(Subject subject){
-		this.subjectContext.set(subject);
+		StaticSecuritySession.subject = subject;
 	}
 
 	public void removeSubject(){
-		this.subjectContext.remove();
+		StaticSecuritySession.subject = null;
 	}
 
 	public Subject getSubject(){
-		return this.subjectContext.get();
+		return StaticSecuritySession.subject;
 	}
 }
