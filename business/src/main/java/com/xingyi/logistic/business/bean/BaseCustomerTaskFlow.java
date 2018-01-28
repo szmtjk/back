@@ -60,6 +60,7 @@ public class BaseCustomerTaskFlow extends BaseModelAndDO {
     private Integer sailingFlag;//航次标识  1：正常  2：散装回程货  3：安吉货
     @AllowedNumber(values = {1, 2})
     private Integer status;
+    private Integer taskStatus;
 
     private String description;//状态 1：启用  2：禁用
 
@@ -266,6 +267,14 @@ public class BaseCustomerTaskFlow extends BaseModelAndDO {
 
     public void setStatus(Integer status) {
         this.status = status;
+    }
+
+    public Integer getTaskStatus() {
+        return taskStatus;
+    }
+
+    public void setTaskStatus(Integer taskStatus) {
+        this.taskStatus = taskStatus;
     }
 
     public String getDescription() {

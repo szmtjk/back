@@ -1,0 +1,228 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!--  Generate by autoSQLMap Powered by duxing@Taobao -->
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.xingyi.logistic.business.db.dao.DispatchInfoDAO">
+    <resultMap id="AllColumnMap" type="com.xingyi.logistic.business.db.entity.DispatchInfoDO">
+        <result property="id" column="id"/>
+        <result property="customerTaskFlowId" column="customerTaskFlowId"/>
+        <result property="orderNo" column="orderNo"/>
+        <result property="dispatchType" column="dispatchType"/>
+        <result property="shipId" column="shipId"/>
+        <result property="shipType" column="shipType"/>
+        <result property="preWeight" column="preWeight"/>
+        <result property="preLoad" column="preLoad"/>
+        <result property="preArriveTime" column="preArriveTime"/>
+        <result property="preSettleAmount" column="preSettleAmount"/>
+        <result property="settleType" column="settleType"/>
+        <result property="actualTransferPrice" column="actualTransferPrice"/>
+        <result property="status" column="status"/>
+        <result property="creator" column="creator"/>
+        <result property="created" column="created"/>
+        <result property="updater" column="updater"/>
+        <result property="updated" column="updated"/>
+    </resultMap>
+
+    <resultMap id="CustomerTaskFlow4DispatchColumnMap" type="com.xingyi.logistic.business.db.entity.CustomerTaskFlow4DispatchDO">
+        <result property="id" column="id"/>
+        <result property="flowName" column="flowName"/>
+        <result property="goodsName" column="goodsName"/>
+        <result property="loadingTime" column="loadingTime"/>
+        <result property="startPortName" column="startPortName"/>
+        <result property="endPortName" column="endPortName"/>
+        <result property="leftWeight" column="leftWeight"/>
+        <result property="goodsType" column="goodsType"/>
+        <result property="sailingArea" column="sailingArea"/>
+    </resultMap>
+
+    <sql id="all_column">
+        `id`
+        ,`customerTaskFlowId`
+        ,`orderNo`
+        ,`dispatchType`
+        ,`shipId`
+        ,`shipType`
+        ,`preWeight`
+        ,`preLoad`
+        ,`preArriveTime`
+        ,`actualTransferPrice`
+        ,`preSettleAmount`
+        ,`settleType`
+        ,`status`
+        ,`creator`
+        ,`created`
+        ,`updater`
+        ,`updated`
+    </sql>
+
+    <sql id="customerTaskFlow4Dispatch_column">
+        `id`,
+        `flowName`,
+        `goodsName`,
+        `loadingTime`,
+        `startPortName`,
+        `endPortName`,
+        `leftWeight`,
+        `goodsType`,
+        `sailingArea`
+    </sql>
+
+    <insert id="insertSelective" useGeneratedKeys="true" keyProperty="pojo.id">
+        INSERT INTO DispatchInfo
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="pojo.customerTaskFlowId!=null"> `customerTaskFlowId`,</if>
+            <if test="pojo.orderNo!=null"> `orderNo`,</if>
+            <if test="pojo.dispatchType!=null"> `dispatchType`,</if>
+            <if test="pojo.shipId!=null"> `shipId`,</if>
+            <if test="pojo.shipType!=null"> `shipType`,</if>
+            <if test="pojo.preWeight!=null"> `preWeight`,</if>
+            <if test="pojo.preLoad!=null"> `preLoad`,</if>
+            <if test="pojo.preArriveTime!=null"> `preArriveTime`,</if>
+            <if test="pojo.preSettleAmount!=null"> `preSettleAmount`,</if>
+            <if test="pojo.settleType!=null"> `settleType`,</if>
+            <if test="pojo.actualTransferPrice!=null"> `actualTransferPrice`,</if>
+            <if test="pojo.status!=null"> `status`,</if>
+            <if test="pojo.creator!=null"> `creator`,</if>
+            <if test="pojo.updater!=null"> `updater`,</if>
+            `created`,
+            `updated`
+        </trim>
+        VALUES
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="pojo.customerTaskFlowId!=null">#{pojo.customerTaskFlowId},</if>
+            <if test="pojo.orderNo!=null">#{pojo.orderNo},</if>
+            <if test="pojo.dispatchType!=null">#{pojo.dispatchType},</if>
+            <if test="pojo.shipId!=null">#{pojo.shipId},</if>
+            <if test="pojo.shipType!=null">#{pojo.shipType},</if>
+            <if test="pojo.preWeight!=null">#{pojo.preWeight},</if>
+            <if test="pojo.preLoad!=null">#{pojo.preLoad},</if>
+            <if test="pojo.preArriveTime!=null">#{pojo.preArriveTime},</if>
+            <if test="pojo.preSettleAmount!=null">#{pojo.preSettleAmount},</if>
+            <if test="pojo.settleType!=null">#{pojo.settleType},</if>
+            <if test="pojo.actualTransferPrice!=null">#{pojo.actualTransferPrice},</if>
+            <if test="pojo.status!=null">#{pojo.status},</if>
+            <if test="pojo.creator!=null">#{pojo.creator},</if>
+            <if test="pojo.updater!=null">#{pojo.updater},</if>
+            UNIX_TIMESTAMP(now()),
+            UNIX_TIMESTAMP(now())
+        </trim>
+    </insert>
+
+    <!--auto generated Code-->
+    <update id="update">
+        UPDATE DispatchInfo
+        <set>
+            <if test="pojo.customerTaskFlowId!=null">`customerTaskFlowId` = #{pojo.customerTaskFlowId},</if>
+            <if test="pojo.orderNo!=null">`orderNo` = #{pojo.orderNo},</if>
+            <if test="pojo.dispatchType!=null">`dispatchType` = #{pojo.dispatchType},</if>
+            <if test="pojo.shipId!=null">`shipId` = #{pojo.shipId},</if>
+            <if test="pojo.shipType!=null">`shipType` = #{pojo.shipType},</if>
+            <if test="pojo.preWeight!=null">`preWeight` = #{pojo.preWeight},</if>
+            <if test="pojo.preLoad!=null">`preLoad` = #{pojo.preLoad},</if>
+            <if test="pojo.preArriveTime!=null">`preArriveTime` = #{pojo.preArriveTime},</if>
+            <if test="pojo.preSettleAmount!=null">`preSettleAmount` = #{pojo.preSettleAmount},</if>
+            <if test="pojo.settleType!=null">`settleType` = #{pojo.settleType},</if>
+            <if test="pojo.actualTransferPrice!=null">`actualTransferPrice` = #{pojo.actualTransferPrice},</if>
+            <if test="pojo.status!=null">`status` = #{pojo.status},</if>
+            <if test="pojo.updater!=null">`updater` = #{pojo.updater},</if>
+            `updated` = UNIX_TIMESTAMP(now())
+        </set>
+        WHERE `id` = #{pojo.id} and `isDeleted` = 0
+        LIMIT 1
+    </update>
+
+    <update id="updateCustomerTaskStatus">
+        update CustomerTaskFlow aa
+        inner join (SELECT customerTaskFlowId as id, sum(preLoad) as preLoad
+                    from DispatchInfo
+                    group by customerTaskFlowId
+                   ) bb on bb.id=aa.id
+        set taskStatus=(case when aa.totalLoad-bb.preLoad &lt;= 0 then 2 when aa.totalLoad-bb.preLoad=aa.totalLoad then 0 else 1 end)
+        where aa.id = #{customerTaskFlowId} and aa.taskStatus &lt;= 2
+    </update>
+
+    <update id="del" parameterType="java.lang.Long">
+        UPDATE DispatchInfo
+        SET `isDeleted` = 1 ,
+        `updated` = UNIX_TIMESTAMP(now())
+        WHERE `id` = #{id} and `isDeleted` = 0
+        LIMIT 1
+    </update>
+
+    <select id="getById" parameterType="java.lang.Long" resultMap="AllColumnMap">
+        SELECT <include refid="all_column"/>
+        FROM `DispatchInfo`
+        WHERE `id` = #{id} and `isDeleted` = 0
+        LIMIT 1
+    </select>
+
+    <select id="getExistCount" resultType="java.lang.Integer" parameterType="Map" >
+        SELECT  count(id)
+        FROM  `DispatchInfo`
+        where `isDeleted` = 0
+        <if test="pojo.id != null"> AND `id` != #{pojo.id} </if>
+        <if test="pojo.shipId != null"> AND `shipId` = #{pojo.shipId} </if>
+        <if test="pojo.customerTaskFlowId != null"> AND `customerTaskFlowId` = #{pojo.customerTaskFlowId} </if>
+        limit 1
+    </select>
+
+    <select id="getCount" resultType="java.lang.Integer" parameterType="Map" >
+        SELECT  count(id)
+        FROM  `DispatchInfo`
+        <include refid="pageQueryWhereCommon"/>
+        limit 1
+    </select>
+
+    <select id="queryByPage" resultMap="AllColumnMap" parameterType="Map">
+        select <include refid="all_column"/>
+        from `DispatchInfo`
+        <include refid="pageQueryWhereCommon"/>
+        order by `id` desc
+        <include refid="pageCommon"/>
+    </select>
+
+    <sql id="pageQueryWhereCommon">
+        where `isDeleted` = 0
+        <if test="pojo.shipId != null"> AND `shipId` = #{pojo.shipId} </if>
+        <if test="pojo.settleType != null"> AND `settleType` = #{pojo.settleType} </if>
+        <if test="pojo.customerTaskFlowId != null"> AND `customerTaskFlowId` = #{pojo.customerTaskFlowId} </if>
+    </sql>
+
+    <select id="getCustomerTaskFlow4DispatchCount" resultType="java.lang.Integer" parameterType="Map" >
+        SELECT  count(id)
+        FROM  `CustomerTaskFlow` a
+        <include refid="getCustomerTaskFlow4DispatchWhereCommon"/>
+        limit 1
+    </select>
+
+    <select id="getCustomerTaskFlow4DispatchList" resultMap="CustomerTaskFlow4DispatchColumnMap" parameterType="Map">
+        select a.id, b.`name`, a.goodsName, a.loadingTime, c.name as startPortName, d.name as endPortName, a.goodsType,
+               a.sailingArea, a.totalLoad - (case when e.preLoad is null then 0 else e.preLoad end) as leftWeight
+        from CustomerTaskFlow a
+        left join Flow b on b.id=a.flowId
+        left join Port c on c.id=a.startPortId
+        left join Port d on d.id=a.endPortId
+        left join ( SELECT aa.customerTaskFlowId, sum(preLoad) as preLoad
+                    from DispatchInfo aa
+                    where customerTaskFlowId=1
+                  ) e on e.customerTaskFlowId = a.id
+        <include refid="getCustomerTaskFlow4DispatchWhereCommon"/>
+        order by `id` desc
+        <include refid="pageCommon"/>
+    </select>
+
+    <sql id="getCustomerTaskFlow4DispatchWhereCommon">
+        where a.`isDeleted` = 0 and a.`taskStatus` &lt;= 2
+        <if test="pojo.key != null"> AND `a.id` = #{pojo.key} </if>
+    </sql>
+
+    <sql id="pageCommon">
+        <choose>
+            <when test="pojo.startRow != null and pojo.startRow gt -1 and pojo.limitNum != null and pojo.limitNum gt 0">
+                limit #{pojo.startRow}, #{pojo.limitNum}
+            </when>
+            <otherwise>
+                limit 100
+            </otherwise>
+        </choose>
+    </sql>
+</mapper>

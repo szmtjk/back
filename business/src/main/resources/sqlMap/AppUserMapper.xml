@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!--  Generate by autoSQLMap Powered by duxing@Taobao -->
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.xingyi.logistic.qiangdan.db.dao.AppUserDAO">
+    <resultMap id="AllColumnMap" type="com.xingyi.logistic.qiangdan.db.entity.AppUserDO">
+        <result property="id" column="id"/>
+        <result property="userName" column="userName"/>
+        <result property="nickName" column="nickName"/>
+        <result property="userPass" column="userPass"/>
+        <result property="shipInfoId" column="shipInfoId"/>
+        <result property="creator" column="creator"/>
+        <result property="creatorName" column="creatorName"/>
+        <result property="created" column="created"/>
+        <result property="updater" column="updater"/>
+        <result property="updaterName" column="updaterName"/>
+        <result property="updated" column="updated"/>
+        <result property="isDeleted" column="isDeleted"/>
+        <result property="sex" column="sex"/>
+        <result property="province" column="province"/>
+        <result property="city" column="city"/>
+        <result property="country" column="country"/>
+        <result property="headImgUrl" column="headImgUrl"/>
+    </resultMap>
+
+    <sql id="all_column">
+        `id`
+        ,`userName`
+        ,`nickName`
+        ,`userPass`
+        ,`shipInfoId`
+        ,`creator`
+        ,`creatorName`
+        ,`created`
+        ,`updater`
+        ,`updaterName`
+        ,`updated`
+        ,`isDeleted`
+        ,`sex`
+        ,`province`
+        ,`city`
+        ,`country`
+        ,`headImgUrl`
+    </sql>
+
+    <insert id="insertSelective" useGeneratedKeys="true" keyProperty="pojo.id">
+        INSERT INTO AppUser
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="pojo.userName!=null"> `userName`,</if>
+            <if test="pojo.nickName!=null"> `nickName`,</if>
+            <if test="pojo.userPass!=null"> `userPass`,</if>
+            <if test="pojo.shipInfoId!=null"> `shipInfoId`,</if>
+            <if test="pojo.creator!=null"> `creator`,</if>
+            <if test="pojo.creatorName!=null"> `creatorName`,</if>
+            <if test="pojo.updater!=null"> `updater`,</if>
+            <if test="pojo.updaterName!=null"> `updaterName`,</if>
+            <if test="pojo.sex!=null"> `sex`,</if>
+            <if test="pojo.province!=null"> `province`,</if>
+            <if test="pojo.city!=null"> `city`,</if>
+            <if test="pojo.country!=null"> `country`,</if>
+            <if test="pojo.headImgUrl!=null"> `headImgUrl`,</if>
+            `created`,
+            `updated`,
+            `isDeleted`
+        </trim>
+        VALUES
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="pojo.userName!=null">#{pojo.userName},</if>
+            <if test="pojo.nickName!=null">#{pojo.nickName},</if>
+            <if test="pojo.userPass!=null">#{pojo.userPass},</if>
+            <if test="pojo.shipInfoId!=null">#{pojo.shipInfoId},</if>
+            <if test="pojo.creator!=null">#{pojo.creator},</if>
+            <if test="pojo.creatorName!=null">#{pojo.creatorName},</if>
+            <if test="pojo.updater!=null">#{pojo.updater},</if>
+            <if test="pojo.updaterName!=null">#{pojo.updaterName},</if>
+            <if test="pojo.sex!=null">#{pojo.sex},</if>
+            <if test="pojo.province!=null">#{pojo.province},</if>
+            <if test="pojo.city!=null">#{pojo.city},</if>
+            <if test="pojo.country!=null">#{pojo.country},</if>
+            <if test="pojo.headImgUrl!=null">#{pojo.headImgUrl},</if>
+            UNIX_TIMESTAMP(now()),
+            UNIX_TIMESTAMP(now()),
+            0
+        </trim>
+    </insert>
+
+    <!--auto generated Code-->
+    <update id="update">
+        UPDATE AppUser
+        <set>
+            <if test="pojo.userName!=null">`userName` = #{pojo.userName},</if>
+            <if test="pojo.nickName!=null">`nickName` = #{pojo.nickName},</if>
+            <if test="pojo.userPass!=null">`userPass` = #{pojo.userPass},</if>
+            <if test="pojo.shipInfoId!=null">`shipInfoId` = #{pojo.shipInfoId},</if>
+            <if test="pojo.updater!=null">`updater` = #{pojo.updater},</if>
+            <if test="pojo.updaterName!=null">`updaterName` = #{pojo.updaterName},</if>
+            <if test="pojo.isDeleted!=null">`isDeleted` = #{pojo.isDeleted},</if>
+            <if test="pojo.isDeleted!=null">`sex` = #{pojo.sex},</if>
+            <if test="pojo.isDeleted!=null">`province` = #{pojo.province},</if>
+            <if test="pojo.isDeleted!=null">`city` = #{pojo.city},</if>
+            <if test="pojo.isDeleted!=null">`country` = #{pojo.country},</if>
+            <if test="pojo.isDeleted!=null">`headImgUrl` = #{pojo.headImgUrl},</if>
+            `updated` = UNIX_TIMESTAMP(now())
+        </set>
+        WHERE `id` = #{pojo.id}
+    </update>
+
+    <update id="del" parameterType="java.lang.Long">
+        UPDATE AppUser
+        SET `isDeleted` = 1 ,
+        `updated` = UNIX_TIMESTAMP(now())
+        WHERE `id` = #{id}
+    </update>
+
+    <select id="getById" parameterType="java.lang.Long" resultMap="AllColumnMap">
+        SELECT <include refid="all_column"/>
+        FROM `AppUser`
+        WHERE `id` = #{id}
+    </select>
+
+    <select id="getExistCount" resultType="java.lang.Integer" parameterType="Map" >
+        SELECT  count(id)
+        FROM  `AppUser`
+        where `isDeleted` = 0
+        <if test="pojo.id != null"> AND `id` != #{pojo.id} </if>
+        AND `userName` = #{pojo.userName}
+        AND `shipInfoId` = #{pojo.shipInfoId}
+        limit 1
+    </select>
+
+    <select id="getCount" resultType="java.lang.Integer" parameterType="Map" >
+        SELECT  count(id)
+        FROM  `AppUser`
+        <include refid="pageQueryWhereCommon"/>
+        limit 1
+    </select>
+
+    <select id="queryByPage" resultMap="AllColumnMap" parameterType="Map">
+        select <include refid="all_column"/>
+        from `AppUser`
+        <include refid="pageQueryWhereCommon"/>
+        order by `id` desc
+        <include refid="pageCommon"/>
+    </select>
+
+    <sql id="pageQueryWhereCommon">
+        where `isDeleted` = 0
+        <if test="pojo.id != null"> AND `id` = #{pojo.id} </if>
+        <if test="pojo.key != null">
+            AND (`userName` like concat('%', #{pojo.key}, '%'))
+        </if>
+    </sql>
+
+    <sql id="pageCommon">
+        <choose>
+            <when test="pojo.startRow != null and pojo.startRow gt -1 and pojo.limitNum != null and pojo.limitNum gt 0">
+                limit #{pojo.startRow}, #{pojo.limitNum}
+            </when>
+            <otherwise>
+                limit 100
+            </otherwise>
+        </choose>
+    </sql>
+</mapper>

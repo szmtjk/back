@@ -46,6 +46,12 @@ xyl:
   upload:
     baseDir: /upload
 
+# OAuth weixin
+oauth:
+  weixin:
+    appId: wx716e867a8dfc27bb
+    secretKey: 39a1e707862681e0690dfb6336e6dc87
+
 # Different profiles' configuration
 ---
 spring:

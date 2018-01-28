@@ -37,13 +37,11 @@ public class LocalAuthenticator implements Authenticator {
 		String md5 = tokenMembers[1];
 		long expire = Long.valueOf(tokenMembers[2]);
 
-		JsonRet<LocalAuth> localAuthJsonRet = this.localAuthService.getById(userId);
+		LocalAuth localAuth = this.localAuthService.queryByUserId(userId);
+		if(null == localAuth){
+		    return jsonRet;
+        }
 
-		if(!localAuthJsonRet.isSuccess()){
-			return jsonRet;
-		}
-
-		LocalAuth localAuth = localAuthJsonRet.getData();
 		String loginName = localAuth.getLoginName();
 		String localPasswd = localAuth.getPasswd();
 		String realMd5 = DigestUtil.md5(String.valueOf(userId),loginName,localPasswd,String.valueOf(expire));

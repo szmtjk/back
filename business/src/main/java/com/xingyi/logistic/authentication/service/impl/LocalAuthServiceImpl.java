@@ -41,4 +41,14 @@ public class LocalAuthServiceImpl extends BaseCRUDService<LocalAuthDO,LocalAuth,
     protected QueryConditionConverter<LocalAuthQuery, LocalAuthDBQuery> getConditionConverter() {
         return this.localAuthQueryConverter;
     }
+
+    @Override
+    public LocalAuth queryByUserId(Long userId) {
+	    LocalAuth localAuth = null;
+		LocalAuthDO localAuthDO = this.localAuthDAO.queryByUserId(userId);
+		if(null != localAuthDO){
+			localAuth = this.localAuthConverter.toModel(localAuthDO);
+		}
+        return localAuth;
+    }
 }

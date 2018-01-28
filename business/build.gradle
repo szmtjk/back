@@ -15,5 +15,6 @@ dependencies {
     compile project(':boot-jdbc')
 
     compile 'com.alibaba:fastjson:1.2.29'
+    compile 'org.apache.httpcomponents:httpclient:4.5.4'
     compile fileTree(dir: 'libs', include: '*.jar')
 }

@@ -76,6 +76,7 @@ public abstract class BaseCRUDController<Model, Condition extends BaseQueryPage>
             if (PrimitiveUtil.getPrimitive(totalRet.getData(), 0) > 0) {
                 JsonRet<List<Model>> listRet = service.getList(condition);
                 if (listRet.isSuccess()) {
+                    miniUIJsonRet.setSuccess(true);
                     miniUIJsonRet.setData(listRet.getData());
                 } else {
                     return JsonRet.getErrRet(ErrCode.GET_ERR.getCode(), listRet.getMsg());

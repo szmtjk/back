@@ -14,4 +14,10 @@ public class MiniUIJsonRet <T> extends JsonRet<T> {
     public void setTotal(int total) {
         this.total = total;
     }
+
+    public void setSuccessData(int total, T data) {
+        this.setSuccess(true);
+        this.setTotal(total);
+        this.setData(data);
+    }
 }
