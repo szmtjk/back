@@ -131,7 +131,7 @@
     <select id="loadContractById" resultMap="mRetComboxMap" parameterType="Map">
         select a.partyA AS ID, b.fullName AS NAME
         from `Contract` a, `Customer` b
-         WHERE  a.partyA = b.customerNo
+         WHERE  a.partyA = b.id
         <if test="pojo.key != null"> AND a.id = #{pojo.key} </if>
     </select>
 
