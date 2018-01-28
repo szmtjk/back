@@ -73,4 +73,14 @@ public class OAuthServiceImpl extends BaseCRUDService<OAuthDO,OAuth,OAuthDBQuery
 	    }
 		return oAuth;
 	}
+
+	@Override
+	public OAuth queryByAppUserId(Long appUserId) {
+		OAuth oAuth = null;
+		OAuthDO oAuthDO = this.oAuthDAO.queryByAppUserId(appUserId);
+		if(null != oAuthDO){
+			oAuth = this.oAuthConverter.toModel(oAuthDO);
+		}
+		return oAuth;
+	}
 }

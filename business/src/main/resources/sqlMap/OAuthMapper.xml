@@ -157,4 +157,8 @@
         SELECT * FROM OAuth WHERE OAUTHID = #{oauthId}
     </select>
 
+    <select id="queryByAppUserId" parameterType="java.lang.Long" resultMap="AllColumnMap">
+        SELECT * FROM OAuth WHERE USERID = #{appUserId}
+    </select>
+
 </mapper>

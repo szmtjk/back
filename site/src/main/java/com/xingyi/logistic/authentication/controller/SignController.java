@@ -174,7 +174,7 @@ public class SignController extends BaseController {
      */
     @RequestMapping("/signout")
 	public JsonRet<Object> signout(){
-        SessionUtil.getSession().removeSubject();
+        SessionUtil.removeSubject();
 	    return JsonRet.getSuccessRet(null);
     }
 }

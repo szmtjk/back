@@ -24,4 +24,11 @@ public interface OAuthService extends BaseService<OAuth,OAuthQuery> {
 	 * @return
 	 */
 	OAuth queryByOauthId(String oauthId);
+
+	/**
+	 * 根据 appUserId 查询
+	 * @param appUserId
+	 * @return
+	 */
+	OAuth queryByAppUserId(Long appUserId);
 }

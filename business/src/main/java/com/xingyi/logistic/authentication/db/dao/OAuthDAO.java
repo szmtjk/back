@@ -13,4 +13,11 @@ public interface OAuthDAO extends BaseDAO<OAuthDO,OAuthDBQuery> {
 	 * @return
 	 */
 	OAuthDO queryByOauthId(String oauthId);
+
+	/**
+	 * 查询 userId 对应记录
+	 * @param appUserId
+	 * @return
+	 */
+	OAuthDO queryByAppUserId(Long appUserId);
 }
