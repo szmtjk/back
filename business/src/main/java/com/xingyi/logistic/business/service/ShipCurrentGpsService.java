@@ -3,6 +3,7 @@ package com.xingyi.logistic.business.service;
 import com.xingyi.logistic.business.model.*;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by WCL on 2018/1/12.
@@ -65,6 +66,12 @@ public interface ShipCurrentGpsService extends BaseService<ShipCurrentGps, ShipC
      */
     public List<DispatchData> queryDispatchInfo();
 
+    /**
+     * 加载部门
+     * @param map
+     * @return
+     */
+    public List<Combox> queryDataDictInfo(Map<String, String> map);
 
     /**
      * 根据相关条件查询实时定位数据

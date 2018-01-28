@@ -259,6 +259,12 @@
         from `Ship`
     </select>
 
+    <select id="queryDataDictInfo" resultMap="mRetComboxMap" parameterType="Map">
+        select id AS ID, value AS NAME
+        from `DataDictionary`
+        where code = #{pojo.code}
+    </select>
+
     <select id="queryComboxCustomerInfo" resultMap="mRetComboxMap" parameterType="Map">
         select id AS ID, fullName AS NAME
         from `Customer`
