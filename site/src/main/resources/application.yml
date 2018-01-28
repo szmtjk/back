@@ -5,7 +5,7 @@ spring:
 ---
 # You can change the default http port
 server:
-  port: 16721
+  port: 16722
   contextPath: /xyl
 
 fee:
