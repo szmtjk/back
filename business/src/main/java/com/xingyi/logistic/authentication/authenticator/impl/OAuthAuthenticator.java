@@ -1,17 +1,11 @@
 package com.xingyi.logistic.authentication.authenticator.impl;
 
 import com.xingyi.logistic.authentication.authenticator.Authenticator;
-import com.xingyi.logistic.authentication.model.OAuth;
-import com.xingyi.logistic.authentication.oauth.weixin.dto.TokenResult;
 import com.xingyi.logistic.authentication.oauth.weixin.service.WeiXinService;
 import com.xingyi.logistic.authentication.service.OAuthService;
 import com.xingyi.logistic.authentication.util.ApplicationContextUtil;
-import com.xingyi.logistic.authentication.util.DigestUtil;
-import com.xingyi.logistic.common.bean.ErrCode;
 import com.xingyi.logistic.common.bean.JsonRet;
-import com.xingyi.logistic.qiangdan.model.AppUser;
 import com.xingyi.logistic.qiangdan.service.AppUserService;
-import org.apache.commons.lang3.StringUtils;
 
 /**
  * @author tsingtao_tung
@@ -29,6 +23,8 @@ public class OAuthAuthenticator implements Authenticator {
 	}
 	@Override
 	public JsonRet<Object> authenticate(String token) {
+		return JsonRet.getSuccessRet(null);
+		/*
 		JsonRet<Object> jsonRet = JsonRet.getErrRet(ErrCode.AUTHTICATION_TOKEN_ERROR.getCode(),ErrCode.AUTHTICATION_TOKEN_ERROR.getMsg());
 
 		String[] tokenMembers = token.split(":");
@@ -59,5 +55,6 @@ public class OAuthAuthenticator implements Authenticator {
 		}
 
 		return JsonRet.getErrRet(ErrCode.AUTHTICATION_TOKEN_ERROR.getCode(),ErrCode.AUTHTICATION_TOKEN_ERROR.getMsg());
+		*/
 	}
 }
