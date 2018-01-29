@@ -14,7 +14,10 @@
         <result property="description" column="description"/>
         <result property="creator" column="creator"/>
         <result property="created" column="created"/>
+        <result property="updater" column="updater"/>
         <result property="updated" column="updated"/>
+        <result property="creatorName" column="creatorName"/>
+        <result property="updaterName" column="updaterName"/>
     </resultMap>
 
     <sql id="all_column">
@@ -29,6 +32,7 @@
         ,`description`
         ,`creator`
         ,`created`
+        ,`updater`
         ,`updated`
     </sql>
 
