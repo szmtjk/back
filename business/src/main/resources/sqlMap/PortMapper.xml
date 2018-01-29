@@ -77,7 +77,6 @@
             <if test="pojo.latitude!=null">`latitude` = #{pojo.latitude},</if>
             <if test="pojo.radius!=null">`radius` = #{pojo.radius},</if>
             <if test="pojo.description!=null">`description` = #{pojo.description},</if>
-            <if test="pojo.creator!=null">`creator` = #{pojo.creator},</if>
             <if test="pojo.updater!=null">`updater` = #{pojo.updater},</if>
             `updated` = UNIX_TIMESTAMP(now())
         </set>
