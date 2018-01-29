@@ -21,11 +21,11 @@ import java.io.PrintWriter;
  * Created At: 2018/1/21 下午11:57.
  */
 @Order(1)
-@WebFilter
+@WebFilter(urlPatterns = "/*")
 public class AuthenticationFilter implements Filter {
 	@Override
 	public void init(FilterConfig filterConfig) throws ServletException {
-
+		System.out.println("filter is inited");
 	}
 
 	@Override
