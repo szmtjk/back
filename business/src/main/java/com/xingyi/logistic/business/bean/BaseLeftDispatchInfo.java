@@ -15,9 +15,6 @@ public class BaseLeftDispatchInfo extends BaseModelAndDO{
     @NotNull
     private Integer customerTaskFlowId;
 
-    @NotNullEmpty
-    private String goodsName;
-
     /**
      * 调度吨位
      */
@@ -69,20 +66,22 @@ public class BaseLeftDispatchInfo extends BaseModelAndDO{
 
     private Integer taskStatus;
 
+    private Integer isDeleted;
+
+    public Integer getIsDeleted() {
+        return isDeleted;
+    }
+
+    public void setIsDeleted(Integer isDeleted) {
+        this.isDeleted = isDeleted;
+    }
+
     public Integer getCustomerTaskFlowId() {
         return customerTaskFlowId;
     }
 
     public void setCustomerTaskFlowId(Integer customerTaskFlowId) {
         this.customerTaskFlowId = customerTaskFlowId;
-    }
-
-    public String getGoodsName() {
-        return goodsName;
-    }
-
-    public void setGoodsName(String goodsName) {
-        this.goodsName = goodsName;
     }
 
     public Integer getDispatchWeight() {
