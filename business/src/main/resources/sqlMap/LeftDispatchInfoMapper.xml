@@ -5,7 +5,6 @@
     <resultMap id="AllColumnMap" type="com.xingyi.logistic.business.db.entity.LeftDispatchInfoDO">
         <result property="id" column="id"/>
         <result property="customerTaskFlowId" column="customerTaskFlowId"/>
-        <result property="goodsName" column="goodsName"/>
         <result property="dispatchWeight" column="dispatchWeight"/>
         <result property="bookSTime" column="bookSTime"/>
         <result property="bookETime" column="bookETime"/>
@@ -25,7 +24,6 @@
 
     <resultMap id="LeftDispatch4CheckColumnMap" type="com.xingyi.logistic.business.db.entity.LeftDispatch4CheckDO">
         <result property="id" column="id"/>
-        <result property="goodsName" column="goodsName"/>
         <result property="goodsType" column="goodsType"/>
         <result property="loadingTime" column="loadingTime"/>
         <result property="startPortName" column="startPortName"/>
@@ -41,7 +39,6 @@
     <sql id="all_column">
         `id`
         ,`customerTaskFlowId`
-        ,`goodsName`
         ,`dispatchWeight`
         ,`bookSTime`
         ,`bookETime`
@@ -63,7 +60,6 @@
         INSERT INTO LeftDispatchInfo
         <trim prefix="(" suffix=")" suffixOverrides=",">
             <if test="pojo.customerTaskFlowId!=null"> `customerTaskFlowId`,</if>
-            <if test="pojo.goodsName!=null"> `goodsName`,</if>
             <if test="pojo.dispatchWeight!=null"> `dispatchWeight`,</if>
             <if test="pojo.bookSTime!=null"> `bookSTime`,</if>
             <if test="pojo.bookETime!=null"> `bookETime`,</if>
@@ -77,13 +73,12 @@
             <if test="pojo.taskStatus!=null"> `taskStatus`,</if>
             `status`,
             `created`,
-            `updated`
+            `updated`,
+            `isDeleted`
         </trim>
         VALUES
         <trim prefix="(" suffix=")" suffixOverrides=",">
-            <if test="pojo.leftDispatchId!=null">#{pojo.leftDispatchId},</if>
             <if test="pojo.customerTaskFlowId!=null">#{pojo.customerTaskFlowId},</if>
-            <if test="pojo.goodsName!=null">#{pojo.goodsName},</if>
             <if test="pojo.dispatchWeight!=null">#{pojo.dispatchWeight},</if>
             <if test="pojo.bookSTime!=null">#{pojo.bookSTime},</if>
             <if test="pojo.bookETime!=null">#{pojo.bookETime},</if>
@@ -97,7 +92,8 @@
             <if test="pojo.taskStatus!=null">#{pojo.taskStatus},</if>
             1,
             UNIX_TIMESTAMP(now()),
-            UNIX_TIMESTAMP(now())
+            UNIX_TIMESTAMP(now()),
+            0
         </trim>
     </insert>
 
@@ -105,9 +101,7 @@
     <update id="update">
         UPDATE LeftDispatchInfo
         <set>
-            <if test="pojo.leftDispatchId!=null">`leftDispatchId` = #{pojo.leftDispatchId},</if>
             <if test="pojo.customerTaskFlowId!=null">`customerTaskFlowId` = #{pojo.customerTaskFlowId},</if>
-            <if test="pojo.goodsName!=null">`goodsName` = #{pojo.goodsName},</if>
             <if test="pojo.dispatchWeight!=null">`dispatchWeight` = #{pojo.dispatchWeight},</if>
             <if test="pojo.bookSTime!=null">`bookSTime` = #{pojo.bookSTime},</if>
             <if test="pojo.bookETime!=null">`bookETime` = #{pojo.bookETime},</if>

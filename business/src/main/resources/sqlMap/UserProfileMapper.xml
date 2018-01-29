@@ -8,6 +8,7 @@
         <result property="realName" column="realName"/>
         <result property="gender" column="gender"/>
         <result property="birthDay" column="birthDay"/>
+        <result property="department" column="department"/>
         <result property="creator" column="creator"/>
         <result property="creatorName" column="creatorName"/>
         <result property="created" column="created"/>
@@ -24,6 +25,7 @@
         ,`realName`
         ,`gender`
         ,`birthDay`
+        ,`department`
         ,`creator`
         ,`creatorName`
         ,`created`
@@ -39,6 +41,7 @@
             <if test="pojo.nickName!=null"> `nickName`,</if>
             <if test="pojo.realName!=null"> `realName`,</if>
             <if test="pojo.birthDay!=null"> `birthDay`,</if>
+            <if test="pojo.department!=null"> `department`,</if>
             <if test="pojo.creator!=null"> `creator`,</if>
             <if test="pojo.creatorName!=null"> `creatorName`,</if>
             <if test="pojo.updater!=null"> `updater`,</if>
@@ -53,6 +56,7 @@
             <if test="pojo.nickName!=null">#{pojo.nickName},</if>
             <if test="pojo.realName!=null">#{pojo.realName},</if>
             <if test="pojo.birthDay!=null">#{pojo.birthDay},</if>
+            <if test="pojo.department!=null">#{pojo.department},</if>
             <if test="pojo.creator!=null">#{pojo.creator},</if>
             <if test="pojo.creatorName!=null">#{pojo.creatorName},</if>
             <if test="pojo.updater!=null">#{pojo.updater},</if>
@@ -70,6 +74,7 @@
             <if test="pojo.nickName!=null">`nickName` = #{pojo.nickName},</if>
             <if test="pojo.realName!=null">`realName` = #{pojo.realName},</if>
             <if test="pojo.birthDay!=null">`birthDay` = #{pojo.birthDay},</if>
+            <if test="pojo.department!=null">`department` = #{pojo.department},</if>
             <if test="pojo.updater!=null">`updater` = #{pojo.updater},</if>
             <if test="pojo.updaterName!=null">`updaterName` = #{pojo.updaterName},</if>
             <if test="pojo.isDeleted!=null">`isDeleted` = #{pojo.isDeleted},</if>
