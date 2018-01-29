@@ -113,8 +113,17 @@
         SELECT  count(id)
         FROM  `ShipStaff`
         where `isDeleted` = 0
-        <if test="pojo.id != null"> AND `id` != #{pojo.id} </if>
+        <if test="pojo.id != null"> AND `id` = #{pojo.id} </if>
         <if test="pojo.identity != null"> AND `identity` = #{pojo.identity} </if>
+        limit 1
+    </select>
+
+    <select id="judege" resultType="java.lang.Integer" parameterType="Map" >
+        SELECT  count(id)
+        FROM  `ShipStaff`
+        where `isDeleted` = 0
+        <if test="pojo.title != null"> AND `title` = #{pojo.title} </if>
+        <if test="pojo.shipId != null"> AND `shipId` = #{pojo.shipId} </if>
         limit 1
     </select>
 

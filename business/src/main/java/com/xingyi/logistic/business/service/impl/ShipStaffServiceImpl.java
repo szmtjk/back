@@ -20,6 +20,11 @@ import com.xingyi.logistic.business.service.converter.ShipConverter;
 import com.xingyi.logistic.business.service.converter.ShipQueryConverter;
 import com.xingyi.logistic.business.service.converter.ShipStaffConverter;
 import com.xingyi.logistic.business.service.converter.ShipStaffQueryConverter;
+import com.xingyi.logistic.business.util.JsonUtil;
+import com.xingyi.logistic.common.bean.ErrCode;
+import com.xingyi.logistic.common.bean.JsonRet;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -28,7 +33,7 @@ import org.springframework.stereotype.Service;
  */
 @Service
 public class ShipStaffServiceImpl extends BaseCRUDService<ShipStaffDO, ShipStaff, ShipStaffDBQuery, ShipStaffQuery> implements ShipStaffService {
-
+    private static final Logger LOG = LoggerFactory.getLogger(BaseCRUDService.class);
     @Autowired
     private ShipStaffDAO shipStaffDAO;
 
@@ -51,5 +56,17 @@ public class ShipStaffServiceImpl extends BaseCRUDService<ShipStaffDO, ShipStaff
     @Override
     protected QueryConditionConverter<ShipStaffQuery, ShipStaffDBQuery> getConditionConverter() {
         return shipStaffQueryConverter;
+    }
+
+    @Override
+    public JsonRet<Integer> judege(ShipStaff shipStaff) {
+        JsonRet<Integer> ret = new JsonRet<>();
+        try {
+            ret.setSuccessData(shipStaffDAO.judege(shipStaff));
+        }catch (Exception e) {
+            ret.setErrTip(ErrCode.ADD_ERR);
+            LOG.error("[ERROR]judege, do:{}", JsonUtil.toJson(shipStaff), e);
+        }
+        return ret;
     }
 }

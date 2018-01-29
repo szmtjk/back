@@ -1,13 +1,12 @@
 package com.xingyi.logistic.business.service;
 
-import com.xingyi.logistic.business.model.Ship;
-import com.xingyi.logistic.business.model.ShipQuery;
-import com.xingyi.logistic.business.model.ShipStaff;
-import com.xingyi.logistic.business.model.ShipStaffQuery;
+import com.xingyi.logistic.business.model.*;
+import com.xingyi.logistic.common.bean.JsonRet;
 
 /**
- * Created by Jadic on 2017/12/31.
+ * 船舶人员
  */
 public interface ShipStaffService extends BaseService<ShipStaff, ShipStaffQuery> {
 
+    JsonRet<Integer> judege(ShipStaff shipStaff);
 }

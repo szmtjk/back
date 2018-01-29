@@ -82,7 +82,7 @@
     <select id="getExistCount" resultType="java.lang.Integer" parameterType="Map" >
         SELECT  count(id)
         FROM  `CustomerTask`
-        where `isDeleted` = 0
+        where `isDeleted` = 0 AND 1=2 <!--客户下单可以重复-->
         <if test="pojo.id != null"> AND `id` != #{pojo.id} </if>
         <if test="pojo.customerId != null"> AND `customerId` = #{pojo.customerId} </if>
         <if test="pojo.contractId != null"> AND `contractId` = #{pojo.contractId} </if>

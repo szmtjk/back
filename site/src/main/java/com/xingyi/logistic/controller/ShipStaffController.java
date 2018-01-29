@@ -50,4 +50,9 @@ public class ShipStaffController extends BaseCRUDController<ShipStaff, ShipStaff
     protected BaseService<ShipStaff, ShipStaffQuery> getBaseService() {
         return shipStaffService;
     }
+
+    @RequestMapping("/judege")
+    public JsonRet<Integer> judege(ShipStaff shipStaff) {
+        return shipStaffService.judege(shipStaff);
+    }
 }
