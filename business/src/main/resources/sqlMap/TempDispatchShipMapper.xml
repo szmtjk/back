@@ -127,7 +127,9 @@
         where `isDeleted` = 0
         <if test="pojo.id != null"> AND `id` != #{pojo.id} </if>
         <if test="pojo.shipNo != null"> AND `shipNo` = #{pojo.shipNo} </if>
+        <if test="pojo.identity != null"> AND `identity` = #{pojo.identity} </if>
         <if test="pojo.name != null"> AND `name` = #{pojo.name} </if>
+        <if test="pojo.mobile != null"> AND `mobile` = #{pojo.mobile} </if>
         limit 1
     </select>
 
