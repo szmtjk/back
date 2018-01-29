@@ -235,6 +235,7 @@ public abstract class BaseCRUDService<DO extends BaseModelAndDO, Model extends B
         try {
             return SessionUtil.getProfile();
         } catch (Exception e) {
+            LOG.error("get current user err", e);
             return null;
         }
     }
