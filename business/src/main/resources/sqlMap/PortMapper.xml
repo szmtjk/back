@@ -43,6 +43,8 @@
             <if test="pojo.latitude!=null"> `latitude`,</if>
             <if test="pojo.radius!=null"> `radius`,</if>
             <if test="pojo.description!=null"> `description`,</if>
+            <if test="pojo.creator!=null"> `creator`,</if>
+            <if test="pojo.updater!=null"> `updater`,</if>
             `created`,
             `updated`
         </trim>
@@ -56,6 +58,8 @@
             <if test="pojo.latitude!=null">#{pojo.latitude},</if>
             <if test="pojo.radius!=null">#{pojo.radius},</if>
             <if test="pojo.description!=null">#{pojo.description},</if>
+            <if test="pojo.creator!=null">#{pojo.creator},</if>
+            <if test="pojo.updater!=null">#{pojo.updater},</if>
             UNIX_TIMESTAMP(now()),
             UNIX_TIMESTAMP(now())
         </trim>
@@ -73,6 +77,8 @@
             <if test="pojo.latitude!=null">`latitude` = #{pojo.latitude},</if>
             <if test="pojo.radius!=null">`radius` = #{pojo.radius},</if>
             <if test="pojo.description!=null">`description` = #{pojo.description},</if>
+            <if test="pojo.creator!=null">`creator` = #{pojo.creator},</if>
+            <if test="pojo.updater!=null">`updater` = #{pojo.updater},</if>
             `updated` = UNIX_TIMESTAMP(now())
         </set>
         WHERE `id` = #{pojo.id} and `isDeleted` = 0
