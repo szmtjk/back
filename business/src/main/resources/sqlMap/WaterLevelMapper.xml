@@ -10,6 +10,7 @@
         <result property="description" column="description"/>
         <result property="creator" column="creator"/>
         <result property="created" column="created"/>
+        <result property="updater" column="updater"/>
         <result property="updated" column="updated"/>
         <result property="isDeleted" column="isDeleted"/>
     </resultMap>
@@ -22,6 +23,7 @@
         ,`description`
         ,`creator`
         ,`created`
+        ,`updater`
         ,`updated`
         ,`isDeleted`
     </sql>
@@ -34,6 +36,7 @@
             <if test="pojo.status!=null"> `status`,</if>
             <if test="pojo.description!=null"> `description`,</if>
             <if test="pojo.creator!=null"> `creator`,</if>
+            <if test="pojo.updater!=null"> `updater`,</if>
             `created`,
             `updated`,
             `isDeleted`
@@ -45,6 +48,7 @@
             <if test="pojo.status!=null">#{pojo.status},</if>
             <if test="pojo.description!=null">#{pojo.description},</if>
             <if test="pojo.creator!=null">#{pojo.creator},</if>
+            <if test="pojo.updater!=null">#{pojo.updater},</if>
             UNIX_TIMESTAMP(now()),
             UNIX_TIMESTAMP(now()),
             0
@@ -60,6 +64,7 @@
             <if test="pojo.status!=null">`status` = #{pojo.status},</if>
             <if test="pojo.description!=null">`description` = #{pojo.description},</if>
             <if test="pojo.isDeleted!=null">`isDeleted` = #{pojo.isDeleted},</if>
+            <if test="pojo.updater!=null">`updater` = #{pojo.updater},</if>
             `updated` = UNIX_TIMESTAMP(now())
         </set>
         WHERE `id` = #{pojo.id}
@@ -68,6 +73,7 @@
     <update id="del" parameterType="java.lang.Long">
         UPDATE WaterLevel
         SET `isDeleted` = 1 ,
+        <if test="pojo.updater!=null">`updater` = #{pojo.updater},</if>
         `updated` = UNIX_TIMESTAMP(now())
         WHERE `id` = #{id}
     </update>

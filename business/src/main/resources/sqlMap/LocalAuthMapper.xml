@@ -70,7 +70,7 @@
             <if test="pojo.loginName!=null">`loginName` = #{pojo.loginName},</if>
             <if test="pojo.passwd!=null">`passwd` = #{pojo.passwd},</if>
             <if test="pojo.salt!=null">`salt` = #{pojo.salt},</if>
-            <if test="pojo.updaterName!=null">`updaterName` = #{pojo.updaterName},</if>
+            <if test="pojo.updater!=null">`updater` = #{pojo.updater},</if>
             <if test="pojo.isDeleted!=null">`isDeleted` = #{pojo.isDeleted},</if>
             `updated` = UNIX_TIMESTAMP(now())
         </set>

@@ -90,6 +90,7 @@
             <if test="pojo.scope!=null">`scope` = #{pojo.scope},</if>
             <if test="pojo.unionId!=null">`unionId` = #{pojo.unionId},</if>
             <if test="pojo.oauthExpires!=null">`oauthExpires` = #{pojo.oauthExpires},</if>
+            <if test="pojo.updater!=null">`updater` = #{pojo.updater},</if>
             <if test="pojo.updaterName!=null">`updaterName` = #{pojo.updaterName},</if>
             <if test="pojo.isDeleted!=null">`isDeleted` = #{pojo.isDeleted},</if>
             `updated` = UNIX_TIMESTAMP(now())

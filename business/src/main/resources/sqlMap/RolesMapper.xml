@@ -66,6 +66,7 @@
             <if test="pojo.code!=null">`code` = #{pojo.code},</if>
             <if test="pojo.name!=null">`name` = #{pojo.name},</if>
             <if test="pojo.remark!=null">`remark` = #{pojo.remark},</if>
+            <if test="pojo.updater!=null">`updater` = #{pojo.updater},</if>
             <if test="pojo.updaterName!=null">`updaterName` = #{pojo.updaterName},</if>
             <if test="pojo.isDeleted!=null">`isDeleted` = #{pojo.isDeleted},</if>
             `updated` = UNIX_TIMESTAMP(now())
@@ -76,6 +77,7 @@
     <update id="del" parameterType="java.lang.Long">
         UPDATE Roles
         SET `isDeleted` = 1,
+        <if test="pojo.updater!=null">`updater` = #{pojo.updater},</if>
         `updated` = UNIX_TIMESTAMP(now())
         WHERE `id` = #{id}
     </update>
