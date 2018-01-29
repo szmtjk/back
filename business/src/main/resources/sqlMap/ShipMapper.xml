@@ -7,6 +7,7 @@
         <result property="shipNo" column="shipNo"/>
         <result property="shipFlag" column="shipFlag"/>
         <result property="shipType" column="shipType"/>
+        <result property="shipLevel" column="shipLevel"/>
         <result property="length" column="length"/>
         <result property="width" column="width"/>
         <result property="depth" column="depth"/>
@@ -48,6 +49,7 @@
         <result property="shipNo" column="shipNo"/>
         <result property="shipFlag" column="shipFlag"/>
         <result property="shipType" column="shipType"/>
+        <result property="shipLevel" column="shipLevel"/>
         <result property="length" column="length"/>
         <result property="width" column="width"/>
         <result property="depth" column="depth"/>
@@ -91,6 +93,7 @@
         ,a.`shipNo`
         ,a.`shipFlag`
         ,a.`shipType`
+        ,a.`shipLevel`
         ,a.`length`
         ,a.`width`
         ,a.`depth`
@@ -139,6 +142,7 @@
             <if test="pojo.shipNo!=null"> `shipNo`,</if>
             <if test="pojo.shipFlag!=null"> `shipFlag`,</if>
             <if test="pojo.shipType!=null"> `shipType`,</if>
+            <if test="pojo.shipLevel!=null"> `shipLevel`,</if>
             <if test="pojo.length!=null"> `length`,</if>
             <if test="pojo.width!=null"> `width`,</if>
             <if test="pojo.depth!=null"> `depth`,</if>
@@ -178,6 +182,7 @@
             <if test="pojo.shipNo!=null">#{pojo.shipNo},</if>
             <if test="pojo.shipFlag!=null">#{pojo.shipFlag},</if>
             <if test="pojo.shipType!=null">#{pojo.shipType},</if>
+            <if test="pojo.shipLevel!=null">#{pojo.shipLevel},</if>
             <if test="pojo.length!=null">#{pojo.length},</if>
             <if test="pojo.width!=null">#{pojo.width},</if>
             <if test="pojo.depth!=null">#{pojo.depth},</if>
@@ -221,6 +226,7 @@
             <if test="pojo.shipNo!=null"> `shipNo` = #{pojo.shipNo},</if>
             <if test="pojo.shipFlag!=null"> `shipFlag`= #{pojo.shipFlag},</if>
             <if test="pojo.shipType!=null"> `shipType`= #{pojo.shipType},</if>
+            <if test="pojo.shipLevel!=null"> `shipLevel`= #{pojo.shipLevel},</if>
             <if test="pojo.length!=null"> `length`= #{pojo.length},</if>
             <if test="pojo.width!=null"> `width`= #{pojo.width},</if>
             <if test="pojo.depth!=null"> `depth`= #{pojo.depth},</if>

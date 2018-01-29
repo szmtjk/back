@@ -14,6 +14,7 @@ public class BaseShip extends BaseModelAndDO {
     private Integer shipFlag;//1：自由船舶  2：挂靠船舶',
     @AllowedNumber(values = {1, 2})
     private Integer shipType;//1：干货船   2：多用途船'
+    private Integer shipLevel;//船级  1、650吨以上 2、650吨以下 3、碎石船 4、兴能散装船5、兴能集装箱船6、兴一航运散装船7、兴一航运集装箱船
     private Float length;//船长
     private Float width;//船宽
     private Float depth;//船深
@@ -35,7 +36,7 @@ public class BaseShip extends BaseModelAndDO {
     private String sailingAreaC;//C级航区
     private String firstRegisterNo;//初次登记号
     private Float sailingDepth;//航深
-    private Long buildFactory;//制造厂家
+    private String buildFactory;//制造厂家
     private String aisID;//AIS识别码
     private String gpsDeviceId;//GPS设备编号
     private String oldShipName;//原船名
@@ -47,6 +48,14 @@ public class BaseShip extends BaseModelAndDO {
     //@DateTimeFormat(pattern = "yyyy-MM-dd")
     private String repairDate;//维修日期
     private String description;//备注
+
+    public Integer getShipLevel() {
+        return shipLevel;
+    }
+
+    public void setShipLevel(Integer shipLevel) {
+        this.shipLevel = shipLevel;
+    }
 
     public Float getSailingDepth() {
         return sailingDepth;
@@ -240,11 +249,11 @@ public class BaseShip extends BaseModelAndDO {
         this.sailingAreaC = sailingAreaC;
     }
 
-    public Long getBuildFactory() {
+    public String getBuildFactory() {
         return buildFactory;
     }
 
-    public void setBuildFactory(Long buildFactory) {
+    public void setBuildFactory(String buildFactory) {
         this.buildFactory = buildFactory;
     }
 

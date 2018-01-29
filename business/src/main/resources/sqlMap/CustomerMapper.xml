@@ -216,10 +216,11 @@
         where `isDeleted` = 0
         <if test="pojo.id != null"> AND `id` = #{pojo.id} </if>
         <if test="pojo.key != null">
-            AND (`customerNo` like concat('%', #{pojo.key}, '%') or `fullName` like concat('%', #{pojo.key}, '%')  or `simpleName` like concat('%', #{pojo.key}, '%')  or `contact` like concat('%', #{pojo.key}, '%')  or `phone` like concat('%', #{pojo.key}, '%'))
+            AND (`customerNo` like concat('%', #{pojo.key}, '%') or `fullName` like concat('%', #{pojo.key}, '%') )
         </if>
     </sql>
 
+    <!--or `simpleName` like concat('%', #{pojo.key}, '%')  or `contact` like concat('%', #{pojo.key}, '%')  or `phone` like concat('%', #{pojo.key}, '%')-->
     <sql id="pageCommon">
         <choose>
             <when test="pojo.startRow != null and pojo.startRow gt -1 and pojo.limitNum != null and pojo.limitNum gt 0">
