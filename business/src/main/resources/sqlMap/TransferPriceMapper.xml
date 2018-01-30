@@ -70,12 +70,7 @@
     </select>
 
     <select id="getExistCount" resultType="java.lang.Integer" parameterType="Map" >
-        SELECT  count(id)
-        FROM  `TransferPrice`
-        where `isDeleted` = 0
-        <if test="pojo.id != null"> AND `id` != #{pojo.id} </if>
-        <if test="pojo.customerId != null and pojo.contractId != null "> AND `customerId` = #{pojo.customerId} AND `contractId` = #{pojo.contractId}  </if>
-        limit 1
+        SELECT SUM(0) FROM DUAL
     </select>
 
     <select id="getCount" resultType="java.lang.Integer" parameterType="Map" >
