@@ -43,6 +43,11 @@ public class DangerZoneSpeedController extends BaseCRUDController<DangerZoneSpee
         return super.getList(dangerZoneSpeedQuery);
     }
 
+    @RequestMapping("/getPage")
+    public JsonRet<Object> getPage(DangerZoneSpeedQuery dangerZoneSpeedQuery) {
+        return super.getList(dangerZoneSpeedQuery);
+    }
+
     @Override
     protected BaseService<DangerZoneSpeed, DangerZoneSpeedQuery> getBaseService() {
         return dangerZoneSpeedService;

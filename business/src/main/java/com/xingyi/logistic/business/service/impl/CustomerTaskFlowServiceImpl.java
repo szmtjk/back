@@ -12,8 +12,11 @@ import com.xingyi.logistic.business.service.base.ModelConverter;
 import com.xingyi.logistic.business.service.base.QueryConditionConverter;
 import com.xingyi.logistic.business.service.converter.CustomerTaskFlowConverter;
 import com.xingyi.logistic.business.service.converter.CustomerTaskFlowQueryConverter;
+import com.xingyi.logistic.common.bean.JsonRet;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.Map;
 
 /**
  * 客户任务流向
@@ -43,5 +46,13 @@ public class CustomerTaskFlowServiceImpl extends BaseCRUDService<CustomerTaskFlo
     @Override
     protected QueryConditionConverter<CustomerTaskFlowQuery, CustomerTaskFlowDBQuery> getConditionConverter() {
         return customerTaskFlowQueryConverter;
+    }
+
+    public JsonRet<Long> queryTotalWeightInfo(Map<String, String> map)
+    {
+        JsonRet<Long> ret = new JsonRet<>();
+        ret.setSuccess(true);
+        ret.setSuccessData(customerTaskFlowDAO.queryTotalWeightInfo(map));
+        return ret;
     }
 }

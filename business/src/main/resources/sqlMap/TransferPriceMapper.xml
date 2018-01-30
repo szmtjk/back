@@ -70,7 +70,7 @@
     </select>
 
     <select id="getExistCount" resultType="java.lang.Integer" parameterType="Map" >
-        SELECT  0 as CNT
+        SELECT  count(id)
         FROM  `TransferPrice`
         where `isDeleted` = 0
         <if test="pojo.id != null"> AND `id` != #{pojo.id} </if>
