@@ -47,8 +47,13 @@ public class AuthenticationFilter implements Filter {
 		String requestURI = httpRequest.getRequestURI();
 		String ctx = httpRequest.getContextPath();
 		String requestPath = requestURI.replace(ctx,"");
-
-		if(!requestPath.startsWith("/signin")){
+		if ((requestPath.startsWith("/dangerZoneSpeed/getList")
+				|| requestPath.startsWith("/port/getList")
+				|| requestPath.startsWith("/dangerZone/getList")) && httpRequest.getHeader("token") == null)
+		{
+			chain.doFilter(request,response);
+		}
+		else if(!requestPath.startsWith("/signin")){
 			//认证
 			String token = httpRequest.getHeader("token");
 			System.out.println(">>>>>>>>>>>>>>>>>>从 Header 获取 Token:" + token);
@@ -56,6 +61,7 @@ public class AuthenticationFilter implements Filter {
 				token = httpRequest.getParameter("token");
 				System.out.println(">>>>>>>>>>>>>>>>>>从 Request 获取 Token:" + token);
 			}
+
 
 			System.out.println(">>>>>>>>>>>>>>>>>>最终 获取 Token:" + token);
 
