@@ -126,6 +126,7 @@
     <select id="queryComboxCustomerInfo" resultMap="mRetComboxMap" parameterType="Map">
         select id AS ID, name AS NAME
         from `Contract` where `isDeleted` = 0
+        ORDER BY created DESC
     </select>
 
     <select id="loadContractById" resultMap="mRetComboxMap" parameterType="Map">
