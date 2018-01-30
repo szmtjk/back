@@ -113,7 +113,7 @@
         where A1.`isDeleted` = 0
         <if test="pojo.id != null"> AND A1.`id` = #{pojo.id} </if>
         <if test="pojo.key != null">
-            AND (A1.`customerId` like concat('%', #{pojo.key}, '%'))
+            AND (A2.`contractNo` like concat('%', #{pojo.key}, '%') OR  A2.`name` like concat('%', #{pojo.key}, '%'))
         </if>
     </sql>
 
