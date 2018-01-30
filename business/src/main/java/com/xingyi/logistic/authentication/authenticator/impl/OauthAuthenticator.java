@@ -20,12 +20,12 @@ import org.springframework.util.Base64Utils;
  * @author tsingtao_tung
  * Created At: 2018/1/22 上午3:01.
  */
-public class OAuthAuthenticator implements Authenticator {
+public class OauthAuthenticator implements Authenticator {
 	private AppUserService appUserService;
 	private OAuthService oAuthService;
 	private WeiXinService weiXinService;
 
-	public OAuthAuthenticator(){
+	public OauthAuthenticator(){
 		this.appUserService = (AppUserService) ApplicationContextUtil.getBean("appUserServiceImpl");
 		this.oAuthService = (OAuthService) ApplicationContextUtil.getBean("oauthServiceImpl");
 		this.weiXinService = (WeiXinService) ApplicationContextUtil.getBean("weiXinServiceImpl");
