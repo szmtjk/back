@@ -10,6 +10,7 @@
         <result property="radius" column="radius"/>
         <result property="alarmDistance" column="alarmDistance"/>
         <result property="status" column="status"/>
+        <result property="msgTemplate" column="msgTemplate"/>
         <result property="description" column="description"/>
         <result property="creator" column="creator"/>
         <result property="created" column="created"/>
@@ -25,6 +26,7 @@
         ,`alarmDistance`
         ,`status`
         ,`description`
+        ,msgTemplate
         ,`creator`
         ,`created`
         ,`updated`
@@ -39,6 +41,7 @@
             <if test="pojo.radius!=null"> `radius`,</if>
             <if test="pojo.alarmDistance!=null"> `alarmDistance`,</if>
             <if test="pojo.status!=null"> `status`,</if>
+            <if test="pojo.msgTemplate!=null"> `msgTemplate`,</if>
             <if test="pojo.description!=null"> `description`,</if>
             `created`,
             `updated`
@@ -51,6 +54,7 @@
             <if test="pojo.radius!=null">#{pojo.radius},</if>
             <if test="pojo.alarmDistance!=null">#{pojo.alarmDistance},</if>
             <if test="pojo.status!=null">#{pojo.status},</if>
+            <if test="pojo.msgTemplate!=null">#{pojo.msgTemplate},</if>
             <if test="pojo.description!=null">#{pojo.description},</if>
             UNIX_TIMESTAMP(now()),
             UNIX_TIMESTAMP(now())
@@ -67,6 +71,7 @@
             <if test="pojo.radius!=null">`radius` = #{pojo.radius},</if>
             <if test="pojo.alarmDistance!=null">`alarmDistance` = #{pojo.alarmDistance},</if>
             <if test="pojo.status!=null">`status` = #{pojo.status},</if>
+            <if test="pojo.msgTemplate!=null">`msgTemplate` = #{pojo.msgTemplate},</if>
             <if test="pojo.description!=null">`description` = #{pojo.description},</if>
             `updated` = UNIX_TIMESTAMP(now())
         </set>

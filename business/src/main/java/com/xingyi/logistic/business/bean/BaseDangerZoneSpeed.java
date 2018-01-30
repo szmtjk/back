@@ -17,6 +17,7 @@ public class BaseDangerZoneSpeed extends BaseModelAndDO {
     @AllowedNumber(values = {1, 2})
     private Integer status; //状态  1：启用 2：禁用
     private String description;
+    private String msgTemplate;
 
     public Float getMinSpeed() {
         return minSpeed;
@@ -64,5 +65,13 @@ public class BaseDangerZoneSpeed extends BaseModelAndDO {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public String getMsgTemplate() {
+        return msgTemplate;
+    }
+
+    public void setMsgTemplate(String msgTemplate) {
+        this.msgTemplate = msgTemplate;
     }
 }
