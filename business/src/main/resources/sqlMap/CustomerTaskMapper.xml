@@ -6,6 +6,8 @@
         <result property="id" column="id"/>
         <result property="customerId" column="customerId"/>
         <result property="contractId" column="contractId"/>
+        <result property="contractNo" column="contractNo"/>
+        <result property="contractName" column="name"/>
         <result property="totalLoad" column="totalLoad"/>
         <result property="description" column="description"/>
         <result property="creator" column="creator"/>
@@ -73,9 +75,10 @@
     </update>
 
     <select id="getById" parameterType="java.lang.Long" resultMap="AllColumnMap">
-        SELECT <include refid="all_column"/>
-        FROM `CustomerTask`
-        WHERE `id` = #{id} and `isDeleted` = 0
+        SELECT A1.*, A2.contractNo, A2.`name`
+        FROM CustomerTask A1
+        LEFT JOIN Contract A2 ON A1.contractId=A2.id
+        WHERE `A1.id` = #{id} and `A1.isDeleted` = 0
         LIMIT 1
     </select>
 
@@ -90,25 +93,27 @@
     </select>
 
     <select id="getCount" resultType="java.lang.Integer" parameterType="Map" >
-        SELECT  count(id)
-        FROM  `CustomerTask`
+        SELECT  count(A1.id)
+        FROM CustomerTask A1
+        LEFT JOIN Contract A2 ON A1.contractId=A2.id
         <include refid="pageQueryWhereCommon"/>
         limit 1
     </select>
 
     <select id="queryByPage" resultMap="AllColumnMap" parameterType="Map">
-        select <include refid="all_column"/>
-        from `CustomerTask`
+        SELECT A1.*, A2.contractNo, A2.`name`
+        FROM CustomerTask A1
+        LEFT JOIN Contract A2 ON A1.contractId=A2.id
         <include refid="pageQueryWhereCommon"/>
-        order by `id` desc
+        order by A1.`id` desc
         <include refid="pageCommon"/>
     </select>
 
     <sql id="pageQueryWhereCommon">
-        where `isDeleted` = 0
-        <if test="pojo.id != null"> AND `id` = #{pojo.id} </if>
+        where A1.`isDeleted` = 0
+        <if test="pojo.id != null"> AND A1.`id` = #{pojo.id} </if>
         <if test="pojo.key != null">
-            AND (`customerId` like concat('%', #{pojo.key}, '%'))
+            AND (A1.`customerId` like concat('%', #{pojo.key}, '%'))
         </if>
     </sql>
 
