@@ -74,6 +74,11 @@ public interface ShipCurrentGpsDAO extends BaseDAO<ShipCurrentGpsDO, ShipCurrent
      */
     public List<Combox> queryContractFlowLastInfo(@Param("pojo")Map<String, String> map);
 
+    /**
+     * 加载用户
+     * @return
+     */
+    public List<Combox> queryUserProfileInfo();
 
     /**
      * 根据相关条件查询实时定位数据

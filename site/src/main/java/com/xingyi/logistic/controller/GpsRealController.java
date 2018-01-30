@@ -132,6 +132,17 @@ public class GpsRealController extends BaseCRUDController<ShipCurrentGps, ShipCu
         return shipCurrentGpsService.queryContractFlowLastInfo(map);
     }
 
+
+    /**
+     * 加载用户
+     * @return
+     */
+    @RequestMapping("/loadUserProfile")
+    public List<Combox> loadUserProfile()
+    {
+        return shipCurrentGpsService.queryUserProfileInfo();
+    }
+
     @Override
     protected BaseService<ShipCurrentGps, ShipCurrentGpsQuery> getBaseService()
     {

@@ -145,6 +145,15 @@ public class ShipCurrentGpsServiceImpl extends BaseCRUDService<ShipCurrentGpsDO,
 
 
     /**
+     * 加载用户
+     * @return
+     */
+    public List<Combox> queryUserProfileInfo()
+    {
+        return  shipCurrentGpsDAO.queryUserProfileInfo();
+    }
+
+    /**
      * 根据相关条件查询实时定位数据
      * @param shipCurrentGpsQuery
      * @return
