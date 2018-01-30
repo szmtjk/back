@@ -9,7 +9,8 @@ import java.util.List;
  */
 public class ShipQuery extends BaseQueryPage {
     private String key;
-    private List<Integer> shipTypeList;
+    private Integer customerTaskFlowId;
+    private List<Integer> shipFlags;
 
     public String getKey() {
         return key;
@@ -19,11 +20,19 @@ public class ShipQuery extends BaseQueryPage {
         this.key = key;
     }
 
-    public List<Integer> getShipTypeList() {
-        return shipTypeList;
+    public Integer getCustomerTaskFlowId() {
+        return customerTaskFlowId;
     }
 
-    public void setShipTypeList(List<Integer> shipTypeList) {
-        this.shipTypeList = shipTypeList;
+    public void setCustomerTaskFlowId(Integer customerTaskFlowId) {
+        this.customerTaskFlowId = customerTaskFlowId;
+    }
+
+    public List<Integer> getShipFlags() {
+        return shipFlags;
+    }
+
+    public void setShipFlags(List<Integer> shipFlags) {
+        this.shipFlags = shipFlags;
     }
 }

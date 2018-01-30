@@ -12,6 +12,7 @@ public class AvailableDispatchShip {
     private String arrivalPort;
     private Integer shipStatus;
     private Integer shipType;
+    private Integer shipFlag;
     private String captain;
     private String mobile;
     private String sailArea;
@@ -103,5 +104,13 @@ public class AvailableDispatchShip {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public Integer getShipFlag() {
+        return shipFlag;
+    }
+
+    public void setShipFlag(Integer shipFlag) {
+        this.shipFlag = shipFlag;
     }
 }
