@@ -1,11 +1,8 @@
 package com.xingyi.logistic.controller;
 
-import com.xingyi.logistic.business.model.Customer;
-import com.xingyi.logistic.business.model.CustomerQuery;
 import com.xingyi.logistic.business.model.DangerZone;
 import com.xingyi.logistic.business.model.DangerZoneQuery;
 import com.xingyi.logistic.business.service.BaseService;
-import com.xingyi.logistic.business.service.CustomerService;
 import com.xingyi.logistic.business.service.DangerZoneService;
 import com.xingyi.logistic.common.bean.JsonRet;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -43,6 +40,11 @@ public class DangerZoneController extends BaseCRUDController<DangerZone, DangerZ
 
     @Override
     public JsonRet<Object> getList(DangerZoneQuery dangerZoneQuery) {
+        return super.getList(dangerZoneQuery);
+    }
+
+    @RequestMapping("/getPage")
+    public JsonRet<Object> getPage(DangerZoneQuery dangerZoneQuery) {
         return super.getList(dangerZoneQuery);
     }
 

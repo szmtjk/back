@@ -189,11 +189,20 @@
         LIMIT 1
     </select>
 
+    <select id="queryTotalWeightInfo" parameterType="Map" resultType="java.lang.Long">
+        SELECT IFNULL(SUM(A1.totalWeight),0)
+        FROM CustomerTaskFlow A1
+        WHERE taskId = #{pojo.taskId}
+        AND isDeleted = 0
+        LIMIT 1
+    </select>
+
     <select id="getExistCount" resultType="java.lang.Integer" parameterType="Map" >
         SELECT  count(id)
         FROM  `CustomerTaskFlow`
         where `isDeleted` = 0
         <if test="pojo.id != null"> AND `id` != #{pojo.id} </if>
+        <if test="pojo.taskId != null"> AND `taskId` = #{pojo.taskId} </if>
         <if test="pojo.flowId != null"> AND `flowId` = #{pojo.flowId} </if>
         <if test="pojo.goodsType != null"> AND `goodsType` = #{pojo.goodsType} </if>
         <if test="pojo.goodsName != null"> AND `goodsName` = #{pojo.goodsName} </if>
