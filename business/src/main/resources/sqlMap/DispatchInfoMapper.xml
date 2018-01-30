@@ -203,7 +203,6 @@
         left join Port d on d.id=a.endPortId
         left join ( SELECT aa.customerTaskFlowId, sum(preLoad) as preLoad
                     from DispatchInfo aa
-                    where customerTaskFlowId=1
                   ) e on e.customerTaskFlowId = a.id
         <include refid="getCustomerTaskFlow4DispatchWhereCommon"/>
         order by `id` desc
@@ -212,7 +211,7 @@
 
     <sql id="getCustomerTaskFlow4DispatchWhereCommon">
         where a.`isDeleted` = 0 and a.`taskStatus` &lt;= 2
-        <if test="pojo.key != null"> AND `a.id` = #{pojo.key} </if>
+        <if test="pojo.id != null"> AND a.`id` = #{pojo.id} </if>
     </sql>
 
     <sql id="pageCommon">
