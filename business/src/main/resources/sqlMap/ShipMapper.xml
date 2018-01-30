@@ -307,14 +307,18 @@
         select <include refid="all_column_staff"/>
         from `Ship` a
         left join `ShipStaff` b on b.shipId = a.id
-        where a.isDeleted = 0
+        where a.isDeleted = 0 and b.isDeleted = 0 and b.title = 1
         <if test="pojo.key != null">
             AND (a.`shipNo` like concat('%', #{pojo.key}, '%') )
         </if>
-        <if test="pojo.shipTypes != null">
-            <!--<foreach collection="shipTypes" open="(" close=")" item="shipType" separator=",">-->
-
-            <!--</foreach>-->
+        <if test="pojo.shipFlags != null">
+            AND `shipFlag` in
+            <foreach collection="pojo.shipFlags" open="(" close=")" item="shipFlag" separator=",">
+                #{shipFlag}
+            </foreach>
+        </if>
+        <if test="pojo.customerTaskFlowId != null">
+            AND a.`id` not in (select shipId from `DispatchInfo` c where c.`customerTaskFlowId`=#{pojo.customerTaskFlowId})
         </if>
     </select>
 

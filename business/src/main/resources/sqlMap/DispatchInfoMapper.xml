@@ -195,7 +195,7 @@
     </select>
 
     <select id="getCustomerTaskFlow4DispatchList" resultMap="CustomerTaskFlow4DispatchColumnMap" parameterType="Map">
-        select a.id, b.`name`, a.goodsName, a.loadingTime, c.name as startPortName, d.name as endPortName, a.goodsType,
+        select a.id, b.`name` as flowName, a.goodsName, a.loadingTime, c.name as startPortName, d.name as endPortName, a.goodsType,
                a.sailingArea, a.totalLoad - (case when e.preLoad is null then 0 else e.preLoad end) as leftWeight
         from CustomerTaskFlow a
         left join Flow b on b.id=a.flowId
@@ -203,7 +203,7 @@
         left join Port d on d.id=a.endPortId
         left join ( SELECT aa.customerTaskFlowId, sum(preLoad) as preLoad
                     from DispatchInfo aa
-                    where customerTaskFlowId=1
+                    group by aa.customerTaskFlowId
                   ) e on e.customerTaskFlowId = a.id
         <include refid="getCustomerTaskFlow4DispatchWhereCommon"/>
         order by `id` desc
@@ -212,7 +212,7 @@
 
     <sql id="getCustomerTaskFlow4DispatchWhereCommon">
         where a.`isDeleted` = 0 and a.`taskStatus` &lt;= 2
-        <if test="pojo.key != null"> AND `a.id` = #{pojo.key} </if>
+        <if test="pojo.id != null"> AND a.`id` = #{pojo.id} </if>
     </sql>
 
     <sql id="pageCommon">

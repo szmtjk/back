@@ -7,9 +7,10 @@ import java.util.List;
 /**
  * Created by Jadic on 2017/12/31.
  */
-public class ShipDBQuery extends BaseDBQueryPage {
+public class    ShipDBQuery extends BaseDBQueryPage {
     private String key;
-    private List<Integer> shipTypes;
+    private Integer customerTaskFlowId;
+    private List<Integer> shipFlags;
 
     public String getKey() {
         return key;
@@ -19,11 +20,19 @@ public class ShipDBQuery extends BaseDBQueryPage {
         this.key = key;
     }
 
-    public List<Integer> getShipTypes() {
-        return shipTypes;
+    public Integer getCustomerTaskFlowId() {
+        return customerTaskFlowId;
     }
 
-    public void setShipTypes(List<Integer> shipTypes) {
-        this.shipTypes = shipTypes;
+    public void setCustomerTaskFlowId(Integer customerTaskFlowId) {
+        this.customerTaskFlowId = customerTaskFlowId;
+    }
+
+    public List<Integer> getShipFlags() {
+        return shipFlags;
+    }
+
+    public void setShipFlags(List<Integer> shipFlags) {
+        this.shipFlags = shipFlags;
     }
 }

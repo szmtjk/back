@@ -9,7 +9,7 @@ public class GetDispatchShipParam {
     @NotNull
     private Integer customerTaskFlowId;
     private String shipNo;
-    private String shipType;
+    private String shipFlag;
 
     public Integer getCustomerTaskFlowId() {
         return customerTaskFlowId;
@@ -27,11 +27,11 @@ public class GetDispatchShipParam {
         this.shipNo = shipNo;
     }
 
-    public String getShipType() {
-        return shipType;
+    public String getShipFlag() {
+        return shipFlag;
     }
 
-    public void setShipType(String shipType) {
-        this.shipType = shipType;
+    public void setShipFlag(String shipFlag) {
+        this.shipFlag = shipFlag;
     }
 }

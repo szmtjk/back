@@ -22,6 +22,7 @@ import com.xingyi.logistic.business.service.ShipService;
 import com.xingyi.logistic.business.service.base.BaseCRUDService;
 import com.xingyi.logistic.business.service.base.ModelConverter;
 import com.xingyi.logistic.business.service.base.QueryConditionConverter;
+import com.xingyi.logistic.business.service.converter.CustomerTaskFlow4DispatchConverter;
 import com.xingyi.logistic.business.service.converter.CustomerTaskFlow4DispatchQueryConverter;
 import com.xingyi.logistic.business.service.converter.DispatchInfoConverter;
 import com.xingyi.logistic.business.service.converter.DispatchInfoQueryConverter;
@@ -75,6 +76,9 @@ public class DispatchInfoServiceImpl extends BaseCRUDService<DispatchInfoDO, Dis
     private ShipQueryConverter shipQueryConverter;
 
     @Autowired
+    private CustomerTaskFlow4DispatchConverter customerTaskFlow4DispatchConverter;
+
+    @Autowired
     private CustomerTaskFlow4DispatchQueryConverter customerTaskFlow4DispatchQueryConverter;
 
     @Override
@@ -88,12 +92,12 @@ public class DispatchInfoServiceImpl extends BaseCRUDService<DispatchInfoDO, Dis
             }
             if (query != null && query.getQueryParamFlag() == QueryType.MINIUI.getCode()) {
                 MiniUIJsonRet<Object> ret = new MiniUIJsonRet<>();
-                ret.setSuccessData(customerTaskFlow4DispatchCount, customerTaskFlow4DispatchList);
+                ret.setSuccessData(customerTaskFlow4DispatchCount, customerTaskFlow4DispatchList.stream().map(customerTaskFlow4DispatchConverter::toModel).collect(Collectors.toList()));
                 return ret;
             } else {
                 Map<String, Object> params = new HashMap<>();
                 params.put("total", customerTaskFlow4DispatchCount);
-                params.put("list", customerTaskFlow4DispatchList);
+                params.put("list",  customerTaskFlow4DispatchList.stream().map(customerTaskFlow4DispatchConverter::toModel).collect(Collectors.toList()));
                 return JsonRet.getSuccessRet(params);
             }
         } catch (Exception e) {
@@ -109,15 +113,16 @@ public class DispatchInfoServiceImpl extends BaseCRUDService<DispatchInfoDO, Dis
             return ret;
         }
         ShipQuery shipQuery = new ShipQuery();
+        shipQuery.setCustomerTaskFlowId(param.getCustomerTaskFlowId());
         shipQuery.setKey(param.getShipNo());
-        if (!StringUtils.isEmpty(param.getShipType())) {
-            shipQuery.setShipTypeList(new ArrayList<>());
-            String[] shipTypes = param.getShipType().trim().split(",");
-            for (String shipType : shipTypes) {
+        if (!StringUtils.isEmpty(param.getShipFlag())) {
+            shipQuery.setShipFlags(new ArrayList<>());
+            String[] shipFlags = param.getShipFlag().trim().split(",");
+            for (String shipFlag : shipFlags) {
                 try {
-                    int type = Integer.parseInt(shipType);
+                    int type = Integer.parseInt(shipFlag);
                     if (type == 1 || type == 2 || type == 3) {
-                        shipQuery.getShipTypeList().add(type);
+                        shipQuery.getShipFlags().add(type);
                     }
                 } catch(Exception e) {
                 }
