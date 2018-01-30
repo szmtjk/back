@@ -203,6 +203,7 @@
         left join Port d on d.id=a.endPortId
         left join ( SELECT aa.customerTaskFlowId, sum(preLoad) as preLoad
                     from DispatchInfo aa
+                    group by aa.customerTaskFlowId
                   ) e on e.customerTaskFlowId = a.id
         <include refid="getCustomerTaskFlow4DispatchWhereCommon"/>
         order by `id` desc
