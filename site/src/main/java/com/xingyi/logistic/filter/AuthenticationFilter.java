@@ -4,7 +4,7 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.serializer.SerializerFeature;
 import com.xingyi.logistic.authentication.authenticator.AuthenticateChain;
 import com.xingyi.logistic.authentication.authenticator.impl.LocalAuthenticator;
-import com.xingyi.logistic.authentication.authenticator.impl.OAuthAuthenticator;
+import com.xingyi.logistic.authentication.authenticator.impl.OauthAuthenticator;
 import com.xingyi.logistic.common.bean.JsonRet;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.core.annotation.Order;
@@ -61,7 +61,7 @@ public class AuthenticationFilter implements Filter {
 
 			AuthenticateChain authenticateChain = new AuthenticateChain();
 			authenticateChain.addAuthenticator(new LocalAuthenticator())
-								.addAuthenticator(new OAuthAuthenticator());
+								.addAuthenticator(new OauthAuthenticator());
 
 			JsonRet<Object> jsonRet = authenticateChain.authenticate(token);
 			boolean isAuthenticated = jsonRet.isSuccess();

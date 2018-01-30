@@ -21,8 +21,18 @@ public class Subject {
 		this.user = user;
 	}
 
+	public Subject(AppUser appUser){
+		this.appUser = appUser;
+	}
+
 	public Subject(User user,boolean isAuthenticated){
 		this(user);
+		this.isAuthenticated = isAuthenticated;
+	}
+
+
+	public Subject(AppUser appUser,boolean isAuthenticated){
+		this(appUser);
 		this.isAuthenticated = isAuthenticated;
 	}
 

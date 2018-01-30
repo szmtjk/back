@@ -108,7 +108,7 @@ public class SignController extends BaseController {
         oAuth.setOauthId(openId);
         oAuth.setRefreshToken(tokenResult.getRefresh_token());
         oAuth.setScope(tokenResult.getScope());
-        oAuth.setOauthExpires(tokenResult.getExpires_in());
+        oAuth.setOauthExpires(System.currentTimeMillis() + tokenResult.getExpires_in());
 	    JsonRet<OAuth> oAuthSaveRet = this.oAuthService.save(oAuth);
 	    if(!oAuthSaveRet.isSuccess()){
 	    	return JsonRet.getErrRet(oAuthSaveRet.getErrCode(),oAuthSaveRet.getMsg());
