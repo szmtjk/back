@@ -11,7 +11,7 @@ public class BaseShip extends BaseModelAndDO {
     @NotNullEmpty
     private String shipNo;//船号
     @AllowedNumber(values = {1, 2})
-    private Integer shipFlag;//1：自由船舶  2：挂靠船舶',
+    private Integer shipFlag;//1：自有船舶  2：挂靠船舶  3：临调船
     @AllowedNumber(values = {1, 2})
     private Integer shipType;//1：干货船   2：多用途船'
     private Integer shipLevel;//船级  1、650吨以上 2、650吨以下 3、碎石船 4、兴能散装船5、兴能集装箱船6、兴一航运散装船7、兴一航运集装箱船

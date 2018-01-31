@@ -1,5 +1,6 @@
 package com.xingyi.logistic.controller;
 
+import com.xingyi.logistic.business.model.Combox;
 import com.xingyi.logistic.business.model.CustomerTaskFlow;
 import com.xingyi.logistic.business.model.CustomerTaskFlowQuery;
 import com.xingyi.logistic.business.service.BaseService;
@@ -10,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -27,6 +29,19 @@ public class CustomerTaskFlowController extends BaseCRUDController<CustomerTaskF
     {
         return customerTaskFlowService.queryTotalWeightInfo(map);
     }
+
+
+    /**
+     * 从运价管理中取（客户、合同、流向、时间）
+     * @param map
+     * @return
+     */
+    @RequestMapping("/loadUnitPrice")
+    public List<Combox> loadUnitPrice(@RequestParam Map<String, String> map)
+    {
+        return customerTaskFlowService.queryUnitPriceInfo(map);
+    }
+
     @Override
     protected BaseService<CustomerTaskFlow, CustomerTaskFlowQuery> getBaseService() {
         return customerTaskFlowService;
