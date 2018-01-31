@@ -242,4 +242,23 @@
             </otherwise>
         </choose>
     </sql>
+
+
+    <resultMap id="mRetComboxMap" type="com.xingyi.logistic.business.model.Combox">
+        <result property="id" column="id"/>
+        <result property="name" column="name"/>
+    </resultMap>
+
+    <select id="queryUnitPriceInfo" resultMap="mRetComboxMap" parameterType="Map">
+        SELECT A1.unitPrice AS ID, A1.unitPrice AS NAME
+        FROM TransferFlowPrice A1
+        INNER JOIN TransferPrice A2 ON A1.transferPriceId=A2.id
+        WHERE A1.flowId = #{pojo.flowId}
+        AND A2.customerId = #{pojo.customerId}
+        AND A2.contractId = #{pojo.contractId}
+        AND A1.startDate <![CDATA[<=]]> from_unixtime(#{pojo.loadingTime})
+        AND A1.endDate <![CDATA[ >=   ]]> from_unixtime(#{pojo.loadingTime})
+        ORDER BY A1.created DESC
+        LIMIT 1
+    </select>
 </mapper>

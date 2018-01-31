@@ -149,4 +149,5 @@
         <if test="pojo.customerId != null"> AND a.flowId not in ( SELECT flowId from CustomerTaskFlow WHERE taskId = #{pojo.customerId} ) </if>
     </select>
 
+
 </mapper>
