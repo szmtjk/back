@@ -8,7 +8,8 @@
         <result property="orderNo" column="orderNo"/>
         <result property="dispatchType" column="dispatchType"/>
         <result property="shipId" column="shipId"/>
-        <result property="shipType" column="shipType"/>
+        <result property="shipNo" column="shipNo"/>
+        <result property="shipFlag" column="shipFlag"/>
         <result property="preWeight" column="preWeight"/>
         <result property="preLoad" column="preLoad"/>
         <result property="preArriveTime" column="preArriveTime"/>
@@ -35,23 +36,24 @@
     </resultMap>
 
     <sql id="all_column">
-        `id`
-        ,`customerTaskFlowId`
-        ,`orderNo`
-        ,`dispatchType`
-        ,`shipId`
-        ,`shipType`
-        ,`preWeight`
-        ,`preLoad`
-        ,`preArriveTime`
-        ,`actualTransferPrice`
-        ,`preSettleAmount`
-        ,`settleType`
-        ,`status`
-        ,`creator`
-        ,`created`
-        ,`updater`
-        ,`updated`
+        a.`id`
+        ,a.`customerTaskFlowId`
+        ,a.`orderNo`
+        ,a.`dispatchType`
+        ,a.`shipId`
+        ,b.`shipNo`
+        ,a.`shipFlag`
+        ,a.`preWeight`
+        ,a.`preLoad`
+        ,a.`preArriveTime`
+        ,a.`actualTransferPrice`
+        ,a.`preSettleAmount`
+        ,a.`settleType`
+        ,a.`status`
+        ,a.`creator`
+        ,a.`created`
+        ,a.`updater`
+        ,a.`updated`
     </sql>
 
     <sql id="customerTaskFlow4Dispatch_column">
@@ -73,7 +75,7 @@
             <if test="pojo.orderNo!=null"> `orderNo`,</if>
             <if test="pojo.dispatchType!=null"> `dispatchType`,</if>
             <if test="pojo.shipId!=null"> `shipId`,</if>
-            <if test="pojo.shipType!=null"> `shipType`,</if>
+            <if test="pojo.shipFlag!=null"> `shipFlag`,</if>
             <if test="pojo.preWeight!=null"> `preWeight`,</if>
             <if test="pojo.preLoad!=null"> `preLoad`,</if>
             <if test="pojo.preArriveTime!=null"> `preArriveTime`,</if>
@@ -92,7 +94,7 @@
             <if test="pojo.orderNo!=null">#{pojo.orderNo},</if>
             <if test="pojo.dispatchType!=null">#{pojo.dispatchType},</if>
             <if test="pojo.shipId!=null">#{pojo.shipId},</if>
-            <if test="pojo.shipType!=null">#{pojo.shipType},</if>
+            <if test="pojo.shipFlag!=null">#{pojo.shipFlag},</if>
             <if test="pojo.preWeight!=null">#{pojo.preWeight},</if>
             <if test="pojo.preLoad!=null">#{pojo.preLoad},</if>
             <if test="pojo.preArriveTime!=null">#{pojo.preArriveTime},</if>
@@ -115,7 +117,7 @@
             <if test="pojo.orderNo!=null">`orderNo` = #{pojo.orderNo},</if>
             <if test="pojo.dispatchType!=null">`dispatchType` = #{pojo.dispatchType},</if>
             <if test="pojo.shipId!=null">`shipId` = #{pojo.shipId},</if>
-            <if test="pojo.shipType!=null">`shipType` = #{pojo.shipType},</if>
+            <if test="pojo.shipFlag!=null">`shipFlag` = #{pojo.shipFlag},</if>
             <if test="pojo.preWeight!=null">`preWeight` = #{pojo.preWeight},</if>
             <if test="pojo.preLoad!=null">`preLoad` = #{pojo.preLoad},</if>
             <if test="pojo.preArriveTime!=null">`preArriveTime` = #{pojo.preArriveTime},</if>
@@ -150,8 +152,9 @@
 
     <select id="getById" parameterType="java.lang.Long" resultMap="AllColumnMap">
         SELECT <include refid="all_column"/>
-        FROM `DispatchInfo`
-        WHERE `id` = #{id} and `isDeleted` = 0
+        FROM `DispatchInfo` a
+        LEFT JOIN `Ship` b on b.id = a.shipId
+        WHERE a.`id` = #{id} and a.`isDeleted` = 0
         LIMIT 1
     </select>
 
@@ -167,24 +170,25 @@
 
     <select id="getCount" resultType="java.lang.Integer" parameterType="Map" >
         SELECT  count(id)
-        FROM  `DispatchInfo`
+        FROM  `DispatchInfo` a
         <include refid="pageQueryWhereCommon"/>
         limit 1
     </select>
 
     <select id="queryByPage" resultMap="AllColumnMap" parameterType="Map">
         select <include refid="all_column"/>
-        from `DispatchInfo`
+        from `DispatchInfo` a
+        left join `Ship` b on b.id = a.shipId
         <include refid="pageQueryWhereCommon"/>
         order by `id` desc
         <include refid="pageCommon"/>
     </select>
 
     <sql id="pageQueryWhereCommon">
-        where `isDeleted` = 0
-        <if test="pojo.shipId != null"> AND `shipId` = #{pojo.shipId} </if>
-        <if test="pojo.settleType != null"> AND `settleType` = #{pojo.settleType} </if>
-        <if test="pojo.customerTaskFlowId != null"> AND `customerTaskFlowId` = #{pojo.customerTaskFlowId} </if>
+        where a.`isDeleted` = 0
+        <if test="pojo.shipId != null"> AND a.`shipId` = #{pojo.shipId} </if>
+        <if test="pojo.settleType != null"> AND a.`settleType` = #{pojo.settleType} </if>
+        <if test="pojo.customerTaskFlowId != null"> AND a.`customerTaskFlowId` = #{pojo.customerTaskFlowId} </if>
     </sql>
 
     <select id="getCustomerTaskFlow4DispatchCount" resultType="java.lang.Integer" parameterType="Map" >

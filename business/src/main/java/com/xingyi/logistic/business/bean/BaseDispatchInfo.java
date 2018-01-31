@@ -9,7 +9,8 @@ public class BaseDispatchInfo extends BaseModelAndDO {
     private String orderNo;
     private Integer dispatchType;
     private Integer shipId;
-    private Integer shipType;
+    private String shipNo;
+    private Integer shipFlag;
     private Integer preWeight;
     private Integer preLoad;
     private Integer preArriveTime;
@@ -17,6 +18,7 @@ public class BaseDispatchInfo extends BaseModelAndDO {
     private Double actualTransferPrice;
     private Integer settleType;
     private Integer status;
+
     public Integer getCustomerTaskFlowId() {
         return customerTaskFlowId;
     }
@@ -49,12 +51,20 @@ public class BaseDispatchInfo extends BaseModelAndDO {
         this.shipId = shipId;
     }
 
-    public Integer getShipType() {
-        return shipType;
+    public String getShipNo() {
+        return shipNo;
     }
 
-    public void setShipType(Integer shipType) {
-        this.shipType = shipType;
+    public void setShipNo(String shipNo) {
+        this.shipNo = shipNo;
+    }
+
+    public Integer getShipFlag() {
+        return shipFlag;
+    }
+
+    public void setShipFlag(Integer shipFlag) {
+        this.shipFlag = shipFlag;
     }
 
     public Integer getPreWeight() {
@@ -112,5 +122,4 @@ public class BaseDispatchInfo extends BaseModelAndDO {
     public void setStatus(Integer status) {
         this.status = status;
     }
-
 }

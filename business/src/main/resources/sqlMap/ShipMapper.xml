@@ -319,6 +319,7 @@
         </if>
         <if test="pojo.customerTaskFlowId != null">
             AND a.`id` not in (select shipId from `DispatchInfo` c where c.`customerTaskFlowId`=#{pojo.customerTaskFlowId})
+            and a.sailingArea &amp; (select sailingArea from CustomerTaskFlow where id = #{pojo.customerTaskFlowId}) > 0
         </if>
     </select>
 
