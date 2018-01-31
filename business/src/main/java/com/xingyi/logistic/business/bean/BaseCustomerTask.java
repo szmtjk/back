@@ -14,6 +14,8 @@ public class BaseCustomerTask extends BaseModelAndDO {
     private Long contractId;//合同id
     private String totalLoad;//总载重
     private String description;
+    private String contractName;
+    private String contractNo;
 
     public Long getCustomerId() {
         return customerId;
@@ -45,5 +47,21 @@ public class BaseCustomerTask extends BaseModelAndDO {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public String getContractName() {
+        return contractName;
+    }
+
+    public void setContractName(String contractName) {
+        this.contractName = contractName;
+    }
+
+    public String getContractNo() {
+        return contractNo;
+    }
+
+    public void setContractNo(String contractNo) {
+        this.contractNo = contractNo;
     }
 }
