@@ -21,6 +21,9 @@
         <result property="creator" column="creator"/>
         <result property="created" column="created"/>
         <result property="updated" column="updated"/>
+        <result property="shipNo" column="shipNo"/>
+        <result property="goodsName" column="goodsName"/>
+        <result property="customerName" column="customerName"/>
     </resultMap>
 
     <sql id="all_column">
@@ -42,6 +45,9 @@
         ,`creator`
         ,`created`
         ,`updated`
+        , '' shipNo
+        , '' goodsName
+        , '' customerName
     </sql>
 
     <insert id="insertSelective" useGeneratedKeys="true" keyProperty="pojo.id">
@@ -134,26 +140,76 @@
         limit 1
     </select>
 
+
     <select id="getCount" resultType="java.lang.Integer" parameterType="Map" >
-        SELECT  count(id)
-        FROM  `SailingInfo`
+        SELECT  count(A1.id)
+        FROM SailingInfo A1
+        LEFT JOIN Ship A2 ON A1.shipId=A2.id
+        LEFT JOIN DispatchInfo A3 ON A3.id=A1.orderId
+        LEFT JOIN CustomerTaskFlow  A4 ON A4.id=A3.customerTaskFlowId
+        LEFT JOIN CustomerTask A5 ON A5.id=A4.taskId
+        LEFT JOIN Customer A6 ON A6.id= A5.customerId
         <include refid="pageQueryWhereCommon"/>
         limit 1
     </select>
 
+
+    <!-- 加载所有的 -->
+    <select id="queryDispatchShipInfo" resultType="Map" parameterType="Map">
+        SELECT A2.shipNo, A6.fullName, A1.id AS orderId, A1.shipId, A1.orderNo, A1.dispatchType, A1.shipType, A1.preWeight, A1.preLoad, A1.preArriveTime, A1.preSettleAmount, A1.actualTransferPrice, A1.settleType, A3.goodsName, A3.goodsType,
+            A3.sender, A3.receiver, A4.`name` AS flowName, A3.startPortId, A3.endPortId
+        FROM DispatchInfo A1
+        INNER JOIN Ship A2 ON A1.shipId=A2.id
+        INNER JOIN CustomerTaskFlow A3 ON A3.id=A1.customerTaskFlowId
+		LEFT JOIN CustomerTask A5 ON A5.id=A3.taskId
+		LEFT JOIN Customer A6 ON A6.id= A5.customerId
+        INNER JOIN Flow A4 ON A4.id=A3.flowId
+        WHERE A1.isDeleted = 0
+        AND A1.`status` = 0
+    </select>
+
+
+    <!-- 加载末增加航次的 -->
+    <select id="queryUnDealDispatchShipInfo" resultType="Map" parameterType="Map">
+        SELECT A2.shipNo, A6.fullName, A1.id AS orderId, A1.shipId, A1.orderNo, A1.dispatchType, A1.shipType, A1.preWeight, A1.preLoad, A1.preArriveTime, A1.preSettleAmount, A1.actualTransferPrice, A1.settleType, A3.goodsName, A3.goodsType,
+            A3.sender, A3.receiver, A4.`name` AS flowName, A3.startPortId, A3.endPortId
+        FROM (SELECT c1.*
+				FROM DispatchInfo  c1
+				WHERE NOT EXISTS (
+					SELECT * FROM SailingInfo c2
+					WHERE c1.id = c2.orderId
+					AND c2.isDeleted=0
+				)) A1
+        INNER JOIN Ship A2 ON A1.shipId=A2.id
+        INNER JOIN CustomerTaskFlow A3 ON A3.id=A1.customerTaskFlowId
+				LEFT JOIN CustomerTask A5 ON A5.id=A3.taskId
+				LEFT JOIN Customer A6 ON A6.id= A5.customerId
+        INNER JOIN Flow A4 ON A4.id=A3.flowId
+        WHERE A1.isDeleted = 0
+        AND A1.`status` = 0
+    </select>
+
+
+
+
     <select id="queryByPage" resultMap="AllColumnMap" parameterType="Map">
-        select <include refid="all_column"/>
-        from `SailingInfo`
+        SELECT A1.*, A2.shipNo, A4.goodsName, A6.fullName AS customerName
+        FROM SailingInfo A1
+        LEFT JOIN Ship A2 ON A1.shipId=A2.id
+        LEFT JOIN DispatchInfo A3 ON A3.id=A1.orderId
+        LEFT JOIN CustomerTaskFlow  A4 ON A4.id=A3.customerTaskFlowId
+        LEFT JOIN CustomerTask A5 ON A5.id=A4.taskId
+        LEFT JOIN Customer A6 ON A6.id= A5.customerId
         <include refid="pageQueryWhereCommon"/>
-        order by `id` desc
+        order by A1.`id` desc
         <include refid="pageCommon"/>
     </select>
 
     <sql id="pageQueryWhereCommon">
-        where `isDeleted` = 0
-        <if test="pojo.id != null"> AND `id` = #{pojo.id} </if>
+        where A1.`isDeleted` = 0
+        <if test="pojo.id != null"> AND A1.`id` = #{pojo.id} </if>
         <if test="pojo.key != null">
-            AND (`shipId` like concat('%', #{pojo.key}, '%') or `orderId` like concat('%', #{pojo.key}, '%'))
+            AND (A2.`shipNo` like concat('%', #{pojo.key}, '%') or A2.`shipNo` like concat('%', #{pojo.key}, '%'))
         </if>
     </sql>
 

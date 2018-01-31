@@ -15,6 +15,9 @@ import com.xingyi.logistic.business.service.converter.SailingInfoQueryConverter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+import java.util.Map;
+
 /**
  * 航次信息
  */
@@ -29,6 +32,28 @@ public class SailingInfoImpl extends BaseCRUDService<SailingInfoDO, SailingInfo,
 
     @Autowired
     private SailingInfoQueryConverter sailingInfoQueryConverter;
+
+    /**
+     * 加载调度的船
+     * @param map
+     * @return
+     */
+    public List<Map<String, Object>> queryDispatchShipInfo(Map<String, String> map)
+    {
+        return sailingInfoDAO.queryDispatchShipInfo(map);
+    }
+
+    /**
+     * 加载未处理的所有调度计划
+     * @param map
+     * @return
+     */
+    public List<Map<String, Object>> queryUnDealDispatchShipInfo(Map<String, String> map)
+    {
+        return sailingInfoDAO.queryUnDealDispatchShipInfo(map);
+    }
+
+
 
     @Override
     protected ModelConverter<SailingInfoDO, SailingInfo> getModelConverter() {

@@ -3,10 +3,6 @@ package com.xingyi.logistic.business.bean;
 import com.xingyi.logistic.common.annotation.AllowedNumber;
 import com.xingyi.logistic.common.annotation.NotNullEmpty;
 
-import javax.validation.constraints.Max;
-import javax.validation.constraints.Min;
-import javax.validation.constraints.NotNull;
-
 /**
  * 航次信息
  */
@@ -29,7 +25,9 @@ public class BaseSailingInfo extends BaseModelAndDO {
     private Float allowance;//异常补助
     private Long departPortTime;//离港日期
     private String description;//备注
-
+    private String shipNo;
+    private String goodsName;
+    private String customerName;
     public Long getDepartPortTime() {
         return departPortTime;
     }
@@ -136,6 +134,30 @@ public class BaseSailingInfo extends BaseModelAndDO {
 
     public String getDescription() {
         return description;
+    }
+
+    public String getShipNo() {
+        return shipNo;
+    }
+
+    public void setShipNo(String shipNo) {
+        this.shipNo = shipNo;
+    }
+
+    public String getGoodsName() {
+        return goodsName;
+    }
+
+    public void setGoodsName(String goodsName) {
+        this.goodsName = goodsName;
+    }
+
+    public String getCustomerName() {
+        return customerName;
+    }
+
+    public void setCustomerName(String customerName) {
+        this.customerName = customerName;
     }
 
     public void setDescription(String description) {
