@@ -7,4 +7,9 @@ import com.xxx.boot.jdbc.annotation.Dao;
 
 @Dao
 public interface RoleResourcesDAO extends BaseDAO<RoleResourcesDO,RoleResourcesDBQuery> {
+    /**
+     * 删除指定角色的权限
+     * @param roleId
+     */
+    void deleteByRoleId(Long roleId);
 }

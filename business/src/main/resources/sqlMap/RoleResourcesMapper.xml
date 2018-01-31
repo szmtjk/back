@@ -128,4 +128,8 @@
             </otherwise>
         </choose>
     </sql>
+
+    <delete id="deleteByRoleId" parameterType="java.lang.Long">
+        DELETE FROM `RoleResources` WHERE `roleId` = #{roleId}
+    </delete>
 </mapper>

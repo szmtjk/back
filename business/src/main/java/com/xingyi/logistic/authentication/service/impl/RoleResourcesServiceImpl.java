@@ -42,4 +42,9 @@ public class RoleResourcesServiceImpl extends BaseCRUDService<RoleResourcesDO,Ro
     protected QueryConditionConverter<RoleResourcesQuery, RoleResourcesDBQuery> getConditionConverter() {
         return this.roleResourcesQueryConverter;
     }
+
+    @Override
+    public void deleteByRoleId(Long roleId) {
+        this.roleResourcesDAO.deleteByRoleId(roleId);
+    }
 }

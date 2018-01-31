@@ -3,23 +3,23 @@ package com.xingyi.logistic.authentication.bean;
 import com.xingyi.logistic.business.bean.BaseModelAndDO;
 
 public class BaseRoleResources extends BaseModelAndDO{
-    private Integer roleId;
-    private Integer resourceId;
+    private Long roleId;
+    private Long resourceId;
     private Integer isDeleted;
 
-    public Integer getRoleId() {
+    public Long getRoleId() {
         return roleId;
     }
 
-    public void setRoleId(Integer roleId) {
+    public void setRoleId(Long roleId) {
         this.roleId = roleId;
     }
 
-    public Integer getResourceId() {
+    public Long getResourceId() {
         return resourceId;
     }
 
-    public void setResourceId(Integer resourceId) {
+    public void setResourceId(Long resourceId) {
         this.resourceId = resourceId;
     }
 
