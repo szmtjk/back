@@ -21,21 +21,25 @@
     </resultMap>
 
     <sql id="all_column">
-        `id`
-        ,`portNo`
-        ,`name`
-        ,`portType`
-        ,`company`
-        ,`longitude`
-        ,`latitude`
-        ,`radius`
-        ,`description`
-        ,`creator`
-        ,`created`
-        ,`updater`
-        ,`updated`
+        a.`id`
+        ,a.`portNo`
+        ,a.`name`
+        ,a.`portType`
+        ,a.`company`
+        ,a.`longitude`
+        ,a.`latitude`
+        ,a.`radius`
+        ,a.`description`
+        ,a.`creator`
+        ,a.`created`
+        ,a.`updater`
+        ,a.`updated`
     </sql>
 
+    <sql id="all_column_user">
+        <include refid="all_column"/>
+        ,b.`realName` as creatorName
+    </sql>
     <insert id="insertSelective" useGeneratedKeys="true" keyProperty="pojo.id">
         INSERT INTO Port
         <trim prefix="(" suffix=")" suffixOverrides=",">
@@ -97,9 +101,9 @@
     </update>
 
     <select id="getById" parameterType="java.lang.Long" resultMap="AllColumnMap">
-        SELECT <include refid="all_column"/>
-        FROM `Port`
-        WHERE `id` = #{id} and `isDeleted` = 0
+        SELECT <include refid="all_column_user"/>
+        FROM `Port` a ,`UserProfile` b
+        WHERE a.`id` = #{id} and a.`isDeleted` = 0  AND a.creator = b.id
         LIMIT 1
     </select>
 
@@ -113,25 +117,25 @@
     </select>
 
     <select id="getCount" resultType="java.lang.Integer" parameterType="Map" >
-        SELECT  count(id)
-        FROM  `Port`
+        SELECT  count(a.id)
+        FROM  `Port` a,`UserProfile` b
         <include refid="pageQueryWhereCommon"/>
         limit 1
     </select>
 
     <select id="queryByPage" resultMap="AllColumnMap" parameterType="Map">
-        select <include refid="all_column"/>
-        from `Port`
+        select <include refid="all_column_user"/>
+        from `Port` a ,`UserProfile` b
         <include refid="pageQueryWhereCommon"/>
-        order by `id` desc
+        order by a.`created` desc
         <include refid="pageCommon"/>
     </select>
 
     <sql id="pageQueryWhereCommon">
-        where `isDeleted` = 0
-        <if test="pojo.id != null"> AND `id` = #{pojo.id} </if>
+        where a.`isDeleted` = 0   AND a.creator = b.id
+        <if test="pojo.id != null"> AND a.`id` = #{pojo.id} </if>
         <if test="pojo.key != null">
-            AND (`name` like concat('%', #{pojo.key}, '%') or `portNo` like concat('%', #{pojo.key}, '%'))
+            AND (a.`name` like concat('%', #{pojo.key}, '%') or a.`portNo` like concat('%', #{pojo.key}, '%'))
         </if>
     </sql>
 
