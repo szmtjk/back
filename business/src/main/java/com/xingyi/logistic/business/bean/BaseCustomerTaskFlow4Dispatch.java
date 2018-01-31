@@ -11,6 +11,7 @@ public class BaseCustomerTaskFlow4Dispatch {
     private Integer loadingTime;
     private String startPortName;
     private String endPortName;
+    private Integer totalLoad;
     private Integer leftWeight;
     private Integer goodsType;
     private String sailingArea;
@@ -61,6 +62,14 @@ public class BaseCustomerTaskFlow4Dispatch {
 
     public void setEndPortName(String endPortName) {
         this.endPortName = endPortName;
+    }
+
+    public Integer getTotalLoad() {
+        return totalLoad;
+    }
+
+    public void setTotalLoad(Integer totalLoad) {
+        this.totalLoad = totalLoad;
     }
 
     public Integer getLeftWeight() {

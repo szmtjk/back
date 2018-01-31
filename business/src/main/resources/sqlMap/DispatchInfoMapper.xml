@@ -196,7 +196,7 @@
 
     <select id="getCustomerTaskFlow4DispatchList" resultMap="CustomerTaskFlow4DispatchColumnMap" parameterType="Map">
         select a.id, b.`name` as flowName, a.goodsName, a.loadingTime, c.name as startPortName, d.name as endPortName, a.goodsType,
-               a.sailingArea, a.totalLoad - (case when e.preLoad is null then 0 else e.preLoad end) as leftWeight
+               a.sailingArea, a.totalLoad, a.totalLoad - (case when e.preLoad is null then 0 else e.preLoad end) as leftWeight
         from CustomerTaskFlow a
         left join Flow b on b.id=a.flowId
         left join Port c on c.id=a.startPortId
