@@ -21,7 +21,7 @@ import java.util.List;
  */
 @Configuration
 @ComponentScan("com.xingyi.logistic")
-//@ServletComponentScan
+@ServletComponentScan
 @SpringBootApplication
 public class MycWebConfig extends WebMvcConfigurerAdapter {
 
