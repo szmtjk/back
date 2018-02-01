@@ -5,7 +5,16 @@ import com.xingyi.logistic.business.bean.BaseModelAndDO;
 public class BaseUserRoles extends BaseModelAndDO{
     private Long userId;
     private Long roleId;
+    private String roleIds;
     private Integer isDeleted;
+
+    public String getRoleIds() {
+        return roleIds;
+    }
+
+    public void setRoleIds(String roleIds) {
+        this.roleIds = roleIds;
+    }
 
     public Long getUserId() {
         return userId;

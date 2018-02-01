@@ -14,11 +14,13 @@ import com.xingyi.logistic.business.service.base.BaseCRUDService;
 import com.xingyi.logistic.business.service.base.ModelConverter;
 import com.xingyi.logistic.business.service.base.QueryConditionConverter;
 import com.xingyi.logistic.business.service.converter.UserRolesQueryConverter;
+import com.xingyi.logistic.common.bean.JsonRet;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class UserRolesServiceImpl extends BaseCRUDService<UserRolesDO,UserRoles,UserRolesDBQuery,UserRolesQuery> implements UserRolesService {
@@ -50,6 +52,43 @@ public class UserRolesServiceImpl extends BaseCRUDService<UserRolesDO,UserRoles,
     @Override
     public void deleteByUserId(Long userId){
         this.userRolesDAO.deleteByUserId(userId);
+    }
+
+
+
+    /**
+     * 根据用户加载角色ID
+     * @param map
+     * @return
+     */
+    public List<Map<String, Object>> queryRolesByUserIdInfo(Map<String, Object> map)
+    {
+        return userRolesDAO.queryRolesByUserIdInfo(map);
+    }
+
+    /**
+     * 用户分配角色
+     * @param model
+     * @return
+     */
+    public JsonRet<Boolean> addfly(UserRoles model)
+    {
+        JsonRet<Boolean> ret = new JsonRet<Boolean>();
+        //删除
+        userRolesDAO.deleteByUserId(model.getUserId());
+        if (!"".equals(model.getRoleIds()) && model.getRoleIds() != null)
+        {
+            String roleFly[] = model.getRoleIds().split("\\,");
+            for (String roleId: roleFly)
+            {
+                model.setRoleId(Long.parseLong(roleId));
+                super.add(model);
+            }
+        }
+
+        ret.setSuccess(true);
+        ret.setSuccessData(true);
+        return  ret;
     }
 
     @Override

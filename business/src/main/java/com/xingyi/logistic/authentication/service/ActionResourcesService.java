@@ -5,6 +5,7 @@ import com.xingyi.logistic.authentication.model.ActionResourcesQuery;
 import com.xingyi.logistic.business.service.BaseService;
 
 import java.util.List;
+import java.util.Map;
 
 public interface ActionResourcesService extends BaseService<ActionResources,ActionResourcesQuery>{
 	/**
@@ -13,4 +14,10 @@ public interface ActionResourcesService extends BaseService<ActionResources,Acti
 	 * @return
 	 */
 	List<ActionResources> queryByUserId(Long userId);
+
+	/**
+	 * 加载权限树
+	 * @return
+     */
+	List<Map<String, Object >> queryTreeResourcesInfo();
 }

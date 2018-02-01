@@ -180,4 +180,13 @@
             AND ur.userId = #{userId}
         )
     </select>
+
+
+    <!-- 加载所有的 -->
+    <select id="queryTreeResourcesInfo" resultType="Map" parameterType="Map">
+        SELECT A1.id, A1.`name`, A1.parentId
+        FROM ActionResources A1
+        WHERE A1.`status` = 1
+        AND A1.isDeleted = 0
+    </select>
 </mapper>

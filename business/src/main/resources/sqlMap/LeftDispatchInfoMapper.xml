@@ -20,6 +20,11 @@
         <result property="updated" column="updated"/>
         <result property="isDeleted" column="isDeleted"/>
         <result property="updater" column="updater"/>
+        <result property="goodsName" column="goodsName"/>
+        <result property="startPortName" column="startPortName"/>
+        <result property="endPortName" column="endPortName"/>
+        <result property="customerName" column="customerName"/>
+        <result property="flowName" column="flowName"/>
     </resultMap>
 
     <resultMap id="LeftDispatch4CheckColumnMap" type="com.xingyi.logistic.business.db.entity.LeftDispatch4CheckDO">
@@ -54,6 +59,11 @@
         ,`updated`
         ,`isDeleted`
         ,`updater`
+        , '' goodsName
+        , '' startPortName
+        , '' endPortName
+        , '' customerName
+        , '' flowName
     </sql>
 
     <insert id="insertSelective" useGeneratedKeys="true" keyProperty="pojo.id">
@@ -141,25 +151,37 @@
     </select>
 
     <select id="getCount" resultType="java.lang.Integer" parameterType="Map" >
-        SELECT  count(id)
-        FROM  `LeftDispatchInfo`
+        SELECT  count(A1.id)
+        FROM LeftDispatchInfo A1
+        LEFT JOIN CustomerTaskFlow A2 ON A1.customerTaskFlowId=A2.id
+        LEFT JOIN CustomerTask A3 ON A3.id=A2.taskId
+        LEFT JOIN Customer A4 ON A4.id = A3.customerId
+        LEFT JOIN Flow A5 ON A5.id = A2.flowId
+        LEFT JOIN `Port` A6 ON A6.id=A2.startPortId
+        Left join `Port` A7 ON A7.id = A2.endPortId
         <include refid="pageQueryWhereCommon"/>
         limit 1
     </select>
 
     <select id="queryByPage" resultMap="AllColumnMap" parameterType="Map">
-        select <include refid="all_column"/>
-        from `LeftDispatchInfo`
+        SELECT A1.*, A2.goodsName, A6.`name` AS startPortName, A7.`name` AS endPortName, A4.fullName AS customerName, A5.`name` AS flowName
+        FROM LeftDispatchInfo A1
+        LEFT JOIN CustomerTaskFlow A2 ON A1.customerTaskFlowId=A2.id
+        LEFT JOIN CustomerTask A3 ON A3.id=A2.taskId
+        LEFT JOIN Customer A4 ON A4.id = A3.customerId
+        LEFT JOIN Flow A5 ON A5.id = A2.flowId
+        LEFT JOIN `Port` A6 ON A6.id=A2.startPortId
+        Left join `Port` A7 ON A7.id = A2.endPortId
         <include refid="pageQueryWhereCommon"/>
-        order by `id` desc
+        order by A1.`id` desc
         <include refid="pageCommon"/>
     </select>
 
     <sql id="pageQueryWhereCommon">
-        where `isDeleted` = 0
-        <if test="pojo.id != null"> AND `id` = #{pojo.id} </if>
+        where A1.`isDeleted` = 0
+        <if test="pojo.id != null"> AND A1.`id` = #{pojo.id} </if>
         <if test="pojo.key != null">
-            AND (`customerTaskFlowId` like concat('%', #{pojo.key}, '%'))
+            AND (A2.goodsName like concat('%', #{pojo.key}, '%') OR A4.fullName like concat('%', #{pojo.key}, '%'))
         </if>
     </sql>
 

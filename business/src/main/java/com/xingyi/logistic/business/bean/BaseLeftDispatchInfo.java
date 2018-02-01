@@ -1,7 +1,5 @@
 package com.xingyi.logistic.business.bean;
 
-import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.serializer.SerializerFeature;
 import com.xingyi.logistic.common.annotation.AllowedNumber;
 import com.xingyi.logistic.common.annotation.NotNullEmpty;
 
@@ -67,6 +65,52 @@ public class BaseLeftDispatchInfo extends BaseModelAndDO{
     private Integer taskStatus;
 
     private Integer isDeleted;
+
+    private String goodsName;
+    private String startPortName;
+    private String endPortName;
+    private String customerName;
+    private String flowName;
+
+    public String getGoodsName() {
+        return goodsName;
+    }
+
+    public void setGoodsName(String goodsName) {
+        this.goodsName = goodsName;
+    }
+
+    public String getStartPortName() {
+        return startPortName;
+    }
+
+    public void setStartPortName(String startPortName) {
+        this.startPortName = startPortName;
+    }
+
+    public String getEndPortName() {
+        return endPortName;
+    }
+
+    public void setEndPortName(String endPortName) {
+        this.endPortName = endPortName;
+    }
+
+    public String getCustomerName() {
+        return customerName;
+    }
+
+    public void setCustomerName(String customerName) {
+        this.customerName = customerName;
+    }
+
+    public String getFlowName() {
+        return flowName;
+    }
+
+    public void setFlowName(String flowName) {
+        this.flowName = flowName;
+    }
 
     public Integer getIsDeleted() {
         return isDeleted;

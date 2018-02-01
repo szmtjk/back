@@ -4,6 +4,10 @@ import com.xingyi.logistic.authentication.db.entity.UserRolesDBQuery;
 import com.xingyi.logistic.authentication.db.entity.UserRolesDO;
 import com.xingyi.logistic.business.db.dao.base.BaseDAO;
 import com.xxx.boot.jdbc.annotation.Dao;
+import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
+import java.util.Map;
 
 @Dao
 public interface UserRolesDAO extends BaseDAO<UserRolesDO,UserRolesDBQuery> {
@@ -12,4 +16,11 @@ public interface UserRolesDAO extends BaseDAO<UserRolesDO,UserRolesDBQuery> {
      * @param userId
      */
     public void deleteByUserId(Long userId);
+
+    /**
+     * 根据用户加载角色ID
+     * @param map
+     * @return
+     */
+    List<Map<String, Object>> queryRolesByUserIdInfo(@Param("pojo")Map<String, Object> map);
 }
