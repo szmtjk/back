@@ -16,6 +16,7 @@ public class BaseCustomerTaskFlow4Dispatch {
     private Integer goodsType;
     private String sailingArea;
     private String customerName;
+    private Float shipSuggestUnitPrice;
 
     public Long getId() {
         return id;
@@ -103,5 +104,13 @@ public class BaseCustomerTaskFlow4Dispatch {
 
     public void setCustomerName(String customerName) {
         this.customerName = customerName;
+    }
+
+    public Float getShipSuggestUnitPrice() {
+        return shipSuggestUnitPrice;
+    }
+
+    public void setShipSuggestUnitPrice(Float shipSuggestUnitPrice) {
+        this.shipSuggestUnitPrice = shipSuggestUnitPrice;
     }
 }

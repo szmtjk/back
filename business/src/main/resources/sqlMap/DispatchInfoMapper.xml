@@ -34,6 +34,7 @@
         <result property="goodsType" column="goodsType"/>
         <result property="sailingArea" column="sailingArea"/>
         <result property="customerName" column="customerName"/>
+        <result property="shipSuggestUnitPrice" column="shipSuggestUnitPrice"/>
     </resultMap>
 
     <sql id="all_column">
@@ -55,18 +56,6 @@
         ,a.`created`
         ,a.`updater`
         ,a.`updated`
-    </sql>
-
-    <sql id="customerTaskFlow4Dispatch_column">
-        `id`,
-        `flowName`,
-        `goodsName`,
-        `loadingTime`,
-        `startPortName`,
-        `endPortName`,
-        `leftWeight`,
-        `goodsType`,
-        `sailingArea`
     </sql>
 
     <insert id="insertSelective" useGeneratedKeys="true" keyProperty="pojo.id">
@@ -202,7 +191,7 @@
     <select id="getCustomerTaskFlow4DispatchList" resultMap="CustomerTaskFlow4DispatchColumnMap" parameterType="Map">
         select a.id, b.`name` as flowName, a.goodsName, a.loadingTime, c.name as startPortName, d.name as endPortName, a.goodsType,
                a.sailingArea, a.totalLoad, a.totalLoad - (case when e.preLoad is null then 0 else e.preLoad end) as leftWeight,
-               g.fullName as customerName
+               g.fullName as customerName, a.shipSuggestUnitPrice
         from CustomerTaskFlow a
         left join Flow b on b.id=a.flowId
         left join Port c on c.id=a.startPortId
