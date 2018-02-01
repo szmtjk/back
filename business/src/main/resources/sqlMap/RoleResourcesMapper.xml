@@ -34,7 +34,6 @@
         <trim prefix="(" suffix=")" suffixOverrides=",">
             <if test="pojo.roleId!=null"> `roleId`,</if>
             <if test="pojo.resourceId!=null"> `resourceId`,</if>
-            <if test="pojo.remark!=null"> `remark`,</if>
             <if test="pojo.creator!=null"> `creator`,</if>
             <if test="pojo.creatorName!=null"> `creatorName`,</if>
             <if test="pojo.updater!=null"> `updater`,</if>
@@ -47,7 +46,6 @@
         <trim prefix="(" suffix=")" suffixOverrides=",">
             <if test="pojo.roleId!=null">#{pojo.roleId},</if>
             <if test="pojo.resourceId!=null">#{pojo.resourceId},</if>
-            <if test="pojo.remark!=null">#{pojo.remark},</if>
             <if test="pojo.creator!=null">#{pojo.creator},</if>
             <if test="pojo.creatorName!=null">#{pojo.creatorName},</if>
             <if test="pojo.updater!=null">#{pojo.updater},</if>
@@ -87,12 +85,7 @@
     </select>
 
     <select id="getExistCount" resultType="java.lang.Integer" parameterType="Map" >
-        SELECT  count(id)
-        FROM  `RoleResources`
-        where `isDeleted` = 0
-        <if test="pojo.id != null"> AND `id` != #{pojo.id} </if>
-        <if test="pojo.roleId != null"> AND `name` = #{pojo.name} </if>
-        limit 1
+         SELECT SUM(0) FROM DUAL
     </select>
 
     <select id="getCount" resultType="java.lang.Integer" parameterType="Map" >
@@ -132,4 +125,11 @@
     <delete id="deleteByRoleId" parameterType="java.lang.Long">
         DELETE FROM `RoleResources` WHERE `roleId` = #{roleId}
     </delete>
+
+
+    <select id="queryResourceByRoleInfo" resultType="Map" parameterType="Map">
+        SELECT A1.roleId, A1.resourceId
+        FROM RoleResources A1
+        WHERE A1.roleId = #{pojo.roleId}
+    </select>
 </mapper>

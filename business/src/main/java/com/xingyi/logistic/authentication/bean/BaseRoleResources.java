@@ -6,6 +6,15 @@ public class BaseRoleResources extends BaseModelAndDO{
     private Long roleId;
     private Long resourceId;
     private Integer isDeleted;
+    private String pids;
+
+    public String getPids() {
+        return pids;
+    }
+
+    public void setPids(String pids) {
+        this.pids = pids;
+    }
 
     public Long getRoleId() {
         return roleId;

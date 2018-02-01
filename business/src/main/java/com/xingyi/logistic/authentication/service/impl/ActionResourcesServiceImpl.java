@@ -18,6 +18,7 @@ import org.springframework.util.CollectionUtils;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class ActionResourcesServiceImpl extends BaseCRUDService<ActionResourcesDO,ActionResources,ActionResourcesDBQuery,ActionResourcesQuery> implements ActionResourcesService {
@@ -57,4 +58,13 @@ public class ActionResourcesServiceImpl extends BaseCRUDService<ActionResourcesD
 	    }
 		return resources;
 	}
+
+    /**
+     * 加载权限树
+     * @return
+     */
+    public List<Map<String, Object >> queryTreeResourcesInfo()
+    {
+        return actionResourcesDAO.queryTreeResourcesInfo();
+    }
 }
