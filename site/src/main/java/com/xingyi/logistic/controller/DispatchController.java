@@ -38,7 +38,7 @@ public class DispatchController extends BaseCRUDController<DispatchInfo, Dispatc
     }
 
     @RequestMapping("/getAvailableShips")
-    public JsonRet<List<AvailableDispatchShip>> getAvailableShips(@JsonParam GetDispatchShipParam param) {
+    public JsonRet<Object> getAvailableShips(@JsonParam GetDispatchShipParam param) {
         return dispatchInfoService.getAvailableShips(param);
     }
 

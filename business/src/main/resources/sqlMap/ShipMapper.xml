@@ -303,24 +303,16 @@
         <include refid="pageCommon"/>
     </select>
 
-    <select id="queryWithStaff" resultMap="ShipWithStaffColumnMap" parameterType="Map">
+    <select id="queryWithStaffCount" resultType="java.lang.Integer" parameterType="Map" >
+        select count(1)
+        <include refid="queryWithStaffWhereCommon"/>
+    </select>
+
+    <select id="queryWithStaffList" resultMap="ShipWithStaffColumnMap" parameterType="Map">
         select <include refid="all_column_staff"/>
-        from `Ship` a
-        left join `ShipStaff` b on b.shipId = a.id
-        where a.isDeleted = 0 and b.isDeleted = 0 and b.title = 1
-        <if test="pojo.key != null">
-            AND (a.`shipNo` like concat('%', #{pojo.key}, '%') )
-        </if>
-        <if test="pojo.shipFlags != null">
-            AND `shipFlag` in
-            <foreach collection="pojo.shipFlags" open="(" close=")" item="shipFlag" separator=",">
-                #{shipFlag}
-            </foreach>
-        </if>
-        <if test="pojo.customerTaskFlowId != null">
-            AND a.`id` not in (select shipId from `DispatchInfo` c where c.`customerTaskFlowId`=#{pojo.customerTaskFlowId})
-            and a.sailingArea &amp; (select sailingArea from CustomerTaskFlow where id = #{pojo.customerTaskFlowId}) > 0
-        </if>
+        <include refid="queryWithStaffWhereCommon"/>
+        order by a.`shipFlag`
+        <include refid="pageCommon"/>
     </select>
 
     <sql id="pageQueryWhereCommon">
@@ -331,6 +323,24 @@
         </if>
     </sql>
 
+    <sql id="queryWithStaffWhereCommon">
+        from `Ship` a
+        left join `ShipStaff` b on b.shipId = a.id and b.isDeleted = 0 and b.title = 1
+        where a.isDeleted = 0
+        <if test="pojo.key != null and pojo.key != ''">
+            AND (a.`shipNo` like concat('%', #{pojo.key}, '%') )
+        </if>
+        <if test="pojo.shipFlags != null">
+            AND `shipFlag` in
+            <foreach collection="pojo.shipFlags" open="(" close=")" item="shipFlag" separator=",">
+                #{shipFlag}
+            </foreach>
+        </if>
+        <if test="pojo.customerTaskFlowId != null">
+            AND a.`id` not in (select shipId from `DispatchInfo` c where c.`status` &lt;=5)
+            and a.sailingArea &amp; (select sailingArea from CustomerTaskFlow where id = #{pojo.customerTaskFlowId}) > 0
+        </if>
+    </sql>
     <sql id="pageCommon">
         <choose>
             <when test="pojo.startRow != null and pojo.startRow gt -1 and pojo.limitNum != null and pojo.limitNum gt 0">

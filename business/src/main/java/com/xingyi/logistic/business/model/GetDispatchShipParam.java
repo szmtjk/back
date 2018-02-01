@@ -1,11 +1,13 @@
 package com.xingyi.logistic.business.model;
 
+import com.xingyi.logistic.business.bean.BaseQueryPage;
+
 import javax.validation.constraints.NotNull;
 
 /**
  * Created by Jadic on 2018/1/22.
  */
-public class GetDispatchShipParam {
+public class GetDispatchShipParam extends BaseQueryPage {
     @NotNull
     private Integer customerTaskFlowId;
     private String shipNo;

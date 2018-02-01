@@ -4,6 +4,7 @@
 <mapper namespace="com.xingyi.logistic.business.db.dao.CustomerTaskFlowDAO">
     <resultMap id="AllColumnMap" type="com.xingyi.logistic.business.db.entity.CustomerTaskFlowDO">
         <result property="id" column="id"/>
+        <result property="customerName" column="customerName"/>
         <result property="taskId" column="taskId"/>
         <result property="flowId" column="flowId"/>
         <result property="goodsName" column="goodsName"/>
@@ -37,37 +38,38 @@
     </resultMap>
 
     <sql id="all_column">
-        `id`
-        ,`taskId`
-        ,`flowId`
-        ,`goodsName`
-        ,`goodsType`
-        ,`goodsSubType`
-        ,`totalWeight`
-        ,`direction`
-        ,`sender`
-        ,`receiver`
-        ,`loadingTime`
-        ,`dischargeTime`
-        ,`startPortId`
-        ,`endPortId`
-        ,`loadType`
-        ,`bigShipPC`
-        ,`totalLoad`
-        ,`arriveLocation`
-        ,`bigShipArriveTime`
-        ,`bigShipDepartTime`
-        ,`selfPick`
-        ,`selfBuckle`
-        ,`sailingArea`
-        ,`shipSuggestUnitPrice`
-        ,`sailingFlag`
-        ,`status`
-        ,`taskStatus`
-        ,`description`
-        ,`creator`
-        ,`created`
-        ,`updated`
+        a.`id`
+        ,c.`fullName` as `customerName`
+        ,a.`taskId`
+        ,a.`flowId`
+        ,a.`goodsName`
+        ,a.`goodsType`
+        ,a.`goodsSubType`
+        ,a.`totalWeight`
+        ,a.`direction`
+        ,a.`sender`
+        ,a.`receiver`
+        ,a.`loadingTime`
+        ,a.`dischargeTime`
+        ,a.`startPortId`
+        ,a.`endPortId`
+        ,a.`loadType`
+        ,a.`bigShipPC`
+        ,a.`totalLoad`
+        ,a.`arriveLocation`
+        ,a.`bigShipArriveTime`
+        ,a.`bigShipDepartTime`
+        ,a.`selfPick`
+        ,a.`selfBuckle`
+        ,a.`sailingArea`
+        ,a.`shipSuggestUnitPrice`
+        ,a.`sailingFlag`
+        ,a.`status`
+        ,a.`taskStatus`
+        ,a.`description`
+        ,a.`creator`
+        ,a.`created`
+        ,a.`updated`
     </sql>
 
     <insert id="insertSelective" useGeneratedKeys="true" keyProperty="pojo.id">
@@ -184,8 +186,10 @@
 
     <select id="getById" parameterType="java.lang.Long" resultMap="AllColumnMap">
         SELECT <include refid="all_column"/>
-        FROM `CustomerTaskFlow`
-        WHERE `id` = #{id} and `isDeleted` = 0
+        FROM `CustomerTaskFlow` a
+        LEFT JOIN `CustomerTask` b on b.id = a.taskId
+        LEFT JOIN `Customer` c on c.id = b.customerId
+        WHERE a.`id` = #{id} and a.`isDeleted` = 0
         LIMIT 1
     </select>
 
@@ -211,24 +215,26 @@
 
     <select id="getCount" resultType="java.lang.Integer" parameterType="Map" >
         SELECT  count(id)
-        FROM  `CustomerTaskFlow`
+        FROM  `CustomerTaskFlow` a
         <include refid="pageQueryWhereCommon"/>
         limit 1
     </select>
 
     <select id="queryByPage" resultMap="AllColumnMap" parameterType="Map">
         select <include refid="all_column"/>
-        from `CustomerTaskFlow`
+        from `CustomerTaskFlow` a
+        LEFT JOIN `CustomerTask` b on b.id = a.taskId
+        LEFT JOIN `Customer` c on c.id = b.customerId
         <include refid="pageQueryWhereCommon"/>
         order by `id` desc
         <include refid="pageCommon"/>
     </select>
 
     <sql id="pageQueryWhereCommon">
-        where `isDeleted` = 0
-        <if test="pojo.id != null"> AND `id` = #{pojo.id} </if>
+        where a.`isDeleted` = 0
+        <if test="pojo.id != null"> AND a.`id` = #{pojo.id} </if>
         <if test="pojo.key != null">
-            AND (`taskId` like concat('%', #{pojo.key}, '%'))
+            AND (a.`taskId` like concat('%', #{pojo.key}, '%'))
         </if>
     </sql>
 

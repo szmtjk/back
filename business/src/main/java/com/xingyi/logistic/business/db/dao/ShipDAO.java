@@ -15,6 +15,7 @@ import java.util.List;
 @Dao
 public interface ShipDAO extends BaseDAO<ShipDO, ShipDBQuery> {
 
-    List<ShipWithStaffDO> queryWithStaff(@Param("pojo") ShipDBQuery pojo);
+    int queryWithStaffCount(@Param("pojo") ShipDBQuery pojo);
+    List<ShipWithStaffDO> queryWithStaffList(@Param("pojo") ShipDBQuery pojo);
 
 }

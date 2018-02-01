@@ -33,6 +33,7 @@
         <result property="leftWeight" column="leftWeight"/>
         <result property="goodsType" column="goodsType"/>
         <result property="sailingArea" column="sailingArea"/>
+        <result property="customerName" column="customerName"/>
     </resultMap>
 
     <sql id="all_column">
@@ -200,7 +201,8 @@
 
     <select id="getCustomerTaskFlow4DispatchList" resultMap="CustomerTaskFlow4DispatchColumnMap" parameterType="Map">
         select a.id, b.`name` as flowName, a.goodsName, a.loadingTime, c.name as startPortName, d.name as endPortName, a.goodsType,
-               a.sailingArea, a.totalLoad, a.totalLoad - (case when e.preLoad is null then 0 else e.preLoad end) as leftWeight
+               a.sailingArea, a.totalLoad, a.totalLoad - (case when e.preLoad is null then 0 else e.preLoad end) as leftWeight,
+               g.fullName as customerName
         from CustomerTaskFlow a
         left join Flow b on b.id=a.flowId
         left join Port c on c.id=a.startPortId
@@ -209,6 +211,8 @@
                     from DispatchInfo aa
                     group by aa.customerTaskFlowId
                   ) e on e.customerTaskFlowId = a.id
+        left join CustomerTask f on f.id = a.taskId
+        left join Customer g on g.id = f.customerId
         <include refid="getCustomerTaskFlow4DispatchWhereCommon"/>
         order by `id` desc
         <include refid="pageCommon"/>

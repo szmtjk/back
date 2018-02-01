@@ -17,7 +17,7 @@ public interface DispatchInfoService extends BaseService<DispatchInfo, DispatchI
 
     JsonRet<Boolean> confirmDispatchInfoPlan(DispatchInfoParam dispatchInfoParam);
 
-    JsonRet<List<AvailableDispatchShip>> getAvailableShips(GetDispatchShipParam param);
+    JsonRet<Object> getAvailableShips(GetDispatchShipParam param);
 
     JsonRet<Object> getCustomerTaskFlows(CustomerTaskFlow4DispatchQuery query);
 }

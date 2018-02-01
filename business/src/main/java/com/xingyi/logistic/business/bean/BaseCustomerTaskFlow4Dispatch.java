@@ -15,6 +15,7 @@ public class BaseCustomerTaskFlow4Dispatch {
     private Integer leftWeight;
     private Integer goodsType;
     private String sailingArea;
+    private String customerName;
 
     public Long getId() {
         return id;
@@ -94,5 +95,13 @@ public class BaseCustomerTaskFlow4Dispatch {
 
     public void setSailingArea(String sailingArea) {
         this.sailingArea = sailingArea;
+    }
+
+    public String getCustomerName() {
+        return customerName;
+    }
+
+    public void setCustomerName(String customerName) {
+        this.customerName = customerName;
     }
 }

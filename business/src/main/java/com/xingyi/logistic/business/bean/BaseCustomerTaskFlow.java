@@ -67,6 +67,7 @@ public class BaseCustomerTaskFlow extends BaseModelAndDO {
     private Integer goodsSubType; //货物子类
 
     private Integer selfBuckle; //是否扣网片
+    private String customerName;
 
     public Integer getSelfBuckle() {
         return selfBuckle;
@@ -283,5 +284,13 @@ public class BaseCustomerTaskFlow extends BaseModelAndDO {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public String getCustomerName() {
+        return customerName;
+    }
+
+    public void setCustomerName(String customerName) {
+        this.customerName = customerName;
     }
 }
