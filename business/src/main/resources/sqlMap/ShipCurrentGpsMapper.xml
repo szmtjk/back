@@ -300,7 +300,7 @@
     <!-- 加载航次信息表-->
     <select id="queryDispatchInfo" resultMap="mRetDispatchMap" parameterType="Map">
         <![CDATA[
-        SELECT A1.id, A1.orderNo, A1.dispatchType, A1.shipId, A1.shipType, A1.preWeight, A1.preLoad, A1.preArriveTime, A1.preSettleAmount, A1.settleType, A3.goodsName, A4.startPortId, A4.endPortId
+        SELECT A1.id, A1.orderNo, A1.dispatchType, A1.shipId, A1.shipFlag as shipType, A1.preWeight, A1.preLoad, A1.preArriveTime, A1.preSettleAmount, A1.settleType, A3.goodsName, A4.startPortId, A4.endPortId
         FROM DispatchInfo A1
         LEFT JOIN CustomerTaskFlow A3 ON A1.customerTaskFlowId=A3.id
         LEFT JOIN Flow A4 ON A4.ID=A3.flowId

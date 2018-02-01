@@ -156,7 +156,7 @@
 
     <!-- 加载所有的 -->
     <select id="queryDispatchShipInfo" resultType="Map" parameterType="Map">
-        SELECT A2.shipNo, A6.fullName, A1.id AS orderId, A1.shipId, A1.orderNo, A1.dispatchType, A1.shipType, A1.preWeight, A1.preLoad, A1.preArriveTime, A1.preSettleAmount, A1.actualTransferPrice, A1.settleType, A3.goodsName, A3.goodsType,
+        SELECT A2.shipNo, A6.fullName, A1.id AS orderId, A1.shipId, A1.orderNo, A1.dispatchType,  A1.preWeight, A1.preLoad, A1.preArriveTime, A1.preSettleAmount, A1.actualTransferPrice, A1.settleType, A3.goodsName, A3.goodsType,
             A3.sender, A3.receiver, A4.`name` AS flowName, A3.startPortId, A3.endPortId
         FROM DispatchInfo A1
         INNER JOIN Ship A2 ON A1.shipId=A2.id
@@ -171,7 +171,7 @@
 
     <!-- 加载末增加航次的 -->
     <select id="queryUnDealDispatchShipInfo" resultType="Map" parameterType="Map">
-        SELECT A2.shipNo, A6.fullName, A1.id AS orderId, A1.shipId, A1.orderNo, A1.dispatchType, A1.shipType, A1.preWeight, A1.preLoad, A1.preArriveTime, A1.preSettleAmount, A1.actualTransferPrice, A1.settleType, A3.goodsName, A3.goodsType,
+        SELECT A2.shipNo, A6.fullName, A1.id AS orderId, A1.shipId, A1.orderNo, A1.dispatchType,  A1.preWeight, A1.preLoad, A1.preArriveTime, A1.preSettleAmount, A1.actualTransferPrice, A1.settleType, A3.goodsName, A3.goodsType,
             A3.sender, A3.receiver, A4.`name` AS flowName, A3.startPortId, A3.endPortId
         FROM (SELECT c1.*
 				FROM DispatchInfo  c1
