@@ -81,6 +81,7 @@ public class RoleResourcesServiceImpl extends BaseCRUDService<RoleResourcesDO,Ro
     {
         return roleResourcesDAO.queryResourceByRoleInfo(map);
     }
+
     @Override
     public void deleteByRoleId(Long roleId) {
         this.roleResourcesDAO.deleteByRoleId(roleId);

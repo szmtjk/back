@@ -2,24 +2,20 @@ package com.xingyi.logistic.authentication.controller;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.serializer.SerializerFeature;
-import com.xingyi.logistic.authentication.model.ActionResources;
-import com.xingyi.logistic.authentication.model.Roles;
-import com.xingyi.logistic.authentication.model.UserProfile;
-import com.xingyi.logistic.authentication.model.UserProfileQuery;
+import com.xingyi.logistic.authentication.model.*;
 import com.xingyi.logistic.authentication.security.User;
-import com.xingyi.logistic.authentication.service.ActionResourcesService;
-import com.xingyi.logistic.authentication.service.RolesService;
-import com.xingyi.logistic.authentication.service.UserProfileService;
-import com.xingyi.logistic.authentication.service.UserRolesService;
+import com.xingyi.logistic.authentication.service.*;
 import com.xingyi.logistic.authentication.util.SessionUtil;
 import com.xingyi.logistic.business.service.BaseService;
 import com.xingyi.logistic.common.bean.ErrCode;
 import com.xingyi.logistic.common.bean.JsonRet;
+import com.xingyi.logistic.config.JsonParam;
 import com.xingyi.logistic.controller.BaseCRUDController;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.CollectionUtils;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.ArrayList;
@@ -41,10 +37,48 @@ public class UserController extends BaseCRUDController<UserProfile,UserProfileQu
     @Autowired
     private ActionResourcesService resourcesService;
 
+    @Autowired
+    private LocalAuthService localAuthService;
+
 	@Override
 	protected BaseService<UserProfile, UserProfileQuery> getBaseService() {
 		return this.userProfileService;
 	}
+
+
+    @Override
+    public JsonRet<Long> add(@JsonParam UserProfile userProfile)
+    {
+        JsonRet<Long> ret = userProfileService.add(userProfile);
+        if (ret.isSuccess())
+        {
+            LocalAuth localAuth = new LocalAuth();
+            localAuth.setLoginName(userProfile.getLoginName());
+            localAuth.setPasswd(userProfile.getPasswd());
+            localAuth.setUserId(ret.getData());
+            localAuthService.add(localAuth);
+        }
+        return ret;
+    }
+
+
+    @Override
+    public JsonRet<Boolean> modify(@JsonParam UserProfile userProfile)
+    {
+        LocalAuth localAuth = new LocalAuth();
+        localAuth.setId(userProfile.getLocalId());
+        localAuth.setLoginName(userProfile.getLoginName());
+        localAuth.setPasswd(userProfile.getPasswd());
+        localAuth.setUserId(userProfile.getId());
+        localAuthService.modify(localAuth);
+        return userProfileService.modify(userProfile);
+    }
+
+    @RequestMapping(value = "/delUser", method = RequestMethod.POST)
+    public JsonRet<Boolean> delUser(@JsonParam UserProfile userProfile) {
+        localAuthService.del(userProfile.getLocalId());
+        return userProfileService.del(userProfile.getId());
+    }
 
     /**
      * 设置用户角色

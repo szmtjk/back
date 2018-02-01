@@ -11,6 +11,9 @@
         <result property="department" column="department"/>
         <result property="creator" column="creator"/>
         <result property="creatorName" column="creatorName"/>
+        <result property="passwd" column="passwd"/>
+        <result property="loginName" column="loginName"/>
+        <result property="localId" column="localId"/>
         <result property="created" column="created"/>
         <result property="updater" column="updater"/>
         <result property="updaterName" column="updaterName"/>
@@ -33,6 +36,9 @@
         ,`updaterName`
         ,`updated`
         ,`isDeleted`
+        , '' passwd
+        , '' loginName
+        , '' localId
     </sql>
 
     <insert id="insertSelective" useGeneratedKeys="true" keyProperty="pojo.id">
@@ -107,25 +113,27 @@
     </select>
 
     <select id="getCount" resultType="java.lang.Integer" parameterType="Map" >
-        SELECT  count(id)
-        FROM  `UserProfile`
+        SELECT  count(A1.id)
+        FROM UserProfile A1
+        INNER JOIN LocalAuth A2 ON A2.userId = A1.id
         <include refid="pageQueryWhereCommon"/>
         limit 1
     </select>
 
     <select id="queryByPage" resultMap="AllColumnMap" parameterType="Map">
-        select <include refid="all_column"/>
-        from `UserProfile`
+        SELECT A1.*, A2.loginName, A2.passwd, A2.id AS localId
+        FROM UserProfile A1
+        INNER JOIN LocalAuth A2 ON A2.userId = A1.id
         <include refid="pageQueryWhereCommon"/>
-        order by `id` desc
+        order by A1.`id` desc
         <include refid="pageCommon"/>
     </select>
 
     <sql id="pageQueryWhereCommon">
-        where `isDeleted` = 0
-        <if test="pojo.id != null"> AND `id` = #{pojo.id} </if>
+        where A1.`isDeleted` = 0
+        <if test="pojo.id != null"> AND A1.`id` = #{pojo.id} </if>
         <if test="pojo.key != null">
-            AND (`nickName` like concat('%', #{pojo.key}, '%'))
+            AND (A1.`nickName` like concat('%', #{pojo.key}, '%'))
         </if>
     </sql>
 
