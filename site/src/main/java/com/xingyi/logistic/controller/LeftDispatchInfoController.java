@@ -21,6 +21,19 @@ public class LeftDispatchInfoController extends BaseCRUDController<LeftDispatchI
     @Autowired
     private LeftDispatchInfoService leftDispatchInfoService;
 
+
+    /**
+     * APP端加载
+     * @param condition
+     * @return
+     */
+    @RequestMapping("/getAppList")
+    public JsonRet<Object> getAppList(@JsonParam LeftDispatchInfoQuery condition)
+    {
+        condition.setAppFlag("app");
+        return super.getList(condition);
+    }
+
     @RequestMapping("/getLeftDispatch4Check")
     public JsonRet<Object> getLeftDispatch4Check(@JsonParam LeftDispatch4CheckQuery query) {
         return leftDispatchInfoService.getLeftDispatch4Check(query);
