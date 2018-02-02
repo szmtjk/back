@@ -48,6 +48,114 @@ public class BaseShip extends BaseModelAndDO {
     //@DateTimeFormat(pattern = "yyyy-MM-dd")
     private String repairDate;//维修日期
     private String description;//备注
+    private String name;//船主信息
+    private String mobile;//手机号码
+    private Integer preLoad;//预报吨位
+    private String identity;//身份证号
+    private String bankCardNo;//银行卡号
+    private String bankName;//银行名称
+    private String idPhoto;//身份证正面照片
+    private String idPhotoF;//身份证反面照片
+    private String bankCardPhoto;//银行卡照片
+    private String shipPhoto;//船舶照片
+    private Integer from;//信息来源  1：后台新增  2：APP新增
+    private Integer status;//状态  1：启用  2：禁用
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getMobile() {
+        return mobile;
+    }
+
+    public void setMobile(String mobile) {
+        this.mobile = mobile;
+    }
+
+    public Integer getPreLoad() {
+        return preLoad;
+    }
+
+    public void setPreLoad(Integer preLoad) {
+        this.preLoad = preLoad;
+    }
+
+    public String getIdentity() {
+        return identity;
+    }
+
+    public void setIdentity(String identity) {
+        this.identity = identity;
+    }
+
+    public String getBankCardNo() {
+        return bankCardNo;
+    }
+
+    public void setBankCardNo(String bankCardNo) {
+        this.bankCardNo = bankCardNo;
+    }
+
+    public String getBankName() {
+        return bankName;
+    }
+
+    public void setBankName(String bankName) {
+        this.bankName = bankName;
+    }
+
+    public String getIdPhoto() {
+        return idPhoto;
+    }
+
+    public void setIdPhoto(String idPhoto) {
+        this.idPhoto = idPhoto;
+    }
+
+    public String getIdPhotoF() {
+        return idPhotoF;
+    }
+
+    public void setIdPhotoF(String idPhotoF) {
+        this.idPhotoF = idPhotoF;
+    }
+
+    public String getBankCardPhoto() {
+        return bankCardPhoto;
+    }
+
+    public void setBankCardPhoto(String bankCardPhoto) {
+        this.bankCardPhoto = bankCardPhoto;
+    }
+
+    public String getShipPhoto() {
+        return shipPhoto;
+    }
+
+    public void setShipPhoto(String shipPhoto) {
+        this.shipPhoto = shipPhoto;
+    }
+
+    public Integer getFrom() {
+        return from;
+    }
+
+    public void setFrom(Integer from) {
+        this.from = from;
+    }
+
+    public Integer getStatus() {
+        return status;
+    }
+
+    public void setStatus(Integer status) {
+        this.status = status;
+    }
 
     public Integer getShipLevel() {
         return shipLevel;

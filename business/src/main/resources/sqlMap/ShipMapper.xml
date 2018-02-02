@@ -42,6 +42,18 @@
         <result property="creator" column="creator"/>
         <result property="created" column="created"/>
         <result property="updated" column="updated"/>
+        <result property="name" column="name"/>
+        <result property="mobile" column="mobile"/>
+        <result property="preLoad" column="preLoad"/>
+        <result property="identity" column="identity"/>
+        <result property="bankCardNo" column="bankCardNo"/>
+        <result property="bankName" column="bankName"/>
+        <result property="idPhoto" column="idPhoto"/>
+        <result property="idPhotoF" column="idPhotoF"/>
+        <result property="bankCardPhoto" column="bankCardPhoto"/>
+        <result property="shipPhoto" column="shipPhoto"/>
+        <result property="from" column="from"/>
+        <result property="status" column="status"/>
     </resultMap>
 
     <resultMap id="ShipWithStaffColumnMap" type="com.xingyi.logistic.business.db.entity.ShipWithStaffDO">
@@ -88,6 +100,61 @@
         <result property="name" column="name"/>
     </resultMap>
 
+
+    <resultMap id="mRetShipMap" type="com.xingyi.logistic.business.db.entity.ShipDO">
+        <result property="id" column="id"/>
+        <result property="shipNo" column="shipNo"/>
+        <result property="shipFlag" column="shipFlag"/>
+        <result property="shipType" column="shipType"/>
+        <result property="shipLevel" column="shipLevel"/>
+        <result property="length" column="length"/>
+        <result property="width" column="width"/>
+        <result property="depth" column="depth"/>
+        <result property="totalWeight" column="totalWeight"/>
+        <result property="netWeight" column="netWeight"/>
+        <result property="loadWeight" column="loadWeight"/>
+        <result property="feeWeight" column="feeWeight"/>
+        <result property="levelAWeight" column="levelAWeight"/>
+        <result property="levelBWeight" column="levelBWeight"/>
+        <result property="levelCWeight" column="levelCWeight"/>
+        <result property="buildDate" column="buildDate"/>
+        <result property="customerId" column="customerId"/>
+        <result property="checkRegisterNo" column="checkRegisterNo"/>
+        <result property="checkNo" column="checkNo"/>
+        <result property="shipID" column="shipID"/>
+        <result property="sailingArea" column="sailingArea"/>
+        <result property="sailingAreaA" column="sailingAreaA"/>
+        <result property="sailingAreaB" column="sailingAreaB"/>
+        <result property="sailingAreaC" column="sailingAreaC"/>
+        <result property="firstRegisterNo" column="firstRegisterNo"/>
+        <result property="sailingDepth" column="sailingDepth"/>
+        <result property="buildFactory" column="buildFactory"/>
+        <result property="aisID" column="aisID"/>
+        <result property="gpsDeviceId" column="gpsDeviceId"/>
+        <result property="oldShipName" column="oldShipName"/>
+        <result property="runType" column="runType"/>
+        <result property="rebuildDate" column="rebuildDate"/>
+        <result property="insuranceDate" column="insuranceDate"/>
+        <result property="checkDate" column="checkDate"/>
+        <result property="repairDate" column="repairDate"/>
+        <result property="description" column="description"/>
+        <result property="creator" column="creator"/>
+        <result property="created" column="created"/>
+        <result property="updated" column="updated"/>
+        <result property="name" column="name"/>
+        <result property="mobile" column="mobile"/>
+        <result property="preLoad" column="preLoad"/>
+        <result property="identity" column="identity"/>
+        <result property="bankCardNo" column="bankCardNo"/>
+        <result property="bankName" column="bankName"/>
+        <result property="idPhoto" column="idPhoto"/>
+        <result property="idPhotoF" column="idPhotoF"/>
+        <result property="bankCardPhoto" column="bankCardPhoto"/>
+        <result property="shipPhoto" column="shipPhoto"/>
+        <result property="from" column="from"/>
+        <result property="status" column="status"/>
+    </resultMap>
+
     <sql id="all_column">
         a.`id`
         ,a.`shipNo`
@@ -128,6 +195,18 @@
         ,a.`creator`
         ,a.`created`
         ,a.`updated`
+        ,a.`name`
+        ,a.`mobile`
+        ,a.`preLoad`
+        ,a.`identity`
+        ,a.`bankCardNo`
+        ,a.`bankName`
+        ,a.`idPhoto`
+        ,a.`idPhotoF`
+        ,a.`bankCardPhoto`
+        ,a.`shipPhoto`
+        ,a.`from`
+        ,a.`status`
     </sql>
 
     <sql id="all_column_staff">
@@ -174,6 +253,18 @@
             <if test="pojo.checkDate!=null"> `checkDate`,</if>
             <if test="pojo.repairDate!=null"> `repairDate`,</if>
             <if test="pojo.description!=null"> `description`,</if>
+            <if test="pojo.name!=null"> `name`,</if>
+            <if test="pojo.mobile!=null"> `mobile`,</if>
+            <if test="pojo.preLoad!=null"> `preLoad`,</if>
+            <if test="pojo.identity!=null"> `identity`,</if>
+            <if test="pojo.bankCardNo!=null"> `bankCardNo`,</if>
+            <if test="pojo.bankName!=null"> `bankName`,</if>
+            <if test="pojo.idPhoto!=null"> `idPhoto`,</if>
+            <if test="pojo.idPhotoF!=null"> `idPhotoF`,</if>
+            <if test="pojo.bankCardPhoto!=null"> `bankCardPhoto`,</if>
+            <if test="pojo.shipPhoto!=null"> `shipPhoto`,</if>
+            <if test="pojo.from!=null"> `from`,</if>
+            <if test="pojo.status!=null"> `status`,</if>
             `created`,
             `updated`
         </trim>
@@ -214,6 +305,18 @@
             <if test="pojo.checkDate!=null">#{pojo.checkDate},</if>
             <if test="pojo.repairDate!=null">#{pojo.repairDate},</if>
             <if test="pojo.description!=null">#{pojo.description},</if>
+            <if test="pojo.name!=null">#{pojo.name},</if>
+            <if test="pojo.mobile!=null">#{pojo.mobile},</if>
+            <if test="pojo.preLoad!=null">#{pojo.preLoad},</if>
+            <if test="pojo.identity!=null">#{pojo.identity},</if>
+            <if test="pojo.bankCardNo!=null">#{pojo.bankCardNo},</if>
+            <if test="pojo.bankName!=null">#{pojo.bankName},</if>
+            <if test="pojo.idPhoto!=null">#{pojo.idPhoto},</if>
+            <if test="pojo.idPhotoF!=null">#{pojo.idPhotoF},</if>
+            <if test="pojo.bankCardPhoto!=null">#{pojo.bankCardPhoto},</if>
+            <if test="pojo.shipPhoto!=null">#{pojo.shipPhoto},</if>
+            <if test="pojo.from!=null">#{pojo.from},</if>
+            <if test="pojo.status!=null">#{pojo.status},</if>
             UNIX_TIMESTAMP(now()),
             UNIX_TIMESTAMP(now())
         </trim>
@@ -258,6 +361,18 @@
             <if test="pojo.checkDate!=null"> `checkDate`= #{pojo.checkDate},</if>
             <if test="pojo.repairDate!=null"> `repairDate`= #{pojo.repairDate},</if>
             <if test="pojo.description!=null"> `description`= #{pojo.description},</if>
+            <if test="pojo.name!=null"> `name`= #{pojo.name},</if>
+            <if test="pojo.mobile!=null"> `mobile`= #{pojo.mobile},</if>
+            <if test="pojo.preLoad!=null"> `preLoad`= #{pojo.preLoad},</if>
+            <if test="pojo.identity!=null"> `identity`= #{pojo.identity},</if>
+            <if test="pojo.bankCardNo!=null"> `bankCardNo`= #{pojo.bankCardNo},</if>
+            <if test="pojo.bankName!=null"> `bankName`= #{pojo.bankName},</if>
+            <if test="pojo.idPhoto!=null"> `idPhoto`= #{pojo.idPhoto},</if>
+            <if test="pojo.idPhotoF!=null"> `idPhotoF`= #{pojo.idPhotoF},</if>
+            <if test="pojo.bankCardPhoto!=null"> `bankCardPhoto`= #{pojo.bankCardPhoto},</if>
+            <if test="pojo.shipPhoto!=null"> `shipPhoto`= #{pojo.shipPhoto},</if>
+            <if test="pojo.from!=null"> `from`= #{pojo.from},</if>
+            <if test="pojo.status!=null"> `status`= #{pojo.status},</if>
             `updated` = UNIX_TIMESTAMP(now())
         </set>
         WHERE `id` = #{pojo.id} and `isDeleted` = 0
@@ -351,4 +466,14 @@
             </otherwise>
         </choose>
     </sql>
+
+
+    <select  id="getAppById" parameterType="java.lang.Long" resultMap="mRetShipMap">
+
+        SELECT A1.shipNo, A1.`name`, A1.mobile, A1.identity, A1.bankCardNo,
+        A1.bankName, A1.idPhoto, A1.idPhotoF, A1.bankCardPhoto, A1.shipPhoto
+        FROM Ship A1
+        INNER JOIN AppUser A2 ON A1.id=A2.shipInfoId
+        WHERE A2.id = #{id}
+    </select>
 </mapper>

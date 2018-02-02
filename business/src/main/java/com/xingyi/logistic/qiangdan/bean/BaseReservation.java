@@ -12,7 +12,7 @@ public class BaseReservation extends BaseModelAndDO {
      * 用户id
      */
     @NotNull
-    private Integer userId;
+    private Long userId;
 
     /**
      * 船舶经度
@@ -68,11 +68,11 @@ public class BaseReservation extends BaseModelAndDO {
         this.leftDispatchId = leftDispatchId;
     }
 
-    public Integer getUserId() {
+    public Long getUserId() {
         return userId;
     }
 
-    public void setUserId(Integer userId) {
+    public void setUserId(Long userId) {
         this.userId = userId;
     }
 

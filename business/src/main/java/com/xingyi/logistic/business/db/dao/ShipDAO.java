@@ -4,6 +4,7 @@ import com.xingyi.logistic.business.db.dao.base.BaseDAO;
 import com.xingyi.logistic.business.db.entity.ShipDBQuery;
 import com.xingyi.logistic.business.db.entity.ShipDO;
 import com.xingyi.logistic.business.db.entity.ShipWithStaffDO;
+import com.xingyi.logistic.common.bean.JsonRet;
 import com.xxx.boot.jdbc.annotation.Dao;
 import org.apache.ibatis.annotations.Param;
 
@@ -18,4 +19,5 @@ public interface ShipDAO extends BaseDAO<ShipDO, ShipDBQuery> {
     int queryWithStaffCount(@Param("pojo") ShipDBQuery pojo);
     List<ShipWithStaffDO> queryWithStaffList(@Param("pojo") ShipDBQuery pojo);
 
+    ShipDO getAppById(@Param("id")Long userId);
 }
