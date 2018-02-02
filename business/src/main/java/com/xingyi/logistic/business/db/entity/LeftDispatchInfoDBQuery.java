@@ -6,6 +6,9 @@ import com.xingyi.logistic.business.bean.BaseDBQueryPage;
  * 余量临调信息
  */
 public class LeftDispatchInfoDBQuery extends BaseDBQueryPage {
+
+    private String appFlag;
+
     private String key;
 
     public String getKey() {
@@ -14,5 +17,13 @@ public class LeftDispatchInfoDBQuery extends BaseDBQueryPage {
 
     public void setKey(String key) {
         this.key = key;
+    }
+
+    public String getAppFlag() {
+        return appFlag;
+    }
+
+    public void setAppFlag(String appFlag) {
+        this.appFlag = appFlag;
     }
 }

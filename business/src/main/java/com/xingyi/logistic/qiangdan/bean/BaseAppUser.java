@@ -1,7 +1,6 @@
 package com.xingyi.logistic.qiangdan.bean;
 
 import com.xingyi.logistic.business.bean.BaseModelAndDO;
-import com.xingyi.logistic.common.annotation.NotNullEmpty;
 
 public class BaseAppUser extends BaseModelAndDO {
 
@@ -23,7 +22,7 @@ public class BaseAppUser extends BaseModelAndDO {
     /**
      * 临调船信息id
      */
-    private Integer shipInfoId;
+    private Long shipInfoId;
 
     /**
      * 是否已删除
@@ -104,11 +103,11 @@ public class BaseAppUser extends BaseModelAndDO {
         this.userPass = userPass;
     }
 
-    public Integer getShipInfoId() {
+    public Long getShipInfoId() {
         return shipInfoId;
     }
 
-    public void setShipInfoId(Integer shipInfoId) {
+    public void setShipInfoId(Long shipInfoId) {
         this.shipInfoId = shipInfoId;
     }
 
