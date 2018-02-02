@@ -337,7 +337,7 @@
             </foreach>
         </if>
         <if test="pojo.customerTaskFlowId != null">
-            AND a.`id` not in (select shipId from `DispatchInfo` c where c.`status` &lt;=5)
+            AND a.`id` not in (select shipId from `DispatchInfo` c where c.isDeleted = 0 and c.`status` &lt;=5)
             and a.sailingArea &amp; (select sailingArea from CustomerTaskFlow where id = #{pojo.customerTaskFlowId}) > 0
         </if>
     </sql>
