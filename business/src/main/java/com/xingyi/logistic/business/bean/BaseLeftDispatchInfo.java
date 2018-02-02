@@ -71,6 +71,24 @@ public class BaseLeftDispatchInfo extends BaseModelAndDO{
     private String endPortName;
     private String customerName;
     private String flowName;
+    private String loadingTime;
+    private String dischargeTime;
+
+    public String getLoadingTime() {
+        return loadingTime;
+    }
+
+    public void setLoadingTime(String loadingTime) {
+        this.loadingTime = loadingTime;
+    }
+
+    public String getDischargeTime() {
+        return dischargeTime;
+    }
+
+    public void setDischargeTime(String dischargeTime) {
+        this.dischargeTime = dischargeTime;
+    }
 
     public String getGoodsName() {
         return goodsName;

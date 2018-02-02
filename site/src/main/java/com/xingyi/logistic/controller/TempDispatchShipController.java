@@ -47,7 +47,7 @@ public class TempDispatchShipController extends BaseCRUDController<TempDispatchS
                 appUserService.modify(mAppUser);
             }
         }
-        return tempDispatchService.add(model);
+        return ret;
     }
 
     @Override

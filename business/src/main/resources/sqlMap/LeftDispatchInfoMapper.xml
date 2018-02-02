@@ -25,6 +25,8 @@
         <result property="endPortName" column="endPortName"/>
         <result property="customerName" column="customerName"/>
         <result property="flowName" column="flowName"/>
+        <result property="loadingTime" column="loadingTime"/>
+        <result property="dischargeTime" column="dischargeTime"/>
     </resultMap>
 
     <resultMap id="LeftDispatch4CheckColumnMap" type="com.xingyi.logistic.business.db.entity.LeftDispatch4CheckDO">
@@ -64,6 +66,8 @@
         , '' endPortName
         , '' customerName
         , '' flowName
+        , '' loadingTime
+        , '' dischargeTime
     </sql>
 
     <insert id="insertSelective" useGeneratedKeys="true" keyProperty="pojo.id">
@@ -164,7 +168,7 @@
     </select>
 
     <select id="queryByPage" resultMap="AllColumnMap" parameterType="Map">
-        SELECT A1.*, A2.goodsName, A6.`name` AS startPortName, A7.`name` AS endPortName, A4.fullName AS customerName, A5.`name` AS flowName
+        SELECT A1.*, A2.goodsName, A6.`name` AS startPortName, A7.`name` AS endPortName, A4.fullName AS customerName, A5.`name` AS flowName, A2.loadingTime, A2.dischargeTime
         FROM LeftDispatchInfo A1
         LEFT JOIN CustomerTaskFlow A2 ON A1.customerTaskFlowId=A2.id
         LEFT JOIN CustomerTask A3 ON A3.id=A2.taskId
