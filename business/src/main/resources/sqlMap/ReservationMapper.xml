@@ -151,4 +151,30 @@
             </otherwise>
         </choose>
     </sql>
+
+
+    <select id="queryMyOrderInfoCnt" resultType="java.lang.Integer" parameterType="Map" >
+        SELECT  count(A1.id)
+        FROM Reservation A1
+        INNER JOIN LeftDispatchInfo A2 ON A1.leftDispatchId=A2.id
+        INNER JOIN CustomerTaskFlow A3 ON A3.id=A2.customerTaskFlowId
+        INNER JOIN `Port` A4 ON A4.id = A3.startPortId
+        INNER JOIN `Port` A5 ON A5.id = A3.endPortId
+        WHERE A1.userId = #{pojo.userId}
+        limit 1
+    </select>
+
+
+    <select id="queryMyOrderInfo" resultType="Map" parameterType="Map">
+        SELECT A1.id, A3.goodsName, A3.loadingTime, A3.dischargeTime, A4.`name` AS startPortName,  A5.`name` AS endPortName, A2.specialTip,
+            CASE WHEN A1.`status` = 1 THEN '已预约' WHEN A1.`status` = 2 THEN '已取消' ELSE '其它' END statusName
+        FROM Reservation A1
+        INNER JOIN LeftDispatchInfo A2 ON A1.leftDispatchId=A2.id
+        INNER JOIN CustomerTaskFlow A3 ON A3.id=A2.customerTaskFlowId
+        INNER JOIN `Port` A4 ON A4.id = A3.startPortId
+        INNER JOIN `Port` A5 ON A5.id = A3.endPortId
+        WHERE A1.userId = #{pojo.userId}
+        ORDER BY A1.id DESC
+         limit #{pojo.startRow}, ${pojo.pageSize}
+    </select>
 </mapper>

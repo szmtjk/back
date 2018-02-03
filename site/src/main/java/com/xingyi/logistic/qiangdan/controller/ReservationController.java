@@ -13,6 +13,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.Map;
+
 @RestController
 @RequestMapping("/reservation")
 public class ReservationController extends BaseCRUDController<Reservation,ReservationQuery> {
@@ -46,6 +48,19 @@ public class ReservationController extends BaseCRUDController<Reservation,Reserv
     public JsonRet<Reservation> getAppById() {
         return super.getById(SessionUtil.getAppUser().getId());
     }
+
+
+    /**
+     * 获取我的订单
+     * @param map
+     * @return
+     */
+    @RequestMapping("/getMyOrder")
+    public JsonRet<Object> getMyOrder(@RequestParam Map<String, Object> map)
+    {
+        return reservationService.queryMyOrderInfo(map);
+    }
+
 
     @Override
     protected BaseService<Reservation, ReservationQuery> getBaseService() {
