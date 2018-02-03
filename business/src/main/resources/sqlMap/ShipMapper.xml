@@ -194,6 +194,7 @@
         ,a.`description`
         ,a.`creator`
         ,a.`created`
+        ,a.`updater`
         ,a.`updated`
         ,a.`name`
         ,a.`mobile`
@@ -208,7 +209,10 @@
         ,a.`from`
         ,a.`status`
     </sql>
-
+    <sql id="all_column_user">
+        <include refid="all_column"/>
+        ,b.`realName` as creatorName
+    </sql>
     <sql id="all_column_staff">
         <include refid="all_column"/>
         ,b.`name` as captain
@@ -265,6 +269,8 @@
             <if test="pojo.shipPhoto!=null"> `shipPhoto`,</if>
             <if test="pojo.from!=null"> `from`,</if>
             <if test="pojo.status!=null"> `status`,</if>
+            <if test="pojo.creator!=null"> `creator`,</if>
+            <if test="pojo.updater!=null"> `updater`,</if>
             `created`,
             `updated`
         </trim>
@@ -317,6 +323,8 @@
             <if test="pojo.shipPhoto!=null">#{pojo.shipPhoto},</if>
             <if test="pojo.from!=null">#{pojo.from},</if>
             <if test="pojo.status!=null">#{pojo.status},</if>
+            <if test="pojo.creator!=null">#{pojo.creator},</if>
+            <if test="pojo.updater!=null">#{pojo.updater},</if>
             UNIX_TIMESTAMP(now()),
             UNIX_TIMESTAMP(now())
         </trim>
@@ -373,6 +381,7 @@
             <if test="pojo.shipPhoto!=null"> `shipPhoto`= #{pojo.shipPhoto},</if>
             <if test="pojo.from!=null"> `from`= #{pojo.from},</if>
             <if test="pojo.status!=null"> `status`= #{pojo.status},</if>
+            <if test="pojo.updater!=null">`updater` = #{pojo.updater},</if>
             `updated` = UNIX_TIMESTAMP(now())
         </set>
         WHERE `id` = #{pojo.id} and `isDeleted` = 0
@@ -388,9 +397,9 @@
     </update>
 
     <select id="getById" parameterType="java.lang.Long" resultMap="AllColumnMap">
-        SELECT <include refid="all_column"/>
-        FROM `Ship` a
-        WHERE `id` = #{id} and `isDeleted` = 0
+        SELECT <include refid="all_column_user"/>
+        FROM `Ship` a  LEFT JOIN `UserProfile` b on a.creator = b.id
+        WHERE a.`id` = #{id} and a.`isDeleted` = 0
         LIMIT 1
     </select>
 
@@ -404,17 +413,17 @@
     </select>
 
     <select id="getCount" resultType="java.lang.Integer" parameterType="Map" >
-        SELECT  count(id)
-        FROM  `Ship`
+        SELECT  count(a.id)
+        FROM  `Ship` a  LEFT JOIN `UserProfile` b on a.creator = b.id
         <include refid="pageQueryWhereCommon"/>
         limit 1
     </select>
 
     <select id="queryByPage" resultMap="AllColumnMap" parameterType="Map">
-        select <include refid="all_column"/>
-        from `Ship` a
+        select <include refid="all_column_user"/>
+        from `Ship` a LEFT JOIN `UserProfile` b on a.creator = b.id
         <include refid="pageQueryWhereCommon"/>
-        order by `id` desc
+        order by a.`created` desc
         <include refid="pageCommon"/>
     </select>
 
@@ -431,10 +440,10 @@
     </select>
 
     <sql id="pageQueryWhereCommon">
-        where `isDeleted` = 0 and `shipFlag` &lt; 3
-        <if test="pojo.id != null"> AND `id` = #{pojo.id} </if>
+        where a.`isDeleted` = 0 and a.`shipFlag` &lt; 3
+        <if test="pojo.id != null"> AND a.`id` = #{pojo.id} </if>
         <if test="pojo.key != null">
-            AND (`shipNo` like concat('%', #{pojo.key}, '%') )
+            AND (a.`shipNo` like concat('%', #{pojo.key}, '%') )
         </if>
     </sql>
 

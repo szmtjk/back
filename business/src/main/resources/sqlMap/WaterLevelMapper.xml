@@ -12,20 +12,27 @@
         <result property="created" column="created"/>
         <result property="updater" column="updater"/>
         <result property="updated" column="updated"/>
+        <result property="creatorName" column="creatorName"/>
+        <result property="updaterName" column="updaterName"/>
         <result property="isDeleted" column="isDeleted"/>
     </resultMap>
 
     <sql id="all_column">
-        `id`
-        ,`name`
-        ,`level`
-        ,`status`
-        ,`description`
-        ,`creator`
-        ,`created`
-        ,`updater`
-        ,`updated`
-        ,`isDeleted`
+        a.`id`
+        ,a.`name`
+        ,a.`level`
+        ,a.`status`
+        ,a.`description`
+        ,a.`creator`
+        ,a.`created`
+        ,a.`updater`
+        ,a.`updated`
+        ,a.`isDeleted`
+    </sql>
+
+    <sql id="all_column_user">
+        <include refid="all_column"/>
+        ,b.`realName` as creatorName
     </sql>
 
     <insert id="insertSelective" useGeneratedKeys="true" keyProperty="pojo.id">
@@ -79,9 +86,9 @@
     </update>
 
     <select id="getById" parameterType="java.lang.Long" resultMap="AllColumnMap">
-        SELECT <include refid="all_column"/>
-        FROM `WaterLevel`
-        WHERE `id` = #{id}
+        SELECT <include refid="all_column_user"/>
+        FROM `WaterLevel`  a LEFT JOIN `UserProfile` b on a.creator = b.id
+        WHERE a.`id` = #{id}
     </select>
 
     <select id="getExistCount" resultType="java.lang.Integer" parameterType="Map" >
@@ -94,25 +101,25 @@
     </select>
 
     <select id="getCount" resultType="java.lang.Integer" parameterType="Map" >
-        SELECT  count(id)
-        FROM  `WaterLevel`
+        SELECT  count(a.id)
+        FROM  `WaterLevel` a LEFT JOIN `UserProfile` b on a.creator = b.id
         <include refid="pageQueryWhereCommon"/>
         limit 1
     </select>
 
     <select id="queryByPage" resultMap="AllColumnMap" parameterType="Map">
-        select <include refid="all_column"/>
-        from `WaterLevel`
+        select <include refid="all_column_user"/>
+        from `WaterLevel` a LEFT JOIN `UserProfile` b on a.creator = b.id
         <include refid="pageQueryWhereCommon"/>
-        order by `id` desc
+        order by a.`created` desc
         <include refid="pageCommon"/>
     </select>
 
     <sql id="pageQueryWhereCommon">
-        where `isDeleted` = 0
-        <if test="pojo.id != null"> AND `id` = #{pojo.id} </if>
+        where a.`isDeleted` = 0
+        <if test="pojo.id != null"> AND a.`id` = #{pojo.id} </if>
         <if test="pojo.key != null">
-            AND (`name` like concat('%', #{pojo.key}, '%'))
+            AND (a.`name` like concat('%', #{pojo.key}, '%'))
         </if>
     </sql>
 
