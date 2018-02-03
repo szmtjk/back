@@ -102,8 +102,8 @@
 
     <select id="getById" parameterType="java.lang.Long" resultMap="AllColumnMap">
         SELECT <include refid="all_column_user"/>
-        FROM `Port` a ,`UserProfile` b
-        WHERE a.`id` = #{id} and a.`isDeleted` = 0  AND a.creator = b.id
+        FROM `Port` a LEFT JOIN `UserProfile` b on a.creator = b.id
+        WHERE a.`id` = #{id} and a.`isDeleted` = 0
         LIMIT 1
     </select>
 
@@ -118,21 +118,21 @@
 
     <select id="getCount" resultType="java.lang.Integer" parameterType="Map" >
         SELECT  count(a.id)
-        FROM  `Port` a,`UserProfile` b
+        FROM  `Port` a LEFT JOIN `UserProfile` b on a.creator = b.id
         <include refid="pageQueryWhereCommon"/>
         limit 1
     </select>
 
     <select id="queryByPage" resultMap="AllColumnMap" parameterType="Map">
         select <include refid="all_column_user"/>
-        from `Port` a ,`UserProfile` b
+        from `Port` a  LEFT JOIN `UserProfile` b on a.creator = b.id
         <include refid="pageQueryWhereCommon"/>
         order by a.`created` desc
         <include refid="pageCommon"/>
     </select>
 
     <sql id="pageQueryWhereCommon">
-        where a.`isDeleted` = 0   AND a.creator = b.id
+        where a.`isDeleted` = 0
         <if test="pojo.id != null"> AND a.`id` = #{pojo.id} </if>
         <if test="pojo.key != null">
             AND (a.`name` like concat('%', #{pojo.key}, '%') or a.`portNo` like concat('%', #{pojo.key}, '%'))
