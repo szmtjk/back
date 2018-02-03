@@ -22,6 +22,26 @@
         <result property="updated" column="updated"/>
     </resultMap>
 
+    <resultMap id="tempDispatchShipMap" type="com.xingyi.logistic.business.db.entity.TempDispatchShipDO">
+        <result property="id" column="id"/>
+        <result property="shipNo" column="shipNo"/>
+        <result property="name" column="name"/>
+        <result property="mobile" column="mobile"/>
+        <result property="preLoad" column="preLoad"/>
+        <result property="identity" column="identity"/>
+        <result property="bankCardNo" column="bankCardNo"/>
+        <result property="bankName" column="bankName"/>
+        <result property="idPhoto" column="idPhoto"/>
+        <result property="bankCardPhoto" column="bankCardPhoto"/>
+        <result property="shipPhoto" column="shipPhoto"/>
+        <result property="from" column="from"/>
+        <result property="status" column="status"/>
+        <result property="description" column="description"/>
+        <result property="creator" column="creator"/>
+        <result property="created" column="created"/>
+        <result property="updated" column="updated"/>
+    </resultMap>
+
     <sql id="all_column">
         `id`
         ,`shipNo`
@@ -166,4 +186,13 @@
             </otherwise>
         </choose>
     </sql>
+
+    <select  id="getAppById" parameterType="java.lang.Long" resultMap="tempDispatchShipMap">
+
+        SELECT A1.preLoad
+        FROM TempDispatchShip A1
+        INNER JOIN AppUser A2 ON A1.id=A2.id
+        WHERE A2.id = #{id}
+    </select>
+
 </mapper>

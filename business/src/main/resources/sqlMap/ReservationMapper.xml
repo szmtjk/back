@@ -22,22 +22,20 @@
     </resultMap>
 
     <sql id="all_column">
-        a.`id`
-        ,a.`leftDispatchId`
-        ,a.`userId`
-        ,c.`shipNo`
-        ,c.`name`
-        ,c.`mobile`
-        ,a.`shipLongitude`
-        ,a.`shipLatitude`
-        ,a.`preLoad`
-        ,a.`preArrivePortTime`
-        ,a.`shipEmptyPhoto`
-        ,a.`shipReference`
-        ,a.`status`
-        ,a.`checkStatus`
-        ,a.`actualTransferPrice`
-        ,a.`preSettleAmount`
+        a.`id`,
+        a.`leftDispatchId`,
+        a.`userId`,
+        c.`shipNo`,
+        c.`name`,
+        c.`mobile`,
+        a.`shipLongitude`,
+        a.`shipLatitude`,
+        a.`preLoad`,
+        a.`preArrivePortTime`,
+        a.`shipEmptyPhoto`,
+        a.`shipReference`,
+        a.`status`,
+        a.`checkStatus`
     </sql>
 
     <insert id="insertSelective" useGeneratedKeys="true" keyProperty="pojo.id">
@@ -102,9 +100,9 @@
     <select id="getById" parameterType="java.lang.Long" resultMap="AllColumnMap">
         SELECT <include refid="all_column"/>
         FROM `Reservation` a
-        left join `AppUser` b on b.id = a.userId
-        left join `Ship` c on c.id = b.shipInfoId
-        WHERE a.`userId` = #{id} `isDeleted` = 0
+        LEFT JOIN `AppUser` b ON b.id = a.userId
+        LEFT JOIN `Ship` c ON c.id = b.shipInfoId
+        WHERE a.`userId` = #{id} AND a.`isDeleted` = 0
     </select>
 
     <select id="getExistCount" resultType="java.lang.Integer" parameterType="Map" >

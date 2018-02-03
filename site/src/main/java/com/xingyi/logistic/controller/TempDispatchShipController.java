@@ -78,4 +78,15 @@ public class TempDispatchShipController extends BaseCRUDController<TempDispatchS
     protected BaseService<TempDispatchShip, TempDispatchShipQuery> getBaseService() {
         return tempDispatchService;
     }
+
+    /**
+     * APP端加载
+     * @return
+     */
+    @RequestMapping("/getAppById")
+    public JsonRet<Object> getAppById()
+    {
+        return tempDispatchService.getAppById(SessionUtil.getAppUser());
+    }
+
 }
