@@ -11,31 +11,26 @@ public class BaseReservation extends BaseModelAndDO {
     /**
      * 用户id
      */
-    @NotNull
     private Long userId;
 
     /**
      * 船舶经度
      */
-    @NotNull
     private Integer shipLongitude;
 
     /**
      * 船舶纬度
      */
-    @NotNull
     private Integer shipLatitude;
 
     /**
      * 预报吨位
      */
-    @NotNull
     private Integer preLoad;
 
     /**
      * 预计到达港口时间
      */
-    @NotNull
     private Integer preArrivePortTime;
 
     /**

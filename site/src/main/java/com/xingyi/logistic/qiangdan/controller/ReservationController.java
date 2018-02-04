@@ -41,12 +41,13 @@ public class ReservationController extends BaseCRUDController<Reservation,Reserv
     @Override
     public JsonRet<Boolean> modify(Reservation reservation) {
         reservation.setStatus(2);
+        reservation.setUserId(SessionUtil.getAppUser().getId());
         return super.modify(reservation);
     }
 
     @RequestMapping("/getAppById")
-    public JsonRet<Reservation> getAppById() {
-        return super.getById(SessionUtil.getAppUser().getId());
+    public JsonRet<Object> getAppById() {
+        return reservationService.getAppById(SessionUtil.getAppUser());
     }
 
 

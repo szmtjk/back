@@ -2,10 +2,12 @@ package com.xingyi.logistic.qiangdan.service.impl;
 
 import com.xingyi.logistic.authentication.util.SessionUtil;
 import com.xingyi.logistic.business.db.dao.base.BaseDAO;
+import com.xingyi.logistic.business.db.entity.ShipDO;
 import com.xingyi.logistic.business.service.base.BaseCRUDService;
 import com.xingyi.logistic.business.service.base.ModelConverter;
 import com.xingyi.logistic.business.service.base.QueryConditionConverter;
 import com.xingyi.logistic.business.service.converter.ReservationQueryConverter;
+import com.xingyi.logistic.common.bean.ErrCode;
 import com.xingyi.logistic.common.bean.JsonRet;
 import com.xingyi.logistic.common.bean.MiniUIJsonRet;
 import com.xingyi.logistic.qiangdan.db.dao.ReservationDAO;
@@ -85,4 +87,24 @@ public class ReservationServiceImpl extends BaseCRUDService<ReservationDO,Reserv
         }
         return miniUIJsonRet;
     }
+
+
+    public JsonRet<Object> getAppById(AppUser mAppUser)
+    {
+        try {
+            if (mAppUser == null || mAppUser.getId() == null) {
+                return JsonRet.getErrRet(ErrCode.ID_INVALID);
+            }
+
+            ReservationDO dataObject = reservationDAO.getAppById(mAppUser.getId());
+            if (dataObject != null) {
+                return JsonRet.getSuccessRet(getModelConverter().toModel(dataObject));
+            } else {
+                return JsonRet.getErrRet(ErrCode.GET_ERR);
+            }
+        } catch (Exception e) {
+            return JsonRet.getErrRet(ErrCode.GET_ERR);
+        }
+    }
+
 }
