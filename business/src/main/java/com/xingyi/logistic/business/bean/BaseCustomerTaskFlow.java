@@ -40,6 +40,7 @@ public class BaseCustomerTaskFlow extends BaseModelAndDO {
     private Integer loadType;//装货途径  1：大轮  2：场地
 
     private String bigShipPC;//大轮批次
+    private String taskNo;
 
     private Float totalLoad;//总载重
 
@@ -292,5 +293,13 @@ public class BaseCustomerTaskFlow extends BaseModelAndDO {
 
     public void setCustomerName(String customerName) {
         this.customerName = customerName;
+    }
+
+    public String getTaskNo() {
+        return taskNo;
+    }
+
+    public void setTaskNo(String taskNo) {
+        this.taskNo = taskNo;
     }
 }
