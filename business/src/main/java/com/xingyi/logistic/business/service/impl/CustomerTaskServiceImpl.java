@@ -1,26 +1,23 @@
 package com.xingyi.logistic.business.service.impl;
 
 import com.xingyi.logistic.business.db.dao.CustomerTaskDAO;
-import com.xingyi.logistic.business.db.dao.PortDAO;
 import com.xingyi.logistic.business.db.dao.base.BaseDAO;
 import com.xingyi.logistic.business.db.entity.CustomerTaskDBQuery;
 import com.xingyi.logistic.business.db.entity.CustomerTaskDO;
-import com.xingyi.logistic.business.db.entity.PortDBQuery;
-import com.xingyi.logistic.business.db.entity.PortDO;
-import com.xingyi.logistic.business.model.*;
+import com.xingyi.logistic.business.model.Combox;
+import com.xingyi.logistic.business.model.CustomerTask;
+import com.xingyi.logistic.business.model.CustomerTaskQuery;
 import com.xingyi.logistic.business.service.CustomerTaskService;
-import com.xingyi.logistic.business.service.PortService;
 import com.xingyi.logistic.business.service.base.BaseCRUDService;
 import com.xingyi.logistic.business.service.base.ModelConverter;
 import com.xingyi.logistic.business.service.base.QueryConditionConverter;
 import com.xingyi.logistic.business.service.converter.CustomerTaskConverter;
 import com.xingyi.logistic.business.service.converter.CustomerTaskQueryConverter;
-import com.xingyi.logistic.business.service.converter.PortConverter;
-import com.xingyi.logistic.business.service.converter.PortQueryConverter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * 客户任务
@@ -56,9 +53,9 @@ public class CustomerTaskServiceImpl extends BaseCRUDService<CustomerTaskDO, Cus
      * 加载客户
      * @return
      */
-    public List<Combox> queryComboxCustomerInfo()
+    public List<Combox> queryComboxCustomerInfo(Map<String, Object> map)
     {
-        return customerTaskDAO.queryComboxCustomerInfo();
+        return customerTaskDAO.queryComboxCustomerInfo(map);
     }
     /**
      * 客户id加载合同

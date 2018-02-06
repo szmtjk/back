@@ -1,10 +1,10 @@
 package com.xingyi.logistic.controller;
 
-import com.xingyi.logistic.business.model.*;
+import com.xingyi.logistic.business.model.Combox;
+import com.xingyi.logistic.business.model.CustomerTask;
+import com.xingyi.logistic.business.model.CustomerTaskQuery;
 import com.xingyi.logistic.business.service.BaseService;
 import com.xingyi.logistic.business.service.CustomerTaskService;
-import com.xingyi.logistic.business.service.PortService;
-import com.xingyi.logistic.common.bean.JsonRet;
 import com.xingyi.logistic.config.JsonParam;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * 客户任务
@@ -33,9 +34,9 @@ public class CustomerTaskController extends BaseCRUDController<CustomerTask, Cus
      * @return
      */
     @RequestMapping("/loadCustomer")
-    public List<Combox> loadCustomer()
+    public List<Combox> loadCustomer(@RequestParam Map<String, Object> map)
     {
-        return customerTaskService.queryComboxCustomerInfo();
+        return customerTaskService.queryComboxCustomerInfo(map);
     }
 
     /**

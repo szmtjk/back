@@ -3,6 +3,7 @@ package com.xingyi.logistic.business.service;
 import com.xingyi.logistic.business.model.*;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * 客户任务
@@ -13,7 +14,7 @@ public interface CustomerTaskService extends BaseService<CustomerTask, CustomerT
      * 加载客户
      * @return
      */
-    public List<Combox> queryComboxCustomerInfo();
+    public List<Combox> queryComboxCustomerInfo(Map<String, Object> map);
 
     /**
      * 客户id加载合同

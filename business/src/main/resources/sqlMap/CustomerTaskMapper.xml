@@ -130,7 +130,17 @@
 
     <select id="queryComboxCustomerInfo" resultMap="mRetComboxMap" parameterType="Map">
         select id AS ID, name AS NAME
-        from `Contract` where `isDeleted` = 0
+        from `Contract` where ( `isDeleted` = 0
+        <if test="pojo.key != null">
+            <![CDATA[
+            AND validSDate <= NOW()
+            AND validEDate >= NOW()
+            ]]>
+        </if>
+        )
+        <if test="pojo.id != null">
+            OR id = #{pojo.id}
+        </if>
         ORDER BY created DESC
     </select>
 
