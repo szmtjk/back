@@ -170,7 +170,7 @@
 
     <select id="queryByUserId" parameterType="java.lang.Long" resultMap="AllColumnMap">
         SELECT
-            res.*
+            DISTINCT res.*
         FROM
             ActionResources res ,
             RoleResources rr
@@ -189,6 +189,7 @@
             AND r.id = ur.roleId
             AND ur.userId = #{userId}
         )
+        ORDER BY res.parentId, res.orderNo
     </select>
 
 
