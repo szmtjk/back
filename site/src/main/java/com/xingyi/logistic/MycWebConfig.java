@@ -29,14 +29,8 @@ import java.util.List;
 @SpringBootApplication
 public class MycWebConfig extends WebMvcConfigurerAdapter {
 
-    private static final Logger LOG = LoggerFactory.getLogger(MycWebConfig.class);
-
-    @Autowired
-    private Environment environment;
-
     @Override
     public void addArgumentResolvers(List<HandlerMethodArgumentResolver> argumentResolvers) {
-        LOG.info("current env:{}", environment.getActiveProfiles());
         argumentResolvers.add(new JsonParamArgumentResolver());
     }
 
