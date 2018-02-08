@@ -10,6 +10,8 @@
         <result property="iconUrl" column="iconUrl"/>
         <result property="type" column="type"/>
         <result property="status" column="status"/>
+        <result property="leafNode" column="leafNode"/>
+        <result property="openFlag" column="openFlag"/>
         <result property="remark" column="remark"/>
         <result property="parentId" column="parentId"/>
         <result property="orderNo" column="orderNo"/>
@@ -30,6 +32,8 @@
         ,`iconUrl`
         ,`type`
         ,`status`
+        ,`leafNode`
+        ,`openFlag`
         ,`remark`
         ,`parentId`
         ,`orderNo`
@@ -51,6 +55,8 @@
             <if test="pojo.iconUrl!=null"> `iconUrl`,</if>
             <if test="pojo.type!=null"> `type`,</if>
             <if test="pojo.status!=null"> `status`,</if>
+            <if test="pojo.leafNode!=null"> `leafNode`,</if>
+            <if test="pojo.openFlag!=null"> `openFlag`,</if>
             <if test="pojo.remark!=null"> `remark`,</if>
             <if test="pojo.parentId!=null"> `parentId`,</if>
             <if test="pojo.orderNo!=null"> `orderNo`,</if>
@@ -70,6 +76,8 @@
             <if test="pojo.iconUrl!=null">#{pojo.iconUrl},</if>
             <if test="pojo.type!=null">#{pojo.type},</if>
             <if test="pojo.status!=null">#{pojo.status},</if>
+            <if test="pojo.leafNode!=null">#{pojo.leafNode},</if>
+            <if test="pojo.openFlag!=null">#{pojo.openFlag},</if>
             <if test="pojo.remark!=null">#{pojo.remark},</if>
             <if test="pojo.parentId!=null">#{pojo.parentId},</if>
             <if test="pojo.orderNo!=null">#{pojo.orderNo},</if>
@@ -93,6 +101,8 @@
             <if test="pojo.iconUrl!=null">`iconUrl` = #{pojo.iconUrl},</if>
             <if test="pojo.type!=null">`type` = #{pojo.type},</if>
             <if test="pojo.status!=null">`status` = #{pojo.status},</if>
+            <if test="pojo.leafNode!=null">`leafNode` = #{pojo.leafNode},</if>
+            <if test="pojo.openFlag!=null">`openFlag` = #{pojo.openFlag},</if>
             <if test="pojo.remark!=null">`remark` = #{pojo.remark},</if>
             <if test="pojo.parentId!=null">`parentId` = #{pojo.parentId},</if>
             <if test="pojo.orderNo!=null">`orderNo` = #{pojo.orderNo},</if>
@@ -135,7 +145,7 @@
         select <include refid="all_column"/>
         from `ActionResources`
         <include refid="pageQueryWhereCommon"/>
-        order by `id` desc
+        order by `orderNo`
         <include refid="pageCommon"/>
     </select>
 
@@ -188,5 +198,22 @@
         FROM ActionResources A1
         WHERE A1.`status` = 1
         AND A1.isDeleted = 0
+        ORDER BY A1.orderNo
+    </select>
+
+    <update id="modifyParentLeft" parameterType="Map">
+        UPDATE ActionResources
+        SET `leafNode` = #{pojo.leafNode},
+        `updated` = UNIX_TIMESTAMP(now())
+        WHERE `id` = #{pojo.parentId}
+    </update>
+
+
+    <select id="qureyParentByIdInfoCnt" resultType="java.lang.Integer"  parameterType="java.lang.Integer" >
+        SELECT COUNT(A1.id)
+        FROM ActionResources A1
+        WHERE A1.parentId = #{id}
+        AND A1.isDeleted = 0
+        limit 1
     </select>
 </mapper>

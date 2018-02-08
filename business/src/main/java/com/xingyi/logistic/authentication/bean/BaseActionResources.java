@@ -9,6 +9,8 @@ public class BaseActionResources extends BaseModelAndDO {
     private String iconUrl;
     private Integer type;
     private Integer status;
+    private Integer leafNode;
+    private Integer openFlag;
     private String remark;
     private Integer parentId;
     private Integer orderNo;
@@ -92,5 +94,21 @@ public class BaseActionResources extends BaseModelAndDO {
 
     public void setIsDeleted(Integer isDeleted) {
         this.isDeleted = isDeleted;
+    }
+
+    public Integer getLeafNode() {
+        return leafNode;
+    }
+
+    public void setLeafNode(Integer leafNode) {
+        this.leafNode = leafNode;
+    }
+
+    public Integer getOpenFlag() {
+        return openFlag;
+    }
+
+    public void setOpenFlag(Integer openFlag) {
+        this.openFlag = openFlag;
     }
 }
