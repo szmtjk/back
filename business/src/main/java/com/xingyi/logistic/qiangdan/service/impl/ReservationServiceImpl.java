@@ -2,7 +2,11 @@ package com.xingyi.logistic.qiangdan.service.impl;
 
 import com.xingyi.logistic.authentication.util.SessionUtil;
 import com.xingyi.logistic.business.db.dao.base.BaseDAO;
-import com.xingyi.logistic.business.db.entity.ShipDO;
+import com.alibaba.fastjson.TypeReference;
+import com.xingyi.logistic.business.model.DispatchInfo;
+import com.xingyi.logistic.business.model.ReservationCheckFlagInfo;
+import com.xingyi.logistic.business.model.ReservationCheckParam;
+import com.xingyi.logistic.business.service.DispatchInfoService;
 import com.xingyi.logistic.business.service.base.BaseCRUDService;
 import com.xingyi.logistic.business.service.base.ModelConverter;
 import com.xingyi.logistic.business.service.base.QueryConditionConverter;
@@ -10,6 +14,8 @@ import com.xingyi.logistic.business.service.converter.ReservationQueryConverter;
 import com.xingyi.logistic.common.bean.ErrCode;
 import com.xingyi.logistic.common.bean.JsonRet;
 import com.xingyi.logistic.common.bean.MiniUIJsonRet;
+import com.xingyi.logistic.business.util.JsonUtil;
+import com.xingyi.logistic.business.util.ParamValidator;
 import com.xingyi.logistic.qiangdan.db.dao.ReservationDAO;
 import com.xingyi.logistic.qiangdan.db.entity.ReservationDBQuery;
 import com.xingyi.logistic.qiangdan.db.entity.ReservationDO;
@@ -23,9 +29,11 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 @Service
 public class ReservationServiceImpl extends BaseCRUDService<ReservationDO,Reservation,ReservationDBQuery,ReservationQuery> implements ReservationService{
+
     @Autowired
     private ReservationDAO reservationDAO;
 
@@ -34,6 +42,59 @@ public class ReservationServiceImpl extends BaseCRUDService<ReservationDO,Reserv
 
     @Autowired
     private ReservationQueryConverter reservationQueryConverter;
+
+    @Autowired
+    private DispatchInfoService dispatchInfoService;
+
+    @Override
+    public JsonRet<Boolean> check(ReservationCheckParam param) {
+        JsonRet<Boolean> ret = new JsonRet<>();
+        if (!ParamValidator.isParamValid(ret, param)) {
+            return ret;
+        }
+        param.setPlanList(JsonUtil.toObject(param.getPlans(), new TypeReference<List<ReservationCheckFlagInfo>>() {}));
+        List<ReservationCheckFlagInfo> updateList = param.getPlanList().stream().filter(o->o.getFlag() == 1).collect(Collectors.toList());
+        List<ReservationCheckFlagInfo> delList = param.getPlanList().stream().filter(o->o.getFlag() == 2).collect(Collectors.toList());
+        List<ReservationCheckFlagInfo> addList = param.getPlanList().stream().filter(o->o.getFlag() == 3).collect(Collectors.toList());
+
+        //新增 1.新增至DispatchInfo表  2.更新Reservation表记录状态，包括DispatchId信息
+        for (ReservationCheckFlagInfo o : updateList) {
+            DispatchInfo dispatchInfo = reservationConverter.toDispatchInfo(o);
+            JsonRet<Boolean> modifyRet = dispatchInfoService.modify(dispatchInfo);
+            if (modifyRet.isSuccess()) {
+                reservationDAO.update(reservationConverter.toUpdatedReservationDO(o, 1));
+            } else {
+                ret.setErrTip(modifyRet.getErrCode(), modifyRet.getMsg());
+                return ret;
+            }
+        }
+
+        //删除 1.存在DispatchId需删除调度计划，2.更新Reservation表记录状态
+        for (ReservationCheckFlagInfo o : delList) {
+            JsonRet<Boolean> delRet = dispatchInfoService.del(o.getDispatchId().longValue());
+            if (delRet.isSuccess()) {
+                reservationDAO.update(reservationConverter.toUpdatedReservationDO(o, 2));
+            } else {
+                ret.setErrTip(delRet.getErrCode(), delRet.getMsg());
+                return ret;
+            }
+        }
+
+        //修改 1.更新相应DispatchInfo表记录 2.更新Reservation表记录状态
+        for (ReservationCheckFlagInfo o : addList) {
+            DispatchInfo dispatchInfo = reservationConverter.toDispatchInfo(o);
+            JsonRet<Long> addRet = dispatchInfoService.add(dispatchInfo);
+            if (addRet.isSuccess()) {
+                o.setDispatchId(addRet.getData().intValue());
+                reservationDAO.update(reservationConverter.toUpdatedReservationDO(o, 1));
+            } else {
+                ret.setErrTip(addRet.getErrCode(), addRet.getMsg());
+                return ret;
+            }
+        }
+        ret.setSuccessData(true);
+        return ret;
+    }
 
     @Override
     protected ModelConverter<ReservationDO, Reservation> getModelConverter() {

@@ -19,23 +19,29 @@
         <result property="checkStatus" column="checkStatus"/>
         <result property="actualTransferPrice" column="actualTransferPrice"/>
         <result property="preSettleAmount" column="preSettleAmount"/>
+        <result property="settleType" column="settleType"/>
+        <result property="preActualLoad" column="preActualLoad"/>
     </resultMap>
 
     <sql id="all_column">
-        a.`id`,
-        a.`leftDispatchId`,
-        a.`userId`,
-        c.`shipNo`,
-        c.`name`,
-        c.`mobile`,
-        a.`shipLongitude`,
-        a.`shipLatitude`,
-        a.`preLoad`,
-        a.`preArrivePortTime`,
-        a.`shipEmptyPhoto`,
-        a.`shipReference`,
-        a.`status`,
-        a.`checkStatus`
+        a.`id`
+        ,a.`leftDispatchId`
+        ,a.`userId`
+        ,c.`shipNo`
+        ,c.`name`
+        ,c.`mobile`
+        ,a.`shipLongitude`
+        ,a.`shipLatitude`
+        ,a.`preLoad`
+        ,a.`preArrivePortTime`
+        ,a.`shipEmptyPhoto`
+        ,a.`shipReference`
+        ,a.`status`
+        ,a.`checkStatus`
+        ,d.`actualTransferPrice`
+        ,d.`preSettleAmount`
+        ,d.`settleType`
+        ,d.`preLoad` as preActualLoad
     </sql>
 
     <insert id="insertSelective" useGeneratedKeys="true" keyProperty="pojo.id">
@@ -50,8 +56,8 @@
             <if test="pojo.shipEmptyPhoto!=null"> `shipEmptyPhoto`,</if>
             <if test="pojo.shipReference!=null"> `shipReference`,</if>
             <if test="pojo.checkStatus!=null"> `checkStatus`,</if>
-            <if test="pojo.actualTransferPrice!=null"> `actualTransferPrice`,</if>
-            <if test="pojo.preSettleAmount!=null"> `preSettleAmount`,</if>
+            <!--<if test="pojo.actualTransferPrice!=null"> `actualTransferPrice`,</if>-->
+            <!--<if test="pojo.preSettleAmount!=null"> `preSettleAmount`,</if>-->
             `status`
         </trim>
         VALUES
@@ -65,8 +71,8 @@
             <if test="pojo.shipEmptyPhoto!=null">#{pojo.shipEmptyPhoto},</if>
             <if test="pojo.shipReference!=null">#{pojo.shipReference},</if>
             <if test="pojo.checkStatus!=null">#{pojo.checkStatus},</if>
-            <if test="pojo.actualTransferPrice!=null">#{pojo.actualTransferPrice},</if>
-            <if test="pojo.preSettleAmount!=null">#{pojo.preSettleAmount},</if>
+            <!--<if test="pojo.actualTransferPrice!=null">#{pojo.actualTransferPrice},</if>-->
+            <!--<if test="pojo.preSettleAmount!=null">#{pojo.preSettleAmount},</if>-->
             1
         </trim>
     </insert>
@@ -85,8 +91,8 @@
             <if test="pojo.shipReference!=null">`shipReference` = #{pojo.shipReference},</if>
             <if test="pojo.status!=null">`status` = #{pojo.status},</if>
             <if test="pojo.checkStatus!=null">`checkStatus` = #{pojo.checkStatus},</if>
-            <if test="pojo.actualTransferPrice!=null">`actualTransferPrice` = #{pojo.actualTransferPrice},</if>
-            <if test="pojo.preSettleAmount!=null">`preSettleAmount` = #{pojo.preSettleAmount},</if>
+            <!--<if test="pojo.actualTransferPrice!=null">`actualTransferPrice` = #{pojo.actualTransferPrice},</if>-->
+            <!--<if test="pojo.preSettleAmount!=null">`preSettleAmount` = #{pojo.preSettleAmount},</if>-->
         </set>
         WHERE `id` = #{pojo.id}
     </update>
@@ -136,6 +142,7 @@
         from `Reservation` a
         left join `AppUser` b on b.id = a.userId
         left join `Ship` c on c.id = b.shipInfoId
+        left join `DispatchInfo` d on d.id = a.dispatchId
         <include refid="pageQueryWhereCommon"/>
         and c.shipFlag = 3
         order by `id` desc

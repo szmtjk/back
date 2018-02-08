@@ -18,6 +18,8 @@ public class BaseDispatchInfo extends BaseModelAndDO {
     private Double actualTransferPrice;
     private Integer settleType;
     private Integer status;
+    private Integer leftDispatchId;
+
 
     public Integer getCustomerTaskFlowId() {
         return customerTaskFlowId;
@@ -121,5 +123,13 @@ public class BaseDispatchInfo extends BaseModelAndDO {
 
     public void setStatus(Integer status) {
         this.status = status;
+    }
+
+    public Integer getLeftDispatchId() {
+        return leftDispatchId;
+    }
+
+    public void setLeftDispatchId(Integer leftDispatchId) {
+        this.leftDispatchId = leftDispatchId;
     }
 }

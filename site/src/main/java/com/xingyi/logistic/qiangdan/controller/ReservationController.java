@@ -3,6 +3,8 @@ package com.xingyi.logistic.qiangdan.controller;
 import com.xingyi.logistic.authentication.util.SessionUtil;
 import com.xingyi.logistic.business.service.BaseService;
 import com.xingyi.logistic.common.bean.JsonRet;
+import com.xingyi.logistic.business.model.ReservationCheckParam;
+import com.xingyi.logistic.config.JsonParam;
 import com.xingyi.logistic.controller.BaseCRUDController;
 import com.xingyi.logistic.qiangdan.model.AppUser;
 import com.xingyi.logistic.qiangdan.model.Reservation;
@@ -21,6 +23,11 @@ public class ReservationController extends BaseCRUDController<Reservation,Reserv
 
     @Autowired
     private ReservationService reservationService;
+
+    @RequestMapping("/check")
+    public JsonRet<Boolean> check(@JsonParam ReservationCheckParam reservationCheckParam) {
+        return reservationService.check(reservationCheckParam);
+    }
 
     @Override
     public JsonRet<Long> add(Reservation reservation) {

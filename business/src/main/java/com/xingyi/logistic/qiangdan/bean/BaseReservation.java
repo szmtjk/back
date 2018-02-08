@@ -51,6 +51,8 @@ public class BaseReservation extends BaseModelAndDO {
     private Integer checkStatus;
     private Double actualTransferPrice;
     private Double preSettleAmount;
+    private Integer settleType;
+    private Integer preActualLoad;
     private String shipNo;
     private String name;
     private String mobile;
@@ -173,5 +175,21 @@ public class BaseReservation extends BaseModelAndDO {
 
     public void setMobile(String mobile) {
         this.mobile = mobile;
+    }
+
+    public Integer getSettleType() {
+        return settleType;
+    }
+
+    public void setSettleType(Integer settleType) {
+        this.settleType = settleType;
+    }
+
+    public Integer getPreActualLoad() {
+        return preActualLoad;
+    }
+
+    public void setPreActualLoad(Integer preActualLoad) {
+        this.preActualLoad = preActualLoad;
     }
 }
