@@ -52,14 +52,23 @@ oauth:
     appId: wx716e867a8dfc27bb
     secretKey: 39a1e707862681e0690dfb6336e6dc87
 
+aa:
+  bb: default
+
 # Different profiles' configuration
 ---
 spring:
   profiles: dev
 
+aa:
+  bb: dev1
+
 ---
 spring:
   profiles: prd
+
+aa:
+  bb: prd1
 
 druid:
   datasource:
