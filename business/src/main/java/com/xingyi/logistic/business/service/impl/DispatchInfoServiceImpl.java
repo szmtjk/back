@@ -174,10 +174,18 @@ public class DispatchInfoServiceImpl extends BaseCRUDService<DispatchInfoDO, Dis
         List<DispatchFlagInfo> updateList = dispatchInfoParam.getPlanList().stream().filter(o->o.getFlag() == 1).collect(Collectors.toList());
         List<DispatchFlagInfo> delList = dispatchInfoParam.getPlanList().stream().filter(o->o.getFlag() == 2).collect(Collectors.toList());
         List<DispatchFlagInfo> addList = dispatchInfoParam.getPlanList().stream().filter(o->o.getFlag() == 3).collect(Collectors.toList());
+
+        //余量确认
+
         try {
             updateList.forEach(o->{
                 if (PrimitiveUtil.getPrimitive(o.getStashStatus()) == 1) {//暂存状态
                     o.setStatus(-1);
+                } else {
+                    DispatchInfoDO dispatchInfoDO = dispatchInfoDAO.getById(o.getId());
+                    if (dispatchInfoDO != null && dispatchInfoDO.getStatus() == -1) {//对于原来是未调度的，修改后将其变成已调度
+                        o.setStatus(0);
+                    }
                 }
                 o.setCustomerTaskFlowId(dispatchInfoParam.getCustomerTaskFlowId());
                 dispatchInfoDAO.update(dispatchInfoConverter.toDataObject(o));
