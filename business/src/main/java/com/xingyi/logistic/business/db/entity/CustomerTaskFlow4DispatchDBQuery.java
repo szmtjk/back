@@ -8,6 +8,7 @@ import com.xingyi.logistic.business.bean.BaseDBQueryPage;
 public class CustomerTaskFlow4DispatchDBQuery extends BaseDBQueryPage {
 
     private String key;
+    private Integer flag;
 
     public String getKey() {
         return key;
@@ -15,5 +16,13 @@ public class CustomerTaskFlow4DispatchDBQuery extends BaseDBQueryPage {
 
     public void setKey(String key) {
         this.key = key;
+    }
+
+    public Integer getFlag() {
+        return flag;
+    }
+
+    public void setFlag(Integer flag) {
+        this.flag = flag;
     }
 }

@@ -26,16 +26,19 @@
 
     <resultMap id="CustomerTaskFlow4DispatchColumnMap" type="com.xingyi.logistic.business.db.entity.CustomerTaskFlow4DispatchDO">
         <result property="id" column="id"/>
+        <result property="taskNo" column="taskNo"/>
         <result property="flowName" column="flowName"/>
         <result property="goodsName" column="goodsName"/>
         <result property="loadingTime" column="loadingTime"/>
         <result property="startPortName" column="startPortName"/>
         <result property="endPortName" column="endPortName"/>
+        <result property="totalLoad" column="totalLoad"/>
         <result property="leftWeight" column="leftWeight"/>
         <result property="goodsType" column="goodsType"/>
         <result property="sailingArea" column="sailingArea"/>
         <result property="customerName" column="customerName"/>
         <result property="shipSuggestUnitPrice" column="shipSuggestUnitPrice"/>
+        <result property="taskStatus" column="taskStatus"/>
     </resultMap>
 
     <sql id="all_column">
@@ -194,9 +197,9 @@
     </select>
 
     <select id="getCustomerTaskFlow4DispatchList" resultMap="CustomerTaskFlow4DispatchColumnMap" parameterType="Map">
-        select a.id, b.`name` as flowName, a.goodsName, a.loadingTime, c.name as startPortName, d.name as endPortName, a.goodsType,
+        select a.id, a.taskNo, b.`name` as flowName, a.goodsName, a.loadingTime, c.name as startPortName, d.name as endPortName, a.goodsType,
                a.sailingArea, a.totalWeight as totalLoad, a.totalWeight - (case when e.preLoad is null then 0 else e.preLoad end) as leftWeight,
-               g.fullName as customerName, a.shipSuggestUnitPrice
+               g.fullName as customerName, a.shipSuggestUnitPrice, a.taskStatus
         from CustomerTaskFlow a
         left join Flow b on b.id=a.flowId
         left join Port c on c.id=a.startPortId
@@ -213,8 +216,17 @@
     </select>
 
     <sql id="getCustomerTaskFlow4DispatchWhereCommon">
-        where a.`isDeleted` = 0 and a.`taskStatus` &lt;= 2
+        where a.`isDeleted` = 0
         <if test="pojo.id != null"> AND a.`id` = #{pojo.id} </if>
+        <choose>
+            <when test="pojo.flag != null and pojo.flag == 1">
+                AND a.`taskStatus` &gt;= 0
+            </when>
+            <otherwise>
+                AND a.`taskStatus` &lt; 2
+            </otherwise>
+        </choose>
+        <if test="pojo.key != null"> AND (a.`taskNo` like concat('%', #{pojo.key}, '%'))</if>
     </sql>
 
     <sql id="pageCommon">
