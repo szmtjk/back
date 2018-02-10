@@ -6,6 +6,7 @@ package com.xingyi.logistic.business.model;
 public class DispatchFlagInfo extends DispatchInfo {
 
     private Integer flag;
+    private Integer stashStatus;
 
     public Integer getFlag() {
         return flag;
@@ -15,4 +16,11 @@ public class DispatchFlagInfo extends DispatchInfo {
         this.flag = flag;
     }
 
+    public Integer getStashStatus() {
+        return stashStatus;
+    }
+
+    public void setStashStatus(Integer stashStatus) {
+        this.stashStatus = stashStatus;
+    }
 }

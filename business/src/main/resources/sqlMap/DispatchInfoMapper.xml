@@ -206,6 +206,7 @@
         left join Port d on d.id=a.endPortId
         left join ( SELECT aa.customerTaskFlowId, sum(preLoad) as preLoad
                     from DispatchInfo aa
+                    where aa.status &gt;= 0
                     group by aa.customerTaskFlowId
                   ) e on e.customerTaskFlowId = a.id
         left join CustomerTask f on f.id = a.taskId

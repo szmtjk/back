@@ -175,6 +175,9 @@ public class DispatchInfoServiceImpl extends BaseCRUDService<DispatchInfoDO, Dis
         List<DispatchFlagInfo> addList = dispatchInfoParam.getPlanList().stream().filter(o->o.getFlag() == 3).collect(Collectors.toList());
         try {
             updateList.forEach(o->{
+                if (o.getStashStatus() == 1) {//暂存状态
+                    o.setStatus(-1);
+                }
                 o.setCustomerTaskFlowId(dispatchInfoParam.getCustomerTaskFlowId());
                 dispatchInfoDAO.update(dispatchInfoConverter.toDataObject(o));
             });
@@ -185,6 +188,9 @@ public class DispatchInfoServiceImpl extends BaseCRUDService<DispatchInfoDO, Dis
             });
 
             addList.forEach(o->{
+                if (o.getStashStatus() == 1) {//暂存状态
+                    o.setStatus(-1);
+                }
                 o.setCustomerTaskFlowId(dispatchInfoParam.getCustomerTaskFlowId());
                 dispatchInfoDAO.insertSelective(dispatchInfoConverter.toDataObject(o));
             });
