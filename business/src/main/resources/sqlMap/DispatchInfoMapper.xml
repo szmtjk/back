@@ -80,7 +80,7 @@
             <if test="pojo.leftDispatchId!=null"> `leftDispatchId`,</if>
             <if test="pojo.creator!=null"> `creator`,</if>
             <if test="pojo.updater!=null"> `updater`,</if>
-            `orderNo`
+            `orderNo`,
             `created`,
             `updated`
         </trim>

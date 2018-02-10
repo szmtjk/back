@@ -32,6 +32,7 @@ import com.xingyi.logistic.business.service.converter.ShipConverter;
 import com.xingyi.logistic.business.service.converter.ShipQueryConverter;
 import com.xingyi.logistic.business.util.JsonUtil;
 import com.xingyi.logistic.business.util.ParamValidator;
+import com.xingyi.logistic.business.util.PrimitiveUtil;
 import com.xingyi.logistic.common.bean.ErrCode;
 import com.xingyi.logistic.common.bean.JsonRet;
 import com.xingyi.logistic.common.bean.MiniUIJsonRet;
@@ -175,7 +176,7 @@ public class DispatchInfoServiceImpl extends BaseCRUDService<DispatchInfoDO, Dis
         List<DispatchFlagInfo> addList = dispatchInfoParam.getPlanList().stream().filter(o->o.getFlag() == 3).collect(Collectors.toList());
         try {
             updateList.forEach(o->{
-                if (o.getStashStatus() == 1) {//暂存状态
+                if (PrimitiveUtil.getPrimitive(o.getStashStatus()) == 1) {//暂存状态
                     o.setStatus(-1);
                 }
                 o.setCustomerTaskFlowId(dispatchInfoParam.getCustomerTaskFlowId());
@@ -188,7 +189,7 @@ public class DispatchInfoServiceImpl extends BaseCRUDService<DispatchInfoDO, Dis
             });
 
             addList.forEach(o->{
-                if (o.getStashStatus() == 1) {//暂存状态
+                if (PrimitiveUtil.getPrimitive(o.getStashStatus()) == 1) {//暂存状态
                     o.setStatus(-1);
                 }
                 o.setCustomerTaskFlowId(dispatchInfoParam.getCustomerTaskFlowId());

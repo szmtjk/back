@@ -21,11 +21,13 @@
         <result property="preSettleAmount" column="preSettleAmount"/>
         <result property="settleType" column="settleType"/>
         <result property="preActualLoad" column="preActualLoad"/>
+        <result property="dispatchId" column="dispatchId"/>
     </resultMap>
 
     <sql id="all_column">
         a.`id`
         ,a.`leftDispatchId`
+        ,a.`dispatchId`
         ,a.`userId`
         ,c.`shipNo`
         ,c.`name`
@@ -48,6 +50,7 @@
         INSERT INTO Reservation
         <trim prefix="(" suffix=")" suffixOverrides=",">
             <if test="pojo.leftDispatchId!=null"> `leftDispatchId`,</if>
+            <if test="pojo.dispatchId!=null"> `dispatchId`,</if>
             <if test="pojo.userId!=null"> `userId`,</if>
             <if test="pojo.shipLongitude!=null"> `shipLongitude`,</if>
             <if test="pojo.shipLatitude!=null"> `shipLatitude`,</if>
@@ -56,13 +59,14 @@
             <if test="pojo.shipEmptyPhoto!=null"> `shipEmptyPhoto`,</if>
             <if test="pojo.shipReference!=null"> `shipReference`,</if>
             <if test="pojo.checkStatus!=null"> `checkStatus`,</if>
-            <!--<if test="pojo.actualTransferPrice!=null"> `actualTransferPrice`,</if>-->
-            <!--<if test="pojo.preSettleAmount!=null"> `preSettleAmount`,</if>-->
+            <if test="pojo.actualTransferPrice!=null"> `actualTransferPrice`,</if>
+            <if test="pojo.preSettleAmount!=null"> `preSettleAmount`,</if>
             `status`
         </trim>
         VALUES
         <trim prefix="(" suffix=")" suffixOverrides=",">
             <if test="pojo.leftDispatchId!=null">#{pojo.leftDispatchId},</if>
+            <if test="pojo.dispatchId!=null">#{pojo.dispatchId},</if>
             <if test="pojo.userId!=null">#{pojo.userId},</if>
             <if test="pojo.shipLongitude!=null">#{pojo.shipLongitude},</if>
             <if test="pojo.shipLatitude!=null">#{pojo.shipLatitude},</if>
@@ -71,8 +75,8 @@
             <if test="pojo.shipEmptyPhoto!=null">#{pojo.shipEmptyPhoto},</if>
             <if test="pojo.shipReference!=null">#{pojo.shipReference},</if>
             <if test="pojo.checkStatus!=null">#{pojo.checkStatus},</if>
-            <!--<if test="pojo.actualTransferPrice!=null">#{pojo.actualTransferPrice},</if>-->
-            <!--<if test="pojo.preSettleAmount!=null">#{pojo.preSettleAmount},</if>-->
+            <if test="pojo.actualTransferPrice!=null">#{pojo.actualTransferPrice},</if>
+            <if test="pojo.preSettleAmount!=null">#{pojo.preSettleAmount},</if>
             1
         </trim>
     </insert>
@@ -82,6 +86,7 @@
         UPDATE Reservation
         <set>
             <if test="pojo.leftDispatchId!=null">`leftDispatchId` = #{pojo.leftDispatchId},</if>
+            <if test="pojo.dispatchId!=null">`dispatchId` = #{pojo.dispatchId},</if>
             <if test="pojo.userId!=null">`userId` = #{pojo.userId},</if>
             <if test="pojo.shipLongitude!=null">`shipLongitude` = #{pojo.shipLongitude},</if>
             <if test="pojo.shipLatitude!=null">`shipLatitude` = #{pojo.shipLatitude},</if>
@@ -91,8 +96,8 @@
             <if test="pojo.shipReference!=null">`shipReference` = #{pojo.shipReference},</if>
             <if test="pojo.status!=null">`status` = #{pojo.status},</if>
             <if test="pojo.checkStatus!=null">`checkStatus` = #{pojo.checkStatus},</if>
-            <!--<if test="pojo.actualTransferPrice!=null">`actualTransferPrice` = #{pojo.actualTransferPrice},</if>-->
-            <!--<if test="pojo.preSettleAmount!=null">`preSettleAmount` = #{pojo.preSettleAmount},</if>-->
+            <if test="pojo.actualTransferPrice!=null">`actualTransferPrice` = #{pojo.actualTransferPrice},</if>
+            <if test="pojo.preSettleAmount!=null">`preSettleAmount` = #{pojo.preSettleAmount},</if>
         </set>
         WHERE `id` = #{pojo.id}
     </update>

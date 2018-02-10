@@ -15,7 +15,7 @@ public class ReservationCheckFlagInfo {
     private Integer leftDispatchId;//余量临调id
     private Integer dispatchId;//修改时关联的调度计划id
     private Integer customerTaskFlowId;//客户流向id
-    private Integer flag;//数据标识  1：修改  2：删除  3:新增
+    private Integer checkStatus;//数据标识  0:待审核  1:审核通过  2:审核不通过
 
     public Integer getId() {
         return id;
@@ -81,12 +81,12 @@ public class ReservationCheckFlagInfo {
         this.dispatchId = dispatchId;
     }
 
-    public Integer getFlag() {
-        return flag;
+    public Integer getCheckStatus() {
+        return checkStatus;
     }
 
-    public void setFlag(Integer flag) {
-        this.flag = flag;
+    public void setCheckStatus(Integer checkStatus) {
+        this.checkStatus = checkStatus;
     }
 
     public Integer getCustomerTaskFlowId() {

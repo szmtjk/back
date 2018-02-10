@@ -11,6 +11,7 @@ import com.xingyi.logistic.business.service.base.BaseCRUDService;
 import com.xingyi.logistic.business.service.base.ModelConverter;
 import com.xingyi.logistic.business.service.base.QueryConditionConverter;
 import com.xingyi.logistic.business.service.converter.ReservationQueryConverter;
+import com.xingyi.logistic.business.util.PrimitiveUtil;
 import com.xingyi.logistic.common.bean.ErrCode;
 import com.xingyi.logistic.common.bean.JsonRet;
 import com.xingyi.logistic.common.bean.MiniUIJsonRet;
@@ -53,24 +54,34 @@ public class ReservationServiceImpl extends BaseCRUDService<ReservationDO,Reserv
             return ret;
         }
         param.setPlanList(JsonUtil.toObject(param.getPlans(), new TypeReference<List<ReservationCheckFlagInfo>>() {}));
-        List<ReservationCheckFlagInfo> updateList = param.getPlanList().stream().filter(o->o.getFlag() == 1).collect(Collectors.toList());
-        List<ReservationCheckFlagInfo> delList = param.getPlanList().stream().filter(o->o.getFlag() == 2).collect(Collectors.toList());
-        List<ReservationCheckFlagInfo> addList = param.getPlanList().stream().filter(o->o.getFlag() == 3).collect(Collectors.toList());
+//        List<ReservationCheckFlagInfo> updateList = param.getPlanList().stream().filter(o->o.getFlag() == 1).collect(Collectors.toList());
+//        List<ReservationCheckFlagInfo> delList = param.getPlanList().stream().filter(o->o.getFlag() == 2).collect(Collectors.toList());
+//        List<ReservationCheckFlagInfo> addList = param.getPlanList().stream().filter(o->o.getFlag() == 3).collect(Collectors.toList());
 
-        //新增 1.新增至DispatchInfo表  2.更新Reservation表记录状态，包括DispatchId信息
-        for (ReservationCheckFlagInfo o : updateList) {
-            DispatchInfo dispatchInfo = reservationConverter.toDispatchInfo(o);
-            JsonRet<Boolean> modifyRet = dispatchInfoService.modify(dispatchInfo);
-            if (modifyRet.isSuccess()) {
-                reservationDAO.update(reservationConverter.toUpdatedReservationDO(o, 1));
-            } else {
-                ret.setErrTip(modifyRet.getErrCode(), modifyRet.getMsg());
-                return ret;
+        List<ReservationCheckFlagInfo> toBeCheckedList = param.getPlanList().stream().filter(o->o.getCheckStatus() == 0).collect(Collectors.toList());
+        List<ReservationCheckFlagInfo> allowedList = param.getPlanList().stream().filter(o->o.getCheckStatus() == 0).collect(Collectors.toList());
+        List<ReservationCheckFlagInfo> deniedList = param.getPlanList().stream().filter(o->o.getCheckStatus() == 0).collect(Collectors.toList());
+
+        //待审核的数据
+        for (ReservationCheckFlagInfo o : toBeCheckedList) {
+            //如果已经是审核过的，则需从调度计划表中删除
+            if (PrimitiveUtil.getPrimitive(o.getDispatchId()) > 0) {
+                dispatchInfoService.del(o.getDispatchId().longValue());
             }
+            o.setDispatchId(0);
+            reservationDAO.update(reservationConverter.toUpdatedReservationDO(o, 0));
         }
 
-        //删除 1.存在DispatchId需删除调度计划，2.更新Reservation表记录状态
-        for (ReservationCheckFlagInfo o : delList) {
+        //审核通过
+        for (ReservationCheckFlagInfo o : allowedList) {
+            DispatchInfo dispatchInfo = reservationConverter.toDispatchInfo(o);
+        }
+
+        //审核未通过
+        for (ReservationCheckFlagInfo o : deniedList) {
+            if (PrimitiveUtil.getPrimitive(o.getDispatchId()) > 0) {
+                JsonRet<Boolean> delRet = dispatchInfoService.del(o.getDispatchId().longValue());
+            }
             JsonRet<Boolean> delRet = dispatchInfoService.del(o.getDispatchId().longValue());
             if (delRet.isSuccess()) {
                 reservationDAO.update(reservationConverter.toUpdatedReservationDO(o, 2));
@@ -79,19 +90,41 @@ public class ReservationServiceImpl extends BaseCRUDService<ReservationDO,Reserv
                 return ret;
             }
         }
-
-        //修改 1.更新相应DispatchInfo表记录 2.更新Reservation表记录状态
-        for (ReservationCheckFlagInfo o : addList) {
-            DispatchInfo dispatchInfo = reservationConverter.toDispatchInfo(o);
-            JsonRet<Long> addRet = dispatchInfoService.add(dispatchInfo);
-            if (addRet.isSuccess()) {
-                o.setDispatchId(addRet.getData().intValue());
-                reservationDAO.update(reservationConverter.toUpdatedReservationDO(o, 1));
-            } else {
-                ret.setErrTip(addRet.getErrCode(), addRet.getMsg());
-                return ret;
-            }
-        }
+//        //新增 1.新增至DispatchInfo表  2.更新Reservation表记录状态，包括DispatchId信息
+//        for (ReservationCheckFlagInfo o : updateList) {
+//            DispatchInfo dispatchInfo = reservationConverter.toDispatchInfo(o);
+//            JsonRet<Boolean> modifyRet = dispatchInfoService.modify(dispatchInfo);
+//            if (modifyRet.isSuccess()) {
+//                reservationDAO.update(reservationConverter.toUpdatedReservationDO(o, 1));
+//            } else {
+//                ret.setErrTip(modifyRet.getErrCode(), modifyRet.getMsg());
+//                return ret;
+//            }
+//        }
+//
+//        //删除 1.存在DispatchId需删除调度计划，2.更新Reservation表记录状态
+//        for (ReservationCheckFlagInfo o : delList) {
+//            JsonRet<Boolean> delRet = dispatchInfoService.del(o.getDispatchId().longValue());
+//            if (delRet.isSuccess()) {
+//                reservationDAO.update(reservationConverter.toUpdatedReservationDO(o, 2));
+//            } else {
+//                ret.setErrTip(delRet.getErrCode(), delRet.getMsg());
+//                return ret;
+//            }
+//        }
+//
+//        //修改 1.更新相应DispatchInfo表记录 2.更新Reservation表记录状态
+//        for (ReservationCheckFlagInfo o : addList) {
+//            DispatchInfo dispatchInfo = reservationConverter.toDispatchInfo(o);
+//            JsonRet<Long> addRet = dispatchInfoService.add(dispatchInfo);
+//            if (addRet.isSuccess()) {
+//                o.setDispatchId(addRet.getData().intValue());
+//                reservationDAO.update(reservationConverter.toUpdatedReservationDO(o, 1));
+//            } else {
+//                ret.setErrTip(addRet.getErrCode(), addRet.getMsg());
+//                return ret;
+//            }
+//        }
         ret.setSuccessData(true);
         return ret;
     }
