@@ -75,20 +75,34 @@ public class ReservationServiceImpl extends BaseCRUDService<ReservationDO,Reserv
         //审核通过
         for (ReservationCheckFlagInfo o : allowedList) {
             DispatchInfo dispatchInfo = reservationConverter.toDispatchInfo(o);
+            int dispatchId = 0;
+            if (PrimitiveUtil.getPrimitive(o.getDispatchId()) > 0) {//如果已经调度过，则更新
+                dispatchId = o.getDispatchId();
+                JsonRet<Boolean> modifyRet = dispatchInfoService.modify(dispatchInfo);
+            } else {//未调度过则新增调度计划
+                JsonRet<Long> addRet = dispatchInfoService.add(dispatchInfo);
+                if (addRet.isSuccess()) {
+                    dispatchId = addRet.getData().intValue();
+                }
+            }
+            o.setDispatchId(dispatchId);
+            if (PrimitiveUtil.getPrimitive(o.getId()) > 0) {
+                reservationDAO.insertSelective(reservationConverter.toUpdatedReservationDO(o, 1));
+            } else {
+                reservationDAO.update(reservationConverter.toUpdatedReservationDO(o, 1));
+            }
         }
 
         //审核未通过
         for (ReservationCheckFlagInfo o : deniedList) {
             if (PrimitiveUtil.getPrimitive(o.getDispatchId()) > 0) {
                 JsonRet<Boolean> delRet = dispatchInfoService.del(o.getDispatchId().longValue());
+                if (!delRet.isSuccess()) {
+                    ret.setErrTip(delRet.getErrCode(), delRet.getMsg());
+                    return ret;
+                }
             }
-            JsonRet<Boolean> delRet = dispatchInfoService.del(o.getDispatchId().longValue());
-            if (delRet.isSuccess()) {
-                reservationDAO.update(reservationConverter.toUpdatedReservationDO(o, 2));
-            } else {
-                ret.setErrTip(delRet.getErrCode(), delRet.getMsg());
-                return ret;
-            }
+            reservationDAO.update(reservationConverter.toUpdatedReservationDO(o, 2));
         }
 //        //新增 1.新增至DispatchInfo表  2.更新Reservation表记录状态，包括DispatchId信息
 //        for (ReservationCheckFlagInfo o : updateList) {
