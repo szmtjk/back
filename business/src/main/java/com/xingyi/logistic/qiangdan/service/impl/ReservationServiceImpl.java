@@ -58,8 +58,8 @@ public class ReservationServiceImpl extends BaseCRUDService<ReservationDO,Reserv
         //余调确认
 
         List<ReservationCheckFlagInfo> toBeCheckedList = param.getPlanList().stream().filter(o->o.getCheckStatus() == 0).collect(Collectors.toList());
-        List<ReservationCheckFlagInfo> allowedList = param.getPlanList().stream().filter(o->o.getCheckStatus() == 0).collect(Collectors.toList());
-        List<ReservationCheckFlagInfo> deniedList = param.getPlanList().stream().filter(o->o.getCheckStatus() == 0).collect(Collectors.toList());
+        List<ReservationCheckFlagInfo> allowedList = param.getPlanList().stream().filter(o->o.getCheckStatus() == 1).collect(Collectors.toList());
+        List<ReservationCheckFlagInfo> deniedList = param.getPlanList().stream().filter(o->o.getCheckStatus() == 2).collect(Collectors.toList());
 
         //待审核的数据
         for (ReservationCheckFlagInfo o : toBeCheckedList) {
