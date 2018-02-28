@@ -49,7 +49,7 @@ public class BaseReservation extends BaseModelAndDO {
     private Integer status;
 
     private Integer checkStatus;
-    private Integer dispatchId;
+    private Long dispatchId;
     private Double actualTransferPrice;
     private Double preSettleAmount;
     private Integer settleType;
@@ -203,11 +203,11 @@ public class BaseReservation extends BaseModelAndDO {
         this.preActualLoad = preActualLoad;
     }
 
-    public Integer getDispatchId() {
+    public Long getDispatchId() {
         return dispatchId;
     }
 
-    public void setDispatchId(Integer dispatchId) {
+    public void setDispatchId(Long dispatchId) {
         this.dispatchId = dispatchId;
     }
 }
