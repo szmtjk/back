@@ -6,6 +6,7 @@
         <result property="id" column="id"/>
         <result property="leftDispatchId" column="leftDispatchId"/>
         <result property="userId" column="userId"/>
+        <result property="shipId" column="shipId"/>
         <result property="shipNo" column="shipNo"/>
         <result property="name" column="name"/>
         <result property="mobile" column="mobile"/>
@@ -29,6 +30,7 @@
         ,a.`leftDispatchId`
         ,a.`dispatchId`
         ,a.`userId`
+        ,c.`shipId`
         ,c.`shipNo`
         ,c.`name`
         ,c.`mobile`
@@ -113,6 +115,7 @@
         FROM `Reservation` a
         LEFT JOIN `AppUser` b ON b.id = a.userId
         LEFT JOIN `Ship` c ON c.id = b.shipInfoId
+        left join `DispatchInfo` d on d.id = a.dispatchId
         WHERE a.`id` = #{id} AND a.`isDeleted` = 0
     </select>
 

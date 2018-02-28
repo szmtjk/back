@@ -11,17 +11,17 @@ import java.util.List;
 public class DispatchInfoParam {
 
     @NotNull
-    private Integer customerTaskFlowId;
+    private Long customerTaskFlowId;
     @NotNullEmpty
     private String plans;
 
     private List<DispatchFlagInfo> planList;
 
-    public Integer getCustomerTaskFlowId() {
+    public Long getCustomerTaskFlowId() {
         return customerTaskFlowId;
     }
 
-    public void setCustomerTaskFlowId(Integer customerTaskFlowId) {
+    public void setCustomerTaskFlowId(Long customerTaskFlowId) {
         this.customerTaskFlowId = customerTaskFlowId;
     }
 

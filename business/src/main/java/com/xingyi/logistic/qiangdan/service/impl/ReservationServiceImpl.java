@@ -73,7 +73,12 @@ public class ReservationServiceImpl extends BaseCRUDService<ReservationDO,Reserv
 
         //审核通过
         for (ReservationCheckFlagInfo o : allowedList) {
-            DispatchInfo dispatchInfo = reservationConverter.toDispatchInfo(o);
+            JsonRet<Reservation> reservationRet = getById(o.getId());
+            if (!reservationRet.isSuccess() || reservationRet.getData() == null) {
+                ret.setErrTip(ErrCode.ID_INVALID);
+                return ret;
+            }
+            DispatchInfo dispatchInfo = reservationConverter.toDispatchInfo(o, reservationRet.getData());
             long dispatchId = 0;
             if (PrimitiveUtil.getPrimitive(o.getDispatchId()) > 0) {//如果已经调度过，则更新
                 dispatchId = o.getDispatchId();
@@ -85,11 +90,7 @@ public class ReservationServiceImpl extends BaseCRUDService<ReservationDO,Reserv
                 }
             }
             o.setDispatchId(dispatchId);
-            if (PrimitiveUtil.getPrimitive(o.getId()) > 0) {
-                reservationDAO.insertSelective(reservationConverter.toUpdatedReservationDO(o, 1));
-            } else {
-                reservationDAO.update(reservationConverter.toUpdatedReservationDO(o, 1));
-            }
+            reservationDAO.update(reservationConverter.toUpdatedReservationDO(o, 1));
         }
 
         //审核未通过

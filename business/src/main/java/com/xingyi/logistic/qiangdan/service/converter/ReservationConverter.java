@@ -28,7 +28,7 @@ public class ReservationConverter extends ModelConverter<ReservationDO,Reservati
         return reservation;
     }
 
-    public DispatchInfo toDispatchInfo(ReservationCheckFlagInfo src) {
+    public DispatchInfo toDispatchInfo(ReservationCheckFlagInfo src, Reservation reservation) {
         DispatchInfo dst = new DispatchInfo();
         if (src != null) {
             BeanUtils.copyProperties(src, dst);
@@ -40,6 +40,7 @@ public class ReservationConverter extends ModelConverter<ReservationDO,Reservati
             if (src.getDispatchId() != null) {
                 dst.setId(src.getDispatchId().longValue());
             }
+            dst.setShipId(reservation.getShipId());
         }
         return dst;
     }
