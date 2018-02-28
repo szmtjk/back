@@ -6,7 +6,7 @@ import javax.validation.constraints.NotNull;
 
 public class BaseReservation extends BaseModelAndDO {
 
-    private Integer leftDispatchId;
+    private Long leftDispatchId;
 
     /**
      * 用户id
@@ -58,11 +58,11 @@ public class BaseReservation extends BaseModelAndDO {
     private String name;
     private String mobile;
 
-    public Integer getLeftDispatchId() {
+    public Long getLeftDispatchId() {
         return leftDispatchId;
     }
 
-    public void setLeftDispatchId(Integer leftDispatchId) {
+    public void setLeftDispatchId(Long leftDispatchId) {
         this.leftDispatchId = leftDispatchId;
     }
 

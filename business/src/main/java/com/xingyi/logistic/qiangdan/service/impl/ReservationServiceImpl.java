@@ -67,14 +67,14 @@ public class ReservationServiceImpl extends BaseCRUDService<ReservationDO,Reserv
             if (PrimitiveUtil.getPrimitive(o.getDispatchId()) > 0) {
                 dispatchInfoService.del(o.getDispatchId().longValue());
             }
-            o.setDispatchId(0);
+            o.setDispatchId(0L);
             reservationDAO.update(reservationConverter.toUpdatedReservationDO(o, 0));
         }
 
         //审核通过
         for (ReservationCheckFlagInfo o : allowedList) {
             DispatchInfo dispatchInfo = reservationConverter.toDispatchInfo(o);
-            int dispatchId = 0;
+            long dispatchId = 0;
             if (PrimitiveUtil.getPrimitive(o.getDispatchId()) > 0) {//如果已经调度过，则更新
                 dispatchId = o.getDispatchId();
                 JsonRet<Boolean> modifyRet = dispatchInfoService.modify(dispatchInfo);

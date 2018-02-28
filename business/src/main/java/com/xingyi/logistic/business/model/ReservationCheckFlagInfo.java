@@ -5,23 +5,23 @@ package com.xingyi.logistic.business.model;
  */
 public class ReservationCheckFlagInfo {
 
-    private Integer id;//预约id
+    private Long id;//预约id
     private Integer preArrivePortTime;//预计到港时间
     private Integer preLoad;//预报吨位
     private Integer preActualLoad;//预发吨位
     private Double actualTransferPrice;//实际运价
     private Double preSettleAmount;//预结算金额
     private Integer settleType;//结算方式
-    private Integer leftDispatchId;//余量临调id
-    private Integer dispatchId;//修改时关联的调度计划id
-    private Integer customerTaskFlowId;//客户流向id
+    private Long leftDispatchId;//余量临调id
+    private Long dispatchId;//修改时关联的调度计划id
+    private Long customerTaskFlowId;//客户流向id
     private Integer checkStatus;//数据标识  0:待审核  1:审核通过  2:审核不通过
 
-    public Integer getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -73,12 +73,28 @@ public class ReservationCheckFlagInfo {
         this.settleType = settleType;
     }
 
-    public Integer getDispatchId() {
+    public Long getLeftDispatchId() {
+        return leftDispatchId;
+    }
+
+    public void setLeftDispatchId(Long leftDispatchId) {
+        this.leftDispatchId = leftDispatchId;
+    }
+
+    public Long getDispatchId() {
         return dispatchId;
     }
 
-    public void setDispatchId(Integer dispatchId) {
+    public void setDispatchId(Long dispatchId) {
         this.dispatchId = dispatchId;
+    }
+
+    public Long getCustomerTaskFlowId() {
+        return customerTaskFlowId;
+    }
+
+    public void setCustomerTaskFlowId(Long customerTaskFlowId) {
+        this.customerTaskFlowId = customerTaskFlowId;
     }
 
     public Integer getCheckStatus() {
@@ -87,21 +103,5 @@ public class ReservationCheckFlagInfo {
 
     public void setCheckStatus(Integer checkStatus) {
         this.checkStatus = checkStatus;
-    }
-
-    public Integer getCustomerTaskFlowId() {
-        return customerTaskFlowId;
-    }
-
-    public void setCustomerTaskFlowId(Integer customerTaskFlowId) {
-        this.customerTaskFlowId = customerTaskFlowId;
-    }
-
-    public Integer getLeftDispatchId() {
-        return leftDispatchId;
-    }
-
-    public void setLeftDispatchId(Integer leftDispatchId) {
-        this.leftDispatchId = leftDispatchId;
     }
 }
