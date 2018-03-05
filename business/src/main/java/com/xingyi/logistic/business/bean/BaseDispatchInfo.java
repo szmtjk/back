@@ -5,10 +5,10 @@ package com.xingyi.logistic.business.bean;
  */
 public class BaseDispatchInfo extends BaseModelAndDO {
 
-    private Integer customerTaskFlowId;
+    private Long customerTaskFlowId;
     private String orderNo;
     private Integer dispatchType;
-    private Integer shipId;
+    private Long shipId;
     private String shipNo;
     private Integer shipFlag;
     private Integer preWeight;
@@ -18,12 +18,14 @@ public class BaseDispatchInfo extends BaseModelAndDO {
     private Double actualTransferPrice;
     private Integer settleType;
     private Integer status;
+    private Long leftDispatchId;
 
-    public Integer getCustomerTaskFlowId() {
+
+    public Long getCustomerTaskFlowId() {
         return customerTaskFlowId;
     }
 
-    public void setCustomerTaskFlowId(Integer customerTaskFlowId) {
+    public void setCustomerTaskFlowId(Long customerTaskFlowId) {
         this.customerTaskFlowId = customerTaskFlowId;
     }
 
@@ -43,11 +45,11 @@ public class BaseDispatchInfo extends BaseModelAndDO {
         this.dispatchType = dispatchType;
     }
 
-    public Integer getShipId() {
+    public Long getShipId() {
         return shipId;
     }
 
-    public void setShipId(Integer shipId) {
+    public void setShipId(Long shipId) {
         this.shipId = shipId;
     }
 
@@ -121,5 +123,13 @@ public class BaseDispatchInfo extends BaseModelAndDO {
 
     public void setStatus(Integer status) {
         this.status = status;
+    }
+
+    public Long getLeftDispatchId() {
+        return leftDispatchId;
+    }
+
+    public void setLeftDispatchId(Long leftDispatchId) {
+        this.leftDispatchId = leftDispatchId;
     }
 }

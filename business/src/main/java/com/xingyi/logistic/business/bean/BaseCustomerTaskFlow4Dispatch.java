@@ -6,6 +6,7 @@ package com.xingyi.logistic.business.bean;
 public class BaseCustomerTaskFlow4Dispatch {
 
     private Long id;
+    private String taskNo;
     private String flowName;
     private String goodsName;
     private Integer loadingTime;
@@ -17,6 +18,7 @@ public class BaseCustomerTaskFlow4Dispatch {
     private String sailingArea;
     private String customerName;
     private Float shipSuggestUnitPrice;
+    private Integer taskStatus;
 
     public Long getId() {
         return id;
@@ -24,6 +26,14 @@ public class BaseCustomerTaskFlow4Dispatch {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public String getTaskNo() {
+        return taskNo;
+    }
+
+    public void setTaskNo(String taskNo) {
+        this.taskNo = taskNo;
     }
 
     public String getFlowName() {
@@ -112,5 +122,13 @@ public class BaseCustomerTaskFlow4Dispatch {
 
     public void setShipSuggestUnitPrice(Float shipSuggestUnitPrice) {
         this.shipSuggestUnitPrice = shipSuggestUnitPrice;
+    }
+
+    public Integer getTaskStatus() {
+        return taskStatus;
+    }
+
+    public void setTaskStatus(Integer taskStatus) {
+        this.taskStatus = taskStatus;
     }
 }

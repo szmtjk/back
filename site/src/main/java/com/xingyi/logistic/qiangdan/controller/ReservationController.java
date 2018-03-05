@@ -3,6 +3,8 @@ package com.xingyi.logistic.qiangdan.controller;
 import com.xingyi.logistic.authentication.util.SessionUtil;
 import com.xingyi.logistic.business.service.BaseService;
 import com.xingyi.logistic.common.bean.JsonRet;
+import com.xingyi.logistic.business.model.ReservationCheckParam;
+import com.xingyi.logistic.config.JsonParam;
 import com.xingyi.logistic.controller.BaseCRUDController;
 import com.xingyi.logistic.qiangdan.model.AppUser;
 import com.xingyi.logistic.qiangdan.model.Reservation;
@@ -21,6 +23,11 @@ public class ReservationController extends BaseCRUDController<Reservation,Reserv
 
     @Autowired
     private ReservationService reservationService;
+
+    @RequestMapping("/check")
+    public JsonRet<Boolean> check(@JsonParam ReservationCheckParam reservationCheckParam) {
+        return reservationService.check(reservationCheckParam);
+    }
 
     @Override
     public JsonRet<Long> add(Reservation reservation) {
@@ -41,12 +48,13 @@ public class ReservationController extends BaseCRUDController<Reservation,Reserv
     @Override
     public JsonRet<Boolean> modify(Reservation reservation) {
         reservation.setStatus(2);
+        reservation.setUserId(SessionUtil.getAppUser().getId());
         return super.modify(reservation);
     }
 
     @RequestMapping("/getAppById")
-    public JsonRet<Reservation> getAppById() {
-        return super.getById(SessionUtil.getAppUser().getId());
+    public JsonRet<Object> getAppById() {
+        return reservationService.getAppById(SessionUtil.getAppUser());
     }
 
 

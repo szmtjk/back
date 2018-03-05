@@ -6,36 +6,31 @@ import javax.validation.constraints.NotNull;
 
 public class BaseReservation extends BaseModelAndDO {
 
-    private Integer leftDispatchId;
+    private Long leftDispatchId;
 
     /**
      * 用户id
      */
-    @NotNull
     private Long userId;
 
     /**
      * 船舶经度
      */
-    @NotNull
     private Integer shipLongitude;
 
     /**
      * 船舶纬度
      */
-    @NotNull
     private Integer shipLatitude;
 
     /**
      * 预报吨位
      */
-    @NotNull
     private Integer preLoad;
 
     /**
      * 预计到达港口时间
      */
-    @NotNull
     private Integer preArrivePortTime;
 
     /**
@@ -54,17 +49,21 @@ public class BaseReservation extends BaseModelAndDO {
     private Integer status;
 
     private Integer checkStatus;
+    private Long dispatchId;
     private Double actualTransferPrice;
     private Double preSettleAmount;
+    private Integer settleType;
+    private Integer preActualLoad;
+    private Long shipId;
     private String shipNo;
     private String name;
     private String mobile;
 
-    public Integer getLeftDispatchId() {
+    public Long getLeftDispatchId() {
         return leftDispatchId;
     }
 
-    public void setLeftDispatchId(Integer leftDispatchId) {
+    public void setLeftDispatchId(Long leftDispatchId) {
         this.leftDispatchId = leftDispatchId;
     }
 
@@ -156,6 +155,14 @@ public class BaseReservation extends BaseModelAndDO {
         this.preSettleAmount = preSettleAmount;
     }
 
+    public Long getShipId() {
+        return shipId;
+    }
+
+    public void setShipId(Long shipId) {
+        this.shipId = shipId;
+    }
+
     public String getShipNo() {
         return shipNo;
     }
@@ -178,5 +185,29 @@ public class BaseReservation extends BaseModelAndDO {
 
     public void setMobile(String mobile) {
         this.mobile = mobile;
+    }
+
+    public Integer getSettleType() {
+        return settleType;
+    }
+
+    public void setSettleType(Integer settleType) {
+        this.settleType = settleType;
+    }
+
+    public Integer getPreActualLoad() {
+        return preActualLoad;
+    }
+
+    public void setPreActualLoad(Integer preActualLoad) {
+        this.preActualLoad = preActualLoad;
+    }
+
+    public Long getDispatchId() {
+        return dispatchId;
+    }
+
+    public void setDispatchId(Long dispatchId) {
+        this.dispatchId = dispatchId;
     }
 }

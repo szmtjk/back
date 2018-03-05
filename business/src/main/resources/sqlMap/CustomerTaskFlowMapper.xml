@@ -6,6 +6,7 @@
         <result property="id" column="id"/>
         <result property="customerName" column="customerName"/>
         <result property="taskId" column="taskId"/>
+        <result property="taskNo" column="taskNo"/>
         <result property="flowId" column="flowId"/>
         <result property="goodsName" column="goodsName"/>
         <result property="goodsType" column="goodsType"/>
@@ -41,6 +42,7 @@
         a.`id`
         ,c.`fullName` as `customerName`
         ,a.`taskId`
+        ,a.`taskNo`
         ,a.`flowId`
         ,a.`goodsName`
         ,a.`goodsType`
@@ -77,6 +79,7 @@
         <trim prefix="(" suffix=")" suffixOverrides=",">
             <if test="pojo.taskId!=null"> `taskId`,</if>
             <if test="pojo.flowId!=null"> `flowId`,</if>
+            <!--<if test="pojo.taskNo!=null"> `taskNo`,</if>-->
             <if test="pojo.goodsName!=null"> `goodsName`,</if>
             <if test="pojo.goodsType!=null"> `goodsType`,</if>
             <if test="pojo.goodsSubType!=null"> `goodsSubType`,</if>
@@ -102,6 +105,7 @@
             <if test="pojo.status!=null"> `status`,</if>
             <if test="pojo.taskStatus!=null"> `taskStatus`,</if>
             <if test="pojo.description!=null"> `description`,</if>
+            `taskNo`,
             `created`,
             `updated`
         </trim>
@@ -109,6 +113,7 @@
         <trim prefix="(" suffix=")" suffixOverrides=",">
             <if test="pojo.taskId!=null">#{pojo.taskId},</if>
             <if test="pojo.flowId!=null">#{pojo.flowId},</if>
+            <!--<if test="pojo.taskNo!=null">#{pojo.taskNo},</if>-->
             <if test="pojo.goodsName!=null">#{pojo.goodsName},</if>
             <if test="pojo.goodsType!=null">#{pojo.goodsType},</if>
             <if test="pojo.goodsSubType!=null">#{pojo.goodsSubType},</if>
@@ -134,6 +139,7 @@
             <if test="pojo.status!=null">#{pojo.status},</if>
             <if test="pojo.taskStatus!=null">#{pojo.taskStatus},</if>
             <if test="pojo.description!=null">#{pojo.description},</if>
+            CONCAT('CTF', UNIX_TIMESTAMP(now())),
             UNIX_TIMESTAMP(now()),
             UNIX_TIMESTAMP(now())
         </trim>
@@ -145,6 +151,7 @@
         <set>
             <if test="pojo.taskId!=null">`taskId` = #{pojo.taskId},</if>
             <if test="pojo.flowId!=null">`flowId` = #{pojo.flowId},</if>
+            <!--<if test="pojo.taskNo!=null">`taskNo` = #{pojo.taskNo},</if>-->
             <if test="pojo.goodsName!=null">`goodsName` = #{pojo.goodsName},</if>
             <if test="pojo.goodsType!=null">`goodsType` = #{pojo.goodsType},</if>
             <if test="pojo.goodsSubType!=null">`goodsSubType` = #{pojo.goodsSubType},</if>

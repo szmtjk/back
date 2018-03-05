@@ -5,7 +5,7 @@ package com.xingyi.logistic.business.bean;
  */
 public class BaseLeftDispatch4Check {
 
-    private Integer id;
+    private Long id;
     private String goodsName;
     private Integer goodsType;
     private Integer loadingTime;
@@ -18,11 +18,11 @@ public class BaseLeftDispatch4Check {
     private Integer shipCountUnchecked;
     private Integer taskStatus;
 
-    public Integer getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(Long id) {
         this.id = id;
     }
 

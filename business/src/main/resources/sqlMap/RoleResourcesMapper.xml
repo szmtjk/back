@@ -131,7 +131,7 @@
         SELECT A1.roleId, A1.resourceId
         FROM RoleResources A1
         INNER JOIN ActionResources A2 ON A1.resourceId=A2.id
-        WHERE A2.type = 0
+        WHERE A2.leafNode = 0
         AND A1.roleId = #{pojo.roleId}
     </select>
 </mapper>

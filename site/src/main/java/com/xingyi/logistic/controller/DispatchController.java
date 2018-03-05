@@ -46,10 +46,6 @@ public class DispatchController extends BaseCRUDController<DispatchInfo, Dispatc
     public JsonRet<Boolean> confirmDispatchInfoPlan(@JsonParam DispatchInfoParam dispatchInfoParam) {
         return dispatchInfoService.confirmDispatchInfoPlan(dispatchInfoParam);
     }
-    @RequestMapping("/confirmPlanTest")
-    public JsonRet<Boolean> confirmDispatchInfoPlan2(@RequestBody DispatchInfoParam dispatchInfoParam) {
-        return dispatchInfoService.confirmDispatchInfoPlan(dispatchInfoParam);
-    }
 
     @Override
     protected BaseService<DispatchInfo, DispatchInfoQuery> getBaseService() {

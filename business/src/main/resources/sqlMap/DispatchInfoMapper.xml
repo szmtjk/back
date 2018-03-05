@@ -17,6 +17,7 @@
         <result property="settleType" column="settleType"/>
         <result property="actualTransferPrice" column="actualTransferPrice"/>
         <result property="status" column="status"/>
+        <result property="leftDispatchId" column="leftDispatchId"/>
         <result property="creator" column="creator"/>
         <result property="created" column="created"/>
         <result property="updater" column="updater"/>
@@ -25,16 +26,19 @@
 
     <resultMap id="CustomerTaskFlow4DispatchColumnMap" type="com.xingyi.logistic.business.db.entity.CustomerTaskFlow4DispatchDO">
         <result property="id" column="id"/>
+        <result property="taskNo" column="taskNo"/>
         <result property="flowName" column="flowName"/>
         <result property="goodsName" column="goodsName"/>
         <result property="loadingTime" column="loadingTime"/>
         <result property="startPortName" column="startPortName"/>
         <result property="endPortName" column="endPortName"/>
+        <result property="totalLoad" column="totalLoad"/>
         <result property="leftWeight" column="leftWeight"/>
         <result property="goodsType" column="goodsType"/>
         <result property="sailingArea" column="sailingArea"/>
         <result property="customerName" column="customerName"/>
         <result property="shipSuggestUnitPrice" column="shipSuggestUnitPrice"/>
+        <result property="taskStatus" column="taskStatus"/>
     </resultMap>
 
     <sql id="all_column">
@@ -52,6 +56,7 @@
         ,a.`preSettleAmount`
         ,a.`settleType`
         ,a.`status`
+        ,a.`leftDispatchId`
         ,a.`creator`
         ,a.`created`
         ,a.`updater`
@@ -62,7 +67,6 @@
         INSERT INTO DispatchInfo
         <trim prefix="(" suffix=")" suffixOverrides=",">
             <if test="pojo.customerTaskFlowId!=null"> `customerTaskFlowId`,</if>
-            <if test="pojo.orderNo!=null"> `orderNo`,</if>
             <if test="pojo.dispatchType!=null"> `dispatchType`,</if>
             <if test="pojo.shipId!=null"> `shipId`,</if>
             <if test="pojo.shipFlag!=null"> `shipFlag`,</if>
@@ -73,15 +77,16 @@
             <if test="pojo.settleType!=null"> `settleType`,</if>
             <if test="pojo.actualTransferPrice!=null"> `actualTransferPrice`,</if>
             <if test="pojo.status!=null"> `status`,</if>
+            <if test="pojo.leftDispatchId!=null"> `leftDispatchId`,</if>
             <if test="pojo.creator!=null"> `creator`,</if>
             <if test="pojo.updater!=null"> `updater`,</if>
+            `orderNo`,
             `created`,
             `updated`
         </trim>
         VALUES
         <trim prefix="(" suffix=")" suffixOverrides=",">
             <if test="pojo.customerTaskFlowId!=null">#{pojo.customerTaskFlowId},</if>
-            <if test="pojo.orderNo!=null">#{pojo.orderNo},</if>
             <if test="pojo.dispatchType!=null">#{pojo.dispatchType},</if>
             <if test="pojo.shipId!=null">#{pojo.shipId},</if>
             <if test="pojo.shipFlag!=null">#{pojo.shipFlag},</if>
@@ -92,8 +97,10 @@
             <if test="pojo.settleType!=null">#{pojo.settleType},</if>
             <if test="pojo.actualTransferPrice!=null">#{pojo.actualTransferPrice},</if>
             <if test="pojo.status!=null">#{pojo.status},</if>
+            <if test="pojo.leftDispatchId!=null">#{pojo.leftDispatchId},</if>
             <if test="pojo.creator!=null">#{pojo.creator},</if>
             <if test="pojo.updater!=null">#{pojo.updater},</if>
+            CONCAT('D', UNIX_TIMESTAMP(now())),
             UNIX_TIMESTAMP(now()),
             UNIX_TIMESTAMP(now())
         </trim>
@@ -104,7 +111,7 @@
         UPDATE DispatchInfo
         <set>
             <if test="pojo.customerTaskFlowId!=null">`customerTaskFlowId` = #{pojo.customerTaskFlowId},</if>
-            <if test="pojo.orderNo!=null">`orderNo` = #{pojo.orderNo},</if>
+            <!--<if test="pojo.orderNo!=null">`orderNo` = #{pojo.orderNo},</if>-->
             <if test="pojo.dispatchType!=null">`dispatchType` = #{pojo.dispatchType},</if>
             <if test="pojo.shipId!=null">`shipId` = #{pojo.shipId},</if>
             <if test="pojo.shipFlag!=null">`shipFlag` = #{pojo.shipFlag},</if>
@@ -115,6 +122,7 @@
             <if test="pojo.settleType!=null">`settleType` = #{pojo.settleType},</if>
             <if test="pojo.actualTransferPrice!=null">`actualTransferPrice` = #{pojo.actualTransferPrice},</if>
             <if test="pojo.status!=null">`status` = #{pojo.status},</if>
+            <if test="pojo.leftDispatchId!=null">`leftDispatchId` = #{pojo.leftDispatchId},</if>
             <if test="pojo.updater!=null">`updater` = #{pojo.updater},</if>
             `updated` = UNIX_TIMESTAMP(now())
         </set>
@@ -189,15 +197,16 @@
     </select>
 
     <select id="getCustomerTaskFlow4DispatchList" resultMap="CustomerTaskFlow4DispatchColumnMap" parameterType="Map">
-        select a.id, b.`name` as flowName, a.goodsName, a.loadingTime, c.name as startPortName, d.name as endPortName, a.goodsType,
-               a.sailingArea, a.totalLoad, a.totalLoad - (case when e.preLoad is null then 0 else e.preLoad end) as leftWeight,
-               g.fullName as customerName, a.shipSuggestUnitPrice
+        select a.id, a.taskNo, b.`name` as flowName, a.goodsName, a.loadingTime, c.name as startPortName, d.name as endPortName, a.goodsType,
+               a.sailingArea, a.totalWeight as totalLoad, a.totalWeight - (case when e.preLoad is null then 0 else e.preLoad end) as leftWeight,
+               g.fullName as customerName, a.shipSuggestUnitPrice, a.taskStatus
         from CustomerTaskFlow a
         left join Flow b on b.id=a.flowId
         left join Port c on c.id=a.startPortId
         left join Port d on d.id=a.endPortId
         left join ( SELECT aa.customerTaskFlowId, sum(preLoad) as preLoad
                     from DispatchInfo aa
+                    where aa.status &gt;= 0
                     group by aa.customerTaskFlowId
                   ) e on e.customerTaskFlowId = a.id
         left join CustomerTask f on f.id = a.taskId
@@ -208,8 +217,17 @@
     </select>
 
     <sql id="getCustomerTaskFlow4DispatchWhereCommon">
-        where a.`isDeleted` = 0 and a.`taskStatus` &lt;= 2
+        where a.`isDeleted` = 0
         <if test="pojo.id != null"> AND a.`id` = #{pojo.id} </if>
+        <choose>
+            <when test="pojo.flag != null and pojo.flag == 1">
+                AND a.`taskStatus` &gt;= 0
+            </when>
+            <otherwise>
+                AND a.`taskStatus` &lt; 2
+            </otherwise>
+        </choose>
+        <if test="pojo.key != null"> AND (a.`taskNo` like concat('%', #{pojo.key}, '%'))</if>
     </sql>
 
     <sql id="pageCommon">

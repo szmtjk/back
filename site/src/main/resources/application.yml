@@ -52,12 +52,37 @@ oauth:
     appId: wx716e867a8dfc27bb
     secretKey: 39a1e707862681e0690dfb6336e6dc87
 
+aa:
+  bb: default
+
 # Different profiles' configuration
 ---
 spring:
   profiles: dev
 
+aa:
+  bb: dev1
+
 ---
 spring:
   profiles: prd
 
+aa:
+  bb: prd1
+
+druid:
+  datasource:
+    - identity: myc_master
+      group: d_myc
+      role: master
+      driverClassName: com.mysql.jdbc.Driver
+      mapperLocations: classpath*:sqlMap/**/*Mapper.xml
+      url: jdbc:mysql://47.100.45.229:3306/xyl2?zeroDateTimeBehavior=convertToNull&useUnicode=true&characterEncoding=UTF-8
+      username: root
+      password: uAiqwVwjJ8-i
+      initialSize: 5
+      filters: stat
+      maxActive: 8
+      minIdle: 5
+      maxWait: 50000
+      validationQuery: SELECT 1

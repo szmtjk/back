@@ -20,6 +20,8 @@
         <result property="status" column="status"/>
         <result property="description" column="description"/>
         <result property="creator" column="creator"/>
+        <result property="goodsType" column="goodsType"/>
+        <result property="goodsSubType" column="goodsSubType"/>
         <result property="created" column="created"/>
         <result property="updated" column="updated"/>
     </resultMap>
@@ -41,6 +43,8 @@
         ,`cheyun`
         ,`status`
         ,`description`
+        , goodsType
+        , goodsSubType
         ,`creator`
         ,`created`
         ,`updated`
@@ -64,6 +68,8 @@
             <if test="pojo.cheyun!=null"> `cheyun`,</if>
             <if test="pojo.status!=null"> `status`,</if>
             <if test="pojo.description!=null"> `description`,</if>
+            <if test="pojo.goodsType!=null"> `goodsType`,</if>
+            <if test="pojo.goodsSubType!=null"> `goodsSubType`,</if>
             `created`,
             `updated`
         </trim>
@@ -84,6 +90,8 @@
             <if test="pojo.cheyun!=null">#{pojo.cheyun},</if>
             <if test="pojo.status!=null">#{pojo.status},</if>
             <if test="pojo.description!=null">#{pojo.description},</if>
+            <if test="pojo.goodsType!=null">#{pojo.goodsType},</if>
+            <if test="pojo.goodsSubType!=null">#{pojo.goodsSubType},</if>
             UNIX_TIMESTAMP(now()),
             UNIX_TIMESTAMP(now())
         </trim>
@@ -108,6 +116,8 @@
             <if test="pojo.cheyun!=null">`cheyun` = #{pojo.cheyun},</if>
             <if test="pojo.status!=null">`status` = #{pojo.status},</if>
             <if test="pojo.description!=null">`description` = #{pojo.description},</if>
+            <if test="pojo.goodsType!=null">`goodsType` = #{pojo.goodsType},</if>
+            <if test="pojo.goodsSubType!=null">`goodsSubType` = #{pojo.goodsSubType},</if>
             `updated` = UNIX_TIMESTAMP(now())
         </set>
         WHERE `id` = #{pojo.id} and `isDeleted` = 0

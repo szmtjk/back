@@ -23,6 +23,9 @@ import java.io.PrintWriter;
 @Order(1)
 @WebFilter(urlPatterns = "/*")
 public class AuthenticationFilter implements Filter {
+
+	public static boolean isEnabled = true;
+
 	@Override
 	public void init(FilterConfig filterConfig) throws ServletException {
 		System.out.println("filter is inited");
@@ -30,6 +33,10 @@ public class AuthenticationFilter implements Filter {
 
 	@Override
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
+		if (!isEnabled) {
+			chain.doFilter(request,response);
+			return;
+		}
 		response.setCharacterEncoding("UTF-8");
 		response.setContentType("application/json; charset=utf-8");
 
@@ -53,7 +60,7 @@ public class AuthenticationFilter implements Filter {
 		{
 			chain.doFilter(request,response);
 		}
-		else if(!requestPath.startsWith("/signin")){
+		else if(!requestPath.startsWith("/signin") && !requestPath.startsWith("/test")){
 			//认证
 			String token = httpRequest.getHeader("token");
 			System.out.println(">>>>>>>>>>>>>>>>>>从 Header 获取 Token:" + token);

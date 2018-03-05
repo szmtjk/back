@@ -29,6 +29,10 @@ public class BaseContract extends BaseModelAndDO {
     @AllowedNumber(values = {1, 2})
     private Integer type; //合同类型  1：短期  2：长期
 
+    private Integer goodsType;
+
+    private Integer goodsSubType;
+
     private Long signDepartment;
 
     private Long signPerson;
@@ -158,5 +162,21 @@ public class BaseContract extends BaseModelAndDO {
 
     public void setStatus(Integer status) {
         this.status = status;
+    }
+
+    public Integer getGoodsType() {
+        return goodsType;
+    }
+
+    public void setGoodsType(Integer goodsType) {
+        this.goodsType = goodsType;
+    }
+
+    public Integer getGoodsSubType() {
+        return goodsSubType;
+    }
+
+    public void setGoodsSubType(Integer goodsSubType) {
+        this.goodsSubType = goodsSubType;
     }
 }

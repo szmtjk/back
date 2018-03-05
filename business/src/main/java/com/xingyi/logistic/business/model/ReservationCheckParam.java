@@ -8,21 +8,21 @@ import java.util.List;
 /**
  * Created by Jadic on 2018/1/21.
  */
-public class DispatchInfoParam {
+public class ReservationCheckParam {
 
     @NotNull
-    private Long customerTaskFlowId;
+    private Integer leftDispatchId;
     @NotNullEmpty
     private String plans;
 
-    private List<DispatchFlagInfo> planList;
+    private List<ReservationCheckFlagInfo> planList;
 
-    public Long getCustomerTaskFlowId() {
-        return customerTaskFlowId;
+    public Integer getLeftDispatchId() {
+        return leftDispatchId;
     }
 
-    public void setCustomerTaskFlowId(Long customerTaskFlowId) {
-        this.customerTaskFlowId = customerTaskFlowId;
+    public void setLeftDispatchId(Integer leftDispatchId) {
+        this.leftDispatchId = leftDispatchId;
     }
 
     public String getPlans() {
@@ -33,11 +33,11 @@ public class DispatchInfoParam {
         this.plans = plans;
     }
 
-    public List<DispatchFlagInfo> getPlanList() {
+    public List<ReservationCheckFlagInfo> getPlanList() {
         return planList;
     }
 
-    public void setPlanList(List<DispatchFlagInfo> planList) {
+    public void setPlanList(List<ReservationCheckFlagInfo> planList) {
         this.planList = planList;
     }
 }

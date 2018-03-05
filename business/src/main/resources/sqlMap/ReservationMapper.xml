@@ -6,6 +6,7 @@
         <result property="id" column="id"/>
         <result property="leftDispatchId" column="leftDispatchId"/>
         <result property="userId" column="userId"/>
+        <result property="shipId" column="shipId"/>
         <result property="shipNo" column="shipNo"/>
         <result property="name" column="name"/>
         <result property="mobile" column="mobile"/>
@@ -19,29 +20,39 @@
         <result property="checkStatus" column="checkStatus"/>
         <result property="actualTransferPrice" column="actualTransferPrice"/>
         <result property="preSettleAmount" column="preSettleAmount"/>
+        <result property="settleType" column="settleType"/>
+        <result property="preActualLoad" column="preActualLoad"/>
+        <result property="dispatchId" column="dispatchId"/>
     </resultMap>
 
     <sql id="all_column">
-        a.`id`,
-        a.`leftDispatchId`,
-        a.`userId`,
-        c.`shipNo`,
-        c.`name`,
-        c.`mobile`,
-        a.`shipLongitude`,
-        a.`shipLatitude`,
-        a.`preLoad`,
-        a.`preArrivePortTime`,
-        a.`shipEmptyPhoto`,
-        a.`shipReference`,
-        a.`status`,
-        a.`checkStatus`
+        a.`id`
+        ,a.`leftDispatchId`
+        ,a.`dispatchId`
+        ,a.`userId`
+        ,c.`shipId`
+        ,c.`shipNo`
+        ,c.`name`
+        ,c.`mobile`
+        ,a.`shipLongitude`
+        ,a.`shipLatitude`
+        ,a.`preLoad`
+        ,a.`preArrivePortTime`
+        ,a.`shipEmptyPhoto`
+        ,a.`shipReference`
+        ,a.`status`
+        ,a.`checkStatus`
+        ,d.`actualTransferPrice`
+        ,d.`preSettleAmount`
+        ,d.`settleType`
+        ,d.`preLoad` as preActualLoad
     </sql>
 
     <insert id="insertSelective" useGeneratedKeys="true" keyProperty="pojo.id">
         INSERT INTO Reservation
         <trim prefix="(" suffix=")" suffixOverrides=",">
             <if test="pojo.leftDispatchId!=null"> `leftDispatchId`,</if>
+            <if test="pojo.dispatchId!=null"> `dispatchId`,</if>
             <if test="pojo.userId!=null"> `userId`,</if>
             <if test="pojo.shipLongitude!=null"> `shipLongitude`,</if>
             <if test="pojo.shipLatitude!=null"> `shipLatitude`,</if>
@@ -57,6 +68,7 @@
         VALUES
         <trim prefix="(" suffix=")" suffixOverrides=",">
             <if test="pojo.leftDispatchId!=null">#{pojo.leftDispatchId},</if>
+            <if test="pojo.dispatchId!=null">#{pojo.dispatchId},</if>
             <if test="pojo.userId!=null">#{pojo.userId},</if>
             <if test="pojo.shipLongitude!=null">#{pojo.shipLongitude},</if>
             <if test="pojo.shipLatitude!=null">#{pojo.shipLatitude},</if>
@@ -76,6 +88,7 @@
         UPDATE Reservation
         <set>
             <if test="pojo.leftDispatchId!=null">`leftDispatchId` = #{pojo.leftDispatchId},</if>
+            <if test="pojo.dispatchId!=null">`dispatchId` = #{pojo.dispatchId},</if>
             <if test="pojo.userId!=null">`userId` = #{pojo.userId},</if>
             <if test="pojo.shipLongitude!=null">`shipLongitude` = #{pojo.shipLongitude},</if>
             <if test="pojo.shipLatitude!=null">`shipLatitude` = #{pojo.shipLatitude},</if>
@@ -98,6 +111,16 @@
     </update>
 
     <select id="getById" parameterType="java.lang.Long" resultMap="AllColumnMap">
+        SELECT <include refid="all_column"/>
+        FROM `Reservation` a
+        LEFT JOIN `AppUser` b ON b.id = a.userId
+        LEFT JOIN `Ship` c ON c.id = b.shipInfoId
+        left join `DispatchInfo` d on d.id = a.dispatchId
+        WHERE a.`id` = #{id} AND a.`isDeleted` = 0
+    </select>
+
+
+    <select id="getAppById" parameterType="java.lang.Long" resultMap="AllColumnMap">
         SELECT <include refid="all_column"/>
         FROM `Reservation` a
         LEFT JOIN `AppUser` b ON b.id = a.userId
@@ -127,6 +150,7 @@
         from `Reservation` a
         left join `AppUser` b on b.id = a.userId
         left join `Ship` c on c.id = b.shipInfoId
+        left join `DispatchInfo` d on d.id = a.dispatchId
         <include refid="pageQueryWhereCommon"/>
         and c.shipFlag = 3
         order by `id` desc
@@ -167,7 +191,7 @@
 
     <select id="queryMyOrderInfo" resultType="Map" parameterType="Map">
         SELECT A1.id, A3.goodsName, A3.loadingTime, A3.dischargeTime, A4.`name` AS startPortName,  A5.`name` AS endPortName, A2.specialTip,
-            CASE WHEN A1.`status` = 1 THEN '已预约' WHEN A1.`status` = 2 THEN '已取消' ELSE '其它' END statusName
+            CASE WHEN A1.`status` = 1 THEN '已预约' WHEN A1.`status` = 2 THEN '已取消' ELSE '其它' END statusName, A2.dispatchWeight
         FROM Reservation A1
         INNER JOIN LeftDispatchInfo A2 ON A1.leftDispatchId=A2.id
         INNER JOIN CustomerTaskFlow A3 ON A3.id=A2.customerTaskFlowId
