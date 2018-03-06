@@ -26,7 +26,7 @@ public class BaseShip extends BaseModelAndDO {
     private Integer levelBWeight;//B级吨位
     private Integer levelCWeight;//C级吨位
     private String buildDate;//建成日期
-    private Long customerId;//船舶所属单位
+    private String customerId;//船舶所属单位
     private String checkRegisterNo;//船检登记号
     private String checkNo;//船检编号
     private String shipID;//船舶识别码
@@ -293,11 +293,11 @@ public class BaseShip extends BaseModelAndDO {
         this.buildDate = buildDate;
     }
 
-    public Long getCustomerId() {
+    public String getCustomerId() {
         return customerId;
     }
 
-    public void setCustomerId(Long customerId) {
+    public void setCustomerId(String customerId) {
         this.customerId = customerId;
     }
 
