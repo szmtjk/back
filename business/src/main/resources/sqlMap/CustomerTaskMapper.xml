@@ -78,7 +78,7 @@
         SELECT A1.*, A2.contractNo, A2.`name`
         FROM CustomerTask A1
         LEFT JOIN Contract A2 ON A1.contractId=A2.id
-        WHERE `A1.id` = #{id} and `A1.isDeleted` = 0
+        WHERE A1.`id` = #{id} and A1.`isDeleted` = 0
         LIMIT 1
     </select>
 
