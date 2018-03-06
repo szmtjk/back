@@ -54,10 +54,17 @@ public class AuthenticationFilter implements Filter {
 		String requestURI = httpRequest.getRequestURI();
 		String ctx = httpRequest.getContextPath();
 		String requestPath = requestURI.replace(ctx,"");
+		System.out.println("-getList--------------------------------------------------" + requestPath);
+		System.out.println("-getList--------------------------------------------------" + requestPath.startsWith("/port/getList"));
+		System.out.println("-token--------------------------------------------------" + httpRequest.getHeader("token"));
+		System.out.println("-getParameter--------------------------------------------------" +  httpRequest.getParameter("token"));
 		if ((requestPath.startsWith("/dangerZoneSpeed/getList")
 				|| requestPath.startsWith("/port/getList")
+				|| requestPath.startsWith("/waterLevel/getList")
 				|| requestPath.startsWith("/dangerZone/getList")) && httpRequest.getHeader("token") == null)
 		{
+
+			System.out.println("---------------------------------------------------");
 			chain.doFilter(request,response);
 		}
 		else if(!requestPath.startsWith("/signin") && !requestPath.startsWith("/test")){
