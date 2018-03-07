@@ -256,6 +256,20 @@
         </choose>
     </sql>
 
+    <update id="updateCustomerTaskStatus4Sailing">
+        update CustomerTaskFlow aa
+        inner join (SELECT customerTaskFlowId as id, min(status) as minStatus, max(status) as maxStatus
+                    from DispatchInfo
+                    group by customerTaskFlowId
+                    ) bb on bb.id=aa.id
+        set taskStatus=(case
+                            when maxStatus &lt;=3 then 3
+                            when maxStatus &lt;=5 then 4
+                            when maxStatus == 6 and minStatus == 6 then 5
+                            else maxStatus
+                        end)
+        where aa.id = #{customerTaskFlowId} and aa.taskStatus &gt; 2
+    </update>
 
     <resultMap id="mRetComboxMap" type="com.xingyi.logistic.business.model.Combox">
         <result property="id" column="id"/>
@@ -274,4 +288,5 @@
         ORDER BY A1.created DESC
         LIMIT 1
     </select>
+
 </mapper>

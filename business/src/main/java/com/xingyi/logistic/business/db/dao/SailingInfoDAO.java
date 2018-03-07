@@ -28,4 +28,5 @@ public interface SailingInfoDAO extends BaseDAO<SailingInfoDO, SailingInfoDBQuer
      * @return
      */
     List<Map<String, Object>> queryUnDealDispatchShipInfo(Map<String, String> map);
+
 }

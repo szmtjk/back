@@ -12,6 +12,9 @@ import com.xingyi.logistic.business.service.base.ModelConverter;
 import com.xingyi.logistic.business.service.base.QueryConditionConverter;
 import com.xingyi.logistic.business.service.converter.SailingInfoConverter;
 import com.xingyi.logistic.business.service.converter.SailingInfoQueryConverter;
+import com.xingyi.logistic.common.bean.JsonRet;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -24,6 +27,8 @@ import java.util.Map;
 @Service
 public class SailingInfoImpl extends BaseCRUDService<SailingInfoDO, SailingInfo, SailingInfoDBQuery, SailingInfoQuery> implements SailingInfoService {
 
+    private static final Logger LOG = LoggerFactory.getLogger(SailingInfoImpl.class);
+
     @Autowired
     private SailingInfoDAO sailingInfoDAO;
 
@@ -32,6 +37,21 @@ public class SailingInfoImpl extends BaseCRUDService<SailingInfoDO, SailingInfo,
 
     @Autowired
     private SailingInfoQueryConverter sailingInfoQueryConverter;
+
+    @Autowired
+    private TaskStatusService taskStatusService;
+
+    @Override
+    protected boolean isBizOperationAfterAddPassed(JsonRet<?> ret, SailingInfo sailingInfo, SailingInfoDO dataObj) {
+        taskStatusService.updateDispatchStatus(sailingInfo.getOrderId(), sailingInfo.getStatus());
+        return true;
+    }
+
+    @Override
+    protected boolean isBizOperationAfterModifyPassed(JsonRet<?> ret, SailingInfo sailingInfo, SailingInfoDO dataObj) {
+        taskStatusService.updateDispatchStatus(sailingInfo.getOrderId(), sailingInfo.getStatus());
+        return true;
+    }
 
     /**
      * 加载调度的船

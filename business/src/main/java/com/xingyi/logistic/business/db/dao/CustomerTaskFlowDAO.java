@@ -24,4 +24,6 @@ public interface CustomerTaskFlowDAO extends BaseDAO<CustomerTaskFlowDO, Custome
      * @return
      */
     List<Combox> queryUnitPriceInfo(@Param("pojo")Map<String, String> map);
+
+    int updateCustomerTaskStatus4Sailing(@Param("customerTaskFlowId") long customerTaskFlowId);
 }

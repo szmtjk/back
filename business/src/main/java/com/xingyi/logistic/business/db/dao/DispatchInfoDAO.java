@@ -20,5 +20,8 @@ public interface DispatchInfoDAO extends BaseDAO<DispatchInfoDO, DispatchInfoDBQ
 
     List<CustomerTaskFlow4DispatchDO> getCustomerTaskFlow4DispatchList(@Param("pojo")CustomerTaskFlow4DispatchDBQuery pojo);
 
-    int updateCustomerTaskStatus(@Param("customerTaskFlowId") long customerTaskFlowId);
+    int updateCustomerTaskStatus4Dispatch(@Param("customerTaskFlowId") long customerTaskFlowId);
+
+    int updateDispatchInfoStatus(@Param("dispatchInfoId") long dispatchInfoId, @Param("status") int status);
+
 }

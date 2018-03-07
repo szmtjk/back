@@ -189,9 +189,6 @@
         AND A1.`status` = 0
     </select>
 
-
-
-
     <select id="queryByPage" resultMap="AllColumnMap" parameterType="Map">
         SELECT A1.*, A2.shipNo, A4.goodsName, A6.fullName AS customerName
         FROM SailingInfo A1

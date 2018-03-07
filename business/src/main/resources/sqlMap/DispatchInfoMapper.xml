@@ -130,7 +130,13 @@
         LIMIT 1
     </update>
 
-    <update id="updateCustomerTaskStatus">
+    <update id="updateDispatchInfoStatus">
+        update DispatchInfo
+        set status = #{status}
+        where id = #{dispatchInfoId} and status &lt; #{status}
+    </update>
+
+    <update id="updateCustomerTaskStatus4Dispatch">
         update CustomerTaskFlow aa
         inner join (SELECT customerTaskFlowId as id, sum(preLoad) as preLoad
                     from DispatchInfo
