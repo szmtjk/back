@@ -80,7 +80,6 @@
     <update id="del" parameterType="java.lang.Long">
         UPDATE WaterLevel
         SET `isDeleted` = 1 ,
-        <if test="pojo.updater!=null">`updater` = #{pojo.updater},</if>
         `updated` = UNIX_TIMESTAMP(now())
         WHERE `id` = #{id}
     </update>
