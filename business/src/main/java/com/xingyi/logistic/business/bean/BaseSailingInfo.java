@@ -28,6 +28,8 @@ public class BaseSailingInfo extends BaseModelAndDO {
     private String shipNo;
     private String goodsName;
     private String customerName;
+    private String orderNo;
+
     public Long getDepartPortTime() {
         return departPortTime;
     }
@@ -158,6 +160,13 @@ public class BaseSailingInfo extends BaseModelAndDO {
 
     public void setCustomerName(String customerName) {
         this.customerName = customerName;
+    }
+
+    public String getOrderNo() {
+        return orderNo;
+    }
+    public void setOrderNo(String orderNo) {
+        this.orderNo = orderNo;
     }
 
     public void setDescription(String description) {
