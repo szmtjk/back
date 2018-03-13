@@ -100,7 +100,7 @@
             <if test="pojo.selfPick!=null"> `selfPick`,</if>
             <if test="pojo.selfBuckle!=null"> `selfBuckle`,</if>
             <if test="pojo.sailingArea!=null"> `sailingArea`,</if>
-            <if test="pojo.shipSuggestUnitPrice!=null"> `shipSuggestUnitPrice`,</if>
+            <if test="pojo.shipSuggestUnitPrice!=null and pojo.shipSuggestUnitPrice!=''"> `shipSuggestUnitPrice`,</if>
             <if test="pojo.sailingFlag!=null"> `sailingFlag`,</if>
             <if test="pojo.status!=null"> `status`,</if>
             <if test="pojo.taskStatus!=null"> `taskStatus`,</if>
@@ -134,7 +134,7 @@
             <if test="pojo.selfPick!=null">#{pojo.selfPick},</if>
             <if test="pojo.selfBuckle!=null">#{pojo.selfBuckle},</if>
             <if test="pojo.sailingArea!=null">#{pojo.sailingArea},</if>
-            <if test="pojo.shipSuggestUnitPrice!=null">#{pojo.shipSuggestUnitPrice},</if>
+            <if test="pojo.shipSuggestUnitPrice!=null and pojo.shipSuggestUnitPrice!=''">#{pojo.shipSuggestUnitPrice},</if>
             <if test="pojo.sailingFlag!=null">#{pojo.sailingFlag},</if>
             <if test="pojo.status!=null">#{pojo.status},</if>
             <if test="pojo.taskStatus!=null">#{pojo.taskStatus},</if>
@@ -172,7 +172,7 @@
             <if test="pojo.selfPick!=null">`selfPick` = #{pojo.selfPick},</if>
             <if test="pojo.selfBuckle!=null">`selfBuckle` = #{pojo.selfBuckle},</if>
             <if test="pojo.sailingArea!=null">`sailingArea` = #{pojo.sailingArea},</if>
-            <if test="pojo.shipSuggestUnitPrice!=null">`shipSuggestUnitPrice` = #{pojo.shipSuggestUnitPrice},</if>
+            <if test="pojo.shipSuggestUnitPrice!=null  and pojo.shipSuggestUnitPrice!=''">`shipSuggestUnitPrice` = #{pojo.shipSuggestUnitPrice},</if>
             <if test="pojo.sailingFlag!=null">`sailingFlag` = #{pojo.sailingFlag},</if>
             <if test="pojo.status!=null">`status` = #{pojo.status},</if>
             <if test="pojo.taskStatus!=null">`taskStatus` = #{pojo.taskStatus},</if>

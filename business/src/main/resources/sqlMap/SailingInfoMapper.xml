@@ -24,6 +24,7 @@
         <result property="shipNo" column="shipNo"/>
         <result property="goodsName" column="goodsName"/>
         <result property="customerName" column="customerName"/>
+        <result property="orderNo" column="orderNo"/>
     </resultMap>
 
     <sql id="all_column">
@@ -48,13 +49,14 @@
         , '' shipNo
         , '' goodsName
         , '' customerName
+        , '' orderNo
     </sql>
 
     <insert id="insertSelective" useGeneratedKeys="true" keyProperty="pojo.id">
         INSERT INTO SailingInfo
         <trim prefix="(" suffix=")" suffixOverrides=",">
             <if test="pojo.shipId!=null"> `shipId`,</if>
-            <if test="pojo.orderId!=null"> `orderId`,</if>
+            <if test="pojo.orderId  !=null"> `orderId`,</if>
             <if test="pojo.status!=null"> `status`,</if>
             <if test="pojo.arriveSPortTime!=null"> `arriveSPortTime`,</if>
             <if test="pojo.loadTime!=null"> `loadTime`,</if>
@@ -190,7 +192,7 @@
     </select>
 
     <select id="queryByPage" resultMap="AllColumnMap" parameterType="Map">
-        SELECT A1.*, A2.shipNo, A4.goodsName, A6.fullName AS customerName
+        SELECT A1.*, A2.shipNo,A4.goodsName, A6.fullName AS customerName, A3.orderNo
         FROM SailingInfo A1
         LEFT JOIN Ship A2 ON A1.shipId=A2.id
         LEFT JOIN DispatchInfo A3 ON A3.id=A1.orderId
