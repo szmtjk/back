@@ -19,6 +19,7 @@ public class BaseDispatchInfo extends BaseModelAndDO {
     private Integer settleType;
     private Integer status;
     private Long leftDispatchId;
+    private Integer oil;
 
 
     public Long getCustomerTaskFlowId() {
@@ -131,5 +132,13 @@ public class BaseDispatchInfo extends BaseModelAndDO {
 
     public void setLeftDispatchId(Long leftDispatchId) {
         this.leftDispatchId = leftDispatchId;
+    }
+
+    public Integer getOil() {
+        return oil;
+    }
+
+    public void setOil(Integer oil) {
+        this.oil = oil;
     }
 }
