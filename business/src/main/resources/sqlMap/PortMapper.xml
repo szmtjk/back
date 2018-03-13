@@ -112,7 +112,7 @@
         FROM  `Port`
         where `isDeleted` = 0
         <if test="pojo.id != null"> AND `id` != #{pojo.id} </if>
-        <if test="pojo.name != null"> AND `name` = #{pojo.name} </if>
+        <if test="pojo.portNo != null"> AND `portNo` = #{pojo.portNo} </if>
         limit 1
     </select>
 
