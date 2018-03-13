@@ -4,6 +4,7 @@
 <mapper namespace="com.xingyi.logistic.business.db.dao.CustomerTaskDAO">
     <resultMap id="AllColumnMap" type="com.xingyi.logistic.business.db.entity.CustomerTaskDO">
         <result property="id" column="id"/>
+        <result property="taskNo" column="taskNo"/>
         <result property="customerId" column="customerId"/>
         <result property="contractId" column="contractId"/>
         <result property="contractNo" column="contractNo"/>
@@ -17,6 +18,7 @@
 
     <sql id="all_column">
         `id`
+        ,`taskNo`
         ,`customerId`
         ,`contractId`
         ,`totalLoad`
@@ -38,6 +40,7 @@
             <if test="pojo.contractId!=null"> `contractId`,</if>
             <if test="pojo.totalLoad!=null"> `totalLoad`,</if>
             <if test="pojo.description!=null"> `description`,</if>
+            `taskNo`,
             `created`,
             `updated`
         </trim>
@@ -47,6 +50,7 @@
             <if test="pojo.contractId!=null">#{pojo.contractId},</if>
             <if test="pojo.totalLoad!=null">#{pojo.totalLoad},</if>
             <if test="pojo.description!=null">#{pojo.description},</if>
+            CONCAT('CT', UNIX_TIMESTAMP(now())),
             UNIX_TIMESTAMP(now()),
             UNIX_TIMESTAMP(now())
         </trim>
@@ -113,7 +117,11 @@
         where A1.`isDeleted` = 0
         <if test="pojo.id != null"> AND A1.`id` = #{pojo.id} </if>
         <if test="pojo.key != null">
-            AND (A2.`contractNo` like concat('%', #{pojo.key}, '%') OR  A2.`name` like concat('%', #{pojo.key}, '%'))
+            AND (
+                    A1.`taskNo` like concat('%', #{pojo.key}, '%')
+                OR  A2.`contractNo` like concat('%', #{pojo.key}, '%')
+                OR  A2.`name` like concat('%', #{pojo.key}, '%')
+                )
         </if>
     </sql>
 

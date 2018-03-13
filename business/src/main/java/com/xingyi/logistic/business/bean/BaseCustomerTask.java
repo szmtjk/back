@@ -16,6 +16,7 @@ public class BaseCustomerTask extends BaseModelAndDO {
     private String description;
     private String contractName;
     private String contractNo;
+    private String taskNo;
 
     public Long getCustomerId() {
         return customerId;
@@ -63,5 +64,13 @@ public class BaseCustomerTask extends BaseModelAndDO {
 
     public void setContractNo(String contractNo) {
         this.contractNo = contractNo;
+    }
+
+    public String getTaskNo() {
+        return taskNo;
+    }
+
+    public void setTaskNo(String taskNo) {
+        this.taskNo = taskNo;
     }
 }
