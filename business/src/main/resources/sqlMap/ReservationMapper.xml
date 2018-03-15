@@ -6,10 +6,6 @@
         <result property="id" column="id"/>
         <result property="leftDispatchId" column="leftDispatchId"/>
         <result property="userId" column="userId"/>
-        <result property="shipId" column="shipId"/>
-        <result property="shipNo" column="shipNo"/>
-        <result property="name" column="name"/>
-        <result property="mobile" column="mobile"/>
         <result property="shipLongitude" column="shipLongitude"/>
         <result property="shipLatitude" column="shipLatitude"/>
         <result property="preLoad" column="preLoad"/>
@@ -18,11 +14,14 @@
         <result property="shipReference" column="shipReference"/>
         <result property="status" column="status"/>
         <result property="checkStatus" column="checkStatus"/>
+        <result property="dispatchId" column="dispatchId"/>
+        <result property="isDeleted" column="isDeleted"/>
+        <result property="creator" column="creator"/>
+        <result property="created" column="created"/>
+        <result property="updater" column="updater"/>
+        <result property="updated" column="updated"/>
         <result property="actualTransferPrice" column="actualTransferPrice"/>
         <result property="preSettleAmount" column="preSettleAmount"/>
-        <result property="settleType" column="settleType"/>
-        <result property="preActualLoad" column="preActualLoad"/>
-        <result property="dispatchId" column="dispatchId"/>
     </resultMap>
 
     <sql id="all_column">
@@ -82,7 +81,8 @@
             <if test="pojo.checkStatus!=null"> `checkStatus`,</if>
             <if test="pojo.actualTransferPrice!=null"> `actualTransferPrice`,</if>
             <if test="pojo.preSettleAmount!=null"> `preSettleAmount`,</if>
-            `status`
+            `status`,
+            `isDeleted`
         </trim>
         VALUES
         <trim prefix="(" suffix=")" suffixOverrides=",">
@@ -98,7 +98,8 @@
             <if test="pojo.checkStatus!=null">#{pojo.checkStatus},</if>
             <if test="pojo.actualTransferPrice!=null">#{pojo.actualTransferPrice},</if>
             <if test="pojo.preSettleAmount!=null">#{pojo.preSettleAmount},</if>
-            1
+            1,
+            0
         </trim>
     </insert>
 
