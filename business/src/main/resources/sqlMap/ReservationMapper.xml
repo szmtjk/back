@@ -48,6 +48,25 @@
         ,d.`preLoad` as preActualLoad
     </sql>
 
+    <sql id="all_columnToApp">
+        a.`id`
+        ,a.`leftDispatchId`
+        ,a.`dispatchId`
+        ,a.`userId`
+        ,c.`shipId`
+        ,c.`shipNo`
+        ,c.`name`
+        ,c.`mobile`
+        ,a.`shipLongitude`
+        ,a.`shipLatitude`
+        ,a.`preLoad`
+        ,a.`preArrivePortTime`
+        ,a.`shipEmptyPhoto`
+        ,a.`shipReference`
+        ,a.`status`
+        ,a.`checkStatus`
+    </sql>
+
     <insert id="insertSelective" useGeneratedKeys="true" keyProperty="pojo.id">
         INSERT INTO Reservation
         <trim prefix="(" suffix=")" suffixOverrides=",">
@@ -121,7 +140,7 @@
 
 
     <select id="getAppById" parameterType="java.lang.Long" resultMap="AllColumnMap">
-        SELECT <include refid="all_column"/>
+        SELECT <include refid="all_columnToApp"/>
         FROM `Reservation` a
         LEFT JOIN `AppUser` b ON b.id = a.userId
         LEFT JOIN `Ship` c ON c.id = b.shipInfoId
