@@ -17,6 +17,15 @@ public class BaseCustomerTask extends BaseModelAndDO {
     private String contractName;
     private String contractNo;
     private String taskNo;
+    private Integer selfBuckle;//是否扣网片 1 是 2否
+
+    public Integer getSelfBuckle() {
+        return selfBuckle;
+    }
+
+    public void setSelfBuckle(Integer selfBuckle) {
+        this.selfBuckle = selfBuckle;
+    }
 
     public Long getCustomerId() {
         return customerId;

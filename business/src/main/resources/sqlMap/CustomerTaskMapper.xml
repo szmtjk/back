@@ -8,7 +8,8 @@
         <result property="customerId" column="customerId"/>
         <result property="contractId" column="contractId"/>
         <result property="contractNo" column="contractNo"/>
-        <result property="contractName" column="name"/>
+        <result property="contractName" column="contractName"/>
+        <result property="selfBuckle" column="selfBuckle"/>
         <result property="totalLoad" column="totalLoad"/>
         <result property="description" column="description"/>
         <result property="creator" column="creator"/>
@@ -21,6 +22,7 @@
         ,`taskNo`
         ,`customerId`
         ,`contractId`
+        ,`selfBuckle`
         ,`totalLoad`
         ,`description`
         ,`creator`
@@ -38,6 +40,7 @@
         <trim prefix="(" suffix=")" suffixOverrides=",">
             <if test="pojo.customerId!=null"> `customerId`,</if>
             <if test="pojo.contractId!=null"> `contractId`,</if>
+            <if test="pojo.selfBuckle!=null"> `selfBuckle`,</if>
             <if test="pojo.totalLoad!=null"> `totalLoad`,</if>
             <if test="pojo.description!=null"> `description`,</if>
             `taskNo`,
@@ -48,6 +51,7 @@
         <trim prefix="(" suffix=")" suffixOverrides=",">
             <if test="pojo.customerId!=null">#{pojo.customerId},</if>
             <if test="pojo.contractId!=null">#{pojo.contractId},</if>
+            <if test="pojo.selfBuckle!=null">#{pojo.selfBuckle},</if>
             <if test="pojo.totalLoad!=null">#{pojo.totalLoad},</if>
             <if test="pojo.description!=null">#{pojo.description},</if>
             CONCAT('CT', UNIX_TIMESTAMP(now())),
@@ -62,6 +66,7 @@
         <set>
             <if test="pojo.customerId!=null">`customerId` = #{pojo.customerId},</if>
             <if test="pojo.contractId!=null">`contractId` = #{pojo.contractId},</if>
+            <if test="pojo.selfBuckle!=null">`selfBuckle` = #{pojo.selfBuckle},</if>
             <if test="pojo.totalLoad!=null">`totalLoad` = #{pojo.totalLoad},</if>
             <if test="pojo.description!=null">`description` = #{pojo.description},</if>
             `updated` = UNIX_TIMESTAMP(now())
