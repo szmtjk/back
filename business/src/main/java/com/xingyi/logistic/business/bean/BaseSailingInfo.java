@@ -26,12 +26,21 @@ public class BaseSailingInfo extends BaseModelAndDO {
     private Long departPortTime;//离港日期
     private Long startchargeTime;//开始卸货时间
     private String description;//备注
+    private String bucklePrice;//扣网片金额
     private String shipNo;
     private String goodsName;
     private String customerName;
     private String orderNo;
     public Long getDepartPortTime() {
         return departPortTime;
+    }
+
+    public String getBucklePrice() {
+        return bucklePrice;
+    }
+
+    public void setBucklePrice(String bucklePrice) {
+        this.bucklePrice = bucklePrice;
     }
 
     public Long getStartchargeTime() {

@@ -18,6 +18,7 @@
         <result property="dischargeDelayFee" column="dischargeDelayFee"/>
         <result property="allowance" column="allowance"/>
         <result property="departPortTime" column="departPortTime"/>
+        <result property="bucklePrice" column="bucklePrice"/>
         <result property="description" column="description"/>
         <result property="creator" column="creator"/>
         <result property="created" column="created"/>
@@ -44,6 +45,7 @@
         ,`dischargeDelayFee`
         ,`allowance`
         ,`departPortTime`
+        ,`bucklePrice`
         ,`description`
         ,`creator`
         ,`created`
@@ -71,6 +73,7 @@
             <if test="pojo.dischargeDelayFee!=null"> `dischargeDelayFee`,</if>
             <if test="pojo.allowance!=null"> `allowance`,</if>
             <if test="pojo.departPortTime!=null"> `departPortTime`,</if>
+            <if test="pojo.bucklePrice!=null"> `bucklePrice`,</if>
             <if test="pojo.description!=null"> `description`,</if>
             `created`,
             `updated`
@@ -91,6 +94,7 @@
             <if test="pojo.dischargeDelayFee!=null">#{pojo.dischargeDelayFee},</if>
             <if test="pojo.allowance!=null">#{pojo.allowance},</if>
             <if test="pojo.departPortTime!=null">#{pojo.departPortTime},</if>
+            <if test="pojo.bucklePrice!=null">#{pojo.bucklePrice},</if>
             <if test="pojo.description!=null">#{pojo.description},</if>
             UNIX_TIMESTAMP(now()),
             UNIX_TIMESTAMP(now())
@@ -115,6 +119,7 @@
             <if test="pojo.dischargeDelayFee!=null">`dischargeDelayFee` =#{pojo.dischargeDelayFee},</if>
             <if test="pojo.allowance!=null">`allowance` =#{pojo.allowance},</if>
             <if test="pojo.departPortTime!=null">`departPortTime` =#{pojo.departPortTime},</if>
+            <if test="pojo.bucklePrice!=null">`bucklePrice` =#{pojo.bucklePrice},</if>
             <if test="pojo.description!=null">`description` = #{pojo.description},</if>
             `updated` = UNIX_TIMESTAMP(now())
         </set>
