@@ -60,6 +60,7 @@ public class AuthenticationFilter implements Filter {
 		System.out.println("-getParameter--------------------------------------------------" +  httpRequest.getParameter("token"));
 		if ((requestPath.startsWith("/dangerZoneSpeed/getList")
 				|| requestPath.startsWith("/port/getList")
+				|| requestPath.startsWith("/gps/loadReal")
 				|| requestPath.startsWith("/waterLevel/getList")
 				|| requestPath.startsWith("/dangerZone/getList")) && httpRequest.getHeader("token") == null)
 		{

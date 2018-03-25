@@ -88,6 +88,12 @@ public class GpsRealController extends BaseCRUDController<ShipCurrentGps, ShipCu
         return shipCurrentGpsService.queryShipCurrentGpsInfo(shipCurrentGpsQuery);
     }
 
+    @RequestMapping("/loadReal")
+    public List<ShipCurrentGps> loadReal(@JsonParam ShipCurrentGpsQuery shipCurrentGpsQuery)
+    {
+        return shipCurrentGpsService.queryShipCurrentGpsInfo(shipCurrentGpsQuery);
+    }
+
 
     /**
      * 加载行次任务表数据
