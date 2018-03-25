@@ -12,12 +12,30 @@ public class BaseDangerZoneSpeed extends BaseModelAndDO {
     @NotNullEmpty
     private String name;
     private String coordinate;//经纬度集合
-    private Float minSpeed;//最小速度
+    private Float minSpeed;//
+    private Integer selfalarmMin;//是否终端报警1是，2否
     private Float maxSpeed;//最大速度
+    private Integer selfalarmMax;//是否终端报警1是，2否
     @AllowedNumber(values = {1, 2})
     private Integer status; //状态  1：启用 2：禁用
     private String description;
     private String msgTemplate;
+
+    public Integer getSelfalarmMin() {
+        return selfalarmMin;
+    }
+
+    public void setSelfalarmMin(Integer selfalarmMin) {
+        this.selfalarmMin = selfalarmMin;
+    }
+
+    public Integer getSelfalarmMax() {
+        return selfalarmMax;
+    }
+
+    public void setSelfalarmMax(Integer selfalarmMax) {
+        this.selfalarmMax = selfalarmMax;
+    }
 
     public Float getMinSpeed() {
         return minSpeed;

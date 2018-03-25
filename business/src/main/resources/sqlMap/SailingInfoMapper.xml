@@ -13,10 +13,12 @@
         <result property="preArriveEPortTime" column="preArriveEPortTime"/>
         <result property="actualArriveEPortTime" column="actualArriveEPortTime"/>
         <result property="dischargeTime" column="dischargeTime"/>
+        <result property="startchargeTime" column="startchargeTime"/>
         <result property="dischargeWeight" column="dischargeWeight"/>
         <result property="dischargeDelayFee" column="dischargeDelayFee"/>
         <result property="allowance" column="allowance"/>
         <result property="departPortTime" column="departPortTime"/>
+        <result property="bucklePrice" column="bucklePrice"/>
         <result property="description" column="description"/>
         <result property="creator" column="creator"/>
         <result property="created" column="created"/>
@@ -38,10 +40,12 @@
         ,`preArriveEPortTime`
         ,`actualArriveEPortTime`
         ,`dischargeTime`
+        ,`startchargeTime`
         ,`dischargeWeight`
         ,`dischargeDelayFee`
         ,`allowance`
         ,`departPortTime`
+        ,`bucklePrice`
         ,`description`
         ,`creator`
         ,`created`
@@ -64,10 +68,12 @@
             <if test="pojo.preArriveEPortTime!=null"> `preArriveEPortTime`,</if>
             <if test="pojo.actualArriveEPortTime!=null"> `actualArriveEPortTime`,</if>
             <if test="pojo.dischargeTime!=null"> `dischargeTime`,</if>
+            <if test="pojo.startchargeTime!=null"> `startchargeTime`,</if>
             <if test="pojo.dischargeWeight!=null"> `dischargeWeight`,</if>
             <if test="pojo.dischargeDelayFee!=null"> `dischargeDelayFee`,</if>
             <if test="pojo.allowance!=null"> `allowance`,</if>
             <if test="pojo.departPortTime!=null"> `departPortTime`,</if>
+            <if test="pojo.bucklePrice!=null"> `bucklePrice`,</if>
             <if test="pojo.description!=null"> `description`,</if>
             `created`,
             `updated`
@@ -83,10 +89,12 @@
             <if test="pojo.preArriveEPortTime!=null">#{pojo.preArriveEPortTime},</if>
             <if test="pojo.actualArriveEPortTime!=null">#{pojo.actualArriveEPortTime},</if>
             <if test="pojo.dischargeTime!=null">#{pojo.dischargeTime},</if>
+            <if test="pojo.startchargeTime!=null">#{pojo.startchargeTime},</if>
             <if test="pojo.dischargeWeight!=null">#{pojo.dischargeWeight},</if>
             <if test="pojo.dischargeDelayFee!=null">#{pojo.dischargeDelayFee},</if>
             <if test="pojo.allowance!=null">#{pojo.allowance},</if>
             <if test="pojo.departPortTime!=null">#{pojo.departPortTime},</if>
+            <if test="pojo.bucklePrice!=null">#{pojo.bucklePrice},</if>
             <if test="pojo.description!=null">#{pojo.description},</if>
             UNIX_TIMESTAMP(now()),
             UNIX_TIMESTAMP(now())
@@ -106,10 +114,12 @@
             <if test="pojo.preArriveEPortTime!=null">`preArriveEPortTime` =#{pojo.preArriveEPortTime},</if>
             <if test="pojo.actualArriveEPortTime!=null">`actualArriveEPortTime` =#{pojo.actualArriveEPortTime},</if>
             <if test="pojo.dischargeTime!=null">`dischargeTime` =#{pojo.dischargeTime},</if>
+            <if test="pojo.startchargeTime!=null">`startchargeTime` =#{pojo.startchargeTime},</if>
             <if test="pojo.dischargeWeight!=null">`dischargeWeight` =#{pojo.dischargeWeight},</if>
             <if test="pojo.dischargeDelayFee!=null">`dischargeDelayFee` =#{pojo.dischargeDelayFee},</if>
             <if test="pojo.allowance!=null">`allowance` =#{pojo.allowance},</if>
             <if test="pojo.departPortTime!=null">`departPortTime` =#{pojo.departPortTime},</if>
+            <if test="pojo.bucklePrice!=null">`bucklePrice` =#{pojo.bucklePrice},</if>
             <if test="pojo.description!=null">`description` = #{pojo.description},</if>
             `updated` = UNIX_TIMESTAMP(now())
         </set>

@@ -58,6 +58,7 @@
         ,a.`settleType`
         ,a.`status`
         ,a.`leftDispatchId`
+        ,a.`oil`
         ,a.`creator`
         ,a.`created`
         ,a.`updater`
@@ -144,6 +145,7 @@
         update CustomerTaskFlow aa
         inner join (SELECT customerTaskFlowId as id, sum(preLoad) as preLoad
                     from DispatchInfo
+                    where isDeleted=0
                     group by customerTaskFlowId
                    ) bb on bb.id=aa.id
         set taskStatus=(case when aa.totalLoad-bb.preLoad &lt;= 0 then 2 when aa.totalLoad-bb.preLoad=aa.totalLoad then 0 else 1 end)
