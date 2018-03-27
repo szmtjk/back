@@ -21,7 +21,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 
 /**
- * Created by Jadic on 2017/6/16.
+ * Created by Jadic on 2017/6/16.222
  */
 @Configuration
 @ComponentScan("com.xingyi.logistic")
