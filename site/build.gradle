@@ -12,7 +12,9 @@ bootRun {
 springBoot {
     mainClass = 'com.xingyi.logistic.Application'
 }
-
+jar{
+    baseName = 'xyl'
+}
 processResources {
     filter org.apache.tools.ant.filters.ReplaceTokens, tokens: [
             profiles: profiles
