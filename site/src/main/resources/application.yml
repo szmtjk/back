@@ -41,7 +41,8 @@ spring:
     multipart:
       maxFileSize: 10Mb
       maxRequestSize: 100Mb
-
+  pid:
+    file: pid.file
 xyl:
   upload:
     baseDir: /upload
