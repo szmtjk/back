@@ -71,7 +71,7 @@ public class TempDispatchShipServiceImpl extends BaseCRUDService<TempDispatchShi
             if (dataObject != null) {
                 return JsonRet.getSuccessRet(getModelConverter().toModel(dataObject));
             } else {
-                return JsonRet.getErrRet(ErrCode.GET_ERR);
+                return JsonRet.getErrRet(ErrCode.FIRST_INPUT_PRELOAD);
             }
         } catch (Exception e) {
             return JsonRet.getErrRet(ErrCode.GET_ERR);

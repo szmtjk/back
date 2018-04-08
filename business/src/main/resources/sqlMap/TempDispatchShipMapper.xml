@@ -204,9 +204,10 @@
     <select  id="getAppById" parameterType="java.lang.Long" resultMap="tempDispatchShipMap">
 
         SELECT A1.preLoad
-        FROM TempDispatchShip A1
-        INNER JOIN AppUser A2 ON A1.id=A2.id
-        WHERE A2.id = #{id}
+        FROM Reservation A1
+        INNER JOIN AppUser A2 ON A1.userId=A2.id
+        WHERE A2.id = #{id} order by A1.created desc
+        limit 1
     </select>
 
 </mapper>

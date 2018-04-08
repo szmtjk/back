@@ -238,7 +238,7 @@ public abstract class BaseCRUDService<DO extends BaseModelAndDO, Model extends B
 
     protected abstract QueryConditionConverter<QueryPage, DBQueryPage> getConditionConverter();
 
-    private UserProfile getCurrentUser() {
+    protected UserProfile getCurrentUser() {
         try {
             return SessionUtil.getProfile();
         } catch (Exception e) {

@@ -170,10 +170,10 @@ public class ReservationServiceImpl extends BaseCRUDService<ReservationDO,Reserv
             }
 
             ReservationDO dataObject = reservationDAO.getAppById(mAppUser.getId());
-            if (dataObject != null) {
+            if (dataObject == null) {
                 return JsonRet.getSuccessRet(getModelConverter().toModel(dataObject));
             } else {
-                return JsonRet.getErrRet(ErrCode.GET_ERR);
+                return JsonRet.getErrRet(ErrCode.RESER_DATA_REPEATED);
             }
         } catch (Exception e) {
             return JsonRet.getErrRet(ErrCode.GET_ERR);

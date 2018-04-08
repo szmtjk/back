@@ -145,7 +145,7 @@
         FROM `Reservation` a
         LEFT JOIN `AppUser` b ON b.id = a.userId
         LEFT JOIN `Ship` c ON c.id = b.shipInfoId
-        WHERE a.`userId` = #{id} AND a.`isDeleted` = 0
+        WHERE a.`userId` = #{id} AND a.`isDeleted` = 0 AND a.`checkStatus`=0
     </select>
 
     <select id="getExistCount" resultType="java.lang.Integer" parameterType="Map" >

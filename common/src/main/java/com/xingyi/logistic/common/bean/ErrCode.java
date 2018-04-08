@@ -16,7 +16,8 @@ public enum ErrCode {
     DEL_ERR(20006, "删除错误"),
     GET_ERR(20007, "查询错误"),
     ADD_SUB_ERR(20008, "新增子数据错误"),
-
+    RESER_DATA_REPEATED(20009, "不能多次预约"),
+    FIRST_INPUT_PRELOAD(20010, "首填预报吨位"),
     WEIXIN_AUTHORITY_FORBIDDEN(70000,"用户禁止授权"),
 
     AUTHORITY_SETTING_ERR(89999,"设置角色权限错误"),
