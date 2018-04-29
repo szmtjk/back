@@ -38,7 +38,6 @@ public class AuthenticationFilter implements Filter {
 			return;
 		}
 		response.setCharacterEncoding("UTF-8");
-		response.setContentType("application/json; charset=utf-8");
 
 		//跨域设置
 		HttpServletResponse httpServletResponse = (HttpServletResponse) response;
@@ -59,6 +58,11 @@ public class AuthenticationFilter implements Filter {
 		System.out.println("-token--------------------------------------------------" + httpRequest.getHeader("token"));
 		System.out.println("-getParameter--------------------------------------------------" +  httpRequest.getParameter("token"));
 		if ((requestPath.startsWith("/dangerZoneSpeed/getList")
+				|| requestPath.startsWith("/webjars")
+				|| requestPath.startsWith("/api")
+				|| requestPath.startsWith("/swagger-ui.html")
+				|| requestPath.startsWith("/swagger-resources")
+				|| requestPath.startsWith("/v2/api-docs")
 				|| requestPath.startsWith("/port/getList")
 				|| requestPath.startsWith("/gps/loadReal")
 				|| requestPath.startsWith("/waterLevel/getList")
