@@ -7,6 +7,7 @@ import com.xingyi.logistic.business.service.DangerZoneService;
 import com.xingyi.logistic.common.bean.JsonRet;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
@@ -43,7 +44,7 @@ public class DangerZoneController extends BaseCRUDController<DangerZone, DangerZ
         return super.getList(dangerZoneQuery);
     }
 
-    @RequestMapping("/getPage")
+    @RequestMapping(value = "/getPage", method = RequestMethod.GET)
     public JsonRet<Object> getPage(DangerZoneQuery dangerZoneQuery) {
         return super.getList(dangerZoneQuery);
     }

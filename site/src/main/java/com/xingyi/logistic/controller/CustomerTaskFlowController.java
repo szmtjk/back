@@ -8,6 +8,7 @@ import com.xingyi.logistic.business.service.CustomerTaskFlowService;
 import com.xingyi.logistic.common.bean.JsonRet;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -24,21 +25,20 @@ public class CustomerTaskFlowController extends BaseCRUDController<CustomerTaskF
     @Autowired
     private CustomerTaskFlowService customerTaskFlowService;
 
-    @RequestMapping("/loadWeight")
-    public JsonRet<Long> loadWeight(@RequestParam Map<String, String> map)
-    {
+    @RequestMapping(value = "/loadWeight", method = RequestMethod.GET)
+    public JsonRet<Long> loadWeight(@RequestParam Map<String, String> map) {
         return customerTaskFlowService.queryTotalWeightInfo(map);
     }
 
 
     /**
      * 从运价管理中取（客户、合同、流向、时间）
+     *
      * @param map
      * @return
      */
-    @RequestMapping("/loadUnitPrice")
-    public List<Combox> loadUnitPrice(@RequestParam Map<String, String> map)
-    {
+    @RequestMapping(value = "/loadUnitPrice", method = RequestMethod.GET)
+    public List<Combox> loadUnitPrice(@RequestParam Map<String, String> map) {
         return customerTaskFlowService.queryUnitPriceInfo(map);
     }
 

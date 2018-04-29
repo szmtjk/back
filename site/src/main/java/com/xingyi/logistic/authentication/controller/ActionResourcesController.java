@@ -10,6 +10,7 @@ import com.xingyi.logistic.controller.BaseCRUDController;
 import org.apache.commons.collections.map.HashedMap;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.ArrayList;
@@ -18,7 +19,7 @@ import java.util.Map;
 
 @RequestMapping("/action")
 @RestController
-public class ActionResourcesController extends BaseCRUDController<ActionResources,ActionResourcesQuery> {
+public class ActionResourcesController extends BaseCRUDController<ActionResources, ActionResourcesQuery> {
     @Autowired
     private ActionResourcesService actionResourcesService;
 
@@ -27,17 +28,15 @@ public class ActionResourcesController extends BaseCRUDController<ActionResource
         return this.actionResourcesService;
     }
 
-    @RequestMapping("/getTree")
+    @RequestMapping(value = "/getTree", method = RequestMethod.GET)
     public Object getTree(@JsonParam ActionResourcesQuery actionResourcesQuery) {
         JsonRet<Object> ret = super.getList(actionResourcesQuery);
         List<ActionResources> argFlys = null;
 
-        if (ret.isSuccess())
-        {
+        if (ret.isSuccess()) {
             argFlys = (List<ActionResources>) ret.getData();
         }
-        if (argFlys == null )
-        {
+        if (argFlys == null) {
             argFlys = new ArrayList<>();
         }
         ActionResources mActionResources = new ActionResources();
@@ -49,12 +48,12 @@ public class ActionResourcesController extends BaseCRUDController<ActionResource
 
     /**
      * 加载所有权限
+     *
      * @return
      */
-    @RequestMapping("/loadResources")
-    public List<Map<String, Object >> queryTreeResourcesInfo()
-    {
-        List<Map<String, Object >> mArgFlys = actionResourcesService.queryTreeResourcesInfo();
+    @RequestMapping(value = "/loadResources", method = RequestMethod.GET)
+    public List<Map<String, Object>> queryTreeResourcesInfo() {
+        List<Map<String, Object>> mArgFlys = actionResourcesService.queryTreeResourcesInfo();
         Map<String, Object> mRootMap = new HashedMap();
         mRootMap.put("id", 0);
         mRootMap.put("name", "所有权限");

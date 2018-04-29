@@ -8,6 +8,7 @@ import com.xingyi.logistic.common.bean.JsonRet;
 import com.xingyi.logistic.config.JsonParam;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
@@ -20,7 +21,7 @@ public class PortController extends BaseCRUDController<Port, PortQuery> {
     @Autowired
     private PortService portService;
 
-    @RequestMapping("/getPage")
+    @RequestMapping(value = "/getPage", method = RequestMethod.GET)
     public JsonRet<Object> getPage(@JsonParam PortQuery portQuery) {
         return super.getList(portQuery);
     }

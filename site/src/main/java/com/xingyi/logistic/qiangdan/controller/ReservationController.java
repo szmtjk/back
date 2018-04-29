@@ -12,6 +12,7 @@ import com.xingyi.logistic.qiangdan.model.ReservationQuery;
 import com.xingyi.logistic.qiangdan.service.ReservationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -19,12 +20,12 @@ import java.util.Map;
 
 @RestController
 @RequestMapping("/reservation")
-public class ReservationController extends BaseCRUDController<Reservation,ReservationQuery> {
+public class ReservationController extends BaseCRUDController<Reservation, ReservationQuery> {
 
     @Autowired
     private ReservationService reservationService;
 
-    @RequestMapping("/check")
+    @RequestMapping(value = "/check", method = RequestMethod.GET)
     public JsonRet<Boolean> check(@JsonParam ReservationCheckParam reservationCheckParam) {
         return reservationService.check(reservationCheckParam);
     }
@@ -32,13 +33,10 @@ public class ReservationController extends BaseCRUDController<Reservation,Reserv
     @Override
     public JsonRet<Long> add(Reservation reservation) {
         AppUser mAppUser = SessionUtil.getAppUser();
-        if (mAppUser != null)
-        {
+        if (mAppUser != null) {
             reservation.setUserId(mAppUser.getId());
             return super.add(reservation);
-        }
-        else
-        {
+        } else {
             JsonRet<Long> ret = new JsonRet<>();
             ret.setSuccess(false);
             return ret;
@@ -52,7 +50,7 @@ public class ReservationController extends BaseCRUDController<Reservation,Reserv
         return super.modify(reservation);
     }
 
-    @RequestMapping("/getAppById")
+    @RequestMapping(value = "/getAppById", method = RequestMethod.GET)
     public JsonRet<Object> getAppById() {
         return reservationService.getAppById(SessionUtil.getAppUser());
     }
@@ -60,12 +58,12 @@ public class ReservationController extends BaseCRUDController<Reservation,Reserv
 
     /**
      * 获取我的订单
+     *
      * @param map
      * @return
      */
-    @RequestMapping("/getMyOrder")
-    public JsonRet<Object> getMyOrder(@RequestParam Map<String, Object> map)
-    {
+    @RequestMapping(value = "/getMyOrder", method = RequestMethod.GET)
+    public JsonRet<Object> getMyOrder(@RequestParam Map<String, Object> map) {
         return reservationService.queryMyOrderInfo(map);
     }
 

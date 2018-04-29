@@ -74,7 +74,7 @@ public class ShipController extends BaseCRUDController<Ship, ShipQuery> {
      * APP端加载
      * @return
      */
-    @RequestMapping("/getAppById")
+    @RequestMapping(value = "/getAppById", method = RequestMethod.GET)
     public JsonRet<Object> getAppById()
     {
         return shipService.getAppById(SessionUtil.getAppUser());

@@ -14,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.CollectionUtils;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
@@ -33,7 +34,7 @@ public class RolesController extends BaseCRUDController<Roles,RolesQuery> {
         return this.rolesService;
     }
 
-    @RequestMapping("/setResources")
+    @RequestMapping(value = "/setResources", method = RequestMethod.GET)
     public JsonRet<Object> setResources(@RequestBody Roles role){
         if(null == role || null == role.getId()){
             return JsonRet.getErrRet(ErrCode.PARAM_INVALID);

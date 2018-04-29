@@ -13,6 +13,7 @@ import com.xingyi.logistic.config.JsonParam;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
@@ -32,17 +33,17 @@ public class DispatchController extends BaseCRUDController<DispatchInfo, Dispatc
     @Autowired
     private DispatchInfoService dispatchInfoService;
 
-    @RequestMapping("/getCustomerTaskFlowList")
+    @RequestMapping(value = "/getCustomerTaskFlowList", method = RequestMethod.GET)
     public JsonRet<Object> getCustomerTaskFlowList(@JsonParam CustomerTaskFlow4DispatchQuery query) {
         return dispatchInfoService.getCustomerTaskFlows(query);
     }
 
-    @RequestMapping("/getAvailableShips")
+    @RequestMapping(value = "/getAvailableShips", method = RequestMethod.GET)
     public JsonRet<Object> getAvailableShips(@JsonParam GetDispatchShipParam param) {
         return dispatchInfoService.getAvailableShips(param);
     }
 
-    @RequestMapping("/confirmPlan")
+    @RequestMapping(value = "/confirmPlan", method = RequestMethod.GET)
     public JsonRet<Boolean> confirmDispatchInfoPlan(@JsonParam DispatchInfoParam dispatchInfoParam) {
         return dispatchInfoService.confirmDispatchInfoPlan(dispatchInfoParam);
     }

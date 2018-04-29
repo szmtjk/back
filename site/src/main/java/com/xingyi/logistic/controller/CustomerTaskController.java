@@ -8,6 +8,7 @@ import com.xingyi.logistic.business.service.CustomerTaskService;
 import com.xingyi.logistic.config.JsonParam;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -31,19 +32,20 @@ public class CustomerTaskController extends BaseCRUDController<CustomerTask, Cus
 
     /**
      * 加载合同
+     *
      * @return
      */
-    @RequestMapping("/loadCustomer")
-    public List<Combox> loadCustomer(@RequestParam Map<String, Object> map)
-    {
+    @RequestMapping(value = "/loadCustomer", method = RequestMethod.GET)
+    public List<Combox> loadCustomer(@RequestParam Map<String, Object> map) {
         return customerTaskService.queryComboxCustomerInfo(map);
     }
 
     /**
      * 合同id加载客户名称
+     *
      * @return
      */
-    @RequestMapping("/loadContractById")
+    @RequestMapping(value = "/loadContractById", method = RequestMethod.GET)
     public List<Combox> loadContractById(@JsonParam CustomerTaskQuery customerTaskQuery) {
 
         return customerTaskService.loadContractById(customerTaskQuery);
@@ -51,9 +53,10 @@ public class CustomerTaskController extends BaseCRUDController<CustomerTask, Cus
 
     /**
      * 合同id加载合同流向
+     *
      * @return
      */
-    @RequestMapping("/loadContractFlowByContractId")
+    @RequestMapping(value = "/loadContractFlowByContractId", method = RequestMethod.GET)
     public List<Combox> loadContractFlowByContractId(@JsonParam CustomerTaskQuery customerTaskQuery) {
 
         return customerTaskService.loadContractFlowByContractId(customerTaskQuery);

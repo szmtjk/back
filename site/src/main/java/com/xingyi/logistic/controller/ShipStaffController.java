@@ -10,6 +10,7 @@ import com.xingyi.logistic.business.service.ShipStaffService;
 import com.xingyi.logistic.common.bean.JsonRet;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
@@ -51,7 +52,7 @@ public class ShipStaffController extends BaseCRUDController<ShipStaff, ShipStaff
         return shipStaffService;
     }
 
-    @RequestMapping("/judege")
+    @RequestMapping(value = "/judege", method = RequestMethod.GET)
     public JsonRet<Integer> judege(ShipStaff shipStaff) {
         return shipStaffService.judege(shipStaff);
     }

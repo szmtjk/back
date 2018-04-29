@@ -84,7 +84,7 @@ public class UserController extends BaseCRUDController<UserProfile,UserProfileQu
      * 设置用户角色
      * @param user
      */
-    @RequestMapping("/setRoles")
+    @RequestMapping(value = "/setRoles", method = RequestMethod.GET)
     public JsonRet<Object> setRoles(@RequestBody User user){
         Long userId = user.getProfile().getId();
         List<Long> roleIds = new ArrayList<Long>();
@@ -103,7 +103,7 @@ public class UserController extends BaseCRUDController<UserProfile,UserProfileQu
         return JsonRet.getSuccessRet("设置用户角色成功");
     }
 
-    @RequestMapping("/info")
+    @RequestMapping(value = "/info", method = RequestMethod.GET)
     public JsonRet<Object> info(){
     	UserProfile sessionProfile = SessionUtil.getProfile();
 	    System.out.println(">>>>>>>>>>>>>>>>>>>sessionProfile=" + JSON.toJSONString(sessionProfile,SerializerFeature.WriteMapNullValue));

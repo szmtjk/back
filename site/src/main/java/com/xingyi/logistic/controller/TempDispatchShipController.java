@@ -83,7 +83,7 @@ public class TempDispatchShipController extends BaseCRUDController<TempDispatchS
      * APP端加载
      * @return
      */
-    @RequestMapping("/getAppById")
+    @RequestMapping(value = "/getAppById", method = RequestMethod.GET)
     public JsonRet<Object> getAppById()
     {
         return tempDispatchService.getAppById(SessionUtil.getAppUser());

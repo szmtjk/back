@@ -4,6 +4,7 @@ import com.xingyi.logistic.business.model.DispatchPlan;
 import com.xingyi.logistic.mq.SendMessageServer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
@@ -11,16 +12,14 @@ import org.springframework.web.bind.annotation.RestController;
  */
 @RestController
 @RequestMapping("/sendmsg")
-public class SendMessageController
-{
+public class SendMessageController {
 
     @Autowired
     private SendMessageServer sendMessageServer;
 
 
-    @RequestMapping(value = "/se")
-    public String home() throws Exception
-    {
+    @RequestMapping(value = "/se", method = RequestMethod.GET)
+    public String home() throws Exception {
         DispatchPlan mDisp = new DispatchPlan();
         mDisp.setDevicecode("1");
         mDisp.setDispatchplansendid(2);

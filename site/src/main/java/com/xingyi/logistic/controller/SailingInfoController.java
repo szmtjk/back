@@ -6,6 +6,7 @@ import com.xingyi.logistic.business.service.BaseService;
 import com.xingyi.logistic.business.service.SailingInfoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -27,7 +28,7 @@ public class SailingInfoController extends BaseCRUDController<SailingInfo, Saili
      * @param map
      * @return
      */
-    @RequestMapping("/loadDsipatchShip")
+    @RequestMapping(value = "/loadDsipatchShip", method = RequestMethod.GET)
     public List<Map<String, Object >> queryDispatchShipInfo(@RequestParam Map<String, String> map)
     {
         return sailingInfoService.queryDispatchShipInfo(map);
@@ -38,7 +39,7 @@ public class SailingInfoController extends BaseCRUDController<SailingInfo, Saili
      * @param map
      * @return
      */
-    @RequestMapping("/loadUnDealDsipatchShip")
+    @RequestMapping(value = "/loadUnDealDsipatchShip", method = RequestMethod.GET)
     public List<Map<String, Object >> queryUnDealDispatchShipInfo(@RequestParam Map<String, String> map)
     {
         return sailingInfoService.queryUnDealDispatchShipInfo(map);

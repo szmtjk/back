@@ -13,6 +13,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
@@ -32,7 +33,7 @@ public class UploadFileController extends BaseController{
     @Value("${xyl.upload.baseDir}")
     private String baseDir;
 
-    @RequestMapping("/upfile")
+    @RequestMapping(value = "/upfile", method = RequestMethod.POST)
     @ResponseBody
     public JsonRet<Object> upLoad(@RequestParam MultipartFile fileName, HttpServletRequest request) throws Exception {
 
@@ -74,7 +75,7 @@ public class UploadFileController extends BaseController{
     }
 
 
-    @RequestMapping("filedownload")
+    @RequestMapping(value = "filedownload", method = RequestMethod.GET)
     public void down(String fileName, HttpServletResponse response, HttpServletRequest request) throws Exception {
 
         // 设置响应头:内容处理方式 → attachment(附件,有为下载,没有为预览加载) →指定文件名

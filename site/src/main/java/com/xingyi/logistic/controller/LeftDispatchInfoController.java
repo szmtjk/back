@@ -9,6 +9,7 @@ import com.xingyi.logistic.common.bean.JsonRet;
 import com.xingyi.logistic.config.JsonParam;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
@@ -16,7 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
  */
 @RestController
 @RequestMapping("/leftDispatchInfo")
-public class LeftDispatchInfoController extends BaseCRUDController<LeftDispatchInfo,LeftDispatchInfoQuery>{
+public class LeftDispatchInfoController extends BaseCRUDController<LeftDispatchInfo, LeftDispatchInfoQuery> {
 
     @Autowired
     private LeftDispatchInfoService leftDispatchInfoService;
@@ -24,17 +25,17 @@ public class LeftDispatchInfoController extends BaseCRUDController<LeftDispatchI
 
     /**
      * APP端加载
+     *
      * @param condition
      * @return
      */
-    @RequestMapping("/getAppList")
-    public JsonRet<Object> getAppList(@JsonParam LeftDispatchInfoQuery condition)
-    {
+    @RequestMapping(value = "/getAppList", method = RequestMethod.GET)
+    public JsonRet<Object> getAppList(@JsonParam LeftDispatchInfoQuery condition) {
         condition.setAppFlag("app");
         return super.getList(condition);
     }
 
-    @RequestMapping("/getLeftDispatch4Check")
+    @RequestMapping(value = "/getLeftDispatch4Check", method = RequestMethod.GET)
     public JsonRet<Object> getLeftDispatch4Check(@JsonParam LeftDispatch4CheckQuery query) {
         return leftDispatchInfoService.getLeftDispatch4Check(query);
     }

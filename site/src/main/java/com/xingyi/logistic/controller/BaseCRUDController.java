@@ -37,12 +37,12 @@ public abstract class BaseCRUDController<Model extends BaseModelAndDO, Condition
         return getBaseService().del(id);
     }
 
-    @RequestMapping("/getById")
+    @RequestMapping(value = "/getById", method = RequestMethod.GET)
     public JsonRet<Model> getById(@RequestParam Long id) {
         return getBaseService().getById(id);
     }
 
-    @RequestMapping("/getList")
+    @RequestMapping(value = "/getList", method = RequestMethod.GET)
     public JsonRet<Object> getList(@JsonParam Condition condition) {
         if (condition != null && condition.getQueryParamFlag() == QueryType.MINIUI.getCode()) {
             return getMiniUIList(condition);
