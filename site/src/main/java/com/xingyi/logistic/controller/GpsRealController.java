@@ -49,7 +49,7 @@ public class GpsRealController extends BaseCRUDController<ShipCurrentGps, ShipCu
      *
      * @return
      */
-    @RequestMapping(value = "/loadPortAll", method = RequestMethod.GET)
+    @RequestMapping(value = "/loadPortAll", method = RequestMethod.POST)
     public List<Port> loadPortAll() {
         return shipCurrentGpsService.getLoadPortAll();
     }
