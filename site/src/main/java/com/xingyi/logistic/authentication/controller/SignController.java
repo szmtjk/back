@@ -53,7 +53,7 @@ public class SignController extends BaseController {
      * @param passwd
      * @return
      */
-    @RequestMapping(value = "/signin/local", method = RequestMethod.GET)
+    @RequestMapping(value = "/signin/local", method = RequestMethod.POST)
     public JsonRet<Object> localSignIn(@RequestParam(value = "signName", required = true) String signName, @RequestParam(value = "passwd", required = true) String passwd) {
         LocalAuthQuery localAuthQuery = new LocalAuthQuery(signName);
         JsonRet<List<LocalAuth>> localAuthRet = this.localAuthService.getList(localAuthQuery);
