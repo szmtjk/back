@@ -51,7 +51,7 @@ public class ActionResourcesController extends BaseCRUDController<ActionResource
      *
      * @return
      */
-    @RequestMapping(value = "/loadResources", method = RequestMethod.GET)
+    @RequestMapping(value = "/loadResources", method = RequestMethod.POST)
     public List<Map<String, Object>> queryTreeResourcesInfo() {
         List<Map<String, Object>> mArgFlys = actionResourcesService.queryTreeResourcesInfo();
         Map<String, Object> mRootMap = new HashedMap();
