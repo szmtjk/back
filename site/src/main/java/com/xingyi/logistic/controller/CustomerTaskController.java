@@ -35,7 +35,7 @@ public class CustomerTaskController extends BaseCRUDController<CustomerTask, Cus
      *
      * @return
      */
-    @RequestMapping(value = "/loadCustomer", method = RequestMethod.GET)
+    @RequestMapping(value = "/loadCustomer", method = RequestMethod.POST)
     public List<Combox> loadCustomer(@RequestParam Map<String, Object> map) {
         return customerTaskService.queryComboxCustomerInfo(map);
     }

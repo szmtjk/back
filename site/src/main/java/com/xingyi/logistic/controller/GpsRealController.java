@@ -31,7 +31,7 @@ public class GpsRealController extends BaseCRUDController<ShipCurrentGps, ShipCu
      *
      * @return
      */
-    @RequestMapping(value = "/loadCustomer", method = RequestMethod.GET)
+    @RequestMapping(value = "/loadCustomer", method = RequestMethod.POST)
     public List<Combox> loadCustomer() {
         return shipCurrentGpsService.queryComboxCustomerInfo();
     }
@@ -121,7 +121,7 @@ public class GpsRealController extends BaseCRUDController<ShipCurrentGps, ShipCu
      *
      * @return
      */
-    @RequestMapping(value = "/loadDataDict", method = RequestMethod.GET)
+    @RequestMapping(value = "/loadDataDict", method = RequestMethod.POST)
     public List<Combox> loadDataDict(@RequestParam Map<String, String> map) {
         return shipCurrentGpsService.queryDataDictInfo(map);
     }
