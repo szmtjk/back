@@ -103,7 +103,7 @@ public class UserController extends BaseCRUDController<UserProfile,UserProfileQu
         return JsonRet.getSuccessRet("设置用户角色成功");
     }
 
-    @RequestMapping(value = "/info", method = RequestMethod.GET)
+    @RequestMapping(value = "/info", method = RequestMethod.POST)
     public JsonRet<Object> info(){
     	UserProfile sessionProfile = SessionUtil.getProfile();
 	    System.out.println(">>>>>>>>>>>>>>>>>>>sessionProfile=" + JSON.toJSONString(sessionProfile,SerializerFeature.WriteMapNullValue));
