@@ -33,7 +33,7 @@ public class DispatchController extends BaseCRUDController<DispatchInfo, Dispatc
     @Autowired
     private DispatchInfoService dispatchInfoService;
 
-    @RequestMapping(value = "/getCustomerTaskFlowList", method = RequestMethod.GET)
+    @RequestMapping(value = "/getCustomerTaskFlowList", method = RequestMethod.POST)
     public JsonRet<Object> getCustomerTaskFlowList(@JsonParam CustomerTaskFlow4DispatchQuery query) {
         return dispatchInfoService.getCustomerTaskFlows(query);
     }
