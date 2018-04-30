@@ -21,7 +21,7 @@ public class PortController extends BaseCRUDController<Port, PortQuery> {
     @Autowired
     private PortService portService;
 
-    @RequestMapping(value = "/getPage", method = RequestMethod.GET)
+    @RequestMapping(value = "/getPage", method = RequestMethod.POST)
     public JsonRet<Object> getPage(@JsonParam PortQuery portQuery) {
         return super.getList(portQuery);
     }

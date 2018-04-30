@@ -18,7 +18,7 @@ public class WaterLevelController extends BaseCRUDController<WaterLevel,WaterLev
     @Autowired
     private WaterLevelService waterLevelService;
 
-    @RequestMapping(value = "/getPage", method = RequestMethod.GET)
+    @RequestMapping(value = "/getPage", method = RequestMethod.POST)
     public JsonRet<Object> getPage(@JsonParam WaterLevelQuery waterLevelQuery) {
         return super.getList(waterLevelQuery);
     }

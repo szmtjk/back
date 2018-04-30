@@ -44,7 +44,7 @@ public class DangerZoneController extends BaseCRUDController<DangerZone, DangerZ
         return super.getList(dangerZoneQuery);
     }
 
-    @RequestMapping(value = "/getPage", method = RequestMethod.GET)
+    @RequestMapping(value = "/getPage", method = RequestMethod.POST)
     public JsonRet<Object> getPage(DangerZoneQuery dangerZoneQuery) {
         return super.getList(dangerZoneQuery);
     }
