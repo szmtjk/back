@@ -42,7 +42,7 @@ public abstract class BaseCRUDController<Model extends BaseModelAndDO, Condition
         return getBaseService().getById(id);
     }
 
-    @RequestMapping(value = "/getList", method = RequestMethod.GET)
+    @RequestMapping(value = "/getList", method = RequestMethod.POST)
     public JsonRet<Object> getList(@JsonParam Condition condition) {
         if (condition != null && condition.getQueryParamFlag() == QueryType.MINIUI.getCode()) {
             return getMiniUIList(condition);

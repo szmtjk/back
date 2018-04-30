@@ -142,7 +142,7 @@ public class GpsRealController extends BaseCRUDController<ShipCurrentGps, ShipCu
      *
      * @return
      */
-    @RequestMapping(value = "/loadUserProfile", method = RequestMethod.GET)
+    @RequestMapping(value = "/loadUserProfile", method = RequestMethod.POST)
     public List<Combox> loadUserProfile() {
         return shipCurrentGpsService.queryUserProfileInfo();
     }
