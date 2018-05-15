@@ -382,6 +382,7 @@
             <if test="pojo.from!=null"> `from`= #{pojo.from},</if>
             <if test="pojo.status!=null"> `status`= #{pojo.status},</if>
             <if test="pojo.updater!=null">`updater` = #{pojo.updater},</if>
+            <if test="pojo.preLoad!=null">`preLoad` = #{pojo.preLoad},</if>
             `updated` = UNIX_TIMESTAMP(now())
         </set>
         WHERE `id` = #{pojo.id} and `isDeleted` = 0
@@ -480,7 +481,7 @@
     <select  id="getAppById" parameterType="java.lang.Long" resultMap="mRetShipMap">
 
         SELECT A1.shipNo, A1.`name`, A1.mobile, A1.identity, A1.bankCardNo,
-        A1.bankName, A1.idPhoto, A1.idPhotoF, A1.bankCardPhoto, A1.shipPhoto
+        A1.bankName, A1.idPhoto, A1.idPhotoF, A1.bankCardPhoto, A1.shipPhoto, A1.preLoad
         FROM Ship A1
         INNER JOIN AppUser A2 ON A1.id=A2.shipInfoId
         WHERE A2.id = #{id}
