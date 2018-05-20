@@ -43,7 +43,7 @@ public class DispatchController extends BaseCRUDController<DispatchInfo, Dispatc
         return dispatchInfoService.getAvailableShips(param);
     }
 
-    @RequestMapping(value = "/confirmPlan", method = RequestMethod.GET)
+    @RequestMapping(value = "/confirmPlan", method = RequestMethod.POST)
     public JsonRet<Boolean> confirmDispatchInfoPlan(@JsonParam DispatchInfoParam dispatchInfoParam) {
         return dispatchInfoService.confirmDispatchInfoPlan(dispatchInfoParam);
     }
