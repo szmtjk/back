@@ -382,7 +382,6 @@
             <if test="pojo.from!=null"> `from`= #{pojo.from},</if>
             <if test="pojo.status!=null"> `status`= #{pojo.status},</if>
             <if test="pojo.updater!=null">`updater` = #{pojo.updater},</if>
-            <if test="pojo.preLoad!=null">`preLoad` = #{pojo.preLoad},</if>
             `updated` = UNIX_TIMESTAMP(now())
         </set>
         WHERE `id` = #{pojo.id} and `isDeleted` = 0
