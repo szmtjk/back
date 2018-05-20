@@ -40,7 +40,7 @@ public class BaseCustomerTaskFlow extends BaseModelAndDO {
     private Integer loadType;//装货途径  1：大轮  2：场地
 
     private String bigShipPC;//大轮批次
-    private String taskNo;
+    private String taskNo;//任务流向单号
 
     private Float totalLoad;//总载重
 

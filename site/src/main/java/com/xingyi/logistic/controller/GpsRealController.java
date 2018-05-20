@@ -31,7 +31,7 @@ public class GpsRealController extends BaseCRUDController<ShipCurrentGps, ShipCu
      *
      * @return
      */
-    @RequestMapping(value = "/loadCustomer", method = RequestMethod.POST)
+    @RequestMapping(value = "/loadCustomer", method = RequestMethod.GET)
     public List<Combox> loadCustomer() {
         return shipCurrentGpsService.queryComboxCustomerInfo();
     }
@@ -49,7 +49,7 @@ public class GpsRealController extends BaseCRUDController<ShipCurrentGps, ShipCu
      *
      * @return
      */
-    @RequestMapping(value = "/loadPortAll", method = RequestMethod.POST)
+    @RequestMapping(value = "/loadPortAll", method = RequestMethod.GET)
     public List<Port> loadPortAll() {
         return shipCurrentGpsService.getLoadPortAll();
     }
@@ -82,8 +82,8 @@ public class GpsRealController extends BaseCRUDController<ShipCurrentGps, ShipCu
      * @param shipCurrentGpsQuery
      * @return
      */
-    @RequestMapping(value = "/loadGpsReal", method = RequestMethod.GET)
-    public List<ShipCurrentGps> loadPortAll(@JsonParam ShipCurrentGpsQuery shipCurrentGpsQuery) {
+    @RequestMapping(value = "/loadGpsReal", method = RequestMethod.POST)
+    public List<ShipCurrentGps> loadGpsReal(@JsonParam ShipCurrentGpsQuery shipCurrentGpsQuery) {
         return shipCurrentGpsService.queryShipCurrentGpsInfo(shipCurrentGpsQuery);
     }
 
@@ -121,7 +121,7 @@ public class GpsRealController extends BaseCRUDController<ShipCurrentGps, ShipCu
      *
      * @return
      */
-    @RequestMapping(value = "/loadDataDict", method = RequestMethod.POST)
+    @RequestMapping(value = "/loadDataDict", method = RequestMethod.GET)
     public List<Combox> loadDataDict(@RequestParam Map<String, String> map) {
         return shipCurrentGpsService.queryDataDictInfo(map);
     }
@@ -142,7 +142,7 @@ public class GpsRealController extends BaseCRUDController<ShipCurrentGps, ShipCu
      *
      * @return
      */
-    @RequestMapping(value = "/loadUserProfile", method = RequestMethod.POST)
+    @RequestMapping(value = "/loadUserProfile", method = RequestMethod.GET)
     public List<Combox> loadUserProfile() {
         return shipCurrentGpsService.queryUserProfileInfo();
     }

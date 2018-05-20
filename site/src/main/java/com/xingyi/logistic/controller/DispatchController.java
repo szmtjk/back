@@ -38,7 +38,7 @@ public class DispatchController extends BaseCRUDController<DispatchInfo, Dispatc
         return dispatchInfoService.getCustomerTaskFlows(query);
     }
 
-    @RequestMapping(value = "/getAvailableShips", method = RequestMethod.GET)
+    @RequestMapping(value = "/getAvailableShips", method = RequestMethod.POST)
     public JsonRet<Object> getAvailableShips(@JsonParam GetDispatchShipParam param) {
         return dispatchInfoService.getAvailableShips(param);
     }

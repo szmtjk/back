@@ -16,7 +16,7 @@ public class BaseCustomerTask extends BaseModelAndDO {
     private String description;
     private String contractName;
     private String contractNo;
-    private String taskNo;
+    private String taskNo;//任务单号
     private Integer selfBuckle;//是否扣网片 1 是 2否
 
     public Integer getSelfBuckle() {

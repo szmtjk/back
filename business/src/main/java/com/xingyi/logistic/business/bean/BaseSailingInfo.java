@@ -13,7 +13,7 @@ public class BaseSailingInfo extends BaseModelAndDO {
     @NotNullEmpty
     private Long orderId;//订单id
     @AllowedNumber(values = {1, 2, 3, 4, 5}, message = "航次信息类型错误")
-    private Integer status;//航次信息类型  1：空船到港  2：空船装后  3:重船到港  4：重船卸后  5：重船离港
+    private Integer status;//航次信息类型  1：空船到港  2：空船装后  3:重船离港  4：重船到港  5：重船卸后
     private Long arriveSPortTime;//实际到装货港时间
     private Long loadTime;//实际装货时间
     private Long loadWeight;//装货吨位
