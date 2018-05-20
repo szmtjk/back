@@ -28,7 +28,7 @@ public class SailingInfoController extends BaseCRUDController<SailingInfo, Saili
      * @param map
      * @return
      */
-    @RequestMapping(value = "/loadDsipatchShip", method = RequestMethod.GET)
+    @RequestMapping(value = "/loadDsipatchShip", method = RequestMethod.POST)
     public List<Map<String, Object >> queryDispatchShipInfo(@RequestParam Map<String, String> map)
     {
         return sailingInfoService.queryDispatchShipInfo(map);
@@ -39,7 +39,7 @@ public class SailingInfoController extends BaseCRUDController<SailingInfo, Saili
      * @param map
      * @return
      */
-    @RequestMapping(value = "/loadUnDealDsipatchShip", method = RequestMethod.GET)
+    @RequestMapping(value = "/loadUnDealDsipatchShip", method = RequestMethod.POST)
     public List<Map<String, Object >> queryUnDealDispatchShipInfo(@RequestParam Map<String, String> map)
     {
         return sailingInfoService.queryUnDealDispatchShipInfo(map);

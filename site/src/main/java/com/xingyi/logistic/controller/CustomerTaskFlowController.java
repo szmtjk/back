@@ -25,7 +25,7 @@ public class CustomerTaskFlowController extends BaseCRUDController<CustomerTaskF
     @Autowired
     private CustomerTaskFlowService customerTaskFlowService;
 
-    @RequestMapping(value = "/loadWeight", method = RequestMethod.GET)
+    @RequestMapping(value = "/loadWeight", method = RequestMethod.POST)
     public JsonRet<Long> loadWeight(@RequestParam Map<String, String> map) {
         return customerTaskFlowService.queryTotalWeightInfo(map);
     }
@@ -37,7 +37,7 @@ public class CustomerTaskFlowController extends BaseCRUDController<CustomerTaskF
      * @param map
      * @return
      */
-    @RequestMapping(value = "/loadUnitPrice", method = RequestMethod.GET)
+    @RequestMapping(value = "/loadUnitPrice", method = RequestMethod.POST)
     public List<Combox> loadUnitPrice(@RequestParam Map<String, String> map) {
         return customerTaskFlowService.queryUnitPriceInfo(map);
     }

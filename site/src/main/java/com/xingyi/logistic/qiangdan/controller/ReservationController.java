@@ -25,7 +25,7 @@ public class ReservationController extends BaseCRUDController<Reservation, Reser
     @Autowired
     private ReservationService reservationService;
 
-    @RequestMapping(value = "/check", method = RequestMethod.GET)
+    @RequestMapping(value = "/check", method = RequestMethod.POST)
     public JsonRet<Boolean> check(@JsonParam ReservationCheckParam reservationCheckParam) {
         return reservationService.check(reservationCheckParam);
     }
@@ -62,7 +62,7 @@ public class ReservationController extends BaseCRUDController<Reservation, Reser
      * @param map
      * @return
      */
-    @RequestMapping(value = "/getMyOrder", method = RequestMethod.GET)
+    @RequestMapping(value = "/getMyOrder", method = RequestMethod.POST)
     public JsonRet<Object> getMyOrder(@RequestParam Map<String, Object> map) {
         return reservationService.queryMyOrderInfo(map);
     }
