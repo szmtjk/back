@@ -110,7 +110,7 @@
     </select>
 
     <select id="queryByPage" resultMap="AllColumnMap" parameterType="Map">
-        SELECT A1.*, A2.contractNo, A2.`name`
+        SELECT A1.*, A2.contractNo, A2.`name` contractName
         FROM CustomerTask A1
         LEFT JOIN Contract A2 ON A1.contractId=A2.id
         <include refid="pageQueryWhereCommon"/>

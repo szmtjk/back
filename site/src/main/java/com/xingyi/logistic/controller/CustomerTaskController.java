@@ -45,7 +45,7 @@ public class CustomerTaskController extends BaseCRUDController<CustomerTask, Cus
      *
      * @return
      */
-    @RequestMapping(value = "/loadContractById", method = RequestMethod.POST)
+    @RequestMapping(value = "/loadContractById", method = RequestMethod.GET)
     public List<Combox> loadContractById(@JsonParam CustomerTaskQuery customerTaskQuery) {
 
         return customerTaskService.loadContractById(customerTaskQuery);

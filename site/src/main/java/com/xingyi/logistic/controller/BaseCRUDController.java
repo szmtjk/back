@@ -37,7 +37,7 @@ public abstract class BaseCRUDController<Model extends BaseModelAndDO, Condition
         return getBaseService().del(id);
     }
 
-    @RequestMapping(value = "/getById", method = RequestMethod.GET)
+    @RequestMapping(value = "/getById", method = RequestMethod.POST)
     public JsonRet<Model> getById(@RequestParam Long id) {
         return getBaseService().getById(id);
     }
