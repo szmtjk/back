@@ -19,6 +19,12 @@ public class DispatchPlan {
     private String endfieldcode;
     private String endfieldname;
     private String servertime;
+    private String startplanarrivetime;
+    private String planarrivetime;
+    private String goodstype;
+    private String goodsname;
+    private String planton;
+    private String realton;
 
     public long getDispatchplansendid() {
         return dispatchplansendid;
@@ -106,5 +112,53 @@ public class DispatchPlan {
 
     public void setServertime(String servertime) {
         this.servertime = servertime;
+    }
+
+    public String getStartplanarrivetime() {
+        return startplanarrivetime;
+    }
+
+    public void setStartplanarrivetime(String startplanarrivetime) {
+        this.startplanarrivetime = startplanarrivetime;
+    }
+
+    public String getPlanarrivetime() {
+        return planarrivetime;
+    }
+
+    public void setPlanarrivetime(String planarrivetime) {
+        this.planarrivetime = planarrivetime;
+    }
+
+    public String getGoodstype() {
+        return goodstype;
+    }
+
+    public void setGoodstype(String goodstype) {
+        this.goodstype = goodstype;
+    }
+
+    public String getGoodsname() {
+        return goodsname;
+    }
+
+    public void setGoodsname(String goodsname) {
+        this.goodsname = goodsname;
+    }
+
+    public String getPlanton() {
+        return planton;
+    }
+
+    public void setPlanton(String planton) {
+        this.planton = planton;
+    }
+
+    public String getRealton() {
+        return realton;
+    }
+
+    public void setRealton(String realton) {
+        this.realton = realton;
     }
 }

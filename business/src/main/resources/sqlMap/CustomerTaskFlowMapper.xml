@@ -139,7 +139,7 @@
             <if test="pojo.status!=null">#{pojo.status},</if>
             <if test="pojo.taskStatus!=null">#{pojo.taskStatus},</if>
             <if test="pojo.description!=null">#{pojo.description},</if>
-            CONCAT('CTF', UNIX_TIMESTAMP(now())),
+            CONCAT('CTF', round(RAND()*100 + 100), round(RAND()*100 + 100), UNIX_TIMESTAMP(now())),
             UNIX_TIMESTAMP(now()),
             UNIX_TIMESTAMP(now())
         </trim>

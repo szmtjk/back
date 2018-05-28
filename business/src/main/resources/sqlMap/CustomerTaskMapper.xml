@@ -54,7 +54,7 @@
             <if test="pojo.selfBuckle!=null">#{pojo.selfBuckle},</if>
             <if test="pojo.totalLoad!=null">#{pojo.totalLoad},</if>
             <if test="pojo.description!=null">#{pojo.description},</if>
-            CONCAT('CT', UNIX_TIMESTAMP(now())),
+            CONCAT('CT', round(RAND()*100 + 100), round(RAND()*100 + 100), UNIX_TIMESTAMP(now())),
             UNIX_TIMESTAMP(now()),
             UNIX_TIMESTAMP(now())
         </trim>

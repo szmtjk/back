@@ -104,7 +104,7 @@
             <if test="pojo.oil!=null">#{pojo.oil},</if>
             <if test="pojo.creator!=null">#{pojo.creator},</if>
             <if test="pojo.updater!=null">#{pojo.updater},</if>
-            CONCAT('D', UNIX_TIMESTAMP(now())),
+            CONCAT('D', round(RAND()*100 + 100), round(RAND()*100 + 100), UNIX_TIMESTAMP(now())),
             UNIX_TIMESTAMP(now()),
             UNIX_TIMESTAMP(now())
         </trim>
