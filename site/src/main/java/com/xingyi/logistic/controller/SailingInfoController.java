@@ -45,6 +45,17 @@ public class SailingInfoController extends BaseCRUDController<SailingInfo, Saili
         return sailingInfoService.queryUnDealDispatchShipInfo(map);
     }
 
+    /**
+     * 加载所有已调度的船舶任务
+     * @param map
+     * @return
+     */
+    @RequestMapping(value = "/queryAllDispatchShipTask", method = RequestMethod.POST)
+    public List<Map<String, Object >> queryAllDispatchShipTask(@RequestParam Map<String, String> map)
+    {
+        return sailingInfoService.queryAllDispatchShipTask(map);
+    }
+
 
     @Override
     protected BaseService<SailingInfo,SailingInfoQuery> getBaseService() {
