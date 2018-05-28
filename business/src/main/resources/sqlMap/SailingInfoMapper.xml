@@ -6,7 +6,7 @@
         <result property="id" column="id"/>
         <result property="shipId" column="shipId"/>
         <result property="orderId" column="orderId"/>
-        <result property="`status" column="`status"/>
+        <result property="status" column="status"/>
         <result property="arriveSPortTime" column="arriveSPortTime"/>
         <result property="loadTime" column="loadTime"/>
         <result property="loadWeight" column="loadWeight"/>

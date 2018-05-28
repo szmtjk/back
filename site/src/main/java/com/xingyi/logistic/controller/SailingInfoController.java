@@ -28,7 +28,7 @@ public class SailingInfoController extends BaseCRUDController<SailingInfo, Saili
      * @param map
      * @return
      */
-    @RequestMapping(value = "/loadDsipatchShip", method = RequestMethod.POST)
+    @RequestMapping(value = "/loadDispatchShip", method = RequestMethod.POST)
     public List<Map<String, Object >> queryDispatchShipInfo(@RequestParam Map<String, String> map)
     {
         return sailingInfoService.queryDispatchShipInfo(map);
