@@ -43,10 +43,16 @@ public class ReservationController extends BaseCRUDController<Reservation, Reser
         }
     }
 
+    /**
+     * 取消预约
+     *
+     * @param Reservation
+     * @return
+     */
     @Override
     public JsonRet<Boolean> modify(Reservation reservation) {
         reservation.setStatus(2);
-        reservation.setUserId(SessionUtil.getAppUser().getId());
+        //reservation.setUserId(SessionUtil.getAppUser().getId());
         return super.modify(reservation);
     }
 
