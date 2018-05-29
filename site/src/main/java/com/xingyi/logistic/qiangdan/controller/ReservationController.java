@@ -62,7 +62,7 @@ public class ReservationController extends BaseCRUDController<Reservation, Reser
      * @param map
      * @return
      */
-    @RequestMapping(value = "/getMyOrder", method = RequestMethod.POST)
+    @RequestMapping(value = "/getMyOrder", method = RequestMethod.GET)
     public JsonRet<Object> getMyOrder(@RequestParam Map<String, Object> map) {
         return reservationService.queryMyOrderInfo(map);
     }
