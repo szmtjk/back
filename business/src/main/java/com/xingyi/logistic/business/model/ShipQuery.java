@@ -11,6 +11,9 @@ public class ShipQuery extends BaseQueryPage {
     private String key;
     private Integer customerTaskFlowId;
     private List<Integer> shipFlags;
+    private String name;
+    private String startTime;
+    private String endTime;
 
     public String getKey() {
         return key;
@@ -34,5 +37,29 @@ public class ShipQuery extends BaseQueryPage {
 
     public void setShipFlags(List<Integer> shipFlags) {
         this.shipFlags = shipFlags;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getStartTime() {
+        return startTime;
+    }
+
+    public void setStartTime(String startTime) {
+        this.startTime = startTime;
+    }
+
+    public String getEndTime() {
+        return endTime;
+    }
+
+    public void setEndTime(String endTime) {
+        this.endTime = endTime;
     }
 }

@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!--  Generate by autoSQLMap Powered by duxing@Taobao -->
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.xingyi.logistic.business.db.dao.FreightPlanDAO">
+    <resultMap id="AllColumnMap" type="com.xingyi.logistic.business.db.entity.FreightPlanDO">
+        <result property="id" column="id"/>
+        <result property="time" column="time"/>
+        <result property="shipFlag" column="shipFlag"/>
+        <result property="revUnit" column="revUnit"/>
+        <result property="goodsName" column="goodsName"/>
+        <result property="plan" column="plan"/>
+        <result property="description" column="description"/>
+        <result property="creator" column="creator"/>
+        <result property="created" column="created"/>
+        <result property="updated" column="updated"/>
+    </resultMap>
+
+    <sql id="all_column">
+        a.`id`
+        ,a.`time`
+        ,a.`shipFlag`
+        ,a.`revUnit`
+        ,a.`goodsName`
+        ,a.`plan`
+        ,a.`description`
+        ,a.`creator`
+        ,a.`created`
+        ,a.`updater`
+        ,a.`updated`
+    </sql>
+    <sql id="all_column_user">
+        <include refid="all_column"/>
+        ,b.`realName` as creatorName
+    </sql>
+    <insert id="insertSelective" useGeneratedKeys="true" keyProperty="pojo.id">
+        INSERT INTO FreightPlan
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="pojo.time!=null"> `time`,</if>
+            <if test="pojo.shipFlag!=null"> `shipFlag`,</if>
+            <if test="pojo.revUnit!=null"> `revUnit`,</if>
+            <if test="pojo.goodsName!=null"> `goodsName`,</if>
+            <if test="pojo.plan!=null"> `plan`,</if>
+            <if test="pojo.description!=null"> `description`,</if>
+            <if test="pojo.creator!=null"> `creator`,</if>
+            <if test="pojo.updater!=null"> `updater`,</if>
+            `created`,
+            `updated`,
+            `isDeleted`
+        </trim>
+        VALUES
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="pojo.time!=null">#{pojo.time},</if>
+            <if test="pojo.shipFlag!=null">#{pojo.shipFlag},</if>
+            <if test="pojo.revUnit!=null">#{pojo.revUnit},</if>
+            <if test="pojo.goodsName!=null">#{pojo.goodsName},</if>
+            <if test="pojo.plan!=null">#{pojo.plan},</if>
+            <if test="pojo.description!=null">#{pojo.description},</if>
+            <if test="pojo.creator!=null">#{pojo.creator},</if>
+            <if test="pojo.updater!=null">#{pojo.updater},</if>
+            UNIX_TIMESTAMP(now()),
+            UNIX_TIMESTAMP(now()),
+            0
+        </trim>
+    </insert>
+
+    <!--auto generated Code-->
+    <update id="update">
+        UPDATE FreightPlan
+        <set>
+            <if test="pojo.time!=null"> `time` = #{pojo.time},</if>
+            <if test="pojo.shipFlag!=null"> `shipFlag`= #{pojo.shipFlag},</if>
+            <if test="pojo.revUnit!=null"> `revUnit`= #{pojo.revUnit},</if>
+            <if test="pojo.goodsName!=null"> `goodsName`= #{pojo.goodsName},</if>
+            <if test="pojo.plan!=null"> `plan`= #{pojo.plan},</if>
+            <if test="pojo.description!=null"> `description`= #{pojo.description},</if>
+            <if test="pojo.updater!=null">`updater` = #{pojo.updater},</if>
+            <if test="pojo.isDeleted!=null">`isDeleted` = #{pojo.isDeleted},</if>
+            `updated` = UNIX_TIMESTAMP(now())
+        </set>
+        WHERE `id` = #{pojo.id} and `isDeleted` = 0
+        LIMIT 1
+    </update>
+
+    <update id="del" parameterType="java.lang.Long">
+        UPDATE FreightPlan
+        SET `isDeleted` = 1 ,
+        `updated` = UNIX_TIMESTAMP(now())
+        WHERE `id` = #{id} and `isDeleted` = 0
+        LIMIT 1
+    </update>
+
+    <select id="getById" parameterType="java.lang.Long" resultMap="AllColumnMap">
+        SELECT <include refid="all_column_user"/>
+        FROM `FreightPlan` a  LEFT JOIN `UserProfile` b on a.creator = b.id
+        WHERE a.`id` = #{id} and a.`isDeleted` = 0
+        LIMIT 1
+    </select>
+
+    <select id="getExistCount" resultType="java.lang.Integer" parameterType="Map" >
+        SELECT  count(id)
+        FROM  `FreightPlan`
+        where `isDeleted` = 0 AND 1 = 2
+        <if test="pojo.id != null"> AND `id` != #{pojo.id} </if>
+        limit 1
+    </select>
+
+    <select id="getCount" resultType="java.lang.Integer" parameterType="Map" >
+        SELECT  count(a.id)
+        FROM  `FreightPlan` a  LEFT JOIN `UserProfile` b on a.creator = b.id
+        <include refid="pageQueryWhereCommon"/>
+        limit 1
+    </select>
+
+    <select id="queryByPage" resultMap="AllColumnMap" parameterType="Map">
+        select <include refid="all_column_user"/>
+        from `FreightPlan` a LEFT JOIN `UserProfile` b on a.creator = b.id
+        <include refid="pageQueryWhereCommon"/>
+        order by a.`created` desc
+        <include refid="pageCommon"/>
+    </select>
+
+    <sql id="pageQueryWhereCommon">
+        where a.`isDeleted` = 0
+        <if test="pojo.id != null"> AND a.`id` = #{pojo.id} </if>
+        <if test="pojo.key != null and pojo.key != ''">
+            AND (a.`shipFlag` = #{pojo.key} )
+        </if>
+    </sql>
+
+    <sql id="pageCommon">
+        <choose>
+            <when test="pojo.startRow != null and pojo.startRow gt -1 and pojo.limitNum != null and pojo.limitNum gt 0">
+                limit #{pojo.startRow}, #{pojo.limitNum}
+            </when>
+            <otherwise>
+                limit 100
+            </otherwise>
+        </choose>
+    </sql>
+
+</mapper>
