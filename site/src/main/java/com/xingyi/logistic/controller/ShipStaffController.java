@@ -52,7 +52,7 @@ public class ShipStaffController extends BaseCRUDController<ShipStaff, ShipStaff
         return shipStaffService;
     }
 
-    @RequestMapping(value = "/judege", method = RequestMethod.GET)
+    @RequestMapping(value = "/judege", method = RequestMethod.POST)
     public JsonRet<Integer> judege(ShipStaff shipStaff) {
         return shipStaffService.judege(shipStaff);
     }
