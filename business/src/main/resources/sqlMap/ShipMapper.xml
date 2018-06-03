@@ -216,7 +216,7 @@
     <sql id="all_column_staff">
         <include refid="all_column"/>
         ,b.`name` as captain
-        ,b.`mobile`
+        ,b.`mobile` as outerMobile
     </sql>
 
     <insert id="insertSelective" useGeneratedKeys="true" keyProperty="pojo.id">
