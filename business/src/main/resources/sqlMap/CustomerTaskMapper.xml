@@ -17,6 +17,36 @@
         <result property="updated" column="updated"/>
     </resultMap>
 
+    <resultMap id="taskDetailColumnMap" type="com.xingyi.logistic.business.db.entity.CustomerTaskDetailDO">
+        <result property="taskNo" column="taskNo"/>
+        <result property="fullName" column="fullName"/>
+        <result property="contractName" column="contractName"/>
+        <result property="totalLoad" column="totalLoad"/>
+        <result property="flowName" column="flowName"/>
+        <result property="goodsName" column="goodsName"/>
+        <result property="goodsType" column="goodsType"/>
+        <result property="totalWeight" column="totalWeight"/>
+        <result property="startPortName" column="startPortName"/>
+        <result property="loadDate" column="loadDate"/>
+        <result property="endPortName" column="endPortName"/>
+        <result property="dischargeDate" column="dischargeDate"/>
+        <result property="shipNo" column="shipNo"/>
+        <result property="shipFlag" column="shipFlag"/>
+        <result property="preWeight" column="preWeight"/>
+        <result property="preLoad" column="preLoad"/>
+        <result property="actualTransferPrice" column="actualTransferPrice"/>
+        <result property="preArriveTime" column="preArriveTime"/>
+        <result property="arriveSPortTime" column="arriveSPortTime"/>
+        <result property="loadTime" column="loadTime"/>
+        <result property="loadWeight" column="loadWeight"/>
+        <result property="preArriveEPortTime" column="preArriveEPortTime"/>
+        <result property="actualArriveEPortTime" column="actualArriveEPortTime"/>
+        <result property="dischargeTime" column="dischargeTime"/>
+        <result property="dischargeWeight" column="dischargeWeight"/>
+        <result property="dischargeDelayFee" column="dischargeDelayFee"/>
+        <result property="allowance" column="allowance"/>
+    </resultMap>
+
     <sql id="all_column">
         `id`
         ,`taskNo`
@@ -172,5 +202,45 @@
         <if test="pojo.customerId != null"> AND a.flowId not in ( SELECT flowId from CustomerTaskFlow WHERE taskId = #{pojo.customerId} ) </if>
     </select>
 
+    <select id="getTaskDetailCount" parameterType="java.lang.String" resultType="java.lang.Integer">
+        select count(1)
+        from CustomerTask a
+        left join CustomerTaskFlow b on b.taskId=a.id
+        left join DispatchInfo c on c.customerTaskFlowId=b.id
+        left join SailingInfo d on d.orderId=c.id
+        left join Customer e on e.id=a.customerId
+        left join Contract f on f.id=a.contractId
+        left join Flow g on g.id=b.flowId
+        left join Port h on h.id=b.startPortId
+        left join Port i on i.id=b.endPortId
+        left join Ship j on j.id=c.shipId
+        where 1 = 1
+        <if test="key != null">
+            and a.taskNo = #{key}
+        </if>
+    </select>
 
+    <select id="getTaskDetailByPage" parameterType="Map" resultMap="taskDetailColumnMap">
+        select a.taskNo, e.fullName, f.`name` as contractName, a.totalLoad, g.`name` as flowName, b.goodsName, b.goodsType,
+            b.totalWeight, h.name as startPortName, i.`name` as endPortName, b.loadingTime as loadDate,
+            b.dischargeTime as dischargeDate, j.shipNo, j.shipFlag, c.preWeight, c.preLoad, c.actualTransferPrice,
+            c.preArriveTime, d.arriveSPortTime, d.loadTime, d.loadWeight, d.preArriveEPortTime, d.actualArriveEPortTime,
+            d.dischargeTime, d.dischargeWeight, d.dischargeDelayFee, d.allowance
+        from CustomerTask a
+        left join CustomerTaskFlow b on b.taskId=a.id
+        left join DispatchInfo c on c.customerTaskFlowId=b.id
+        left join SailingInfo d on d.orderId=c.id
+        left join Customer e on e.id=a.customerId
+        left join Contract f on f.id=a.contractId
+        left join Flow g on g.id=b.flowId
+        left join Port h on h.id=b.startPortId
+        left join Port i on i.id=b.endPortId
+        left join Ship j on j.id=c.shipId
+        where 1 = 1
+        <if test="pojo.key != null">
+            and a.taskNo = #{pojo.key}
+        </if>
+        order by a.id, b.id, c.id, d.id
+        <include refid="pageCommon"/>
+    </select>
 </mapper>

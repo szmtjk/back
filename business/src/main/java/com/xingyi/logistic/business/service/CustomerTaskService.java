@@ -1,6 +1,7 @@
 package com.xingyi.logistic.business.service;
 
 import com.xingyi.logistic.business.model.*;
+import com.xingyi.logistic.common.bean.JsonRet;
 
 import java.util.List;
 import java.util.Map;
@@ -28,4 +29,17 @@ public interface CustomerTaskService extends BaseService<CustomerTask, CustomerT
      */
     public List<Combox> loadContractFlowByContractId(CustomerTaskQuery customerTaskQuery);
 
+    /**
+     * 任务明细总数
+     * @param key
+     * @return
+     */
+    JsonRet<Integer> getTaskDetailTotal(String key);
+
+    /**
+     * 任务明细列表
+     * @param key
+     * @return
+     */
+    JsonRet<List<CustomerTaskDetail>> getTaskDetailList(CustomerTaskQuery customerTaskQuery);
 }

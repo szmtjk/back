@@ -2,9 +2,15 @@ package com.xingyi.logistic.controller;
 
 import com.xingyi.logistic.business.model.Combox;
 import com.xingyi.logistic.business.model.CustomerTask;
+import com.xingyi.logistic.business.model.CustomerTaskDetail;
 import com.xingyi.logistic.business.model.CustomerTaskQuery;
 import com.xingyi.logistic.business.service.BaseService;
 import com.xingyi.logistic.business.service.CustomerTaskService;
+import com.xingyi.logistic.business.util.PrimitiveUtil;
+import com.xingyi.logistic.common.bean.ErrCode;
+import com.xingyi.logistic.common.bean.JsonRet;
+import com.xingyi.logistic.common.bean.MiniUIJsonRet;
+import com.xingyi.logistic.common.bean.QueryType;
 import com.xingyi.logistic.config.JsonParam;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -12,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -62,5 +69,48 @@ public class CustomerTaskController extends BaseCRUDController<CustomerTask, Cus
         return customerTaskService.loadContractFlowByContractId(customerTaskQuery);
     }
 
+    @RequestMapping(value = "/getTaskDetailList")
+    public JsonRet<Object> getList(@JsonParam CustomerTaskQuery condition) {
+        if (condition != null && condition.getQueryParamFlag() == QueryType.MINIUI.getCode()) {
+            return getTaskDetailMiniUIList(condition);
+        }
+
+        JsonRet<Integer> totalRet = customerTaskService.getTaskDetailTotal(condition.getKey());
+        if (totalRet.isSuccess()) {
+            Map<String, Object> params = new HashMap<>();
+            if (PrimitiveUtil.getPrimitive(totalRet.getData(), 0) > 0) {
+                JsonRet<List<CustomerTaskDetail>> listRet = customerTaskService.getTaskDetailList(condition);
+                if (listRet.isSuccess()) {
+                    params.put("total", totalRet.getData());
+                    params.put("list", listRet.getData());
+                    return JsonRet.getSuccessRet(params);
+                } else {
+                    return JsonRet.getErrRet(ErrCode.GET_ERR.getCode(), listRet.getMsg());
+                }
+            } else {
+                params.put("total", 0);
+                return JsonRet.getSuccessRet(params);
+            }
+        }
+        return JsonRet.getErrRet(ErrCode.GET_ERR.getCode(), totalRet.getMsg());
+    }
+
+    private JsonRet<Object> getTaskDetailMiniUIList(CustomerTaskQuery condition) {
+        MiniUIJsonRet<Object> miniUIJsonRet = new MiniUIJsonRet<>();
+        JsonRet<Integer> totalRet = customerTaskService.getTotal(condition);
+        if (totalRet.isSuccess()) {
+            miniUIJsonRet.setTotal(totalRet.getData());
+            if (PrimitiveUtil.getPrimitive(totalRet.getData(), 0) > 0) {
+                JsonRet<List<CustomerTaskDetail>> listRet = customerTaskService.getTaskDetailList(condition);
+                if (listRet.isSuccess()) {
+                    miniUIJsonRet.setSuccess(true);
+                    miniUIJsonRet.setData(listRet.getData());
+                } else {
+                    return JsonRet.getErrRet(ErrCode.GET_ERR.getCode(), listRet.getMsg());
+                }
+            }
+        }
+        return miniUIJsonRet;
+    }
 
 }

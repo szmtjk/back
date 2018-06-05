@@ -3,6 +3,7 @@ package com.xingyi.logistic.business.db.dao;
 import com.xingyi.logistic.business.db.dao.base.BaseDAO;
 import com.xingyi.logistic.business.db.entity.CustomerTaskDBQuery;
 import com.xingyi.logistic.business.db.entity.CustomerTaskDO;
+import com.xingyi.logistic.business.db.entity.CustomerTaskDetailDO;
 import com.xingyi.logistic.business.model.Combox;
 import com.xingyi.logistic.business.model.CustomerTaskQuery;
 import com.xxx.boot.jdbc.annotation.Dao;
@@ -26,4 +27,7 @@ public interface CustomerTaskDAO extends BaseDAO<CustomerTaskDO, CustomerTaskDBQ
 
     List<Combox> loadContractFlowByContractId(@Param("pojo")CustomerTaskQuery customerTaskQuery);
 
+    Integer getTaskDetailCount(@Param("key")String key);
+
+    List<CustomerTaskDetailDO> getTaskDetailByPage(@Param("pojo")CustomerTaskDBQuery query);
 }
