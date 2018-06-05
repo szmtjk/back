@@ -43,10 +43,16 @@ public class ReservationController extends BaseCRUDController<Reservation, Reser
         }
     }
 
+    /**
+     * 取消预约
+     *
+     * @param Reservation
+     * @return
+     */
     @Override
     public JsonRet<Boolean> modify(Reservation reservation) {
         reservation.setStatus(2);
-        reservation.setUserId(SessionUtil.getAppUser().getId());
+        //reservation.setUserId(SessionUtil.getAppUser().getId());
         return super.modify(reservation);
     }
 
@@ -62,7 +68,7 @@ public class ReservationController extends BaseCRUDController<Reservation, Reser
      * @param map
      * @return
      */
-    @RequestMapping(value = "/getMyOrder", method = RequestMethod.POST)
+    @RequestMapping(value = "/getMyOrder", method = RequestMethod.GET)
     public JsonRet<Object> getMyOrder(@RequestParam Map<String, Object> map) {
         return reservationService.queryMyOrderInfo(map);
     }

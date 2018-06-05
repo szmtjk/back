@@ -1,22 +1,17 @@
 package com.xingyi.logistic.controller;
 
-import com.xingyi.logistic.business.model.AvailableDispatchShip;
-import com.xingyi.logistic.business.model.CustomerTaskFlow4DispatchQuery;
-import com.xingyi.logistic.business.model.DispatchInfo;
-import com.xingyi.logistic.business.model.DispatchInfoParam;
-import com.xingyi.logistic.business.model.DispatchInfoQuery;
-import com.xingyi.logistic.business.model.GetDispatchShipParam;
+import com.xingyi.logistic.business.model.*;
 import com.xingyi.logistic.business.service.BaseService;
 import com.xingyi.logistic.business.service.DispatchInfoService;
 import com.xingyi.logistic.common.bean.JsonRet;
 import com.xingyi.logistic.config.JsonParam;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by Jadic on 2018/1/21.
@@ -51,6 +46,42 @@ public class DispatchController extends BaseCRUDController<DispatchInfo, Dispatc
     @Override
     protected BaseService<DispatchInfo, DispatchInfoQuery> getBaseService() {
         return dispatchInfoService;
+    }
+
+
+    @RequestMapping("/getPoundBalanceList")
+    public JsonRet<Object> getPoundBalanceList(@JsonParam ReportParam param) {
+        return dispatchInfoService.getPoundBalanceList(param);
+    }
+
+    @RequestMapping("/getReportFiveList")
+    public JsonRet<Object> getReportFiveList(@JsonParam ReportParam param) {
+        return dispatchInfoService.getReportFiveList(param);
+    }
+
+    @RequestMapping("/getReportThreeList")
+    public List<Map<String,Object>> getReportThreeList(@JsonParam ReportParam param) {
+        return dispatchInfoService.getReportThreeList(param);
+    }
+
+    @RequestMapping("/getReportFour2ThreeList")
+    public List<Map<String,Object>> getReportFour2ThreeList(@JsonParam ReportParam param) {
+        return dispatchInfoService.getReportFour2ThreeList(param);
+    }
+
+    @RequestMapping("/getReportFour2TwoList")
+    public List<Map<String,Object>> getReportFour2TwoList(@JsonParam ReportParam param) {
+        return dispatchInfoService.getReportFour2TwoList(param);
+    }
+
+    @RequestMapping("/getReportFour2OneList")
+    public List<Map<String,Object>> getReportFour2OneList(@JsonParam ReportParam param) {
+        return dispatchInfoService.getReportFour2OneList(param);
+    }
+
+    @RequestMapping("/getReportFour2FourList")
+    public List<Map<String,Object>> getReportFour2FourList(@JsonParam ReportParam param) {
+        return dispatchInfoService.getReportFour2FourList(param);
     }
 
 }

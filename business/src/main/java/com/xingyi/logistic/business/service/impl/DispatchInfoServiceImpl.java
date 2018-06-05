@@ -4,32 +4,14 @@ import com.alibaba.fastjson.TypeReference;
 import com.xingyi.logistic.business.db.dao.DispatchInfoDAO;
 import com.xingyi.logistic.business.db.dao.ShipDAO;
 import com.xingyi.logistic.business.db.dao.base.BaseDAO;
-import com.xingyi.logistic.business.db.entity.CustomerTaskFlow4DispatchDBQuery;
-import com.xingyi.logistic.business.db.entity.CustomerTaskFlow4DispatchDO;
-import com.xingyi.logistic.business.db.entity.DispatchInfoDBQuery;
-import com.xingyi.logistic.business.db.entity.DispatchInfoDO;
-import com.xingyi.logistic.business.db.entity.ShipDBQuery;
-import com.xingyi.logistic.business.db.entity.ShipWithStaffDO;
-import com.xingyi.logistic.business.model.AvailableDispatchShip;
-import com.xingyi.logistic.business.model.CustomerTaskFlow4Dispatch;
-import com.xingyi.logistic.business.model.CustomerTaskFlow4DispatchQuery;
-import com.xingyi.logistic.business.model.DispatchFlagInfo;
-import com.xingyi.logistic.business.model.DispatchInfo;
-import com.xingyi.logistic.business.model.DispatchInfoParam;
-import com.xingyi.logistic.business.model.DispatchInfoQuery;
-import com.xingyi.logistic.business.model.GetDispatchShipParam;
-import com.xingyi.logistic.business.model.ShipQuery;
+import com.xingyi.logistic.business.db.entity.*;
+import com.xingyi.logistic.business.model.*;
 import com.xingyi.logistic.business.service.DispatchInfoService;
 import com.xingyi.logistic.business.service.ShipService;
 import com.xingyi.logistic.business.service.base.BaseCRUDService;
 import com.xingyi.logistic.business.service.base.ModelConverter;
 import com.xingyi.logistic.business.service.base.QueryConditionConverter;
-import com.xingyi.logistic.business.service.converter.CustomerTaskFlow4DispatchConverter;
-import com.xingyi.logistic.business.service.converter.CustomerTaskFlow4DispatchQueryConverter;
-import com.xingyi.logistic.business.service.converter.DispatchInfoConverter;
-import com.xingyi.logistic.business.service.converter.DispatchInfoQueryConverter;
-import com.xingyi.logistic.business.service.converter.ShipConverter;
-import com.xingyi.logistic.business.service.converter.ShipQueryConverter;
+import com.xingyi.logistic.business.service.converter.*;
 import com.xingyi.logistic.business.util.JsonUtil;
 import com.xingyi.logistic.business.util.ParamValidator;
 import com.xingyi.logistic.business.util.PrimitiveUtil;
@@ -162,6 +144,165 @@ public class DispatchInfoServiceImpl extends BaseCRUDService<DispatchInfoDO, Dis
             LOG.error("get available ships err, param:{}", JsonUtil.toJson(param), e);
         }
         return ret;
+    }
+
+    @Override
+    public JsonRet<Object> getPoundBalanceList(ReportParam param) {
+        JsonRet<Object> ret = new JsonRet<>();
+        if (!ParamValidator.isParamValid(ret, param)) {
+            return ret;
+        }
+        ShipQuery shipQuery = new ShipQuery();
+        BeanUtils.copyProperties(param, shipQuery);
+
+        try {
+            ShipDBQuery shipDBQuery = shipQueryConverter.toDOCondition(shipQuery);
+            int total = shipDAO.queryReportOneCount(shipDBQuery);
+            List<Map<String,Object>> shipStaffS = null;
+            if (total > 0) {
+                 shipStaffS = shipDAO.queryReportOneList(shipDBQuery);
+            }
+            MiniUIJsonRet<Object> miniUIJsonRet = new MiniUIJsonRet<>();
+            miniUIJsonRet.setSuccessData(total, shipStaffS);
+            return miniUIJsonRet;
+
+        } catch(Exception e) {
+            ret.setErrTip(ErrCode.GET_ERR);
+            LOG.error("query report one err, param:{}", JsonUtil.toJson(param), e);
+        }
+        return ret;
+    }
+
+    @Override
+    public JsonRet<Object> getReportFiveList(ReportParam param) {
+        JsonRet<Object> ret = new JsonRet<>();
+        if (!ParamValidator.isParamValid(ret, param)) {
+            return ret;
+        }
+        ShipQuery shipQuery = new ShipQuery();
+        BeanUtils.copyProperties(param, shipQuery);
+
+        try {
+            ShipDBQuery shipDBQuery = shipQueryConverter.toDOCondition(shipQuery);
+            int total = shipDAO.queryReportFiveCount(shipDBQuery);
+            List<Map<String,Object>> shipStaffS = null;
+            if (total > 0) {
+                shipStaffS = shipDAO.queryReportFiveList(shipDBQuery);
+            }
+            MiniUIJsonRet<Object> miniUIJsonRet = new MiniUIJsonRet<>();
+            miniUIJsonRet.setSuccessData(total, shipStaffS);
+            return miniUIJsonRet;
+
+        } catch(Exception e) {
+            ret.setErrTip(ErrCode.GET_ERR);
+            LOG.error("query report one err, param:{}", JsonUtil.toJson(param), e);
+        }
+        return ret;
+    }
+
+    @Override
+    public List<Map<String,Object>> getReportThreeList(ReportParam param) {
+        List<Map<String,Object>>  list = new ArrayList<Map<String,Object>>();
+        ShipQuery shipQuery = new ShipQuery();
+        BeanUtils.copyProperties(param, shipQuery);
+        String time;
+        if(!StringUtils.isEmpty(param.getKey())){
+            time =param.getKey()+"-01";
+        } else {
+            return list;
+        }
+       //time = "2018-03-01";
+        try {
+            list = shipDAO.queryReportThreeList(time,time,time,time);
+        } catch(Exception e) {
+
+            LOG.error("query report one err, param:{}", JsonUtil.toJson(param), e);
+        }
+        return list;
+    }
+
+    @Override
+    public List<Map<String,Object>> getReportFour2ThreeList(ReportParam param) {
+        List<Map<String,Object>>  list = new ArrayList<Map<String,Object>>();
+        ShipQuery shipQuery = new ShipQuery();
+        BeanUtils.copyProperties(param, shipQuery);
+        String time;
+        if(!StringUtils.isEmpty(param.getKey())){
+            time =param.getKey();
+        } else {
+            return list;
+        }
+        //time = "2018-03-01";
+        try {
+            list = shipDAO.getReportFour2ThreeList(time,time);
+        } catch(Exception e) {
+
+            LOG.error("query report one err, param:{}", JsonUtil.toJson(param), e);
+        }
+        return list;
+    }
+
+    @Override
+    public List<Map<String,Object>> getReportFour2TwoList(ReportParam param) {
+        List<Map<String,Object>>  list = new ArrayList<Map<String,Object>>();
+        ShipQuery shipQuery = new ShipQuery();
+        BeanUtils.copyProperties(param, shipQuery);
+        String time;
+        if(!StringUtils.isEmpty(param.getKey())){
+            time =param.getKey();
+        } else {
+            return list;
+        }
+        //time = "2018-03-01";
+        try {
+            list = shipDAO.getReportFour2TwoList(time,time);
+        } catch(Exception e) {
+
+            LOG.error("query report one err, param:{}", JsonUtil.toJson(param), e);
+        }
+        return list;
+    }
+
+    @Override
+    public List<Map<String,Object>> getReportFour2OneList(ReportParam param) {
+        List<Map<String,Object>>  list = new ArrayList<Map<String,Object>>();
+        ShipQuery shipQuery = new ShipQuery();
+        BeanUtils.copyProperties(param, shipQuery);
+        String time;
+        if(!StringUtils.isEmpty(param.getKey())){
+            time =param.getKey();
+        } else {
+            return list;
+        }
+        //time = "2018-03-01";
+        try {
+            list = shipDAO.getReportFour2OneList(time,time,time,time);
+        } catch(Exception e) {
+
+            LOG.error("query report one err, param:{}", JsonUtil.toJson(param), e);
+        }
+        return list;
+    }
+
+    @Override
+    public List<Map<String,Object>> getReportFour2FourList(ReportParam param) {
+        List<Map<String,Object>>  list = new ArrayList<Map<String,Object>>();
+        ShipQuery shipQuery = new ShipQuery();
+        BeanUtils.copyProperties(param, shipQuery);
+        String time;
+        if(!StringUtils.isEmpty(param.getKey())){
+            time =param.getKey();
+        } else {
+            return list;
+        }
+        //time = "2018-03-01";
+        try {
+            list = shipDAO.getReportFour2FourList(time,time);
+        } catch(Exception e) {
+
+            LOG.error("query report one err, param:{}", JsonUtil.toJson(param), e);
+        }
+        return list;
     }
 
     @Override

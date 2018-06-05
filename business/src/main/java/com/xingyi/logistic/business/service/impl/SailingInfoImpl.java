@@ -73,6 +73,16 @@ public class SailingInfoImpl extends BaseCRUDService<SailingInfoDO, SailingInfo,
         return sailingInfoDAO.queryUnDealDispatchShipInfo(map);
     }
 
+    /**
+     * 加载所有已调度的船舶任务
+     * @param map
+     * @return
+     */
+    public List<Map<String, Object>> queryAllDispatchShipTask(Map<String, String> map)
+    {
+        return sailingInfoDAO.queryAllDispatchShipTask(map);
+    }
+
 
 
     @Override

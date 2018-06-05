@@ -184,9 +184,9 @@
     <sql id="pageQueryWhereCommon">
         where A1.`isDeleted` = 0
         <if test="pojo.id != null"> AND A1.`id` = #{pojo.id} </if>
-        <if test="pojo.appFlag != null"> AND A1.bookSTime <![CDATA[<=]]> UNIX_TIMESTAMP(now())
-            AND A1.bookETime <![CDATA[>=]]> UNIX_TIMESTAMP(now())
-            AND A1.taskStatus <![CDATA[<]]> 2
+        <if test="pojo.appFlag != null">
+            AND UNIX_TIMESTAMP(now()) BETWEEN A1.bookSTime AND A1.bookETime
+            AND A1.taskStatus != 2
             AND A1.status = 2
         </if>
         <if test="pojo.key != null">

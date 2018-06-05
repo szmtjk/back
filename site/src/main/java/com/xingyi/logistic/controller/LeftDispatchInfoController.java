@@ -29,7 +29,7 @@ public class LeftDispatchInfoController extends BaseCRUDController<LeftDispatchI
      * @param condition
      * @return
      */
-    @RequestMapping(value = "/getAppList", method = RequestMethod.POST)
+    @RequestMapping(value = "/getAppList", method = RequestMethod.GET)
     public JsonRet<Object> getAppList(@JsonParam LeftDispatchInfoQuery condition) {
         condition.setAppFlag("app");
         return super.getList(condition);

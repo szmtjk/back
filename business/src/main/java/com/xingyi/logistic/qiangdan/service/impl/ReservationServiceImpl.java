@@ -47,6 +47,20 @@ public class ReservationServiceImpl extends BaseCRUDService<ReservationDO,Reserv
     @Autowired
     private DispatchInfoService dispatchInfoService;
 
+    /**
+     * 取消预约
+     *
+     * @param Reservation
+     * @return
+     */
+    @Override
+    public JsonRet<Boolean> modify(Reservation reservation) {
+        ReservationDO model=  reservationDAO.getById(reservation.getId());
+        reservation.setLeftDispatchId(model.getLeftDispatchId());
+        reservation.setUserId(model.getUserId());
+        return super.modify(reservation);
+    }
+
     @Override
     public JsonRet<Boolean> check(ReservationCheckParam param) {
         JsonRet<Boolean> ret = new JsonRet<>();

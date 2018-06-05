@@ -201,6 +201,55 @@
         AND A1.`status` = 0
     </select>
 
+    <!-- 加载所有已调度的船舶任务 -->
+    <select id="queryAllDispatchShipTask" resultType="Map" parameterType="Map">
+
+        SELECT  A1.id dispatchId,A1.orderNo dispatchNo,A1.preWeight preOcccurWeight,A1.preArriveTime requireArriveTime,A1.dispatchType,
+                SH1.shipNo,SH1.loadWeight+SH1.preLoad preLoadWeight,SH1.shipFlag shipOwner,IFNULL(SH1.name,SS1.name) shipername,IFNULL(SH1.mobile,SS1.mobile) shipermobile,
+                A5.taskNo,A3.taskNo taskFlowNo,A3.goodsName,A3.totalWeight goodsTotalWeight,A6.simpleName companySimpleName,A3.sender sendGoodsUnit,A3.receiver receiveGoodsUnit,P1.name startPortName,P2.name endPortName,A3.loadingTime preLoadTime,A3.dischargeTime preDischargeTime,
+                SA1.arriveSPortTime actualArriveSPortTime,
+                SA1.loadTime actualLoadTime,SA1.loadWeight actualLoadWeight,SA1.bucklePrice,
+                SA1.departPortTime LeaveSPortTime,SA1.preArriveEPortTime,
+                SA1.actualArriveEPortTime,
+                SA1.startchargeTime,SA1.dischargeTime,SA1.dischargeWeight,
+                SA1.dischargeDelayFee,SA1.allowance,IFNULL(SA1.status,A1.status) sailingStatus
+
+        FROM DispatchInfo A1
+        INNER JOIN Ship SH1 ON SH1.Id=A1.shipId
+        LEFT JOIN ShipStaff SS1 ON SS1.shipId=SH1.Id
+
+        LEFT JOIN SailingInfo SA1 ON SA1.orderId=A1.id
+
+        INNER JOIN CustomerTaskFlow A3 ON A3.id=A1.customerTaskFlowId
+		INNER JOIN CustomerTask A5 ON A5.id=A3.taskId
+		INNER JOIN Customer A6 ON A6.id= A5.customerId
+        INNER JOIN Flow A4 ON A4.id=A3.flowId
+        INNER JOIN Port P1 ON P1.Id=A3.startPortId
+        INNER JOIN Port P2 ON P2.Id=A3.endPortId
+
+        <include refid="pageQueryWhereCommonNew"/>
+        order by A1.`id` desc
+        <include refid="pageCommon"/>
+
+
+
+    </select>
+
+    <sql id="pageQueryWhereCommonNew">
+        where A1.`isDeleted` = 0
+        <if test="pojo.id != null"> AND A1.`id` = #{pojo.id} </if>
+        <if test="pojo.key != null">
+            AND (
+
+            SH1.`shipNo` like concat('%', #{pojo.key}, '%')
+            or A5.`taskNo` like concat('%', #{pojo.key}, '%')
+            or A3.`taskNo` like concat('%', #{pojo.key}, '%')
+            or A1.`orderNo` like concat('%', #{pojo.key}, '%')
+            )
+
+        </if>
+    </sql>
+
     <select id="queryByPage" resultMap="AllColumnMap" parameterType="Map">
         SELECT A1.*, A2.shipNo,A4.goodsName, A6.fullName AS customerName, A3.orderNo
         FROM SailingInfo A1
@@ -214,11 +263,20 @@
         <include refid="pageCommon"/>
     </select>
 
+
+
     <sql id="pageQueryWhereCommon">
         where A1.`isDeleted` = 0
         <if test="pojo.id != null"> AND A1.`id` = #{pojo.id} </if>
         <if test="pojo.key != null">
-            AND (A2.`shipNo` like concat('%', #{pojo.key}, '%') or A2.`shipNo` like concat('%', #{pojo.key}, '%'))
+            AND (
+
+            A2.`shipNo` like concat('%', #{pojo.key}, '%')
+            or A5.`taskNo` like concat('%', #{pojo.key}, '%')
+            or A4.`taskNo` like concat('%', #{pojo.key}, '%')
+            or A3.`orderNo` like concat('%', #{pojo.key}, '%')
+            )
+
         </if>
     </sql>
 
