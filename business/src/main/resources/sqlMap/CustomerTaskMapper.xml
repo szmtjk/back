@@ -214,9 +214,9 @@
         left join Port h on h.id=b.startPortId
         left join Port i on i.id=b.endPortId
         left join Ship j on j.id=c.shipId
-        where 1 = 1
+        where a.isDeleted = 0
         <if test="key != null">
-            and a.taskNo = #{key}
+            and a.taskNo like concat('%', #{key}, '%')
         </if>
     </select>
 
@@ -236,9 +236,9 @@
         left join Port h on h.id=b.startPortId
         left join Port i on i.id=b.endPortId
         left join Ship j on j.id=c.shipId
-        where 1 = 1
+        where a.isDeleted = 0
         <if test="pojo.key != null">
-            and a.taskNo = #{pojo.key}
+            and a.taskNo like concat('%', #{pojo.key}, '%')
         </if>
         order by a.id, b.id, c.id, d.id
         <include refid="pageCommon"/>
