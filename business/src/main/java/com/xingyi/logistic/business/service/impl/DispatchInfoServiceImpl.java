@@ -19,6 +19,7 @@ import com.xingyi.logistic.common.bean.ErrCode;
 import com.xingyi.logistic.common.bean.JsonRet;
 import com.xingyi.logistic.common.bean.MiniUIJsonRet;
 import com.xingyi.logistic.common.bean.QueryType;
+import org.apache.http.client.utils.DateUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeanUtils;
@@ -26,10 +27,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.text.SimpleDateFormat;
+import java.util.*;
 import java.util.stream.Collectors;
 
 /**
@@ -214,6 +213,104 @@ public class DispatchInfoServiceImpl extends BaseCRUDService<DispatchInfoDO, Dis
        //time = "2018-03-01";
         try {
             list = shipDAO.queryReportThreeList(time,time,time,time);
+        } catch(Exception e) {
+
+            LOG.error("query report one err, param:{}", JsonUtil.toJson(param), e);
+        }
+        return list;
+    }
+
+
+    @Override
+    public List<Map<String,Object>> getReportTwoHeader(ReportParam param) {
+        List<Map<String,Object>>  list = new ArrayList<Map<String,Object>>();
+        ShipQuery shipQuery = new ShipQuery();
+        if(StringUtils.isEmpty(param.getKey()) && StringUtils.isEmpty(param.getName())){
+            Date currentTime = new Date();
+            SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM");
+            param.setKey( formatter.format(currentTime) );
+        }
+        BeanUtils.copyProperties(param, shipQuery);
+        try {
+            ShipDBQuery shipDBQuery = shipQueryConverter.toDOCondition(shipQuery);
+            List<Map<String,Object>>  listDao = shipDAO.getReportTwoHeader(shipDBQuery);
+            Map mapt = new HashMap();
+            mapt.put("field","xh");
+            mapt.put("headerAlign","center");
+            mapt.put("width","15");
+            mapt.put("header","序号");
+            list.add(mapt);
+            Map mapch = new HashMap();
+            mapch.put("field","ch");
+            mapch.put("headerAlign","center");
+            mapch.put("width","50");
+            mapch.put("header","船号");
+            list.add(mapch);
+            if(listDao.size() >0 ){
+                String str[] = (listDao.get(0).get("lx")+"").split(",");
+                for(int i = 0; i<str.length;i++){
+                    Map map = new HashMap();
+                    map.put("field","id"+(i+1));
+                    map.put("name","name"+(i+1));
+                    map.put("header",(i+1));
+                    map.put("headerAlign","center");
+                    map.put("width","120");
+                    list.add(map);
+                }
+            }
+            Map mapb = new HashMap();
+            mapb.put("field","hj");
+            mapb.put("name","hj");
+            mapb.put("header","合计");
+            mapb.put("headerAlign","center");
+            mapb.put("width","30");
+            list.add(mapb);
+
+        } catch(Exception e) {
+
+            LOG.error("query report one err, param:{}", JsonUtil.toJson(param), e);
+        }
+        return list;
+    }
+
+    @Override
+    public List<Map<String,Object>> getReportTwoList(ReportParam param) {
+        List<Map<String,Object>>  list = new ArrayList<Map<String,Object>>();
+        ShipQuery shipQuery = new ShipQuery();
+        if(StringUtils.isEmpty(param.getKey()) && StringUtils.isEmpty(param.getName())){
+            Date currentTime = new Date();
+            SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM");
+            param.setKey( formatter.format(currentTime) );
+        }
+        BeanUtils.copyProperties(param, shipQuery);
+        try {
+            ShipDBQuery shipDBQuery = shipQueryConverter.toDOCondition(shipQuery);
+            List<Map<String,Object>>  listDao = shipDAO.getReportTwoList(shipDBQuery);
+            for(int j=0;j<listDao.size();j++){
+                String strSj[] = (listDao.get(j).get("sj")+"").split(",");
+                String strReceiver[] = (listDao.get(j).get("receiver")+"").split(",");
+                String strSender[] = (listDao.get(j).get("sender")+"").split(",");
+                String strLx[] = (listDao.get(j).get("lx")+"").split(",");
+                Map map = new HashMap();
+                map.put("xh",(j+1));
+                map.put("ch",(listDao.get(j).get("shipNo")+""));
+                for(int i = 0; i<strLx.length;i++){
+
+                    // 1：熟料  2：散装  3：集装箱'
+                    //实际发货日期+收货单位（熟料），实际发货日期+发货单位发货地+收货单位（散装）
+                    if("1".equals(strLx[i])){
+                        map.put("id"+(i+1),strSj[i]+strReceiver[i]);
+                    }else {
+                        map.put("id"+(i+1),strSj[i]+strSender[i]+strReceiver[i]);
+                    }
+
+                }
+                map.put("hj",strLx.length);
+                list.add(map);
+
+            }
+
+
         } catch(Exception e) {
 
             LOG.error("query report one err, param:{}", JsonUtil.toJson(param), e);

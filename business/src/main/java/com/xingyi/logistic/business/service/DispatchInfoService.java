@@ -32,4 +32,8 @@ public interface DispatchInfoService extends BaseService<DispatchInfo, DispatchI
     List<Map<String,Object>> getReportFour2OneList(ReportParam param);
 
     List<Map<String,Object>> getReportFour2FourList(ReportParam param);
+
+    List<Map<String,Object>> getReportTwoHeader(ReportParam param);
+
+    List<Map<String,Object>> getReportTwoList(ReportParam param);
 }

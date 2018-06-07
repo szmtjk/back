@@ -84,4 +84,14 @@ public class DispatchController extends BaseCRUDController<DispatchInfo, Dispatc
         return dispatchInfoService.getReportFour2FourList(param);
     }
 
+    @RequestMapping("/getReportTwoHeader")
+    public List<Map<String,Object>> getReportTwoHeader(@JsonParam ReportParam param) {
+        return dispatchInfoService.getReportTwoHeader(param);
+    }
+
+    @RequestMapping("/getReportTwoList")
+    public List<Map<String,Object>> getReportTwoList(@JsonParam ReportParam param) {
+        return dispatchInfoService.getReportTwoList(param);
+    }
+
 }

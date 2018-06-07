@@ -35,5 +35,9 @@ public interface ShipDAO extends BaseDAO<ShipDO, ShipDBQuery> {
 
     List<Map<String, Object>> getReportFour2FourList(String time1, String time2);
 
+    List<Map<String, Object>> getReportTwoHeader(@Param("pojo") ShipDBQuery pojo);
+
+    List<Map<String, Object>> getReportTwoList(@Param("pojo") ShipDBQuery pojo);
+
     ShipDO getAppById(@Param("id") Long userId);
 }

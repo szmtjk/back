@@ -498,6 +498,39 @@
 
     </select>
 
+    <select id="getReportTwoHeader"  resultType="Map" parameterType="Map">
+        select ta.shipNo ,GROUP_CONCAT(ta.sj) as  sj,
+        GROUP_CONCAT(ta.receiver) as receiver,GROUP_CONCAT(ta.sender) as sender,GROUP_CONCAT(ta.goodsType) as lx from  (
+        select b.shipNo,date_format(FROM_UNIXTIME(a.loadTime),'%Y-%m-%d') as sj
+        ,d.receiver,d.sender,d.goodsType from SailingInfo a, Ship b,DispatchInfo c,CustomerTaskFlow d where
+        a.shipId = b.id and a.orderId = c.id and c.customerTaskFlowId =d.id
+        and b.shipFlag = 1 and a.isDeleted = '0'
+        <if test="pojo.key != null and pojo.key != ''">
+            and FROM_UNIXTIME( a.actualArriveEPortTime, '%Y-%m' )  = #{pojo.key}
+        </if>
+        <if test="pojo.name != null">
+            AND  (b.`shipNo` like concat('%', #{pojo.name}, '%') )
+        </if>
+        ORDER BY a.shipId
+        ) ta GROUP BY ta.shipNo order by count(ta.shipNo) desc  LIMIT 1
+    </select>
+
+    <select id="getReportTwoList"  resultType="Map" parameterType="Map">
+        select ta.shipNo ,GROUP_CONCAT(ta.sj) as  sj,
+        GROUP_CONCAT(ta.receiver) as receiver,GROUP_CONCAT(ta.sender) as sender,GROUP_CONCAT(ta.goodsType) as lx from  (
+        select b.shipNo,date_format(FROM_UNIXTIME(a.loadTime),'%Y-%m-%d') as sj
+        ,d.receiver,d.sender,d.goodsType from SailingInfo a, Ship b,DispatchInfo c,CustomerTaskFlow d where
+        a.shipId = b.id and a.orderId = c.id and c.customerTaskFlowId =d.id
+        <if test="pojo.key != null and pojo.key != ''">
+            and FROM_UNIXTIME( a.actualArriveEPortTime, '%Y-%m' )  = #{pojo.key}
+        </if>
+        <if test="pojo.name != null">
+            AND  (b.`shipNo` like concat('%', #{pojo.name}, '%') )
+        </if>
+        and b.shipFlag = 1 and a.isDeleted = '0' ORDER BY a.shipId
+        ) ta GROUP BY ta.shipNo order by count(ta.shipNo) desc
+    </select>
+
     <sql id="queryReportFiveCommon">
         from DispatchInfo a LEFT JOIN Ship b
         on  a.shipId = b.id  where a.isDeleted ='0'
