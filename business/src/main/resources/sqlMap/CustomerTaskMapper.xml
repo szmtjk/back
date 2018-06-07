@@ -14,6 +14,7 @@
         <result property="description" column="description"/>
         <result property="creator" column="creator"/>
         <result property="created" column="created"/>
+        <result property="updater" column="updater"/>
         <result property="updated" column="updated"/>
     </resultMap>
 
@@ -57,6 +58,7 @@
         ,`description`
         ,`creator`
         ,`created`
+        ,`updater`
         ,`updated`
     </sql>
 
@@ -74,6 +76,8 @@
             <if test="pojo.totalLoad!=null"> `totalLoad`,</if>
             <if test="pojo.description!=null"> `description`,</if>
             `taskNo`,
+            <if test="pojo.creator!=null"> `creator`,</if>
+            <if test="pojo.updater!=null"> `updater`,</if>
             `created`,
             `updated`
         </trim>
@@ -85,6 +89,8 @@
             <if test="pojo.totalLoad!=null">#{pojo.totalLoad},</if>
             <if test="pojo.description!=null">#{pojo.description},</if>
             CONCAT('CT', round(RAND()*100 + 100), round(RAND()*100 + 100), UNIX_TIMESTAMP(now())),
+            <if test="pojo.creator!=null">#{pojo.creator},</if>
+            <if test="pojo.updater!=null">#{pojo.updater},</if>
             UNIX_TIMESTAMP(now()),
             UNIX_TIMESTAMP(now())
         </trim>
@@ -99,6 +105,7 @@
             <if test="pojo.selfBuckle!=null">`selfBuckle` = #{pojo.selfBuckle},</if>
             <if test="pojo.totalLoad!=null">`totalLoad` = #{pojo.totalLoad},</if>
             <if test="pojo.description!=null">`description` = #{pojo.description},</if>
+            <if test="pojo.updater!=null">`updater` = #{pojo.updater},</if>
             `updated` = UNIX_TIMESTAMP(now())
         </set>
         WHERE `id` = #{pojo.id} and `isDeleted` = 0
@@ -108,6 +115,7 @@
     <update id="del" parameterType="java.lang.Long">
         UPDATE CustomerTask
         SET `isDeleted` = 1 ,
+        <if test="pojo.updater!=null">`updater` = #{pojo.updater},</if>
         `updated` = UNIX_TIMESTAMP(now())
         WHERE `id` = #{id} and `isDeleted` = 0
         LIMIT 1

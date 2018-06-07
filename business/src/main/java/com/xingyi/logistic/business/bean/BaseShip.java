@@ -60,6 +60,24 @@ public class BaseShip extends BaseModelAndDO {
     private String shipPhoto;//船舶照片
     private Integer from;//信息来源  1：后台新增  2：APP新增
     private Integer status;//状态  1：启用  2：禁用
+    private Integer fitStatus;//状态  1：适航  2：不适航
+    private String noFitCause;//原因
+
+    public String getNoFitCause() {
+        return noFitCause;
+    }
+
+    public void setNoFitCause(String noFitCause) {
+        this.noFitCause = noFitCause;
+    }
+
+    public Integer getFitStatus() {
+        return fitStatus;
+    }
+
+    public void setFitStatus(Integer fitStatus) {
+        this.fitStatus = fitStatus;
+    }
 
     public String getName() {
         return name;

@@ -233,7 +233,7 @@
         <if test="pojo.id != null"> AND a.`id` = #{pojo.id} </if>
         <choose>
             <when test="pojo.flag != null and pojo.flag == 1">
-                AND a.`taskStatus` &gt;= 0
+                AND a.`taskStatus` &gt;= 2
             </when>
             <otherwise>
                 AND a.`taskStatus` &lt; 2

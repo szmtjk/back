@@ -14,7 +14,7 @@ public class AvailableDispatchShip {
     private Integer shipType;
     private Integer shipFlag;
     private String captain;
-    private String mobile;
+    private String combineMobile;
     private String sailArea;
     private String description;
 
@@ -82,12 +82,12 @@ public class AvailableDispatchShip {
         this.captain = captain;
     }
 
-    public String getMobile() {
-        return mobile;
+    public String getCombineMobile() {
+        return combineMobile;
     }
 
-    public void setMobile(String mobile) {
-        this.mobile = mobile;
+    public void setCombineMobile(String combineMobile) {
+        this.combineMobile = combineMobile;
     }
 
     public String getSailArea() {

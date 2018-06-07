@@ -16,6 +16,8 @@ public class BaseFlow extends BaseModelAndDO {
     private Long endPortId;//
     private Integer sailingArea;//航行区域 按位存储信息
     private String waterLevelPoint;//水位点
+
+    private String sailingTime;//水位点
     @AllowedNumber(values = {1, 2})
     private Integer status; //状态  1：启用 2：禁用
     private String description;
@@ -74,6 +76,14 @@ public class BaseFlow extends BaseModelAndDO {
 
     public void setWaterLevelPoint(String waterLevelPoint) {
         this.waterLevelPoint = waterLevelPoint;
+    }
+
+    public String getSailingTime() {
+        return sailingTime;
+    }
+
+    public void setSailingTime(String sailingTime) {
+        this.sailingTime = sailingTime;
     }
 
     public Integer getStatus() {

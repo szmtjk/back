@@ -14,6 +14,15 @@ public class ShipDBQuery extends BaseDBQueryPage {
     private String startTime;
     private String endTime;
     private String name;
+    private Integer fitStatus;
+
+    public Integer getFitStatus() {
+        return fitStatus;
+    }
+
+    public void setFitStatus(Integer fitStatus) {
+        this.fitStatus = fitStatus;
+    }
 
     public String getKey() {
         return key;

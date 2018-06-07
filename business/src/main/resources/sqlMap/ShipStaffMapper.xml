@@ -13,6 +13,8 @@
         <result property="shipId" column="shipId"/>
         <result property="title" column="title"/>
         <result property="isOwner" column="isOwner"/>
+        <result property="fitAssignCert" column="fitAssignCert"/>
+        <result property="certValidDate" column="certValidDate"/>
         <result property="status" column="status"/>
         <result property="description" column="description"/>
         <result property="creator" column="creator"/>
@@ -34,6 +36,8 @@
         ,a.`shipId`
         ,a.`title`
         ,a.`isOwner`
+        ,a.`fitAssignCert`
+        ,a.`certValidDate`
         ,a.`status`
         ,a.`description`
         ,a.`creator`
@@ -59,6 +63,8 @@
             <if test="pojo.shipId!=null"> `shipId`,</if>
             <if test="pojo.title!=null"> `title`,</if>
             <if test="pojo.isOwner!=null"> `isOwner`,</if>
+            <if test="pojo.fitAssignCert!=null"> `fitAssignCert`,</if>
+            <if test="pojo.certValidDate!=null"> `certValidDate`,</if>
             <if test="pojo.status!=null"> `status`,</if>
             <if test="pojo.description!=null"> `description`,</if>
             <if test="pojo.creator!=null"> `creator`,</if>
@@ -77,6 +83,8 @@
             <if test="pojo.shipId!=null">#{pojo.shipId},</if>
             <if test="pojo.title!=null">#{pojo.title},</if>
             <if test="pojo.isOwner!=null">#{pojo.isOwner},</if>
+            <if test="pojo.fitAssignCert!=null">#{pojo.fitAssignCert},</if>
+            <if test="pojo.certValidDate!=null">#{pojo.certValidDate},</if>
             <if test="pojo.status!=null">#{pojo.status},</if>
             <if test="pojo.description!=null">#{pojo.description},</if>
             <if test="pojo.creator!=null">#{pojo.creator},</if>
@@ -99,6 +107,8 @@
             <if test="pojo.shipId!=null">`shipId` = #{pojo.shipId},</if>
             <if test="pojo.title!=null">`title` = #{pojo.title},</if>
             <if test="pojo.isOwner!=null">`isOwner` = #{pojo.isOwner},</if>
+            <if test="pojo.fitAssignCert!=null">`fitAssignCert` = #{pojo.fitAssignCert},</if>
+            <if test="pojo.certValidDate!=null">`certValidDate` = #{pojo.certValidDate},</if>
             <if test="pojo.status!=null">`status` = #{pojo.status},</if>
             <if test="pojo.description!=null">`description` = #{pojo.description},</if>
             <if test="pojo.updater!=null">`updater` = #{pojo.updater},</if>

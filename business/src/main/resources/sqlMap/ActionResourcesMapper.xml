@@ -107,6 +107,7 @@
             <if test="pojo.parentId!=null">`parentId` = #{pojo.parentId},</if>
             <if test="pojo.orderNo!=null">`orderNo` = #{pojo.orderNo},</if>
             <if test="pojo.updaterName!=null">`updaterName` = #{pojo.updaterName},</if>
+            <if test="pojo.updater!=null">`updater` = #{pojo.updater},</if>
             `updated` = UNIX_TIMESTAMP(now())
         </set>
         WHERE `id` = #{pojo.id}

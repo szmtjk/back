@@ -19,6 +19,9 @@
         <result property="allowance" column="allowance"/>
         <result property="departPortTime" column="departPortTime"/>
         <result property="bucklePrice" column="bucklePrice"/>
+        <result property="cutWire" column="cutWire"/>
+        <result property="cutOther" column="cutOther"/>
+        <result property="cutOtherDes" column="cutOtherDes"/>
         <result property="description" column="description"/>
         <result property="creator" column="creator"/>
         <result property="created" column="created"/>
@@ -46,6 +49,9 @@
         ,`allowance`
         ,`departPortTime`
         ,`bucklePrice`
+        ,`cutWire`
+        ,`cutOther`
+        ,`cutOtherDes`
         ,`description`
         ,`creator`
         ,`created`
@@ -74,6 +80,9 @@
             <if test="pojo.allowance!=null"> `allowance`,</if>
             <if test="pojo.departPortTime!=null"> `departPortTime`,</if>
             <if test="pojo.bucklePrice!=null"> `bucklePrice`,</if>
+            <if test="pojo.cutWire!=null"> `cutWire`,</if>
+            <if test="pojo.cutOther!=null"> `cutOther`,</if>
+            <if test="pojo.cutOtherDes!=null"> `cutOtherDes`,</if>
             <if test="pojo.description!=null"> `description`,</if>
             `created`,
             `updated`
@@ -95,6 +104,9 @@
             <if test="pojo.allowance!=null">#{pojo.allowance},</if>
             <if test="pojo.departPortTime!=null">#{pojo.departPortTime},</if>
             <if test="pojo.bucklePrice!=null">#{pojo.bucklePrice},</if>
+            <if test="pojo.cutWire!=null">#{pojo.cutWire},</if>
+            <if test="pojo.cutOther!=null">#{pojo.cutOther},</if>
+            <if test="pojo.cutOtherDes!=null">#{pojo.cutOtherDes},</if>
             <if test="pojo.description!=null">#{pojo.description},</if>
             UNIX_TIMESTAMP(now()),
             UNIX_TIMESTAMP(now())
@@ -120,6 +132,9 @@
             <if test="pojo.allowance!=null">`allowance` =#{pojo.allowance},</if>
             <if test="pojo.departPortTime!=null">`departPortTime` =#{pojo.departPortTime},</if>
             <if test="pojo.bucklePrice!=null">`bucklePrice` =#{pojo.bucklePrice},</if>
+            <if test="pojo.cutWire!=null">`cutWire` =#{pojo.cutWire},</if>
+            <if test="pojo.cutOther!=null">`cutOther` =#{pojo.cutOther},</if>
+            <if test="pojo.cutOtherDes!=null">`cutOtherDes` =#{pojo.cutOtherDes},</if>
             <if test="pojo.description!=null">`description` = #{pojo.description},</if>
             `updated` = UNIX_TIMESTAMP(now())
         </set>

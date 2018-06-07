@@ -35,6 +35,7 @@
         <result property="description" column="description"/>
         <result property="creator" column="creator"/>
         <result property="created" column="created"/>
+        <result property="updater" column="updater"/>
         <result property="updated" column="updated"/>
     </resultMap>
 
@@ -69,9 +70,10 @@
         ,a.`status`
         ,a.`taskStatus`
         ,a.`description`
-        ,a.`creator`
-        ,a.`created`
-        ,a.`updated`
+        ,`creator`
+        ,`created`
+        ,`updater`
+        ,`updated`
     </sql>
 
     <insert id="insertSelective" useGeneratedKeys="true" keyProperty="pojo.id">
@@ -106,6 +108,8 @@
             <if test="pojo.taskStatus!=null"> `taskStatus`,</if>
             <if test="pojo.description!=null"> `description`,</if>
             `taskNo`,
+            <if test="pojo.creator!=null"> `creator`,</if>
+            <if test="pojo.updater!=null"> `updater`,</if>
             `created`,
             `updated`
         </trim>
@@ -140,6 +144,8 @@
             <if test="pojo.taskStatus!=null">#{pojo.taskStatus},</if>
             <if test="pojo.description!=null">#{pojo.description},</if>
             CONCAT('CTF', round(RAND()*100 + 100), round(RAND()*100 + 100), UNIX_TIMESTAMP(now())),
+            <if test="pojo.creator!=null">#{pojo.creator},</if>
+            <if test="pojo.updater!=null">#{pojo.updater},</if>
             UNIX_TIMESTAMP(now()),
             UNIX_TIMESTAMP(now())
         </trim>
@@ -177,6 +183,7 @@
             <if test="pojo.status!=null">`status` = #{pojo.status},</if>
             <if test="pojo.taskStatus!=null">`taskStatus` = #{pojo.taskStatus},</if>
             <if test="pojo.description!=null">`description` = #{pojo.description},</if>
+            <if test="pojo.updater!=null">`updater` = #{pojo.updater},</if>
             `updated` = UNIX_TIMESTAMP(now())
         </set>
         WHERE `id` = #{pojo.id} and `isDeleted` = 0

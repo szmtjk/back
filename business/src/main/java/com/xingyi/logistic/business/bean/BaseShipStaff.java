@@ -14,6 +14,8 @@ public class BaseShipStaff extends BaseModelAndDO {
     private Integer shipId;//所属
     private Integer title;//岗位  1：船长  2：驾驶员  3：轮机员  4：水手
     private Integer isOwner;//是否承包人  1：是  2：否
+    private String fitAssignCert;//适任证书
+    private String certValidDate;//证书有效期
     private Integer status;//状态  1：启用  2：禁用
     private String description;//备注
 
@@ -87,6 +89,22 @@ public class BaseShipStaff extends BaseModelAndDO {
 
     public void setIsOwner(Integer isOwner) {
         this.isOwner = isOwner;
+    }
+
+    public String getCertValidDate() {
+        return certValidDate;
+    }
+
+    public void setCertValidDate(String certValidDate) {
+        this.certValidDate = certValidDate;
+    }
+
+    public String getFitAssignCert() {
+        return fitAssignCert;
+    }
+
+    public void setFitAssignCert(String fitAssignCert) {
+        this.fitAssignCert = fitAssignCert;
     }
 
     public Integer getStatus() {

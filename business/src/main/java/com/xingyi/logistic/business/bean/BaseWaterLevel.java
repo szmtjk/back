@@ -19,7 +19,7 @@ public class BaseWaterLevel extends BaseModelAndDO{
      * 水位
      */
     @NotNullEmpty
-    private Integer level;
+    private Float level;
 
     /**
      * 状态  1：启用  2：禁用
@@ -46,11 +46,11 @@ public class BaseWaterLevel extends BaseModelAndDO{
         this.name = name;
     }
 
-    public Integer getLevel() {
+    public Float getLevel() {
         return level;
     }
 
-    public void setLevel(Integer level) {
+    public void setLevel(Float level) {
         this.level = level;
     }
 

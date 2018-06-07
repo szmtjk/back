@@ -54,6 +54,8 @@
         <result property="shipPhoto" column="shipPhoto"/>
         <result property="from" column="from"/>
         <result property="status" column="status"/>
+        <result property="fitStatus" column="fitStatus"/>
+        <result property="noFitCause" column="noFitCause"/>
     </resultMap>
 
     <resultMap id="ShipWithStaffColumnMap" type="com.xingyi.logistic.business.db.entity.ShipWithStaffDO">
@@ -98,6 +100,7 @@
         <result property="updated" column="updated"/>
         <result property="captain" column="captain"/>
         <result property="name" column="name"/>
+        <result property="combineMobile" column="combineMobile"/>
     </resultMap>
 
 
@@ -153,6 +156,8 @@
         <result property="shipPhoto" column="shipPhoto"/>
         <result property="from" column="from"/>
         <result property="status" column="status"/>
+        <result property="fitStatus" column="fitStatus"/>
+        <result property="noFitCause" column="noFitCause"/>
     </resultMap>
 
     <sql id="all_column">
@@ -208,6 +213,8 @@
         ,a.`shipPhoto`
         ,a.`from`
         ,a.`status`
+        ,a.`fitStatus`
+        ,a.`noFitCause`
     </sql>
     <sql id="all_column_user">
         <include refid="all_column"/>
@@ -215,8 +222,8 @@
     </sql>
     <sql id="all_column_staff">
         <include refid="all_column"/>
-        ,b.`name` as captain
-        ,b.`mobile` as outerMobile
+        ,IFNULL(b.`name`,a.name) as captain
+        ,IFNULL(b.`mobile`,a.name) as combineMobile
     </sql>
 
     <insert id="insertSelective" useGeneratedKeys="true" keyProperty="pojo.id">
@@ -254,8 +261,8 @@
             <if test="pojo.runType!=null"> `runType`,</if>
             <if test="pojo.rebuildDate!=null and pojo.rebuildDate != '' "> `rebuildDate`,</if>
             <!--<if test="pojo.insuranceDate!=null"> `insuranceDate`,</if>-->
-            <if test="pojo.checkDate!=null"> `checkDate`,</if>
-            <if test="pojo.repairDate!=null"> `repairDate`,</if>
+            <if test="pojo.checkDate!=null and pojo.checkDate != ''"> `checkDate`,</if>
+            <if test="pojo.repairDate!=null and pojo.repairDate != ''"> `repairDate`,</if>
             <if test="pojo.description!=null"> `description`,</if>
             <if test="pojo.name!=null"> `name`,</if>
             <if test="pojo.mobile!=null"> `mobile`,</if>
@@ -268,7 +275,9 @@
             <if test="pojo.bankCardPhoto!=null"> `bankCardPhoto`,</if>
             <if test="pojo.shipPhoto!=null"> `shipPhoto`,</if>
             <if test="pojo.from!=null"> `from`,</if>
-            <if test="pojo.status!=null"> `status`,</if>
+            <if test="pojo.status!=null and pojo.status!=''"> `status`,</if>
+            <if test="pojo.fitStatus!=null"> `fitStatus`,</if>
+            <if test="pojo.noFitCause!=null"> `noFitCause`,</if>
             <if test="pojo.creator!=null"> `creator`,</if>
             <if test="pojo.updater!=null"> `updater`,</if>
             `created`,
@@ -308,8 +317,8 @@
             <if test="pojo.runType!=null">#{pojo.runType},</if>
             <if test="pojo.rebuildDate!=null and pojo.rebuildDate != ''">#{pojo.rebuildDate},</if>
             <!--<if test="pojo.insuranceDate!=null">#{pojo.insuranceDate},</if>-->
-            <if test="pojo.checkDate!=null">#{pojo.checkDate},</if>
-            <if test="pojo.repairDate!=null">#{pojo.repairDate},</if>
+            <if test="pojo.checkDate!=null and pojo.checkDate != ''" >#{pojo.checkDate},</if>
+            <if test="pojo.repairDate!=null and pojo.repairDate != ''">#{pojo.repairDate},</if>
             <if test="pojo.description!=null">#{pojo.description},</if>
             <if test="pojo.name!=null">#{pojo.name},</if>
             <if test="pojo.mobile!=null">#{pojo.mobile},</if>
@@ -322,7 +331,9 @@
             <if test="pojo.bankCardPhoto!=null">#{pojo.bankCardPhoto},</if>
             <if test="pojo.shipPhoto!=null">#{pojo.shipPhoto},</if>
             <if test="pojo.from!=null">#{pojo.from},</if>
-            <if test="pojo.status!=null">#{pojo.status},</if>
+            <if test="pojo.status!=null and pojo.status!=''">#{pojo.status},</if>
+            <if test="pojo.fitStatus!=null">#{pojo.fitStatus},</if>
+            <if test="pojo.noFitCause!=null">#{pojo.noFitCause},</if>
             <if test="pojo.creator!=null">#{pojo.creator},</if>
             <if test="pojo.updater!=null">#{pojo.updater},</if>
             UNIX_TIMESTAMP(now()),
@@ -366,8 +377,8 @@
             <if test="pojo.runType!=null"> `runType`= #{pojo.runType},</if>
             <if test="pojo.rebuildDate!=null and pojo.rebuildDate!= '' "> `rebuildDate`= #{pojo.rebuildDate},</if>
             <!--<if test="pojo.insuranceDate!=null"> `insuranceDate`= #{pojo.insuranceDate},</if>-->
-            <if test="pojo.checkDate!=null"> `checkDate`= #{pojo.checkDate},</if>
-            <if test="pojo.repairDate!=null"> `repairDate`= #{pojo.repairDate},</if>
+            <if test="pojo.checkDate!=null and pojo.checkDate != ''"> `checkDate`= #{pojo.checkDate},</if>
+            <if test="pojo.repairDate!=null and pojo.repairDate != ''"> `repairDate`= #{pojo.repairDate},</if>
             <if test="pojo.description!=null"> `description`= #{pojo.description},</if>
             <if test="pojo.name!=null"> `name`= #{pojo.name},</if>
             <if test="pojo.mobile!=null"> `mobile`= #{pojo.mobile},</if>
@@ -380,7 +391,9 @@
             <if test="pojo.bankCardPhoto!=null"> `bankCardPhoto`= #{pojo.bankCardPhoto},</if>
             <if test="pojo.shipPhoto!=null"> `shipPhoto`= #{pojo.shipPhoto},</if>
             <if test="pojo.from!=null"> `from`= #{pojo.from},</if>
-            <if test="pojo.status!=null"> `status`= #{pojo.status},</if>
+            <if test="pojo.status!=null and pojo.status!=''"> `status`= #{pojo.status},</if>
+            <if test="pojo.fitStatus!=null"> `fitStatus`= #{pojo.fitStatus},</if>
+            <if test="pojo.noFitCause!=null"> `noFitCause`= #{pojo.noFitCause},</if>
             <if test="pojo.updater!=null">`updater` = #{pojo.updater},</if>
             `updated` = UNIX_TIMESTAMP(now())
         </set>
@@ -657,11 +670,12 @@
         <if test="pojo.key != null">
             AND (a.`shipNo` like concat('%', #{pojo.key}, '%') )
         </if>
+        <if test="pojo.fitStatus != null and pojo.fitStatus != ''"> AND a.`fitStatus` = #{pojo.fitStatus} </if>
     </sql>
 
     <sql id="queryWithStaffWhereCommon">
         from `Ship` a
-        left join `ShipStaff` b on b.shipId = a.id and b.isDeleted = 0 and b.title = 1
+        left join `ShipStaff` b on b.shipId = a.id and b.isDeleted = 0 and b.isOwner = 1 and a.runType!=2
         where a.isDeleted = 0
         <if test="pojo.key != null and pojo.key != ''">
             AND (a.`shipNo` like concat('%', #{pojo.key}, '%') )
