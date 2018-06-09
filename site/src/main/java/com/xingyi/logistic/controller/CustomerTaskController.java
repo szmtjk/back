@@ -70,7 +70,7 @@ public class CustomerTaskController extends BaseCRUDController<CustomerTask, Cus
     }
 
     @RequestMapping(value = "/getTaskDetailList")
-    public JsonRet<Object> getList(@JsonParam CustomerTaskQuery condition) {
+    public JsonRet<Object> getTaskDetailList(@JsonParam CustomerTaskQuery condition) {
         if (condition != null && condition.getQueryParamFlag() == QueryType.MINIUI.getCode()) {
             return getTaskDetailMiniUIList(condition);
         }

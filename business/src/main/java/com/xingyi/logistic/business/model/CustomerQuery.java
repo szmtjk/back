@@ -15,4 +15,5 @@ public class CustomerQuery extends BaseQueryPage {
     public void setKey(String key) {
         this.key = key;
     }
+
 }
