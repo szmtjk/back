@@ -143,7 +143,7 @@
 
     <update id="updateCustomerTaskStatus4Dispatch">
         update CustomerTaskFlow aa
-        inner join (SELECT customerTaskFlowId as id, sum(preLoad) as preLoad
+        left join (SELECT customerTaskFlowId as id, sum(preLoad) as preLoad
                     from DispatchInfo
                     where isDeleted=0
                     group by customerTaskFlowId
