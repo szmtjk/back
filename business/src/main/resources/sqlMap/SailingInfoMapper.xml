@@ -217,51 +217,137 @@
     </select>
 
     <!-- 加载所有已调度的船舶任务 -->
-    <select id="queryAllDispatchShipTask" resultType="Map" parameterType="Map">
+    <select id="getDispatchShipTaskCount" resultType="java.lang.Integer" parameterType="Map">
 
-        SELECT  A1.id dispatchId,A1.orderNo dispatchNo,A1.preWeight preOcccurWeight,A1.preArriveTime requireArriveTime,A1.dispatchType,
-                SH1.shipNo,SH1.loadWeight+SH1.preLoad preLoadWeight,SH1.shipFlag shipOwner,IFNULL(SH1.name,SS1.name) shipername,IFNULL(SH1.mobile,SS1.mobile) shipermobile,
-                A5.taskNo,A3.taskNo taskFlowNo,A3.goodsName,A3.totalWeight goodsTotalWeight,A6.simpleName companySimpleName,A3.sender sendGoodsUnit,A3.receiver receiveGoodsUnit,P1.name startPortName,P2.name endPortName,A3.loadingTime preLoadTime,A3.dischargeTime preDischargeTime,
-                SA1.arriveSPortTime actualArriveSPortTime,
-                SA1.loadTime actualLoadTime,SA1.loadWeight actualLoadWeight,SA1.bucklePrice,
-                SA1.departPortTime LeaveSPortTime,SA1.preArriveEPortTime,
-                SA1.actualArriveEPortTime,
-                SA1.startchargeTime,SA1.dischargeTime,SA1.dischargeWeight,
-                SA1.dischargeDelayFee,SA1.allowance,IFNULL(SA1.status,A1.status) sailingStatus
+        SELECT  count(A1.dispatchId)
+        FROM  (<include refid="v_dispatchTask"/>) A1
 
-        FROM DispatchInfo A1
-        INNER JOIN Ship SH1 ON SH1.Id=A1.shipId
-        LEFT JOIN ShipStaff SS1 ON SS1.shipId=SH1.Id
-
-        LEFT JOIN SailingInfo SA1 ON SA1.orderId=A1.id
-
-        INNER JOIN CustomerTaskFlow A3 ON A3.id=A1.customerTaskFlowId
-		INNER JOIN CustomerTask A5 ON A5.id=A3.taskId
-		INNER JOIN Customer A6 ON A6.id= A5.customerId
-        INNER JOIN Flow A4 ON A4.id=A3.flowId
-        INNER JOIN Port P1 ON P1.Id=A3.startPortId
-        INNER JOIN Port P2 ON P2.Id=A3.endPortId
-
-        <include refid="pageQueryWhereCommonNew"/>
-        order by A1.`id` desc
-        <include refid="pageCommon"/>
-
-
+        <include refid="dispatchCondition"/>
 
     </select>
+
+    <!-- 加载所有已调度的船舶任务 -->
+    <select id="getDispatchShipTaskList" resultType="Map" parameterType="Map">
+        SELECT A1.*,
+          SA1.id sailingId,SA1.arriveSPortTime actualArriveSPortTime,SA1.loadTime actualLoadTime,SA1.loadWeight actualLoadWeight,SA1.bucklePrice,
+          SA1.departPortTime LeaveSPortTime,SA1.preArriveEPortTime,
+          SA1.actualArriveEPortTime,SA1.startchargeTime,SA1.dischargeTime,SA1.dischargeWeight,SA1.created sailingCreateTime,
+          SA1.dischargeDelayFee,SA1.allowance,IFNULL(SA1.status,A1.dispatchStatus) sailingStatus
+        FROM (<include refid="v_dispatchTask"/>) A1
+        LEFT JOIN SailingInfo SA1 ON SA1.orderId=A1.dispatchId
+        <include refid="dispatchCondition"/>
+        order by A1.`dispatchId` desc
+        <include refid="pageCommon"/>
+
+    </select>
+
+    <sql id="dispatchCondition">
+        where 0 = 0
+        <if test="pojo.id != null"> AND A1.`dispatchId` = #{pojo.id} </if>
+        <if test="pojo.key != null">
+            AND (
+            A1.`shipNo` like concat('%', #{pojo.key}, '%')
+            or A1.`taskNo` like concat('%', #{pojo.key}, '%')
+            or A1.`taskFlowNo` like concat('%', #{pojo.key}, '%')
+            or A1.`dispatchNo` like concat('%', #{pojo.key}, '%')
+            )
+        </if>
+    </sql>
+
+    <!-- 加载所有有航次的船舶任务 -->
+    <select id="getSailingShipTaskCount" resultType="java.lang.Integer" parameterType="Map">
+
+        SELECT  count(A1.sailingId)
+        FROM  (<include refid="v_sailingTask"/>) A1
+
+        <include refid="taskCondition"/>
+
+    </select>
+
+    <!-- 加载所有有航次的船舶任务 -->
+    <select id="getSailingShipTaskList" resultType="Map" parameterType="Map">
+        SELECT *
+        FROM (<include refid="v_sailingTask"/>) A1
+
+        <include refid="taskCondition"/>
+        order by A1.`sailingId` desc
+        <include refid="pageCommon"/>
+
+    </select>
+
+    <sql id="taskCondition">
+        where 0 = 0
+        <if test="pojo.id != null"> AND A1.`sailingId` = #{pojo.id} </if>
+        <if test="pojo.key != null">
+            AND (
+            A1.`shipNo` like concat('%', #{pojo.key}, '%')
+            or A1.`taskNo` like concat('%', #{pojo.key}, '%')
+            or A1.`taskFlowNo` like concat('%', #{pojo.key}, '%')
+            or A1.`dispatchNo` like concat('%', #{pojo.key}, '%')
+            )
+        </if>
+    </sql>
+
+    <!-- 流向任务视图 -->
+    <sql id="v_flowTask">
+        SELECT  A2.id taskId,A2.taskNo,A2.totalLoad totalWeight,
+                A1.id flowTaskId,A1.taskNo taskFlowNo,A1.goodsName,A1.totalWeight flowTotalWeight,
+                A1.flowId,A4.name flowName,A1.sender sendGoodsUnit,A1.receiver receiveGoodsUnit,
+                A1.sailingArea,A1.taskStatus taskFlowStatus,
+                A1.loadingTime preLoadTime,A1.dischargeTime preDischargeTime,A1.created flowTaskCreateTime,
+                A3.id customerId,A3.fullName customerFullName,A3.simpleName companySimpleName,
+                P1.id startPortId,P1.name startPortName,P2.id endPortId,P2.name endPortName
+
+        FROM CustomerTaskFlow A1
+		INNER JOIN CustomerTask A2 ON A2.id=A1.taskId
+		INNER JOIN Customer A3 ON A3.id= A2.customerId
+        INNER JOIN Flow A4 ON A4.id=A1.flowId
+        INNER JOIN Port P1 ON P1.Id=A1.startPortId
+        INNER JOIN Port P2 ON P2.Id=A1.endPortId
+        WHERE A1.`isDeleted` = 0
+    </sql>
+    <!-- 船舶视图 -->
+    <sql id="v_ship">
+        SELECT SH1.id shipId,SH1.shipNo,SH1.loadWeight+SH1.preLoad shipPreLoadWeight,SH1.shipFlag shipOwner,
+        IFNULL(SH1.name,SS1.name) shipername,IFNULL(SH1.mobile,SS1.mobile) shipermobile
+        FROM Ship SH1
+        LEFT JOIN ShipStaff SS1 ON SS1.shipId=SH1.Id
+        WHERE SH1.`isDeleted` = 0
+    </sql>
+    <!-- 调度任务视图 -->
+    <sql id="v_dispatchTask">
+        SELECT  A1.id dispatchId,A1.orderNo dispatchNo,A1.preWeight preOcccurWeight,
+        A1.preArriveTime requireArriveTime,A1.dispatchType,A1.created dispatchCreateTime,A1.status dispatchStatus,
+        T1.*,
+        S1.*
+        FROM DispatchInfo A1
+        INNER JOIN (<include refid="v_ship"/>) S1 ON S1.shipId=A1.shipId
+        INNER JOIN (<include refid="v_flowTask"/>) T1 ON T1.flowTaskId=A1.customerTaskFlowId
+        WHERE A1.`isDeleted` = 0
+    </sql>
+
+    <!-- 航次任务试图 -->
+    <sql id="v_sailingTask">
+        SELECT  SA1.id sailingId,SA1.arriveSPortTime actualArriveSPortTime,SA1.loadTime actualLoadTime,SA1.loadWeight actualLoadWeight,SA1.bucklePrice,
+                SA1.departPortTime LeaveSPortTime,SA1.preArriveEPortTime,
+                SA1.actualArriveEPortTime,SA1.startchargeTime,SA1.dischargeTime,SA1.dischargeWeight,SA1.created sailingCreateTime,
+                SA1.dischargeDelayFee,SA1.allowance,IFNULL(SA1.status,D1.dispatchStatus) sailingStatus,
+                D1.*
+        FROM SailingInfo SA1
+        INNER JOIN (<include refid="v_dispatchTask"/>) D1 ON D1.dispatchId=SA1.orderId
+        WHERE SA1.`isDeleted` = 0
+    </sql>
 
     <sql id="pageQueryWhereCommonNew">
         where A1.`isDeleted` = 0
         <if test="pojo.id != null"> AND A1.`id` = #{pojo.id} </if>
         <if test="pojo.key != null">
             AND (
-
             SH1.`shipNo` like concat('%', #{pojo.key}, '%')
             or A5.`taskNo` like concat('%', #{pojo.key}, '%')
             or A3.`taskNo` like concat('%', #{pojo.key}, '%')
             or A1.`orderNo` like concat('%', #{pojo.key}, '%')
             )
-
         </if>
     </sql>
 
@@ -277,8 +363,6 @@
         order by A1.`id` desc
         <include refid="pageCommon"/>
     </select>
-
-
 
     <sql id="pageQueryWhereCommon">
         where A1.`isDeleted` = 0

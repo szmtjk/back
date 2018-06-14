@@ -31,6 +31,34 @@ public class BaseSailingInfo extends BaseModelAndDO {
     private String goodsName;
     private String customerName;
     private String orderNo;
+    private Float cutWire;//扣钢丝
+    private  Float cutOther;//扣其他
+    private  String cutOtherDes;//扣其他描述
+
+    public Float getCutWire() {
+        return cutWire;
+    }
+
+    public void setCutWire(Float cutWire) {
+        this.cutWire = cutWire;
+    }
+
+    public Float getCutOther() {
+        return cutOther;
+    }
+
+    public void setCutOther(Float cutOther) {
+        this.cutOther = cutOther;
+    }
+
+    public String getCutOtherDes() {
+        return cutOtherDes;
+    }
+
+    public void setCutOtherDes(String cutOtherDes) {
+        this.cutOtherDes = cutOtherDes;
+    }
+
     public Long getDepartPortTime() {
         return departPortTime;
     }

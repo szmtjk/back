@@ -2,6 +2,7 @@ package com.xingyi.logistic.business.service;
 
 import com.xingyi.logistic.business.model.SailingInfo;
 import com.xingyi.logistic.business.model.SailingInfoQuery;
+import com.xingyi.logistic.common.bean.JsonRet;
 
 import java.util.List;
 import java.util.Map;
@@ -26,9 +27,16 @@ public interface SailingInfoService extends BaseService<SailingInfo,SailingInfoQ
     List<Map<String, Object>> queryUnDealDispatchShipInfo(Map<String, String> map);
 
     /**
-     * 加载所有已调度的船舶任务
+     * 加载已调度的船舶任务
      * @param map
      * @return
      */
-    List<Map<String, Object>> queryAllDispatchShipTask(Map<String, String> map);
+    JsonRet<Object> getDispatchShipTaskList(SailingInfoQuery query);
+
+    /**
+     * 加载已调度的船舶任务
+     * @param map
+     * @return
+     */
+    JsonRet<Object> getSailingShipTaskList(SailingInfoQuery query);
 }

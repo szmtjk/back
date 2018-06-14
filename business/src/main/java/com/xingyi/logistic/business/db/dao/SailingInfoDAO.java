@@ -1,6 +1,8 @@
 package com.xingyi.logistic.business.db.dao;
 
 import com.xingyi.logistic.business.db.dao.base.BaseDAO;
+import com.xingyi.logistic.business.db.entity.CustomerTaskFlow4DispatchDBQuery;
+import com.xingyi.logistic.business.db.entity.CustomerTaskFlow4DispatchDO;
 import com.xingyi.logistic.business.db.entity.SailingInfoDBQuery;
 import com.xingyi.logistic.business.db.entity.SailingInfoDO;
 import com.xxx.boot.jdbc.annotation.Dao;
@@ -36,4 +38,11 @@ public interface SailingInfoDAO extends BaseDAO<SailingInfoDO, SailingInfoDBQuer
      */
     List<Map<String, Object>> queryAllDispatchShipTask(Map<String, String> map);
 
+    int getDispatchShipTaskCount(@Param("pojo")SailingInfoDBQuery pojo);
+
+    List<Map<String, Object>> getDispatchShipTaskList(@Param("pojo")SailingInfoDBQuery pojo);
+
+    int getSailingShipTaskCount(@Param("pojo")SailingInfoDBQuery pojo);
+
+    List<Map<String, Object>> getSailingShipTaskList(@Param("pojo")SailingInfoDBQuery pojo);
 }
