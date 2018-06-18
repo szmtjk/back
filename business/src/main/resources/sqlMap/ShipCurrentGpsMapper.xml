@@ -24,6 +24,7 @@
         <result property="occurtime" column="occurtime"/>
         <result property="entertime" column="entertime"/>
         <result property="leavetime" column="leavetime"/>
+        <result property="online" column="online"/>
     </resultMap>
 
     <resultMap id="mShipDevMap" type="com.xingyi.logistic.business.model.ShipDev">
@@ -246,7 +247,7 @@
     </select>
 
     <select id="queryShipCurrentGpsInfo" resultMap="AllColumnMap" parameterType="Map">
-        select A2.shipNo, A1.*, A2.id as shipId
+        select A2.shipNo, A1.*, A2.id as shipId,CASE WHEN (UNIX_TIMESTAMP(now())-UNIX_TIMESTAMP(STR_TO_DATE(A1.gpsTime,"%Y-%m-%d %H:%i:%s ")))/60 > 10 THEN 0 ELSE 1 END AS online
         from `ShipCurrentGps` A1
         INNER JOIN Ship  A2 ON A1.devId = A2.gpsDeviceId
         WHERE A1.longitude != 0 AND A1.longitude is not NULL
