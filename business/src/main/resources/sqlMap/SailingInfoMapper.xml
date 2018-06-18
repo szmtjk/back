@@ -30,6 +30,21 @@
         <result property="goodsName" column="goodsName"/>
         <result property="customerName" column="customerName"/>
         <result property="orderNo" column="orderNo"/>
+
+        <result property="dispatchType" column="dispatchType"/>
+        <result property="preWeight" column="preWeight"/>
+        <result property="preLoad" column="preLoad"/>
+        <result property="preArriveTime" column="preArriveTime"/>
+        <result property="preSettleAmount" column="preSettleAmount"/>
+        <result property="actualTransferPrice" column="actualTransferPrice"/>
+        <result property="settleType" column="settleType"/>
+        <result property="goodsType" column="goodsType"/>
+        <result property="sender" column="sender"/>
+        <result property="receiver" column="receiver"/>
+        <result property="flowName" column="flowName"/>
+        <result property="startPortId" column="startPortId"/>
+        <result property="endPortId" column="endPortId"/>
+
     </resultMap>
 
     <sql id="all_column">
@@ -60,6 +75,21 @@
         , '' goodsName
         , '' customerName
         , '' orderNo
+
+        , '' dispatchType
+        , '' preWeight
+        , '' preLoad
+        , '' preArriveTime
+        , '' preSettleAmount
+        , '' actualTransferPrice
+        , '' settleType
+        , '' goodsType
+        , '' sender
+        , '' receiver
+        , '' flowName
+        , '' startPortId
+        , '' endPortId
+
     </sql>
 
     <insert id="insertSelective" useGeneratedKeys="true" keyProperty="pojo.id">
@@ -191,8 +221,12 @@
 		LEFT JOIN CustomerTask A5 ON A5.id=A3.taskId
 		LEFT JOIN Customer A6 ON A6.id= A5.customerId
         INNER JOIN Flow A4 ON A4.id=A3.flowId
-        WHERE A1.isDeleted = 0
-        AND A1.`status` = 0
+        WHERE NOT EXISTS (
+					SELECT id FROM SailingInfo c2
+					WHERE A1.id = c2.orderId
+					AND c2.isDeleted=0
+				)
+				AND A1.isDeleted = 0 AND A1.status>=0
     </select>
 
 
@@ -213,7 +247,7 @@
 				LEFT JOIN Customer A6 ON A6.id= A5.customerId
         INNER JOIN Flow A4 ON A4.id=A3.flowId
         WHERE A1.isDeleted = 0
-        AND A1.`status` = 0
+        AND A1.`status` >= 0
     </select>
 
     <!-- 加载所有已调度的船舶任务 -->
@@ -291,7 +325,7 @@
     <!-- 流向任务视图 -->
     <sql id="v_flowTask">
         SELECT  A2.id taskId,A2.taskNo,A2.totalLoad totalWeight,
-                A1.id flowTaskId,A1.taskNo taskFlowNo,A1.goodsName,A1.totalWeight flowTotalWeight,
+                A1.id flowTaskId,A1.taskNo flowTaskNo,A1.goodsName,A1.totalWeight flowTotalWeight,A1.selfPick,A1.sailingArea taskSailingArea,
                 A1.flowId,A4.name flowName,A1.sender sendGoodsUnit,A1.receiver receiveGoodsUnit,
                 A1.sailingArea,A1.taskStatus taskFlowStatus,
                 A1.loadingTime preLoadTime,A1.dischargeTime preDischargeTime,A1.created flowTaskCreateTime,
@@ -309,7 +343,7 @@
     <!-- 船舶视图 -->
     <sql id="v_ship">
         SELECT SH1.id shipId,SH1.shipNo,SH1.loadWeight+SH1.preLoad shipPreLoadWeight,SH1.shipFlag shipOwner,
-        IFNULL(SH1.name,SS1.name) shipername,IFNULL(SH1.mobile,SS1.mobile) shipermobile
+        IFNULL(SH1.name,SS1.name) shiperName,IFNULL(SH1.mobile,SS1.mobile) shiperMobile
         FROM Ship SH1
         LEFT JOIN ShipStaff SS1 ON SS1.shipId=SH1.Id
         WHERE SH1.`isDeleted` = 0
@@ -352,17 +386,37 @@
     </sql>
 
     <select id="queryByPage" resultMap="AllColumnMap" parameterType="Map">
-        SELECT A1.*, A2.shipNo,A4.goodsName, A6.fullName AS customerName, A3.orderNo
-        FROM SailingInfo A1
-        LEFT JOIN Ship A2 ON A1.shipId=A2.id
-        LEFT JOIN DispatchInfo A3 ON A3.id=A1.orderId
-        LEFT JOIN CustomerTaskFlow  A4 ON A4.id=A3.customerTaskFlowId
-        LEFT JOIN CustomerTask A5 ON A5.id=A4.taskId
-        LEFT JOIN Customer A6 ON A6.id= A5.customerId
-        <include refid="pageQueryWhereCommon"/>
-        order by A1.`id` desc
+        SELECT SI1.*, S1.shipNo,CTF1.goodsName, C1.fullName AS customerName,
+        DI1.orderNo,DI1.id AS orderId, DI1.shipId, DI1.dispatchType,DI1.preWeight, DI1.preLoad, DI1.preArriveTime,
+        DI1.preSettleAmount, DI1.actualTransferPrice, DI1.settleType,
+        CTF1.goodsType,CTF1.sender, CTF1.receiver, F1.`name` AS flowName, CTF1.startPortId, CTF1.endPortId
+        FROM SailingInfo SI1
+        LEFT JOIN Ship S1 ON S1.Id=SI1.shipId
+        LEFT JOIN DispatchInfo DI1 ON DI1.id=SI1.orderId
+        LEFT JOIN CustomerTaskFlow  CTF1 ON CTF1.id=DI1.customerTaskFlowId
+        LEFT JOIN CustomerTask CT1 ON CT1.id=CTF1.taskId
+        LEFT JOIN Customer C1 ON C1.id= CT1.customerId
+        INNER JOIN Flow F1 ON F1.id=CTF1.flowId
+
+        <include refid="pageQueryWhereCommon1"/>
+        order by SI1.`id` desc
         <include refid="pageCommon"/>
     </select>
+
+    <sql id="pageQueryWhereCommon1">
+        where SI1.`isDeleted` = 0
+        <if test="pojo.id != null"> AND SI1.`id` = #{pojo.id} </if>
+        <if test="pojo.key != null">
+            AND (
+
+            S1.`shipNo` like concat('%', #{pojo.key}, '%')
+            or CTF1.`taskNo` like concat('%', #{pojo.key}, '%')
+            or CT1.`taskNo` like concat('%', #{pojo.key}, '%')
+            or DI1.`orderNo` like concat('%', #{pojo.key}, '%')
+            )
+
+        </if>
+    </sql>
 
     <sql id="pageQueryWhereCommon">
         where A1.`isDeleted` = 0
