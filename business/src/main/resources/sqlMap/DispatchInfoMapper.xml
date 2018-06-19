@@ -42,6 +42,13 @@
         <result property="taskStatus" column="taskStatus"/>
     </resultMap>
 
+    <select id="getDispatchInfoInfo" resultType="Map" parameterType="Map">
+        select id AS id, orderNo AS name,shipId as shipId
+        from `DispatchInfo`
+        WHERE isDeleted = 0
+        ORDER BY updated DESC
+    </select>
+
     <sql id="all_column">
         a.`id`
         ,a.`customerTaskFlowId`

@@ -66,6 +66,15 @@ public class DispatchInfoServiceImpl extends BaseCRUDService<DispatchInfoDO, Dis
     @Autowired
     private CustomerTaskFlow4DispatchQueryConverter customerTaskFlow4DispatchQueryConverter;
 
+    /**
+     * 加载所有设备
+     * @return
+     */
+    public List<Map<String,Object>> getDispatchInfoInfo()
+    {
+        return dispatchInfoDAO.getDispatchInfoInfo();
+    }
+
     @Override
     public JsonRet<Object> getCustomerTaskFlows(CustomerTaskFlow4DispatchQuery query) {
         try {

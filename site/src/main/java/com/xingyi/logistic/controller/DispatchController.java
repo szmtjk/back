@@ -32,6 +32,13 @@ public class DispatchController extends BaseCRUDController<DispatchInfo, Dispatc
     public JsonRet<Object> getCustomerTaskFlowList(@JsonParam CustomerTaskFlow4DispatchQuery query) {
         return dispatchInfoService.getCustomerTaskFlows(query);
     }
+    /**
+     * 调度单号加载
+     */
+    @RequestMapping(value = "/loadDispatchInfo", method = RequestMethod.POST)
+    public List<Map<String,Object>> loadDispatchInfo() {
+        return dispatchInfoService.getDispatchInfoInfo();
+    }
 
     @RequestMapping(value = "/getAvailableShips", method = RequestMethod.POST)
     public JsonRet<Object> getAvailableShips(@JsonParam GetDispatchShipParam param) {
