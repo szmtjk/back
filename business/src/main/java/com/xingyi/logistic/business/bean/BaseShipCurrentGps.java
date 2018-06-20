@@ -33,6 +33,16 @@ public class BaseShipCurrentGps extends BaseModelAndDO {
     private String entertime;//进入港口时间
     private String leavetime;//离开港口时间
 
+    public int getOnline() {
+        return online;
+    }
+
+    public void setOnline(int online) {
+        this.online = online;
+    }
+
+    private int online = 1;//在线状态；
+
 
     public int getInOrOut() {
         return inOrOut;

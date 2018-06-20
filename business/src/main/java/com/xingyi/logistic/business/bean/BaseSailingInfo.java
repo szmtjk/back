@@ -31,6 +31,152 @@ public class BaseSailingInfo extends BaseModelAndDO {
     private String goodsName;
     private String customerName;
     private String orderNo;
+    private Float cutWire;//扣钢丝
+    private  Float cutOther;//扣其他
+    private  String cutOtherDes;//扣其他描述
+
+    private String dispatchType;
+    private String preWeight;
+    private String preLoad;
+    private String preArriveTime;
+    private String preSettleAmount;
+    private String actualTransferPrice;
+    private String settleType;
+    private String goodsType;
+    private String sender;
+    private String receiver;
+    private String flowName;
+    private String startPortId;
+    private String endPortId;
+
+    public String getDispatchType() {
+        return dispatchType;
+    }
+
+    public void setDispatchType(String dispatchType) {
+        this.dispatchType = dispatchType;
+    }
+
+    public String getPreWeight() {
+        return preWeight;
+    }
+
+    public void setPreWeight(String preWeight) {
+        this.preWeight = preWeight;
+    }
+
+    public String getPreLoad() {
+        return preLoad;
+    }
+
+    public void setPreLoad(String preLoad) {
+        this.preLoad = preLoad;
+    }
+
+    public String getPreArriveTime() {
+        return preArriveTime;
+    }
+
+    public void setPreArriveTime(String preArriveTime) {
+        this.preArriveTime = preArriveTime;
+    }
+
+    public String getPreSettleAmount() {
+        return preSettleAmount;
+    }
+
+    public void setPreSettleAmount(String preSettleAmount) {
+        this.preSettleAmount = preSettleAmount;
+    }
+
+    public String getActualTransferPrice() {
+        return actualTransferPrice;
+    }
+
+    public void setActualTransferPrice(String actualTransferPrice) {
+        this.actualTransferPrice = actualTransferPrice;
+    }
+
+    public String getSettleType() {
+        return settleType;
+    }
+
+    public void setSettleType(String settleType) {
+        this.settleType = settleType;
+    }
+
+    public String getGoodsType() {
+        return goodsType;
+    }
+
+    public void setGoodsType(String goodsType) {
+        this.goodsType = goodsType;
+    }
+
+    public String getSender() {
+        return sender;
+    }
+
+    public void setSender(String sender) {
+        this.sender = sender;
+    }
+
+    public String getReceiver() {
+        return receiver;
+    }
+
+    public void setReceiver(String receiver) {
+        this.receiver = receiver;
+    }
+
+    public String getFlowName() {
+        return flowName;
+    }
+
+    public void setFlowName(String flowName) {
+        this.flowName = flowName;
+    }
+
+    public String getStartPortId() {
+        return startPortId;
+    }
+
+    public void setStartPortId(String startPortId) {
+        this.startPortId = startPortId;
+    }
+
+    public String getEndPortId() {
+        return endPortId;
+    }
+
+    public void setEndPortId(String endPortId) {
+        this.endPortId = endPortId;
+    }
+
+    public Float getCutWire() {
+        return cutWire;
+    }
+
+    public void setCutWire(Float cutWire) {
+        this.cutWire = cutWire;
+    }
+
+    public Float getCutOther() {
+        return cutOther;
+    }
+
+    public void setCutOther(Float cutOther) {
+        this.cutOther = cutOther;
+    }
+
+    public String getCutOtherDes() {
+        return cutOtherDes;
+    }
+
+    public void setCutOtherDes(String cutOtherDes) {
+        this.cutOtherDes = cutOtherDes;
+    }
+
     public Long getDepartPortTime() {
         return departPortTime;
     }

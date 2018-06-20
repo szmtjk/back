@@ -1,9 +1,12 @@
 package com.xingyi.logistic.controller;
 
+import com.xingyi.logistic.business.model.CustomerTaskFlow4DispatchQuery;
 import com.xingyi.logistic.business.model.SailingInfo;
 import com.xingyi.logistic.business.model.SailingInfoQuery;
 import com.xingyi.logistic.business.service.BaseService;
 import com.xingyi.logistic.business.service.SailingInfoService;
+import com.xingyi.logistic.common.bean.JsonRet;
+import com.xingyi.logistic.config.JsonParam;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -50,10 +53,10 @@ public class SailingInfoController extends BaseCRUDController<SailingInfo, Saili
      * @param map
      * @return
      */
-    @RequestMapping(value = "/queryAllDispatchShipTask", method = RequestMethod.POST)
-    public List<Map<String, Object >> queryAllDispatchShipTask(@RequestParam Map<String, String> map)
+    @RequestMapping(value = "/getDispatchShipTaskList", method = RequestMethod.POST)
+    public JsonRet<Object> getDispatchShipTaskList(@JsonParam SailingInfoQuery query)
     {
-        return sailingInfoService.queryAllDispatchShipTask(map);
+        return sailingInfoService.getDispatchShipTaskList(query);
     }
 
 

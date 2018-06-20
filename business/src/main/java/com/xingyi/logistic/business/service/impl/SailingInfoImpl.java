@@ -12,12 +12,18 @@ import com.xingyi.logistic.business.service.base.ModelConverter;
 import com.xingyi.logistic.business.service.base.QueryConditionConverter;
 import com.xingyi.logistic.business.service.converter.SailingInfoConverter;
 import com.xingyi.logistic.business.service.converter.SailingInfoQueryConverter;
+import com.xingyi.logistic.business.util.JsonUtil;
+import com.xingyi.logistic.business.util.ParamValidator;
+import com.xingyi.logistic.common.bean.ErrCode;
 import com.xingyi.logistic.common.bean.JsonRet;
+import com.xingyi.logistic.common.bean.MiniUIJsonRet;
+import com.xingyi.logistic.common.bean.QueryType;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -78,12 +84,74 @@ public class SailingInfoImpl extends BaseCRUDService<SailingInfoDO, SailingInfo,
      * @param map
      * @return
      */
-    public List<Map<String, Object>> queryAllDispatchShipTask(Map<String, String> map)
+    public JsonRet<Object> getDispatchShipTaskList(SailingInfoQuery query)
     {
-        return sailingInfoDAO.queryAllDispatchShipTask(map);
+        JsonRet<Object> ret = new JsonRet<>();
+        if (!ParamValidator.isParamValid(ret, query)) {
+            return ret;
+        }
+        try {
+            SailingInfoDBQuery dbQuery = sailingInfoQueryConverter.toDOCondition(query);
+
+            int count = sailingInfoDAO.getDispatchShipTaskCount(dbQuery);
+
+            List<Map<String, Object>> pageList = null;
+            if (count > 0) {
+                pageList = sailingInfoDAO.getDispatchShipTaskList(dbQuery);
+            }
+            if (query.getQueryParamFlag() == QueryType.MINIUI.getCode()) {
+                MiniUIJsonRet<Object> miniUIJsonRet = new MiniUIJsonRet<>();
+                miniUIJsonRet.setSuccessData(count, pageList);
+                return miniUIJsonRet;
+            } else {
+                Map<String, Object> params = new HashMap<>();
+                params.put("total", count);
+                params.put("list",  pageList);
+                return JsonRet.getSuccessRet(params);
+            }
+
+        } catch (Exception e) {
+            LOG.error("get customer task flows err, param:{}", JsonUtil.toJson(query), e);
+            return JsonRet.getErrRet(ErrCode.GET_ERR);
+        }
     }
 
+    /**
+     * 加载所有已调度的船舶任务
+     * @param map
+     * @return
+     */
+    public JsonRet<Object> getSailingShipTaskList(SailingInfoQuery query)
+    {
+        JsonRet<Object> ret = new JsonRet<>();
+        if (!ParamValidator.isParamValid(ret, query)) {
+            return ret;
+        }
+        try {
+            SailingInfoDBQuery dbQuery = sailingInfoQueryConverter.toDOCondition(query);
 
+            int count = sailingInfoDAO.getSailingShipTaskCount(dbQuery);
+
+            List<Map<String, Object>> pageList = null;
+            if (count > 0) {
+                pageList = sailingInfoDAO.getSailingShipTaskList(dbQuery);
+            }
+            if (query.getQueryParamFlag() == QueryType.MINIUI.getCode()) {
+                MiniUIJsonRet<Object> miniUIJsonRet = new MiniUIJsonRet<>();
+                miniUIJsonRet.setSuccessData(count, pageList);
+                return miniUIJsonRet;
+            } else {
+                Map<String, Object> params = new HashMap<>();
+                params.put("total", count);
+                params.put("list",  pageList);
+                return JsonRet.getSuccessRet(params);
+            }
+
+        } catch (Exception e) {
+            LOG.error("get customer task flows err, param:{}", JsonUtil.toJson(query), e);
+            return JsonRet.getErrRet(ErrCode.GET_ERR);
+        }
+    }
 
     @Override
     protected ModelConverter<SailingInfoDO, SailingInfo> getModelConverter() {
