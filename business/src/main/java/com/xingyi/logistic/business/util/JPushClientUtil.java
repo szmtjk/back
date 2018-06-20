@@ -22,9 +22,9 @@ public class JPushClientUtil {
 
     private static final Logger LOG = LoggerFactory.getLogger(JPushClientUtil.class);
 
-    private static final String APP_KEY = "fb038d82a846a03212621eaf";
+    private static final String APP_KEY = "85772dad8ca519fec32cbd2a";
 
-    private static final String MASTER_SECRET = "32f370a85ca7d1415f5bd696";
+    private static final String MASTER_SECRET = "823b360572852c33cbfb475c";
 
     private static JPushClient sJPushClient = new JPushClient(MASTER_SECRET, APP_KEY);
 
