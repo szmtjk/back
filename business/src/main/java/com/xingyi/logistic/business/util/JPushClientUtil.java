@@ -12,9 +12,15 @@ import cn.jpush.api.push.model.audience.Audience;
 import cn.jpush.api.push.model.notification.AndroidNotification;
 import cn.jpush.api.push.model.notification.IosNotification;
 import cn.jpush.api.push.model.notification.Notification;
+import com.alibaba.druid.support.json.JSONUtils;
+import com.alibaba.fastjson.JSON;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 
 public class JPushClientUtil {
+
+    private static final Logger LOG = LoggerFactory.getLogger(JPushClientUtil.class);
 
     private static final String APP_KEY = "fb038d82a846a03212621eaf";
 
@@ -33,23 +39,7 @@ public class JPushClientUtil {
      * @return 0推送失败，1推送成功
      */
     public static int sendToRegistrationId(String registrationId, String notificationTitle, String msgTitle, String msgContent, String extrasparam) {
-        int result = 0;
-        try {
-            PushPayload pushPayload = JPushClientUtil.buildPushObjectAllRegistrationIdAlertWithTitle(registrationId, notificationTitle, msgTitle, msgContent, extrasparam);
-            System.out.println(pushPayload);
-            PushResult pushResult = sJPushClient.sendPush(pushPayload);
-            System.out.println(pushResult);
-            if (pushResult.getResponseCode() == 200) {
-                result = 1;
-            }
-        } catch (APIConnectionException e) {
-            e.printStackTrace();
-
-        } catch (APIRequestException e) {
-            e.printStackTrace();
-        }
-
-        return result;
+        return pushMsg(buildPushObjectAllRegistrationIdAlertWithTitle(registrationId, notificationTitle, msgTitle, msgContent, extrasparam));
     }
 
     /**
@@ -62,21 +52,7 @@ public class JPushClientUtil {
      * @return 0推送失败，1推送成功
      */
     public static int sendToAllAndroid(String notificationTitle, String msgTitle, String msgContent, String extrasparam) {
-        int result = 0;
-        try {
-            PushPayload pushPayload = JPushClientUtil.buildPushObjectAndroidAllAlertWithTitle(notificationTitle, msgTitle, msgContent, extrasparam);
-            System.out.println(pushPayload);
-            PushResult pushResult = sJPushClient.sendPush(pushPayload);
-            System.out.println(pushResult);
-            if (pushResult.getResponseCode() == 200) {
-                result = 1;
-            }
-        } catch (Exception e) {
-
-            e.printStackTrace();
-        }
-
-        return result;
+        return pushMsg(buildPushObjectAndroidAllAlertWithTitle(notificationTitle, msgTitle, msgContent, extrasparam));
     }
 
     /**
@@ -89,21 +65,7 @@ public class JPushClientUtil {
      * @return 0推送失败，1推送成功
      */
     public static int sendToAllIos(String notificationTitle, String msgTitle, String msgContent, String extrasparam) {
-        int result = 0;
-        try {
-            PushPayload pushPayload = JPushClientUtil.buildPushObjectIosAllAlertWithTitle(notificationTitle, msgTitle, msgContent, extrasparam);
-            System.out.println(pushPayload);
-            PushResult pushResult = sJPushClient.sendPush(pushPayload);
-            System.out.println(pushResult);
-            if (pushResult.getResponseCode() == 200) {
-                result = 1;
-            }
-        } catch (Exception e) {
-
-            e.printStackTrace();
-        }
-
-        return result;
+        return pushMsg(buildPushObjectIosAllAlertWithTitle(notificationTitle, msgTitle, msgContent, extrasparam));
     }
 
     /**
@@ -116,21 +78,7 @@ public class JPushClientUtil {
      * @return 0推送失败，1推送成功
      */
     public static int sendToAll(String notificationTitle, String msgTitle, String msgContent, String extrasparam) {
-        int result = 0;
-        try {
-            PushPayload pushPayload = JPushClientUtil.buildPushObjectAndroidAndIos(notificationTitle, msgTitle, msgContent, extrasparam);
-            System.out.println(pushPayload);
-            PushResult pushResult = sJPushClient.sendPush(pushPayload);
-            System.out.println(pushResult);
-            if (pushResult.getResponseCode() == 200) {
-                result = 1;
-            }
-        } catch (Exception e) {
-
-            e.printStackTrace();
-        }
-
-        return result;
+        return pushMsg(buildPushObjectAndroidAndIos(notificationTitle, msgTitle, msgContent, extrasparam));
     }
 
     /**
@@ -143,21 +91,20 @@ public class JPushClientUtil {
      * @return 0推送失败，1推送成功
      */
     public static int sendToAliasUser(String notificationTitle, String msgTitle, String msgContent, String extrasparam, String alias) {
-        int result = 0;
+        return pushMsg(doSendMsgByAlias(notificationTitle, msgTitle, msgContent, extrasparam, alias));
+    }
+
+    private static int pushMsg(PushPayload payload) {
         try {
-            PushPayload pushPayload = JPushClientUtil.doSendMsgByAlias(notificationTitle, msgTitle, msgContent, extrasparam, alias);
-            System.out.println(pushPayload);
-            PushResult pushResult = sJPushClient.sendPush(pushPayload);
-            System.out.println(pushResult);
-            if (pushResult.getResponseCode() == 200) {
-                result = 1;
+            PushResult pushResult = sJPushClient.sendPush(payload);
+            if (pushResult != null && pushResult.getResponseCode() == 200) {
+                return 1;
             }
+            LOG.info("push msg, payload:{}, result:{}", JsonUtil.toJson(payload), JsonUtil.toJson(pushResult));
         } catch (Exception e) {
-
-            e.printStackTrace();
+            LOG.error("pushMsg err, payload", JsonUtil.toJson(payload), e);
         }
-
-        return result;
+        return 0;
     }
 
     private static PushPayload doSendMsgByAlias(String notificationTitle, String msgTitle, String msgContent, String extrasparam, String alias) {
