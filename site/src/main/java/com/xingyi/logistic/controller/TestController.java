@@ -52,7 +52,7 @@ public class TestController extends BaseController {
     }
     @RequestMapping(value = "sendToAllIos", method = RequestMethod.POST)
     public String sendToAllIos(String notificationTitle, String msgTitle, String msgContent, String extrasParam) {
-        return "testPushToAndroid ret:" + JPushClientUtil.sendToAllIos(notificationTitle, msgTitle, msgContent, extrasParam);
+        return "sendToAllIos ret:" + JPushClientUtil.sendToAllIos(notificationTitle, msgTitle, msgContent, extrasParam);
     }
     @RequestMapping(value = "sendToAll", method = RequestMethod.POST)
     public String sendToAll(String notificationTitle, String msgTitle, String msgContent, String extrasParam) {
@@ -60,6 +60,6 @@ public class TestController extends BaseController {
     }
     @RequestMapping(value = "sendToAliasUser", method = RequestMethod.POST)
     public String sendToAliasUser(String notificationTitle, String msgTitle, String msgContent, String extrasParam, String alias) {
-        return "testPushToAndroid ret:" + JPushClientUtil.sendToAliasUser(notificationTitle, msgTitle, msgContent, extrasParam, alias);
+        return "sendToAliasUser ret:" + JPushClientUtil.sendToAliasUser(notificationTitle, msgTitle, msgContent, extrasParam, alias);
     }
 }
