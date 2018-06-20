@@ -1,5 +1,6 @@
 package com.xingyi.logistic.controller;
 
+import com.xingyi.logistic.business.util.JPushClientUtil;
 import com.xingyi.logistic.config.JsonParam;
 import com.xingyi.logistic.filter.AuthenticationFilter;
 import org.springframework.beans.factory.annotation.Value;
@@ -35,9 +36,30 @@ public class TestController extends BaseController {
     }
 
     @RequestMapping(value = "/t1", method = RequestMethod.GET)
-
     public String test1(@JsonParam TestBean a) {
         return a.getFlow().getName();
     }
 
+    @RequestMapping(value = "sendToRegistrationId", method = RequestMethod.POST)
+    public String sendToRegistrationId(String registrationId, String notificationTitle, String msgTitle, String msgContent, String extrasParam) {
+        long now = System.currentTimeMillis();
+        int ret = JPushClientUtil.sendToRegistrationId(registrationId, notificationTitle, msgTitle, msgContent, extrasParam);
+        return "sendToRegistrationId ret:" + ret;
+    }
+    @RequestMapping(value = "sendToAllAndroid", method = RequestMethod.POST)
+    public String sendToAllAndroid(String notificationTitle, String msgTitle, String msgContent, String extrasParam) {
+        return "sendToAllAndroid ret:" + JPushClientUtil.sendToAllAndroid(notificationTitle, msgTitle, msgContent, extrasParam);
+    }
+    @RequestMapping(value = "sendToAllIos", method = RequestMethod.POST)
+    public String sendToAllIos(String notificationTitle, String msgTitle, String msgContent, String extrasParam) {
+        return "testPushToAndroid ret:" + JPushClientUtil.sendToAllIos(notificationTitle, msgTitle, msgContent, extrasParam);
+    }
+    @RequestMapping(value = "sendToAll", method = RequestMethod.POST)
+    public String sendToAll(String notificationTitle, String msgTitle, String msgContent, String extrasParam) {
+        return "sendToAll ret:" + JPushClientUtil.sendToAll(notificationTitle, msgTitle, msgContent, extrasParam);
+    }
+    @RequestMapping(value = "sendToAliasUser", method = RequestMethod.POST)
+    public String sendToAliasUser(String notificationTitle, String msgTitle, String msgContent, String extrasParam, String alias) {
+        return "testPushToAndroid ret:" + JPushClientUtil.sendToAliasUser(notificationTitle, msgTitle, msgContent, extrasParam, alias);
+    }
 }
