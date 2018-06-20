@@ -97,12 +97,14 @@ public class JPushClientUtil {
     private static int pushMsg(PushPayload payload) {
         try {
             PushResult pushResult = sJPushClient.sendPush(payload);
+            LOG.info("push msg, payload:{}, result:{}", JsonUtil.toJson(payload), JsonUtil.toJson(pushResult));
             if (pushResult != null && pushResult.getResponseCode() == 200) {
                 return 1;
             }
-            LOG.info("push msg, payload:{}, result:{}", JsonUtil.toJson(payload), JsonUtil.toJson(pushResult));
         } catch (Exception e) {
             LOG.error("pushMsg err, payload", JsonUtil.toJson(payload), e);
+        } finally {
+
         }
         return 0;
     }
