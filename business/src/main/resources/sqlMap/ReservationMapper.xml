@@ -29,7 +29,7 @@
         ,a.`leftDispatchId`
         ,a.`dispatchId`
         ,a.`userId`
-        ,c.`shipId`
+        ,c.`id` as shipId
         ,c.`shipNo`
         ,c.`name`
         ,c.`mobile`
@@ -52,7 +52,7 @@
         ,a.`leftDispatchId`
         ,a.`dispatchId`
         ,a.`userId`
-        ,c.`shipId`
+        ,c.`id` as shipId
         ,c.`shipNo`
         ,c.`name`
         ,c.`mobile`
