@@ -6,7 +6,7 @@ import com.xingyi.logistic.business.service.BaseService;
 import com.xingyi.logistic.business.service.TerminalMsgService;
 import com.xingyi.logistic.common.bean.JsonRet;
 import com.xingyi.logistic.config.JsonParam;
-import com.xingyi.logistic.mq.SendMessageServer;
+import com.xingyi.logistic.business.mq.SendMessageServer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;

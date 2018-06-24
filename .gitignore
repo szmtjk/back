@@ -33,3 +33,4 @@ logs/
 /site/logs/
 !/gradle/wrapper/gradle-wrapper.jar
 /pid.file
+classes/

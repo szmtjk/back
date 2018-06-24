@@ -70,10 +70,10 @@
         ,a.`status`
         ,a.`taskStatus`
         ,a.`description`
-        ,`creator`
-        ,`created`
-        ,`updater`
-        ,`updated`
+        ,a.`creator`
+        ,a.`created`
+        ,a.`updater`
+        ,a.`updated`
     </sql>
 
     <insert id="insertSelective" useGeneratedKeys="true" keyProperty="pojo.id">

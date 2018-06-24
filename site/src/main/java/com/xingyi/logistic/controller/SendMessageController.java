@@ -1,7 +1,7 @@
 package com.xingyi.logistic.controller;
 
 import com.xingyi.logistic.business.model.DispatchPlan;
-import com.xingyi.logistic.mq.SendMessageServer;
+import com.xingyi.logistic.business.mq.SendMessageServer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;

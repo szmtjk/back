@@ -6,12 +6,15 @@ import com.xingyi.logistic.business.db.dao.ShipDAO;
 import com.xingyi.logistic.business.db.dao.base.BaseDAO;
 import com.xingyi.logistic.business.db.entity.*;
 import com.xingyi.logistic.business.model.*;
+import com.xingyi.logistic.business.mq.SendMessageServer;
+import com.xingyi.logistic.business.service.CustomerTaskFlowService;
 import com.xingyi.logistic.business.service.DispatchInfoService;
 import com.xingyi.logistic.business.service.ShipService;
 import com.xingyi.logistic.business.service.base.BaseCRUDService;
 import com.xingyi.logistic.business.service.base.ModelConverter;
 import com.xingyi.logistic.business.service.base.QueryConditionConverter;
 import com.xingyi.logistic.business.service.converter.*;
+import com.xingyi.logistic.business.util.DateUtils;
 import com.xingyi.logistic.business.util.JsonUtil;
 import com.xingyi.logistic.business.util.ParamValidator;
 import com.xingyi.logistic.business.util.PrimitiveUtil;
@@ -19,7 +22,6 @@ import com.xingyi.logistic.common.bean.ErrCode;
 import com.xingyi.logistic.common.bean.JsonRet;
 import com.xingyi.logistic.common.bean.MiniUIJsonRet;
 import com.xingyi.logistic.common.bean.QueryType;
-import org.apache.http.client.utils.DateUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeanUtils;
@@ -65,6 +67,12 @@ public class DispatchInfoServiceImpl extends BaseCRUDService<DispatchInfoDO, Dis
 
     @Autowired
     private CustomerTaskFlow4DispatchQueryConverter customerTaskFlow4DispatchQueryConverter;
+
+    @Autowired
+    private CustomerTaskFlowService customerTaskFlowService;
+
+    @Autowired
+    private SendMessageServer sendMessageServer;
 
     /**
      * 加载所有设备
@@ -426,29 +434,42 @@ public class DispatchInfoServiceImpl extends BaseCRUDService<DispatchInfoDO, Dis
 
         try {
             updateList.forEach(o->{
+                boolean isNeedSendMsgToDev = false;
                 if (PrimitiveUtil.getPrimitive(o.getStashStatus()) == 1) {//暂存状态
                     o.setStatus(-1);
                 } else {
                     DispatchInfoDO dispatchInfoDO = dispatchInfoDAO.getById(o.getId());
                     if (dispatchInfoDO != null && dispatchInfoDO.getStatus() == -1) {//对于原来是未调度的，修改后将其变成已调度
                         o.setStatus(0);
+                        isNeedSendMsgToDev = true;
+
                     }
                 }
                 o.setCustomerTaskFlowId(dispatchInfoParam.getCustomerTaskFlowId());
                 dispatchInfoDAO.update(dispatchInfoConverter.toDataObject(o));
+                if (isNeedSendMsgToDev) {
+                    sendMsgToDev(o);
+                }
             });
 
             delList.forEach(o->{
                 o.setCustomerTaskFlowId(dispatchInfoParam.getCustomerTaskFlowId());
                 dispatchInfoDAO.del(o.getId());
+                sendMsgToDev(o);
             });
 
             addList.forEach(o->{
+                boolean isNeedSendMsgToDev = false;
                 if (PrimitiveUtil.getPrimitive(o.getStashStatus()) == 1) {//暂存状态
                     o.setStatus(-1);
+                } else {
+                    isNeedSendMsgToDev = true;
                 }
                 o.setCustomerTaskFlowId(dispatchInfoParam.getCustomerTaskFlowId());
                 dispatchInfoDAO.insertSelective(dispatchInfoConverter.toDataObject(o));
+                if (isNeedSendMsgToDev) {
+                    sendMsgToDev(o);
+                }
             });
 
             dispatchInfoDAO.updateCustomerTaskStatus4Dispatch(dispatchInfoParam.getCustomerTaskFlowId());
@@ -457,6 +478,47 @@ public class DispatchInfoServiceImpl extends BaseCRUDService<DispatchInfoDO, Dis
             LOG.error("confirmDispatchInfoPlan err, param:{}", JsonUtil.toJson(dispatchInfoParam), e);
         }
         return ret;
+    }
+
+    private void sendMsgToDev(DispatchFlagInfo dispatchFlagInfo) {
+        DispatchPlan plan = new DispatchPlan();
+        if (dispatchFlagInfo.getId() != null) {
+            plan.setDispatchplansendid(dispatchFlagInfo.getId());
+        }
+        if (dispatchFlagInfo.getFlag() == 2) {
+            sendMessageServer.funSendCancelMsg(plan);
+            LOG.info("send cancel msg to dev, planID:{}", dispatchFlagInfo.getId());
+            return;
+        }
+
+        JsonRet<Ship> shipRet = shipService.getById(dispatchFlagInfo.getShipId());
+        if (!shipRet.isSuccess() || shipRet.getData() == null) {
+            LOG.error("no ship found by id:{}, can't send msg to dev", dispatchFlagInfo.getShipId());
+            return;
+        }
+        JsonRet<CustomerTaskFlow> customerTaskFlowRet = customerTaskFlowService.getById(dispatchFlagInfo.getCustomerTaskFlowId());
+        if (!customerTaskFlowRet.isSuccess() || customerTaskFlowRet.getData() == null) {
+            LOG.error("no customer task flow found by id:{}, can't send msg to dev", dispatchFlagInfo.getCustomerTaskFlowId());
+            return;
+        }
+        Ship ship = shipRet.getData();
+        CustomerTaskFlow customerTaskFlow = customerTaskFlowRet.getData();
+
+
+        plan.setTaskname("任务:" + dispatchFlagInfo.getId());
+        plan.setDevicecode(ship.getGpsDeviceId());
+        plan.setStartfieldcode(String.valueOf(customerTaskFlow.getStartPortId()));
+        plan.setStartfieldcode("出发港口" + customerTaskFlow.getStartPortId());
+        plan.setEndfieldcode(String.valueOf(customerTaskFlow.getEndPortId()));
+        plan.setEndfieldname("抵达港口" + customerTaskFlow.getEndPortId());
+        plan.setServertime(DateUtils.getCurrentSystemTime());
+        plan.setStartplanarrivetime(DateUtils.formatDatetime(dispatchFlagInfo.getPreArriveTime() * 1000));
+        plan.setPlanarrivetime(DateUtils.formatDatetime(customerTaskFlow.getDischargeTime() * 1000));
+        plan.setGoodsname(customerTaskFlow.getGoodsName());
+        plan.setGoodstype(String.valueOf(customerTaskFlow.getGoodsType()));
+        plan.setPlanton(String.valueOf(dispatchFlagInfo.getPreLoad()));
+        sendMessageServer.funSendMsg(plan);
+        LOG.info("send msg to dev, content:{}", JsonUtil.toJson(plan));
     }
 
     @Override

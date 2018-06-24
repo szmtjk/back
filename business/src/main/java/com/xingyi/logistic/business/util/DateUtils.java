@@ -1,4 +1,4 @@
-package com.xingyi.logistic.util;
+package com.xingyi.logistic.business.util;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -31,6 +31,13 @@ public class DateUtils
     {
         SimpleDateFormat dateFormatter =new SimpleDateFormat(format);
         Calendar c = Calendar.getInstance();
+        return dateFormatter.format(c.getTime());
+    }
+
+    public static String formatDatetime(long time) {
+        SimpleDateFormat dateFormatter =new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        Calendar c = Calendar.getInstance();
+        c.setTimeInMillis(time);
         return dateFormatter.format(c.getTime());
     }
 
