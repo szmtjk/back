@@ -10,6 +10,15 @@ public class BaseStaffSign extends BaseModelAndDO {
     private Integer longitude;//longitude经度
     private Integer latitude;//latitude纬度
     private String gpsAddress;//gpsAddress位置地址
+    private String photoPath;
+
+    public String getPhotoPath() {
+        return photoPath;
+    }
+
+    public void setPhotoPath(String photoPath) {
+        this.photoPath = photoPath;
+    }
 
     public Integer getStaffId() {
         return staffId;

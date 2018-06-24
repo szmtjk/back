@@ -8,6 +8,7 @@
         <result property="longitude" column="longitude"/>
         <result property="latitude" column="latitude"/>
         <result property="gpsAddress" column="gpsAddress"/>
+        <result property="photoPath" column="photoPath"/>
         <result property="creator" column="creator"/>
         <result property="created" column="created"/>
         <result property="updater" column="updater"/>
@@ -20,6 +21,7 @@
         ,a.`longitude`
         ,a.`latitude`
         ,a.`gpsAddress`
+        ,a.`photoPath`
         ,a.`creator`
         ,a.`created`
         ,a.`updater`
@@ -37,6 +39,7 @@
             <if test="pojo.longitude!=null"> `longitude`,</if>
             <if test="pojo.latitude!=null"> `latitude`,</if>
             <if test="pojo.gpsAddress!=null"> `gpsAddress`,</if>
+            <if test="pojo.photoPath!=null"> `photoPath`,</if>
             <if test="pojo.creator!=null"> `creator`,</if>
             <if test="pojo.updater!=null"> `updater`,</if>
             `created`,
@@ -48,6 +51,7 @@
             <if test="pojo.longitude!=null">#{pojo.longitude},</if>
             <if test="pojo.latitude!=null">#{pojo.latitude},</if>
             <if test="pojo.gpsAddress!=null">#{pojo.gpsAddress},</if>
+            <if test="pojo.photoPath!=null">#{pojo.photoPath},</if>
             <if test="pojo.creator!=null">#{pojo.creator},</if>
             <if test="pojo.updater!=null">#{pojo.updater},</if>
             UNIX_TIMESTAMP(now()),
@@ -62,7 +66,8 @@
             <if test="pojo.staffId!=null">`fuelQuantity` = #{pojo.staffId},</if>
             <if test="pojo.longitude!=null">`unitPrice` = #{pojo.longitude},</if>
             <if test="pojo.latitude!=null">`refuelingTime` = #{pojo.latitude},</if>
-            <if test="pojo.gpsAddress!=null">`description` = #{pojo.gpsAddress},</if>
+            <if test="pojo.gpsAddress!=null">`gpsAddress` = #{pojo.gpsAddress},</if>
+            <if test="pojo.photoPath!=null">`photoPath` = #{pojo.photoPath},</if>
             <if test="pojo.updater!=null">`updater` = #{pojo.updater},</if>
             `updated` = UNIX_TIMESTAMP(now())
         </set>

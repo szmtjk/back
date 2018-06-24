@@ -32,7 +32,7 @@ public abstract class BaseCRUDController<Model extends BaseModelAndDO, Condition
         return getBaseService().modify(model);
     }
 
-    @RequestMapping(value = "/del", method = RequestMethod.POST)
+    @RequestMapping(value = "/del", method = {RequestMethod.POST,RequestMethod.GET})
     public JsonRet<Boolean> del(@RequestParam Long id) {
         return getBaseService().del(id);
     }
@@ -42,7 +42,7 @@ public abstract class BaseCRUDController<Model extends BaseModelAndDO, Condition
         return getBaseService().getById(id);
     }
 
-    @RequestMapping(value = "/getList", method = RequestMethod.POST)
+    @RequestMapping(value = "/getList", method = {RequestMethod.POST,RequestMethod.GET})
     public JsonRet<Object> getList(@JsonParam Condition condition) {
         if (condition != null && condition.getQueryParamFlag() == QueryType.MINIUI.getCode()) {
             return getMiniUIList(condition);
