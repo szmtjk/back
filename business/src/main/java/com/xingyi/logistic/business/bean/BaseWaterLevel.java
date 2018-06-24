@@ -15,6 +15,16 @@ public class BaseWaterLevel extends BaseModelAndDO{
     @NotNullEmpty
     private String name;
 
+    private String levelName;
+
+    public String getLevelName() {
+        return levelName;
+    }
+
+    public void setLevelName(String levelName) {
+        this.levelName = levelName;
+    }
+
     /**
      * 水位
      */

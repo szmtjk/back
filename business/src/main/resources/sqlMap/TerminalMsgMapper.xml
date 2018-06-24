@@ -87,7 +87,7 @@
     <select id="getExistCount" resultType="java.lang.Integer" parameterType="Map" >
         SELECT  count(id)
         FROM  `TerminalMsg`
-        where `isDeleted` = 0
+        WHERE `isDeleted` = 0 AND 1>1
         <if test="pojo.id != null"> AND `id` != #{pojo.id} </if>
         <if test="pojo.shipId != null"> AND `shipId` = #{pojo.shipId} </if>
         limit 1
