@@ -15,6 +15,7 @@
         <result property="creatorName" column="creatorName"/>
         <result property="updaterName" column="updaterName"/>
         <result property="isDeleted" column="isDeleted"/>
+        <result property="levelName" column="levelName"/>
     </resultMap>
 
     <sql id="all_column">
@@ -107,8 +108,10 @@
     </select>
 
     <select id="queryByPage" resultMap="AllColumnMap" parameterType="Map">
-        select <include refid="all_column_user"/>
-        from `WaterLevel` a LEFT JOIN `UserProfile` b on a.creator = b.id
+        select <include refid="all_column_user"/>,ddd.value levelName
+        from `WaterLevel` a
+        LEFT JOIN DataDictionary ddd ON ddd.Id=a.name AND EXISTS (select dd.id from DataDictionary dd where dd.code='gjswd' and ddd.parentId=dd.id)
+        LEFT JOIN `UserProfile` b on a.creator = b.id
         <include refid="pageQueryWhereCommon"/>
         order by a.`created` desc
         <include refid="pageCommon"/>

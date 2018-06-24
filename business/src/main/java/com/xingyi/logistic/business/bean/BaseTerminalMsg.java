@@ -8,7 +8,6 @@ public class BaseTerminalMsg extends BaseModelAndDO{
     /**
      * 船舶id
      */
-    @NotNullEmpty
     private Integer shipId;
 
     /**
