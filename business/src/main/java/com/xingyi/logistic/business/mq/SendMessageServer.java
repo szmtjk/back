@@ -1,9 +1,9 @@
-package com.xingyi.logistic.mq;
+package com.xingyi.logistic.business.mq;
 
 import com.xingyi.logistic.business.model.DispatchPlan;
 import com.xingyi.logistic.business.model.TerminalMsg;
 import com.xingyi.logistic.business.model.TextMessageSend;
-import com.xingyi.logistic.util.DateUtils;
+import com.xingyi.logistic.business.util.DateUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jms.core.JmsMessagingTemplate;
 import org.springframework.stereotype.Component;
@@ -56,7 +56,7 @@ public class SendMessageServer
 
     /**
      * 下发文本调度
-     * @param obj
+     * @param terminalMsg
      */
     public void funTerminalMsg(TerminalMsg terminalMsg)
     {

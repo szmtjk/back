@@ -23,7 +23,7 @@ dependencies {
 
     compile group: 'dom4j', name: 'dom4j', version: '1.6.1'
     compile  'org.springframework.boot:spring-boot-starter-websocket'
-    compile  'org.springframework.boot:spring-boot-starter-activemq'
+//    compile  'org.springframework.boot:spring-boot-starter-activemq'
     compile 'org.springframework.boot:spring-boot-starter-web'
     compile 'org.springframework.boot:spring-boot-starter-tomcat'
     compile "io.springfox:springfox-swagger2:2.9.0"
