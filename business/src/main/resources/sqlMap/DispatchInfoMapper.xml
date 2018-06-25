@@ -155,7 +155,7 @@
                     where isDeleted=0
                     group by customerTaskFlowId
                    ) bb on bb.id=aa.id
-        set taskStatus=(case when aa.totalLoad-bb.preLoad &lt;= 0 then 2 when aa.totalLoad-bb.preLoad=aa.totalLoad then 0 else 1 end)
+        set taskStatus=(case when aa.totalWeight-bb.preLoad &lt;= 0 then 2 when aa.totalWeight-bb.preLoad=aa.totalWeight then 0 else 1 end)
         where aa.id = #{customerTaskFlowId} and aa.taskStatus &lt;= 2
     </update>
 
