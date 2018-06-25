@@ -467,7 +467,9 @@ public class DispatchInfoServiceImpl extends BaseCRUDService<DispatchInfoDO, Dis
                     isNeedSendMsgToDev = true;
                 }
                 o.setCustomerTaskFlowId(dispatchInfoParam.getCustomerTaskFlowId());
-                dispatchInfoDAO.insertSelective(dispatchInfoConverter.toDataObject(o));
+                DispatchInfoDO dispatchInfoDO = dispatchInfoConverter.toDataObject(o);
+                dispatchInfoDAO.insertSelective(dispatchInfoDO);
+                o.setId(dispatchInfoDO.getId());
                 if (isNeedSendMsgToDev) {
                     sendMsgToDev(o);
                 }
@@ -509,8 +511,9 @@ public class DispatchInfoServiceImpl extends BaseCRUDService<DispatchInfoDO, Dis
 
             plan.setTaskname("任务:" + dispatchFlagInfo.getId());
             plan.setDevicecode(ship.getGpsDeviceId());
+            plan.setPlanruntime(DateUtils.formatDatetime(customerTaskFlow.getLoadingTime() * 1000));
             plan.setStartfieldcode(String.valueOf(customerTaskFlow.getStartPortId()));
-            plan.setStartfieldcode("出发港口" + customerTaskFlow.getStartPortId());
+            plan.setStartfieldname("出发港口" + customerTaskFlow.getStartPortId());
             plan.setEndfieldcode(String.valueOf(customerTaskFlow.getEndPortId()));
             plan.setEndfieldname("抵达港口" + customerTaskFlow.getEndPortId());
             plan.setServertime(DateUtils.getCurrentSystemTime());
@@ -519,6 +522,7 @@ public class DispatchInfoServiceImpl extends BaseCRUDService<DispatchInfoDO, Dis
             plan.setGoodsname(customerTaskFlow.getGoodsName());
             plan.setGoodstype(String.valueOf(customerTaskFlow.getGoodsType()));
             plan.setPlanton(String.valueOf(dispatchFlagInfo.getPreLoad()));
+            plan.setRealton("");
             sendMessageServer.funSendMsg(plan);
             LOG.info("send msg to dev, content:{}", JsonUtil.toJson(plan));
         } catch (Exception e) {
