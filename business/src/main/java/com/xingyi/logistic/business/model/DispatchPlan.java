@@ -6,7 +6,7 @@ import javax.xml.bind.annotation.XmlRootElement;
  * Created by WCL on 2018/1/12.
  */
 
-@XmlRootElement(name="dispatchplan")
+@XmlRootElement(name="dispatchplansend")
 public class DispatchPlan {
     private long dispatchplansendid;
     private String taskname;

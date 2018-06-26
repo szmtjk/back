@@ -31,6 +31,7 @@ public class MessageHandler
     @JmsListener(destination = "ENTERSTATION.QUEUE")
     public void receiveEnterStationQueue(String msg)
     {
+        System.out.println("receiveEnterStationQueue:" + msg);
         gpsServer.executeEnterStationTask(msg);
     }
 
