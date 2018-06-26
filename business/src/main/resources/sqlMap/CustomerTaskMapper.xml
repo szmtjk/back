@@ -229,7 +229,7 @@
     </select>
 
     <select id="getTaskDetailByPage" parameterType="Map" resultMap="taskDetailColumnMap">
-        select a.taskNo, e.fullName, f.`name` as contractName, a.totalLoad, g.`name` as flowName, b.goodsName, b.goodsType,
+        select a.taskStatus, a.taskNo, e.fullName, f.`name` as contractName, a.totalLoad, g.`name` as flowName, b.goodsName, b.goodsType,
             b.totalWeight, h.name as startPortName, i.`name` as endPortName, b.loadingTime as loadDate,
             b.dischargeTime as dischargeDate, j.shipNo, j.shipFlag, c.preWeight, c.preLoad, c.actualTransferPrice,
             c.preArriveTime, d.arriveSPortTime, d.loadTime, d.loadWeight, d.preArriveEPortTime, d.actualArriveEPortTime,
@@ -251,4 +251,18 @@
         order by a.id, b.id, c.id, d.id
         <include refid="pageCommon"/>
     </select>
+
+    <update id="updateCustomerTaskStatus">
+        update CustomerTask aa
+        left join (SELECT taskId, min(taskStatus) as minStatus, max(taskStatus) as maxStatus
+        from CustomerTaskFlow
+        group by taskId
+        ) bb on bb.taskId=aa.id
+        set taskStatus=(case
+        when maxStatus == 0 then 0
+        when maxStatus == 5 and minStatus == 5 then 2
+        else 1
+        end)
+        where aa.id = #{taskId}
+    </update>
 </mapper>

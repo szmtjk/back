@@ -30,4 +30,6 @@ public interface CustomerTaskDAO extends BaseDAO<CustomerTaskDO, CustomerTaskDBQ
     Integer getTaskDetailCount(@Param("key")String key);
 
     List<CustomerTaskDetailDO> getTaskDetailByPage(@Param("pojo")CustomerTaskDBQuery query);
+
+    int updateCustomerTaskStatus(@Param("taskId")long taskId);
 }

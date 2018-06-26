@@ -73,6 +73,9 @@ public class DispatchInfoServiceImpl extends BaseCRUDService<DispatchInfoDO, Dis
     private CustomerTaskFlowService customerTaskFlowService;
 
     @Autowired
+    private TaskStatusService taskStatusService;
+
+    @Autowired
     private SendMessageServer sendMessageServer;
 
     /**
@@ -475,7 +478,7 @@ public class DispatchInfoServiceImpl extends BaseCRUDService<DispatchInfoDO, Dis
                 }
             });
 
-            dispatchInfoDAO.updateCustomerTaskStatus4Dispatch(dispatchInfoParam.getCustomerTaskFlowId());
+            taskStatusService.updateCustomerTaskFlowTaskStatus4Dispatch(dispatchInfoParam.getCustomerTaskFlowId());
             ret.setSuccessData(true);
         } catch (Exception e) {
             LOG.error("confirmDispatchInfoPlan err, param:{}", JsonUtil.toJson(dispatchInfoParam), e);

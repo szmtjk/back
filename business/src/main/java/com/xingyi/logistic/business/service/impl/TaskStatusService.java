@@ -1,7 +1,10 @@
 package com.xingyi.logistic.business.service.impl;
 
+import com.xingyi.logistic.business.db.dao.CustomerTaskDAO;
 import com.xingyi.logistic.business.db.dao.CustomerTaskFlowDAO;
 import com.xingyi.logistic.business.db.dao.DispatchInfoDAO;
+import com.xingyi.logistic.business.db.entity.CustomerTaskDO;
+import com.xingyi.logistic.business.db.entity.CustomerTaskFlowDO;
 import com.xingyi.logistic.business.db.entity.DispatchInfoDO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -22,17 +25,49 @@ public class TaskStatusService {
     @Autowired
     private CustomerTaskFlowDAO customerTaskFlowDAO;
 
+    @Autowired
+    private CustomerTaskDAO customerTaskDAO;
+
     public boolean updateDispatchStatus(long dispatchInfoId, int status) {
         try {
             dispatchInfoDAO.updateDispatchInfoStatus(dispatchInfoId, status);
             DispatchInfoDO dispatchInfoDO = dispatchInfoDAO.getById(dispatchInfoId);
             if (dispatchInfoDO != null) {
-                customerTaskFlowDAO.updateCustomerTaskStatus4Sailing(dispatchInfoDO.getCustomerTaskFlowId());
+                CustomerTaskFlowDO customerTaskFlowDO = customerTaskFlowDAO.getById(dispatchInfoDO.getCustomerTaskFlowId());
+                if (customerTaskFlowDO != null) {
+                    customerTaskFlowDAO.updateCustomerTaskStatus4Sailing(dispatchInfoDO.getCustomerTaskFlowId());
+                    updateCustomerTaskStatus(customerTaskFlowDO.getTaskId());
+                }
             }
+            return true;
         } catch (Exception e) {
             LOG.error("update dispatch status err, dispatchInfoId:{}, taskStatus:{}", dispatchInfoId, status);
         }
-        return true;
+        return false;
+    }
+
+    public boolean updateCustomerTaskFlowTaskStatus4Dispatch(long customerTaskFlowId) {
+        try {
+            CustomerTaskFlowDO customerTaskFlowDO = customerTaskFlowDAO.getById(customerTaskFlowId);
+            if (customerTaskFlowDO != null) {
+                dispatchInfoDAO.updateCustomerTaskStatus4Dispatch(customerTaskFlowId);
+                updateCustomerTaskStatus(customerTaskFlowDO.getTaskId());
+            }
+            return true;
+        } catch (Exception e) {
+            LOG.error("updateCustomerTaskFlowTaskStatus err, taskId:{}", customerTaskFlowId);
+        }
+        return false;
+    }
+
+    public boolean updateCustomerTaskStatus(long taskId) {
+        try {
+            customerTaskDAO.updateCustomerTaskStatus(taskId);
+            return true;
+        } catch (Exception e) {
+            LOG.error("updateCustomerTaskStatus err, taskId:{}", taskId);
+        }
+        return false;
     }
 
 }

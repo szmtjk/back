@@ -5,6 +5,7 @@ package com.xingyi.logistic.business.bean;
  */
 public class BaseCustomerTaskDetail {
 
+    private Integer taskStatus;//任务状态
     private String taskNo;//客户单号
     private String fullName;//客户单位
     private String contractName;//合同名
@@ -32,6 +33,14 @@ public class BaseCustomerTaskDetail {
     private String dischargeWeight;//重船实际卸货吨位
     private String dischargeDelayFee;//卸货延期费
     private String allowance;//异常补助
+
+    public Integer getTaskStatus() {
+        return taskStatus;
+    }
+
+    public void setTaskStatus(Integer taskStatus) {
+        this.taskStatus = taskStatus;
+    }
 
     public String getTaskNo() {
         return taskNo;
