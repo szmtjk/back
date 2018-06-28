@@ -16,6 +16,15 @@ public class BaseUserProfile extends BaseModelAndDO {
 	private Integer department;
 	private Integer isDeleted;
 	private Long localId;
+	private String mobile;
+
+	public String getMobile() {
+		return mobile;
+	}
+
+	public void setMobile(String mobile) {
+		this.mobile = mobile;
+	}
 
 	public Long getLocalId() {
 		return localId;

@@ -19,6 +19,7 @@
         <result property="updaterName" column="updaterName"/>
         <result property="updated" column="updated"/>
         <result property="isDeleted" column="isDeleted"/>
+        <result property="mobile" column="mobile"/>
 
     </resultMap>
 
@@ -29,6 +30,7 @@
         ,`gender`
         ,`birthDay`
         ,`department`
+        ,`mobile`
         ,`creator`
         ,`creatorName`
         ,`created`
@@ -47,6 +49,7 @@
             <if test="pojo.nickName!=null"> `nickName`,</if>
             <if test="pojo.realName!=null"> `realName`,</if>
             <if test="pojo.birthDay!=null"> `birthDay`,</if>
+            <if test="pojo.mobile!=null"> `mobile`,</if>
             <if test="pojo.department!=null"> `department`,</if>
             <if test="pojo.creator!=null"> `creator`,</if>
             <if test="pojo.creatorName!=null"> `creatorName`,</if>
@@ -62,6 +65,7 @@
             <if test="pojo.nickName!=null">#{pojo.nickName},</if>
             <if test="pojo.realName!=null">#{pojo.realName},</if>
             <if test="pojo.birthDay!=null">#{pojo.birthDay},</if>
+            <if test="pojo.mobile!=null">#{pojo.mobile},</if>
             <if test="pojo.department!=null">#{pojo.department},</if>
             <if test="pojo.creator!=null">#{pojo.creator},</if>
             <if test="pojo.creatorName!=null">#{pojo.creatorName},</if>
@@ -80,6 +84,7 @@
             <if test="pojo.nickName!=null">`nickName` = #{pojo.nickName},</if>
             <if test="pojo.realName!=null">`realName` = #{pojo.realName},</if>
             <if test="pojo.birthDay!=null">`birthDay` = #{pojo.birthDay},</if>
+            <if test="pojo.mobile!=null">`mobile` = #{pojo.mobile},</if>
             <if test="pojo.department!=null">`department` = #{pojo.department},</if>
             <if test="pojo.updater!=null">`updater` = #{pojo.updater},</if>
             <if test="pojo.updaterName!=null">`updaterName` = #{pojo.updaterName},</if>
