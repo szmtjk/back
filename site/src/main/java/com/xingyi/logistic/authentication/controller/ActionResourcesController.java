@@ -34,7 +34,16 @@ public class ActionResourcesController extends BaseCRUDController<ActionResource
         List<ActionResources> argFlys = null;
 
         if (ret.isSuccess()) {
-            argFlys = (List<ActionResources>) ret.getData();
+            Object retData = ret.getData();
+            if (retData instanceof Map) {
+                Map<String, Object> paramMap = (Map<String, Object>)retData;
+                Object listData = paramMap.get("list");
+                if (listData instanceof List) {
+                    argFlys = (List<ActionResources>)listData;
+                }
+            } else if (retData instanceof List) {
+                argFlys = (List<ActionResources>)ret.getData();
+            }
         }
         if (argFlys == null) {
             argFlys = new ArrayList<>();
