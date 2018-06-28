@@ -103,8 +103,6 @@ public class JPushClientUtil {
             }
         } catch (Exception e) {
             LOG.error("pushMsg err, payload", JsonUtil.toJson(payload), e);
-        } finally {
-
         }
         return 0;
     }

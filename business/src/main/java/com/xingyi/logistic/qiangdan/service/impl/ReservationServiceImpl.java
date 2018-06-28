@@ -10,6 +10,7 @@ import com.xingyi.logistic.business.service.DispatchInfoService;
 import com.xingyi.logistic.business.service.base.BaseCRUDService;
 import com.xingyi.logistic.business.service.base.ModelConverter;
 import com.xingyi.logistic.business.service.base.QueryConditionConverter;
+import com.xingyi.logistic.business.service.common.PushService;
 import com.xingyi.logistic.business.service.converter.ReservationQueryConverter;
 import com.xingyi.logistic.business.util.PrimitiveUtil;
 import com.xingyi.logistic.common.bean.ErrCode;
@@ -47,10 +48,13 @@ public class ReservationServiceImpl extends BaseCRUDService<ReservationDO,Reserv
     @Autowired
     private DispatchInfoService dispatchInfoService;
 
+    @Autowired
+    private PushService pushService;
+
     /**
      * 取消预约
      *
-     * @param Reservation
+     * @param reservation
      * @return
      */
     @Override
@@ -105,6 +109,7 @@ public class ReservationServiceImpl extends BaseCRUDService<ReservationDO,Reserv
             }
             o.setDispatchId(dispatchId);
             reservationDAO.update(reservationConverter.toUpdatedReservationDO(o, 1));
+            pushService.pushReservationPassed(reservationRet.getData(), o);
         }
 
         //审核未通过
