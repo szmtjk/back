@@ -252,7 +252,7 @@
         INNER JOIN Ship  A2 ON A1.devId = A2.gpsDeviceId
         WHERE A1.longitude != 0 AND A1.longitude is not NULL
         <if test="pojo.shipNo != null"> AND A2.shipNo like concat('%', #{pojo.shipNo}, '%') </if>
-        <if test="pojo.shipNo != null"> AND A1.devId like concat('%', #{pojo.devId}, '%') </if>
+        <if test="pojo.devId != null"> AND A1.devId like concat('%', #{pojo.devId}, '%') </if>
     </select>
 
     <select id="queryComboxShipInfo" resultMap="mRetComboxMap" parameterType="Map">
