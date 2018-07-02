@@ -243,7 +243,7 @@
             <if test="pojo.levelAWeight!=null"> `levelAWeight`,</if>
             <if test="pojo.levelBWeight!=null"> `levelBWeight`,</if>
             <if test="pojo.levelCWeight!=null"> `levelCWeight`,</if>
-            <if test="pojo.buildDate!=null"> `buildDate`,</if>
+            <if test="pojo.buildDate!=null and pojo.buildDate!='' " > `buildDate`,</if>
             <if test="pojo.customerId!=null"> `customerId`,</if>
             <if test="pojo.checkRegisterNo!=null"> `checkRegisterNo`,</if>
            <!-- <if test="pojo.checkNo!=null"> `checkNo`,</if>-->
@@ -299,7 +299,7 @@
             <if test="pojo.levelAWeight!=null">#{pojo.levelAWeight},</if>
             <if test="pojo.levelBWeight!=null">#{pojo.levelBWeight},</if>
             <if test="pojo.levelCWeight!=null">#{pojo.levelCWeight},</if>
-            <if test="pojo.buildDate!=null">#{pojo.buildDate},</if>
+            <if test="pojo.buildDate!=null and pojo.buildDate!=''">#{pojo.buildDate},</if>
             <if test="pojo.customerId!=null">#{pojo.customerId},</if>
             <if test="pojo.checkRegisterNo!=null">#{pojo.checkRegisterNo},</if>
            <!-- <if test="pojo.checkNo!=null">#{pojo.checkNo},</if>-->
@@ -598,9 +598,13 @@
         order by  a.shipId ,a.eventId
     </select>
 
+    <select id="getFlowByContractId"  resultType="Map" >
+        select f.id as id ,f.name as name from Flow f, ContractFlow c where c.contractId = #{0} and c.flowId = f.id
+    </select>
+
     <select id="getReportFour2ThreeList"  resultType="Map" >
         select '集装箱' as lx, ta.jhsl as jhsl,tb.sjsl as sjsl,case when ta.jhsl is null or tb.sjsl is null  then '' else FORMAT(ta.jhsl/tb.sjsl ,2) end  as wcl
-        from (select sum(plan) as jhsl, '3' as lx  from FreightPlan  where time = #{0} and shipFlag ='3' and isDeleted = '0'  ) ta ,
+        FlowMapper    from (select sum(plan) as jhsl, '3' as lx  from FreightPlan  where time = #{0} and shipFlag ='3' and isDeleted = '0'  ) ta ,
         (select  sum(dischargeWeight) as sjsl ,'3' as lx from CustomerTaskFlow a , DispatchInfo b , SailingInfo c
         where b.customerTaskFlowId = a.id and c.orderId = b.id  and a.goodsType = '3' and c.isDeleted = '0'
         and FROM_UNIXTIME( c.dischargeTime, '%Y-%m' ) =  #{1} ) tb where ta.lx = tb.lx

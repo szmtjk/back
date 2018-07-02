@@ -43,10 +43,10 @@
     </resultMap>
 
     <select id="getDispatchInfoInfo" resultType="Map" parameterType="Map">
-        select id AS id, orderNo AS name,shipId as shipId
-        from `DispatchInfo`
-        WHERE isDeleted = 0
-        ORDER BY updated DESC
+        select b.id AS id, b.orderNo AS name,b.shipId as shipId, (select shipNo from Ship s where s.id = b.shipId ) as shipNo
+        from `DispatchInfo` b
+        WHERE b.isDeleted = 0 and b.orderNo <![CDATA[ <> ]]> ''
+        ORDER BY b.updated DESC
     </select>
 
     <sql id="all_column">

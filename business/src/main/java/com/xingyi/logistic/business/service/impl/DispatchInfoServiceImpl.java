@@ -340,6 +340,23 @@ public class DispatchInfoServiceImpl extends BaseCRUDService<DispatchInfoDO, Dis
     }
 
     @Override
+    public List<Map<String,Object>> getFlowByContractId(ReportParam param) {
+        List<Map<String,Object>>  list = new ArrayList<Map<String,Object>>();
+        ShipQuery shipQuery = new ShipQuery();
+        BeanUtils.copyProperties(param, shipQuery);
+
+        if(StringUtils.isEmpty(param.getKey())){
+            return list;
+        }
+        try {
+            list = shipDAO.getFlowByContractId(param.getKey());
+        } catch(Exception e) {
+            LOG.error("query getFlowByContractId err, param:{}", JsonUtil.toJson(param), e);
+        }
+        return list;
+    }
+
+    @Override
     public List<Map<String,Object>> getReportFour2ThreeList(ReportParam param) {
         List<Map<String,Object>>  list = new ArrayList<Map<String,Object>>();
         ShipQuery shipQuery = new ShipQuery();

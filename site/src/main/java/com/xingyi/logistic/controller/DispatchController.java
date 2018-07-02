@@ -101,4 +101,9 @@ public class DispatchController extends BaseCRUDController<DispatchInfo, Dispatc
         return dispatchInfoService.getReportTwoList(param);
     }
 
+    @RequestMapping("/getFlowByContractId")
+    public List<Map<String,Object>> getFlowByContractId(@JsonParam ReportParam param) {
+        return dispatchInfoService.getFlowByContractId(param);
+    }
+
 }

@@ -38,4 +38,7 @@ public interface DispatchInfoService extends BaseService<DispatchInfo, DispatchI
     List<Map<String,Object>> getReportTwoHeader(ReportParam param);
 
     List<Map<String,Object>> getReportTwoList(ReportParam param);
+
+    List<Map<String,Object>> getFlowByContractId(ReportParam param);
+
 }
