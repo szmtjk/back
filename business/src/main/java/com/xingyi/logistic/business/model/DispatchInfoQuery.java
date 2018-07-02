@@ -10,6 +10,15 @@ public class DispatchInfoQuery extends BaseQueryPage {
     private Integer shipId;
     private Integer customerTaskFlowId;
     private Integer settleType;
+    private String key;
+
+    public String getKey() {
+        return key;
+    }
+
+    public void setKey(String key) {
+        this.key = key;
+    }
 
     public Integer getShipId() {
         return shipId;

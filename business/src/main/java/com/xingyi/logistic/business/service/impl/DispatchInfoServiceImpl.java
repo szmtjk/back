@@ -82,9 +82,19 @@ public class DispatchInfoServiceImpl extends BaseCRUDService<DispatchInfoDO, Dis
      * 加载所有设备
      * @return
      */
-    public List<Map<String,Object>> getDispatchInfoInfo()
+    public List<Map<String,Object>> getDispatchInfoInfo(ReportParam param)
     {
-        return dispatchInfoDAO.getDispatchInfoInfo();
+        List<Map<String,Object>>  list = new ArrayList<Map<String,Object>>();
+        DispatchInfoQuery dispatchInfoQuery = new DispatchInfoQuery();
+        BeanUtils.copyProperties(param, dispatchInfoQuery);
+        try {
+            DispatchInfoDBQuery dispatchInfoDBQuery = dispatchInfoQueryConverter.toDOCondition(dispatchInfoQuery);
+            list = dispatchInfoDAO.getDispatchInfoInfo(dispatchInfoDBQuery);
+        } catch(Exception e) {
+
+            LOG.error("query getDispatchInfoInfo err, param:{}", JsonUtil.toJson(param), e);
+        }
+        return list;
     }
 
     @Override

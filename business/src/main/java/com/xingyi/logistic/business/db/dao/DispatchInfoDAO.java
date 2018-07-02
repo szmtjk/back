@@ -31,6 +31,6 @@ public interface DispatchInfoDAO extends BaseDAO<DispatchInfoDO, DispatchInfoDBQ
      * 加载调度单号
      * @return
      */
-    List<Map<String,Object>> getDispatchInfoInfo();
+    List<Map<String,Object>> getDispatchInfoInfo(@Param("pojo")DispatchInfoDBQuery pojo);
 
 }

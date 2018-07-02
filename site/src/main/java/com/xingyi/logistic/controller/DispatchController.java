@@ -36,8 +36,8 @@ public class DispatchController extends BaseCRUDController<DispatchInfo, Dispatc
      * 调度单号加载
      */
     @RequestMapping(value = "/loadDispatchInfo", method = RequestMethod.POST)
-    public List<Map<String,Object>> loadDispatchInfo() {
-        return dispatchInfoService.getDispatchInfoInfo();
+    public List<Map<String,Object>> loadDispatchInfo(@JsonParam ReportParam param) {
+        return dispatchInfoService.getDispatchInfoInfo(param);
     }
 
     @RequestMapping(value = "/getAvailableShips", method = RequestMethod.POST)

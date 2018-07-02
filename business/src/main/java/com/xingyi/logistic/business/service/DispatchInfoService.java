@@ -23,7 +23,7 @@ public interface DispatchInfoService extends BaseService<DispatchInfo, DispatchI
 
     JsonRet<Object> getReportFiveList(ReportParam param);
 
-    List<Map<String,Object>> getDispatchInfoInfo();
+    List<Map<String,Object>> getDispatchInfoInfo(ReportParam param);
 
     List<Map<String,Object>> getReportThreeList(ReportParam param);
 
