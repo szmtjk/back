@@ -42,4 +42,6 @@ public interface ShipDAO extends BaseDAO<ShipDO, ShipDBQuery> {
     List<Map<String, Object>> getFlowByContractId(String key);
 
     ShipDO getAppById(@Param("id") Long userId);
+
+    ShipDO getShipInfo(@Param("id") Long userId);
 }

@@ -715,4 +715,12 @@
         INNER JOIN AppUser A2 ON A1.id=A2.shipInfoId
         WHERE A2.id = #{id}
     </select>
+
+    <select  id="getShipInfo" parameterType="java.lang.Long" resultMap="mRetShipMap">
+
+        SELECT A1.`id` , A1.shipNo
+        FROM Ship A1
+        INNER JOIN UserProfile A2 ON A1.mobile=A2.mobile
+        WHERE A2.id = #{id}
+    </select>
 </mapper>

@@ -56,7 +56,6 @@ public class ShipServiceImpl extends BaseCRUDService<ShipDO, Ship, ShipDBQuery, 
         }
     }
 
-
     @Override
     protected ModelConverter<ShipDO, Ship> getModelConverter() {
         return shipConverter;
@@ -71,4 +70,23 @@ public class ShipServiceImpl extends BaseCRUDService<ShipDO, Ship, ShipDBQuery, 
     protected QueryConditionConverter<ShipQuery, ShipDBQuery> getConditionConverter() {
         return shipQueryConverter;
     }
+
+    @Override
+    public JsonRet<Object> getShipInfo(AppUser mAppUser) {
+        try {
+            if (mAppUser == null || mAppUser.getId() == null) {
+                return JsonRet.getErrRet(ErrCode.ID_INVALID);
+            }
+
+            ShipDO dataObject = shipDAO.getShipInfo(mAppUser.getId());
+            if (dataObject != null) {
+                return JsonRet.getSuccessRet(getModelConverter().toModel(dataObject));
+            } else {
+                return JsonRet.getErrRet(ErrCode.GET_ERR);
+            }
+        } catch (Exception e) {
+            return JsonRet.getErrRet(ErrCode.GET_ERR);
+        }
+    }
+
 }

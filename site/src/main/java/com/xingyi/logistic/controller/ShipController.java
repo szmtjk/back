@@ -79,4 +79,15 @@ public class ShipController extends BaseCRUDController<Ship, ShipQuery> {
     {
         return shipService.getAppById(SessionUtil.getAppUser());
     }
+
+
+    /**
+     * 通过token获取船舶id和船号
+     * @return
+     */
+    @RequestMapping(value = "/getShipInfo", method = {RequestMethod.GET,RequestMethod.POST})
+    public JsonRet<Object> getShipInfo() {
+        AppUser mAppUser = SessionUtil.getAppUser();
+        return shipService.getShipInfo(mAppUser);
+    }
 }

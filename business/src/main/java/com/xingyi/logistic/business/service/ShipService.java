@@ -12,4 +12,6 @@ import com.xingyi.logistic.qiangdan.model.AppUser;
  */
 public interface ShipService extends BaseService<Ship, ShipQuery> {
     JsonRet<Object> getAppById(AppUser mAppUser);
+
+    JsonRet<Object> getShipInfo(AppUser mAppUser);
 }
