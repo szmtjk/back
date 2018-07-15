@@ -359,7 +359,7 @@
         FROM DispatchInfo A1
         INNER JOIN (<include refid="v_ship"/>) S1 ON S1.shipId=A1.shipId
         INNER JOIN (<include refid="v_flowTask"/>) T1 ON T1.flowTaskId=A1.customerTaskFlowId
-        WHERE A1.`isDeleted` = 0
+        WHERE A1.`isDeleted` = 0 AND A1.status>-1
     </sql>
 
     <!-- 航次任务试图 -->
