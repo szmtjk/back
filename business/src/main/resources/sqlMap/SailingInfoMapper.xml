@@ -266,7 +266,7 @@
           SA1.id sailingId,SA1.arriveSPortTime actualArriveSPortTime,SA1.loadTime actualLoadTime,SA1.loadWeight actualLoadWeight,SA1.bucklePrice,
           SA1.departPortTime leaveSPortTime,SA1.preArriveEPortTime,
           SA1.actualArriveEPortTime,SA1.startchargeTime,SA1.dischargeTime,SA1.dischargeWeight,SA1.created sailingCreateTime,
-          SA1.dischargeDelayFee,SA1.allowance,IFNULL(SA1.status,A1.dispatchStatus) sailingStatus
+          SA1.dischargeDelayFee,SA1.allowance,IFNULL(SA1.status,A1.dispatchStatus) status
         FROM (<include refid="v_dispatchTask"/>) A1
         LEFT JOIN SailingInfo SA1 ON SA1.orderId=A1.dispatchId AND SA1.isDeleted=0
         <include refid="dispatchCondition"/>
@@ -278,6 +278,7 @@
     <sql id="dispatchCondition">
         where 0 = 0
         <if test="pojo.id != null"> AND A1.`dispatchId` = #{pojo.id} </if>
+        <if test="pojo.status != null"> AND IFNULL(SA1.status,A1.dispatchStatus)  = #{pojo.status} </if>
         <if test="pojo.key != null">
             AND (
             A1.`shipNo` like concat('%', #{pojo.key}, '%')

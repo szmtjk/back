@@ -26,4 +26,14 @@ public class SailingInfoQuery extends BaseQueryPage {
     public void setKey(String key) {
         this.key = key;
     }
+
+    private  String status;
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
 }
