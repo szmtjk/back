@@ -106,4 +106,8 @@ public class DispatchController extends BaseCRUDController<DispatchInfo, Dispatc
         return dispatchInfoService.getFlowByContractId(param);
     }
 
+    @RequestMapping("/getReportSixList")
+    public JsonRet<Object> getReportSixList(@JsonParam ReportParam param) {
+        return dispatchInfoService.getReportSixList(param);
+    }
 }

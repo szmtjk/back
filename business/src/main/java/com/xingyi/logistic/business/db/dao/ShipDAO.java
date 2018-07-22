@@ -44,4 +44,7 @@ public interface ShipDAO extends BaseDAO<ShipDO, ShipDBQuery> {
     ShipDO getAppById(@Param("id") Long userId);
 
     ShipDO getShipInfo(@Param("id") Long userId);
+
+    int queryReportSixCount(@Param("pojo") ShipDBQuery pojo);
+    List<Map<String, Object>> queryReportSixList(@Param("pojo") ShipDBQuery pojo);
 }

@@ -41,4 +41,5 @@ public interface DispatchInfoService extends BaseService<DispatchInfo, DispatchI
 
     List<Map<String,Object>> getFlowByContractId(ReportParam param);
 
+    JsonRet<Object> getReportSixList(ReportParam param);
 }

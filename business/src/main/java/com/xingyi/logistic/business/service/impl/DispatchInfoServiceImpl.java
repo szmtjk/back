@@ -574,4 +574,31 @@ public class DispatchInfoServiceImpl extends BaseCRUDService<DispatchInfoDO, Dis
     protected QueryConditionConverter<DispatchInfoQuery, DispatchInfoDBQuery> getConditionConverter() {
         return dispatchInfoQueryConverter;
     }
+
+    @Override
+    public JsonRet<Object> getReportSixList(ReportParam param) {
+        JsonRet<Object> ret = new JsonRet<>();
+        if (!ParamValidator.isParamValid(ret, param)) {
+            return ret;
+        }
+        ShipQuery shipQuery = new ShipQuery();
+        BeanUtils.copyProperties(param, shipQuery);
+
+        try {
+            ShipDBQuery shipDBQuery = shipQueryConverter.toDOCondition(shipQuery);
+            int total = shipDAO.queryReportSixCount(shipDBQuery);
+            List<Map<String,Object>> shipStaffS = null;
+            if (total > 0) {
+                shipStaffS = shipDAO.queryReportSixList(shipDBQuery);
+            }
+            MiniUIJsonRet<Object> miniUIJsonRet = new MiniUIJsonRet<>();
+            miniUIJsonRet.setSuccessData(total, shipStaffS);
+            return miniUIJsonRet;
+
+        } catch(Exception e) {
+            ret.setErrTip(ErrCode.GET_ERR);
+            LOG.error("query report six err, param:{}", JsonUtil.toJson(param), e);
+        }
+        return ret;
+    }
 }
