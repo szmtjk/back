@@ -45,7 +45,7 @@ spring:
     file: pid.file
 xyl:
   upload:
-    baseDir: /upload
+    baseDir: /data/pic/upload
 
 # OAuth weixin
 oauth:

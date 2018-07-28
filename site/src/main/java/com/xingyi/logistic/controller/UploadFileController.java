@@ -42,13 +42,12 @@ public class UploadFileController extends BaseController{
         // 改为uuid名!
         String newFileName = getNewName(fileName);
         // 查找即将上传到服务器中的真实路径!
-        String realPath = request.getRealPath(this.baseDir);
-        File file = new File(realPath);
+        File file = new File(this.baseDir);
         if (!file.exists()) {
             file.mkdirs();
         }
         // 程序 写出 上传服务器!
-        FileOutputStream fileOutputStream = new FileOutputStream(realPath + "/" + newFileName);
+        FileOutputStream fileOutputStream = new FileOutputStream(baseDir + "/" + newFileName);
         // 复制多功能文件(图片)以及关闭流
         IOUtils.copy(inputStream, fileOutputStream);
 
