@@ -646,7 +646,10 @@
     </select>
 
     <select id="getReportFour2ThreeList"  resultType="Map" >
-        select '集装箱' as lx, ta.jhsl as jhsl,tb.sjsl as sjsl,case when ta.jhsl is null or tb.sjsl is null  then '' else FORMAT(ta.jhsl/tb.sjsl ,2) end  as wcl
+        select '集装箱' as lx,
+        case when  ta.jhsl is null then '-' else  ta.jhsl end  as jhsl,
+        case when tb.sjsl is null then '-' else tb.sjsl end as sjsl,
+        case when ta.jhsl is null or tb.sjsl is null then '-' else FORMAT(tb.sjsl /ta.jhsl,2) end  as wcl
          from (select sum(plan) as jhsl, '3' as lx  from FreightPlan  where time = #{0} and shipFlag ='3' and isDeleted = '0'  ) ta ,
         (select  sum(dischargeWeight) as sjsl ,'3' as lx from CustomerTaskFlow a , DispatchInfo b , SailingInfo c
         where b.customerTaskFlowId = a.id and c.orderId = b.id  and a.goodsType = '3' and c.isDeleted = '0'
@@ -654,44 +657,55 @@
     </select>
 
     <select id="getReportFour2TwoList"  resultType="Map" >
-        select tt.lx  as lx , tb.jhsl as jhsl ,tt.sjsl as sjsl,  case when tb.jhsl is null or tt.sjsl is null then '' else FORMAT(tb.jhsl/tt.sjsl ,2) end  as wcl
-        from (  select t.lx, ta.sjsl from (SELECT 1 AS lx FROM DUAL
-        UNION ALL
-        SELECT 2 AS lx FROM DUAL
-        UNION ALL
-        SELECT 3 AS lx FROM DUAL
-        UNION ALL
-        SELECT 4 AS lx FROM DUAL
-        UNION ALL
-        SELECT 5 AS lx FROM DUAL
-        UNION ALL
-        SELECT 6 AS lx FROM DUAL
-        UNION ALL
-        SELECT 7 AS lx FROM DUAL
-        UNION ALL
-        SELECT 8 AS lx FROM DUAL ) t LEFT JOIN (select  sum(dischargeWeight) as sjsl ,a.goodsSubType as lx from CustomerTaskFlow a , DispatchInfo b , SailingInfo c
-        where b.customerTaskFlowId = a.id and c.orderId = b.id  and a.goodsType = '2' and c.isDeleted = '0'
-        and FROM_UNIXTIME( c.dischargeTime, '%Y-%m' ) =  #{0}  group by a.goodsSubType) ta on t.lx = ta.lx  ) tt LEFT JOIN
-        (select sum(plan) as jhsl, goodsName lx  from FreightPlan  where time = #{1} and shipFlag ='2' and isDeleted = '0'  group by goodsName) tb on tt.lx = tb.lx  order by tt.lx
+
+        select  CASE tt.lx WHEN 1 THEN '碎石'  WHEN 2 THEN '市场煤炭'  WHEN 3 THEN '华能电煤'  WHEN 4 THEN '浙能电煤'  WHEN 5 THEN '铜精矿'  WHEN 6 THEN 'PAT'  WHEN 7 THEN '经营业务'  WHEN 8 THEN '其他业务'   ELSE '' END   as lx ,
+        case when tb.jhsl is null then '-' else tb.jhsl end  as jhsl,
+        case when tt.sjsl is null then '-' else tt.sjsl end as sjsl,
+        case when tb.jhsl is null or tt.sjsl is null then '-' else FORMAT(tt.sjsl /tb.jhsl,2) end  as wcl
+            from (  select t.lx, ta.sjsl from (SELECT 1 AS lx FROM DUAL
+            UNION ALL
+            SELECT 2 AS lx FROM DUAL
+            UNION ALL
+            SELECT 3 AS lx FROM DUAL
+            UNION ALL
+            SELECT 4 AS lx FROM DUAL
+            UNION ALL
+            SELECT 5 AS lx FROM DUAL
+            UNION ALL
+            SELECT 6 AS lx FROM DUAL
+            UNION ALL
+            SELECT 7 AS lx FROM DUAL
+            UNION ALL
+            SELECT 8 AS lx FROM DUAL ) t LEFT JOIN (select  sum(dischargeWeight) as sjsl ,a.goodsSubType as lx from CustomerTaskFlow a , DispatchInfo b , SailingInfo c
+            where b.customerTaskFlowId = a.id and c.orderId = b.id  and a.goodsType = '2' and c.isDeleted = '0'
+            and FROM_UNIXTIME( c.dischargeTime, '%Y-%m' ) =  #{0}  group by a.goodsSubType) ta on t.lx = ta.lx  ) tt LEFT JOIN
+            (select sum(plan) as jhsl, goodsName lx  from FreightPlan  where time = #{1} and shipFlag ='2' and isDeleted = '0'  group by goodsName) tb on tt.lx = tb.lx  order by tt.lx
     </select>
 
     <select id="getReportFour2OneList"  resultType="Map" >
-        select tb.lx as lx  ,tb.jhsl as jhsl  ,tb.sjsl as sjsl ,case when tb.jhsl is null or tb.sjsl is null then '' else FORMAT(tb.jhsl/tb.sjsl ,2) end  as wcl
-        from (
-        select a.lx ,b.jhsl ,a.sjsl from  ( select  sum(dischargeWeight) as sjsl ,a.receiver as lx from CustomerTaskFlow a , DispatchInfo b , SailingInfo c
-        where b.customerTaskFlowId = a.id and c.orderId = b.id  and a.goodsType = '1' and c.isDeleted = '0'
-        and FROM_UNIXTIME( c.dischargeTime, '%Y-%m' ) =  #{0}  group by a.receiver ) a left join
-        (select sum(plan) as jhsl, revUnit lx  from FreightPlan  where time = #{1} and shipFlag ='1' and isDeleted = '0'  group by revUnit ) b on a.lx = b.lx
-        UNION
-        select b.lx ,b.jhsl ,a.sjsl from  ( select  sum(dischargeWeight) as sjsl ,a.receiver as lx from CustomerTaskFlow a , DispatchInfo b , SailingInfo c
-        where b.customerTaskFlowId = a.id and c.orderId = b.id  and a.goodsType = '1' and c.isDeleted = '0'
-        and FROM_UNIXTIME( c.dischargeTime, '%Y-%m' ) =  #{2}  group by a.receiver ) a right join
-        (select sum(plan) as jhsl, revUnit lx  from FreightPlan  where time = #{3} and shipFlag ='1' and isDeleted = '0'  group by revUnit ) b on a.lx = b.lx
-        ) tb
+        select tb.lx as lx  ,
+        case when tb.jhsl is null then '-' else tb.jhsl end as jhsl,
+        case when tb.sjsl is null then '-' else tb.sjsl end as sjsl,
+        case when tb.jhsl is null or tb.sjsl is null then '-' else FORMAT(tb.sjsl/tb.jhsl ,2) end  as wcl
+            from (
+            select a.lx ,b.jhsl ,a.sjsl from  ( select  sum(dischargeWeight) as sjsl ,a.receiver as lx from CustomerTaskFlow a , DispatchInfo b , SailingInfo c
+            where b.customerTaskFlowId = a.id and c.orderId = b.id  and a.goodsType = '1' and c.isDeleted = '0'
+            and FROM_UNIXTIME( c.dischargeTime, '%Y-%m' ) =  #{0}  group by a.receiver ) a left join
+            (select sum(plan) as jhsl, revUnit lx  from FreightPlan  where time = #{1} and shipFlag ='1' and isDeleted = '0'  group by revUnit ) b on a.lx = b.lx
+            UNION
+            select b.lx ,b.jhsl ,a.sjsl from  ( select  sum(dischargeWeight) as sjsl ,a.receiver as lx from CustomerTaskFlow a , DispatchInfo b , SailingInfo c
+            where b.customerTaskFlowId = a.id and c.orderId = b.id  and a.goodsType = '1' and c.isDeleted = '0'
+            and FROM_UNIXTIME( c.dischargeTime, '%Y-%m' ) =  #{2}  group by a.receiver ) a right join
+            (select sum(plan) as jhsl, revUnit lx  from FreightPlan  where time = #{3} and shipFlag ='1' and isDeleted = '0'  group by revUnit ) b on a.lx = b.lx
+            ) tb
     </select>
 
     <select id="getReportFour2FourList"  resultType="Map" >
-        select tt.lx , tb.jhsl ,tt.sjsl ,  case when tb.jhsl is null or tt.sjsl is null then '' else FORMAT(tb.jhsl/tt.sjsl ,2) end  as wcl
+        select
+        CASE tt.lx WHEN 1 THEN '650吨以上'  WHEN 2 THEN '650吨以下'  WHEN 3 THEN '碎石船'  WHEN 4 THEN '兴能散装船'  WHEN 5 THEN '兴能集装箱船'  WHEN 6 THEN '兴一航运散装船'  WHEN 7 THEN '兴一航运集装箱船'   END   as lx ,
+        case when tb.jhsl is null then '-' else tb.jhsl end  as jhsl,
+        case when tt.sjsl is null then '-' else tt.sjsl end as sjsl,
+        case when tb.jhsl is null or tt.sjsl is null then '-' else FORMAT(tt.sjsl/tb.jhsl ,2) end  as wcl
         from (  select t.lx, ta.sjsl from (SELECT 1 AS lx FROM DUAL
         UNION ALL
         SELECT 2 AS lx FROM DUAL

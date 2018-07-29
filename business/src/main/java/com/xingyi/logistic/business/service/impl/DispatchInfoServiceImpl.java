@@ -371,12 +371,12 @@ public class DispatchInfoServiceImpl extends BaseCRUDService<DispatchInfoDO, Dis
         List<Map<String,Object>>  list = new ArrayList<Map<String,Object>>();
         ShipQuery shipQuery = new ShipQuery();
         BeanUtils.copyProperties(param, shipQuery);
-        String time;
-        if(!StringUtils.isEmpty(param.getKey())){
+        String time =param.getKey();
+       /* if(!StringUtils.isEmpty(param.getKey())){
             time =param.getKey();
         } else {
             return list;
-        }
+        }*/
         //time = "2018-03-01";
         try {
             list = shipDAO.getReportFour2ThreeList(time,time);
@@ -392,12 +392,12 @@ public class DispatchInfoServiceImpl extends BaseCRUDService<DispatchInfoDO, Dis
         List<Map<String,Object>>  list = new ArrayList<Map<String,Object>>();
         ShipQuery shipQuery = new ShipQuery();
         BeanUtils.copyProperties(param, shipQuery);
-        String time;
-        if(!StringUtils.isEmpty(param.getKey())){
+        String time =param.getKey();
+        /*if(!StringUtils.isEmpty(param.getKey())){
             time =param.getKey();
         } else {
             return list;
-        }
+        }*/
         //time = "2018-03-01";
         try {
             list = shipDAO.getReportFour2TwoList(time,time);
@@ -413,12 +413,12 @@ public class DispatchInfoServiceImpl extends BaseCRUDService<DispatchInfoDO, Dis
         List<Map<String,Object>>  list = new ArrayList<Map<String,Object>>();
         ShipQuery shipQuery = new ShipQuery();
         BeanUtils.copyProperties(param, shipQuery);
-        String time;
-        if(!StringUtils.isEmpty(param.getKey())){
+        String time =param.getKey();
+       /* if(!StringUtils.isEmpty(param.getKey())){
             time =param.getKey();
         } else {
             return list;
-        }
+        }*/
         //time = "2018-03-01";
         try {
             list = shipDAO.getReportFour2OneList(time,time,time,time);
@@ -434,12 +434,12 @@ public class DispatchInfoServiceImpl extends BaseCRUDService<DispatchInfoDO, Dis
         List<Map<String,Object>>  list = new ArrayList<Map<String,Object>>();
         ShipQuery shipQuery = new ShipQuery();
         BeanUtils.copyProperties(param, shipQuery);
-        String time;
-        if(!StringUtils.isEmpty(param.getKey())){
+        String time =param.getKey();
+       /* if(!StringUtils.isEmpty(param.getKey())){
             time =param.getKey();
         } else {
             return list;
-        }
+        }*/
         //time = "2018-03-01";
         try {
             list = shipDAO.getReportFour2FourList(time,time);
