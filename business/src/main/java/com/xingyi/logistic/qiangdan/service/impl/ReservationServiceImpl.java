@@ -110,10 +110,17 @@ public class ReservationServiceImpl extends BaseCRUDService<ReservationDO,Reserv
             o.setDispatchId(dispatchId);
             reservationDAO.update(reservationConverter.toUpdatedReservationDO(o, 1));
             pushService.pushReservationPassed(reservationRet.getData(), o);
+
         }
 
         //审核未通过
         for (ReservationCheckFlagInfo o : deniedList) {
+            JsonRet<Reservation> reservationRet = getById(o.getId());
+            if (!reservationRet.isSuccess() || reservationRet.getData() == null) {
+                ret.setErrTip(ErrCode.ID_INVALID);
+                return ret;
+            }
+            DispatchInfo dispatchInfo = reservationConverter.toDispatchInfo(o, reservationRet.getData());
             if (PrimitiveUtil.getPrimitive(o.getDispatchId()) > 0) {
                 JsonRet<Boolean> delRet = dispatchInfoService.del(o.getDispatchId().longValue());
                 if (!delRet.isSuccess()) {
@@ -122,6 +129,7 @@ public class ReservationServiceImpl extends BaseCRUDService<ReservationDO,Reserv
                 }
             }
             reservationDAO.update(reservationConverter.toUpdatedReservationDO(o, 2));
+            pushService.pushReservationPassed(reservationRet.getData(), o);
         }
         ret.setSuccessData(true);
         return ret;

@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!--  Generate by autoSQLMap Powered by duxing@Taobao -->
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.xingyi.logistic.business.db.dao.PushAppMsgDAO">
+    <resultMap id="AllColumnMap" type="com.xingyi.logistic.business.db.entity.PushAppMsgDO">
+        <result property="id" column="id"/>
+        <result property="userId" column="userId"/>
+        <result property="notificationTitle" column="notificationTitle"/>
+        <result property="msgTitle" column="msgTitle"/>
+        <result property="msgContent" column="msgContent"/>
+        <result property="extrasParam" column="extrasParam"/>
+        <result property="created" column="created"/>
+        <result property="updated" column="updated"/>
+        <result property="isDeleted" column="isDeleted"/>
+    </resultMap>
+
+    <insert id="insertSelective" useGeneratedKeys="true" keyProperty="pojo.id">
+        INSERT INTO PushAppMsg
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="pojo.userId!=null"> `userId`,</if>
+            <if test="pojo.notificationTitle!=null"> `notificationTitle`,</if>
+            <if test="pojo.msgTitle!=null"> `msgTitle`,</if>
+            <if test="pojo.msgContent!=null"> `msgContent`,</if>
+            <if test="pojo.extrasParam!=null"> `extrasParam`,</if>
+            `created`,
+            `updated`,
+            `isDeleted`
+        </trim>
+        VALUES
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="pojo.userId!=null">#{pojo.userId},</if>
+            <if test="pojo.notificationTitle!=null">#{pojo.notificationTitle},</if>
+            <if test="pojo.msgTitle!=null">#{pojo.msgTitle},</if>
+            <if test="pojo.msgContent!=null">#{pojo.msgContent},</if>
+            <if test="pojo.extrasParam!=null">#{pojo.extrasParam},</if>
+            UNIX_TIMESTAMP(now()),
+            UNIX_TIMESTAMP(now()),
+            0
+        </trim>
+    </insert>
+
+    <!--auto generated Code-->
+    <update id="update">
+        UPDATE PushAppMsg
+        <set>
+            <if test="pojo.userId!=null">`userId` = #{pojo.userId},</if>
+            <if test="pojo.notificationTitle!=null">`notificationTitle` = #{pojo.notificationTitle},</if>
+            <if test="pojo.msgTitle!=null">`msgTitle` = #{pojo.msgTitle},</if>
+            <if test="pojo.msgContent!=null">`msgContent` = #{pojo.msgContent},</if>
+            <if test="pojo.extrasParam!=null">`extrasParam` = #{pojo.extrasParam},</if>
+            `updated` = UNIX_TIMESTAMP(now())
+        </set>
+        WHERE `userId` = #{pojo.userId}
+    </update>
+
+    <update id="del" parameterType="java.lang.Long">
+        UPDATE PushAppMsg
+        SET `isDeleted` = 1 ,
+        `updated` = UNIX_TIMESTAMP(now())
+        WHERE `userId` = #{userId}
+    </update>
+
+    <select id="getAppById" parameterType="java.lang.Long" resultMap="AllColumnMap">
+        SELECT * FROM `PushAppMsg`
+        WHERE `userId` = #{id} AND `isDeleted` = 0
+</select>
+
+    <sql id="pageCommon">
+        <choose>
+            <when test="pojo.startRow != null and pojo.startRow gt -1 and pojo.limitNum != null and pojo.limitNum gt 0">
+                limit #{pojo.startRow}, #{pojo.limitNum}
+            </when>
+            <otherwise>
+                limit 100
+            </otherwise>
+        </choose>
+    </sql>
+</mapper>
