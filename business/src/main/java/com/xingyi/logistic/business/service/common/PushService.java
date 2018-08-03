@@ -48,4 +48,29 @@ public class PushService {
         pushAppMsgDAO.insertSelective(pushAppMsg);
         LOG.info("reservation passed, and msg pushed to user:{}", reservation.getUserId());
     }
+
+    /**
+     * 推送预约失败信息
+     * @param reservation 预约信息
+     * @param reservationCheckFlagInfo 预约审核信息
+     */
+    public void pushReservationFalsed(Reservation reservation, ReservationCheckFlagInfo reservationCheckFlagInfo) {
+        if (reservation == null) {
+            return;
+        }
+        String notificationTitle = "兴一物流";
+        String msgTitle = "预约失败";
+        String msgContent = "您申请的预约未通过。";
+        String extrasParam = "";
+        JPushClientUtil.sendToAliasUser(notificationTitle, msgTitle, msgContent, extrasParam, String.valueOf(reservation.getUserId()));
+        PushAppMsgDO pushAppMsg = new PushAppMsgDO();
+        PushAppMsgDBQuery pushAppMsgDBQuery = new PushAppMsgDBQuery();
+        pushAppMsg.setUserId(reservation.getUserId());
+        pushAppMsg.setNotificationTitle(notificationTitle);
+        pushAppMsg.setMsgTitle(msgTitle);
+        pushAppMsg.setMsgContent(msgContent);
+        pushAppMsg.setExtrasParam(extrasParam);
+        pushAppMsgDAO.insertSelective(pushAppMsg);
+        LOG.info("reservation passed, and msg pushed to user:{}", reservation.getUserId());
+    }
 }
