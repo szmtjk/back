@@ -9,7 +9,9 @@
         <result property="msgTitle" column="msgTitle"/>
         <result property="msgContent" column="msgContent"/>
         <result property="extrasParam" column="extrasParam"/>
+        <result property="creator" column="creator"/>
         <result property="created" column="created"/>
+        <result property="updater" column="updater"/>
         <result property="updated" column="updated"/>
         <result property="isDeleted" column="isDeleted"/>
     </resultMap>
@@ -22,6 +24,8 @@
             <if test="pojo.msgTitle!=null"> `msgTitle`,</if>
             <if test="pojo.msgContent!=null"> `msgContent`,</if>
             <if test="pojo.extrasParam!=null"> `extrasParam`,</if>
+            <if test="pojo.creator!=null"> `creator`,</if>
+            <if test="pojo.updater!=null"> `updater`,</if>
             `created`,
             `updated`,
             `isDeleted`
@@ -33,6 +37,8 @@
             <if test="pojo.msgTitle!=null">#{pojo.msgTitle},</if>
             <if test="pojo.msgContent!=null">#{pojo.msgContent},</if>
             <if test="pojo.extrasParam!=null">#{pojo.extrasParam},</if>
+            <if test="pojo.creator!=null">#{pojo.creator},</if>
+            <if test="pojo.updater!=null">#{pojo.updater},</if>
             UNIX_TIMESTAMP(now()),
             UNIX_TIMESTAMP(now()),
             0
@@ -48,6 +54,7 @@
             <if test="pojo.msgTitle!=null">`msgTitle` = #{pojo.msgTitle},</if>
             <if test="pojo.msgContent!=null">`msgContent` = #{pojo.msgContent},</if>
             <if test="pojo.extrasParam!=null">`extrasParam` = #{pojo.extrasParam},</if>
+            <if test="pojo.updater!=null">`updater` = #{pojo.updater},</if>
             `updated` = UNIX_TIMESTAMP(now())
         </set>
         WHERE `userId` = #{pojo.userId}
