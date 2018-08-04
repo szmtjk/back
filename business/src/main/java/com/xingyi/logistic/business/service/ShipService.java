@@ -1,5 +1,6 @@
 package com.xingyi.logistic.business.service;
 
+import com.xingyi.logistic.authentication.model.UserProfile;
 import com.xingyi.logistic.business.model.Port;
 import com.xingyi.logistic.business.model.PortQuery;
 import com.xingyi.logistic.business.model.Ship;
@@ -13,5 +14,5 @@ import com.xingyi.logistic.qiangdan.model.AppUser;
 public interface ShipService extends BaseService<Ship, ShipQuery> {
     JsonRet<Object> getAppById(AppUser mAppUser);
 
-    JsonRet<Object> getShipInfo(AppUser mAppUser);
+    JsonRet<Object> getShipInfo(UserProfile profile);
 }

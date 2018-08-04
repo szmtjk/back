@@ -1,5 +1,6 @@
 package com.xingyi.logistic.controller;
 
+import com.xingyi.logistic.authentication.model.UserProfile;
 import com.xingyi.logistic.authentication.util.SessionUtil;
 import com.xingyi.logistic.business.model.Ship;
 import com.xingyi.logistic.business.model.ShipQuery;
@@ -87,7 +88,7 @@ public class ShipController extends BaseCRUDController<Ship, ShipQuery> {
      */
     @RequestMapping(value = "/getShipInfo", method = {RequestMethod.GET,RequestMethod.POST})
     public JsonRet<Object> getShipInfo() {
-        AppUser mAppUser = SessionUtil.getAppUser();
-        return shipService.getShipInfo(mAppUser);
+        UserProfile profile = SessionUtil.getProfile();
+        return shipService.getShipInfo(profile);
     }
 }

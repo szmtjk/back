@@ -1,5 +1,6 @@
 package com.xingyi.logistic.business.service.impl;
 
+import com.xingyi.logistic.authentication.model.UserProfile;
 import com.xingyi.logistic.business.db.dao.ShipDAO;
 import com.xingyi.logistic.business.db.dao.base.BaseDAO;
 import com.xingyi.logistic.business.db.entity.ShipDBQuery;
@@ -72,13 +73,13 @@ public class ShipServiceImpl extends BaseCRUDService<ShipDO, Ship, ShipDBQuery, 
     }
 
     @Override
-    public JsonRet<Object> getShipInfo(AppUser mAppUser) {
+    public JsonRet<Object> getShipInfo(UserProfile profile) {
         try {
-            if (mAppUser == null || mAppUser.getId() == null) {
+            if (profile == null || profile.getId() == null) {
                 return JsonRet.getErrRet(ErrCode.ID_INVALID);
             }
 
-            ShipDO dataObject = shipDAO.getShipInfo(mAppUser.getId());
+            ShipDO dataObject = shipDAO.getShipInfo(profile.getId());
             if (dataObject != null) {
                 return JsonRet.getSuccessRet(getModelConverter().toModel(dataObject));
             } else {
