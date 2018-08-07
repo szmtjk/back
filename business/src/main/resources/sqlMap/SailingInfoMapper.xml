@@ -45,9 +45,18 @@
         <result property="startPortId" column="startPortId"/>
         <result property="endPortId" column="endPortId"/>
 
+        <result property="loadCentiPic" column="loadCentiPic"/>
+        <result property="loadExPic" column="loadExPic"/>
+        <result property="loadExDes" column="loadExDes"/>
+        <result property="dischargeCentiPic" column="dischargeCentiPic"/>
+        <result property="dischargeExPic" column="dischargeExPic"/>
+        <result property="dischargeExDes" column="dischargeExDes"/>
+
     </resultMap>
 
     <sql id="all_column">
+
+
         `id`
         ,`shipId`
         ,`orderId`
@@ -68,6 +77,14 @@
         ,`cutOther`
         ,`cutOtherDes`
         ,`description`
+
+        , loadCentiPic
+        , loadExPic
+        , loadExDes
+        , dischargeCentiPic
+        , dischargeExPic
+        , dischargeExDes
+
         ,`creator`
         ,`created`
         ,`updated`
@@ -89,6 +106,8 @@
         , '' flowName
         , '' startPortId
         , '' endPortId
+
+
 
     </sql>
 
@@ -166,6 +185,14 @@
             <if test="pojo.cutOther!=null">`cutOther` =#{pojo.cutOther},</if>
             <if test="pojo.cutOtherDes!=null">`cutOtherDes` =#{pojo.cutOtherDes},</if>
             <if test="pojo.description!=null">`description` = #{pojo.description},</if>
+
+            <if test="pojo.loadCentiPic!=null">`loadCentiPic` = #{pojo.loadCentiPic},</if>
+            <if test="pojo.loadExPic!=null">`loadExPic` = #{pojo.loadExPic},</if>
+            <if test="pojo.loadExDes!=null">`loadExDes` = #{pojo.loadExDes},</if>
+            <if test="pojo.dischargeCentiPic!=null">`dischargeCentiPic` = #{pojo.dischargeCentiPic},</if>
+            <if test="pojo.dischargeExPic!=null">`dischargeExPic` = #{pojo.dischargeExPic},</if>
+            <if test="pojo.dischargeExDes!=null">`dischargeExDes` = #{pojo.dischargeExDes},</if>
+
             `updated` = UNIX_TIMESTAMP(now())
         </set>
         WHERE `id` = #{pojo.id} and `isDeleted` = 0
@@ -266,7 +293,8 @@
           SA1.id sailingId,SA1.arriveSPortTime actualArriveSPortTime,SA1.loadTime actualLoadTime,SA1.loadWeight actualLoadWeight,SA1.bucklePrice,
           SA1.departPortTime leaveSPortTime,SA1.preArriveEPortTime,
           SA1.actualArriveEPortTime,SA1.startchargeTime,SA1.dischargeTime,SA1.dischargeWeight,SA1.created sailingCreateTime,
-          SA1.dischargeDelayFee,SA1.allowance,IFNULL(SA1.status,A1.dispatchStatus) status
+          SA1.dischargeDelayFee,SA1.allowance,IFNULL(SA1.status,A1.dispatchStatus) status,
+          SA1.loadCentiPic,SA1.loadExPic,SA1.loadExDes,SA1.dischargeCentiPic,SA1.dischargeExPic,SA1.dischargeExDes
         FROM (<include refid="v_dispatchTask"/>) A1
         LEFT JOIN SailingInfo SA1 ON SA1.orderId=A1.dispatchId AND SA1.isDeleted=0
         <include refid="dispatchCondition"/>

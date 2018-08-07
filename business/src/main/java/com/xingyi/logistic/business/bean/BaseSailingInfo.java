@@ -49,6 +49,61 @@ public class BaseSailingInfo extends BaseModelAndDO {
     private String startPortId;
     private String endPortId;
 
+    private String loadCentiPic;
+    private String loadExPic;
+    private String loadExDes;
+    private String dischargeCentiPic;
+    private String dischargeExPic;
+    private String dischargeExDes;
+
+    public String getLoadCentiPic() {
+        return loadCentiPic;
+    }
+
+    public void setLoadCentiPic(String loadCentiPic) {
+        this.loadCentiPic = loadCentiPic;
+    }
+
+    public String getLoadExPic() {
+        return loadExPic;
+    }
+
+    public void setLoadExPic(String loadExPic) {
+        this.loadExPic = loadExPic;
+    }
+
+    public String getLoadExDes() {
+        return loadExDes;
+    }
+
+    public void setLoadExDes(String loadExDes) {
+        this.loadExDes = loadExDes;
+    }
+
+    public String getDischargeCentiPic() {
+        return dischargeCentiPic;
+    }
+
+    public void setDischargeCentiPic(String dischargeCentiPic) {
+        this.dischargeCentiPic = dischargeCentiPic;
+    }
+
+    public String getDischargeExPic() {
+        return dischargeExPic;
+    }
+
+    public void setDischargeExPic(String dischargeExPic) {
+        this.dischargeExPic = dischargeExPic;
+    }
+
+    public String getDischargeExDes() {
+        return dischargeExDes;
+    }
+
+    public void setDischargeExDes(String dischargeExDes) {
+        this.dischargeExDes = dischargeExDes;
+    }
+
     public String getDispatchType() {
         return dispatchType;
     }
