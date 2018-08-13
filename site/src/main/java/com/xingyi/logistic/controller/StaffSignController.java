@@ -5,8 +5,10 @@ import com.xingyi.logistic.business.model.StaffSignQuery;
 import com.xingyi.logistic.business.service.BaseService;
 import com.xingyi.logistic.business.service.StaffSignService;
 import com.xingyi.logistic.common.bean.JsonRet;
+import com.xingyi.logistic.config.JsonParam;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
@@ -41,6 +43,14 @@ public class StaffSignController extends BaseCRUDController<StaffSign, StaffSign
     @Override
     public JsonRet<Object> getList(StaffSignQuery StaffSignQuery) {
         return super.getList(StaffSignQuery);
+    }
+
+    @RequestMapping(value = "/getPage", method = {RequestMethod.GET,RequestMethod.POST})
+    public JsonRet<Object> getPage(@JsonParam StaffSignQuery staffSignQuery) {
+        if("".equals(staffSignQuery.getKey())){
+            staffSignQuery.setKey(null);
+        }
+        return super.getList(staffSignQuery);
     }
 
     @Override
