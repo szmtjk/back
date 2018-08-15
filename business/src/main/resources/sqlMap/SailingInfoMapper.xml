@@ -306,7 +306,8 @@
     <sql id="dispatchCondition">
         where 0 = 0
         <if test="pojo.id != null"> AND A1.`dispatchId` = #{pojo.id} </if>
-        <if test="pojo.status != null"> AND IFNULL(SA1.status,A1.dispatchStatus)  = #{pojo.status} </if>
+        <if test="pojo.status != null and pojo.status != '14'"> AND IFNULL(SA1.status,A1.dispatchStatus)  = #{pojo.status} </if>
+        <if test="pojo.status != null and pojo.status == '14'"> AND (IFNULL(SA1.status,A1.dispatchStatus) between 1 and 4) </if>
         <if test="pojo.key != null">
             AND (
             A1.`shipNo` like concat('%', #{pojo.key}, '%')
