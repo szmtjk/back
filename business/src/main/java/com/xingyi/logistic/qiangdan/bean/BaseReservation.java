@@ -58,9 +58,14 @@ public class BaseReservation extends BaseModelAndDO {
     private String shipNo;
     private String name;
     private String mobile;
+    private String gpsAddress;
 
     public Long getLeftDispatchId() {
         return leftDispatchId;
+    }
+
+    public String getGpsAddress() {
+        return gpsAddress;
     }
 
     public void setLeftDispatchId(Long leftDispatchId) {
@@ -81,6 +86,10 @@ public class BaseReservation extends BaseModelAndDO {
 
     public void setShipLongitude(Integer shipLongitude) {
         this.shipLongitude = shipLongitude;
+    }
+
+    public void setGpsAddress(String gpsAddress) {
+        this.gpsAddress = gpsAddress;
     }
 
     public Integer getShipLatitude() {
