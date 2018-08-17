@@ -126,7 +126,7 @@
     </select>
 
     <select id="queryByPage" resultMap="AllColumnMap" parameterType="Map">
-        SELECT A1.*, A2.loginName, A2.passwd, A2.id AS localId
+        SELECT A1.*, A2.loginName, A2.id AS localId
         FROM UserProfile A1
         INNER JOIN LocalAuth A2 ON A2.userId = A1.id
         <include refid="pageQueryWhereCommon"/>
