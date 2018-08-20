@@ -35,6 +35,7 @@ public class BaseSailingInfo extends BaseModelAndDO {
     private  Float cutOther;//扣其他
     private  String cutOtherDes;//扣其他描述
 
+
     private String dispatchType;
     private String preWeight;
     private String preLoad;
@@ -55,6 +56,25 @@ public class BaseSailingInfo extends BaseModelAndDO {
     private String dischargeCentiPic;
     private String dischargeExPic;
     private String dischargeExDes;
+
+    private  Float poundBalance;//磅差调整
+    private  String poundBalanceDes;//磅差调整原因
+
+    public Float getPoundBalance() {
+        return poundBalance;
+    }
+
+    public void setPoundBalance(Float poundBalance) {
+        this.poundBalance = poundBalance;
+    }
+
+    public String getPoundBalanceDes() {
+        return poundBalanceDes;
+    }
+
+    public void setPoundBalanceDes(String poundBalanceDes) {
+        this.poundBalanceDes = poundBalanceDes;
+    }
 
     public String getLoadCentiPic() {
         return loadCentiPic;
