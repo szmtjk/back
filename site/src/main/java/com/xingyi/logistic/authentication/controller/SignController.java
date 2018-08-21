@@ -15,6 +15,8 @@ import com.xingyi.logistic.controller.BaseController;
 import com.xingyi.logistic.qiangdan.model.AppUser;
 import com.xingyi.logistic.qiangdan.service.AppUserService;
 import org.apache.commons.lang3.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.util.Base64Utils;
@@ -31,6 +33,9 @@ import java.util.Map;
  */
 @RestController
 public class SignController extends BaseController {
+
+    private static final Logger LOG = LoggerFactory.getLogger(SignController.class);
+
     @Autowired
     private LocalAuthService localAuthService;
 
@@ -85,7 +90,7 @@ public class SignController extends BaseController {
 
         Map<String, Object> params = new HashMap<String, Object>();
         params.put("token", token);
-
+        LOG.info("user sign in, userName:{}, token:{}", signName, token);
         return JsonRet.getSuccessRet(params);
     }
 
