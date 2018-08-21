@@ -170,7 +170,7 @@ public class SignController extends BaseController {
         String md5 = DigestUtil.md5(String.valueOf(appUserId), oAuth.getOauthId(), oAuth.getAccessToken(), String.valueOf(expire));
         String token = appUserId + ":" + md5 + ":" + expire;
         token = Base64Utils.encodeToString(token.getBytes());
-        LOG.info("appuser sign in, token:{}", token);
+        LOG.info("app user sign in, token:{}", token);
         Map<String, Object> params = new HashMap<String, Object>();
         params.put("token", token);
         params.put("appUser", appUser);
