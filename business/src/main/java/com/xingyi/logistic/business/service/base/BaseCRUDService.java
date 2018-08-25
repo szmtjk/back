@@ -109,7 +109,7 @@ public abstract class BaseCRUDService<DO extends BaseModelAndDO, Model extends B
             return ret;
         }
 
-        if (!isBizDelAllowed(ret, dataObject.getId())) {
+        if (!isBizModifyAllowed(ret, dataObject.getId())) {
             return ret;
         }
 
