@@ -108,6 +108,11 @@ public abstract class BaseCRUDService<DO extends BaseModelAndDO, Model extends B
             ret.setErrTip(ErrCode.ID_INVALID);
             return ret;
         }
+
+        if (!isBizDelAllowed(ret, dataObject.getId())) {
+            return ret;
+        }
+
         BaseDAO<DO, DBQueryPage> dao = getDAO();
         try {
             if (dao.getById(dataObject.getId()) == null) {
