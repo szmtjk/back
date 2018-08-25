@@ -646,6 +646,16 @@ public class DispatchInfoServiceImpl extends BaseCRUDService<DispatchInfoDO, Dis
         return ret;
     }
 
+    @Override
+    public JsonRet<Object> getShipsByCustomerTaskNo(CustomerTaskParam param) {
+        JsonRet<Object> ret = new JsonRet<>();
+        if (!ParamValidator.isParamValid(ret, param)) {
+            return ret;
+        }
+        List<CustomerTaskShipDO> ships = dispatchInfoDAO.getShipsByCustomerTaskNo(param);
+        return JsonRet.getSuccessRet(ships);
+    }
+
     private boolean isSailingInfoExists(Long dispatchInfoId) {
         SailingInfoQuery query = new SailingInfoQuery();
         query.setOrderId(dispatchInfoId);

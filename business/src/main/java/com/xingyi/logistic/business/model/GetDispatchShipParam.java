@@ -10,6 +10,7 @@ import javax.validation.constraints.NotNull;
 public class GetDispatchShipParam extends BaseQueryPage {
     @NotNull
     private Integer customerTaskFlowId;
+    private String taskNo;
     private String shipNo;
     private String shipFlag;
 
@@ -19,6 +20,14 @@ public class GetDispatchShipParam extends BaseQueryPage {
 
     public void setCustomerTaskFlowId(Integer customerTaskFlowId) {
         this.customerTaskFlowId = customerTaskFlowId;
+    }
+
+    public String getTaskNo() {
+        return taskNo;
+    }
+
+    public void setTaskNo(String taskNo) {
+        this.taskNo = taskNo;
     }
 
     public String getShipNo() {

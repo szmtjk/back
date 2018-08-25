@@ -42,6 +42,16 @@
         <result property="taskStatus" column="taskStatus"/>
     </resultMap>
 
+    <resultMap id="CustomerTaskShipColumnMap" type="com.xingyi.logistic.business.db.entity.CustomerTaskShipDO">
+        <result property="taskId" column="taskId"/>
+        <result property="customerTaskNo" column="customerTaskNo"/>
+        <result property="customerTaskFlowId" column="customerTaskFlowId"/>
+        <result property="customerTaskFlowNo" column="customerTaskFlowNo"/>
+        <result property="shipId" column="shipId"/>
+        <result property="shipNo" column="shipNo"/>
+        <result property="gpsDeviceId" column="gpsDeviceId"/>
+    </resultMap>
+
     <select id="getDispatchInfoInfo" resultType="Map" parameterType="Map">
         select b.id AS id, b.orderNo AS name,b.shipId as shipId, (select shipNo from Ship s where s.id = b.shipId ) as shipNo
         from `DispatchInfo` b
@@ -234,6 +244,22 @@
         <include refid="getCustomerTaskFlow4DispatchWhereCommon"/>
         order by `id` desc
         <include refid="pageCommon"/>
+    </select>
+
+    <select id="getShipsByCustomerTaskNo" resultMap="CustomerTaskShipColumnMap" parameterType="Map">
+        select a.id as taskId, a.taskNo as customerTaskNo, b.id as customerTaskFlowId,
+               b.taskNo as customerTaskFlowNo, c.shipId, d.shipNo, d.gpsDeviceId
+        from CustomerTask a
+        inner join CustomerTaskFlow b on b.taskId = a.id and b.isDeleted = 0
+        inner join DispatchInfo c on c.customerTaskFlowId = b.id and c.isDeleted = 0
+        inner join Ship d on d.id = c.shipId and d.isDeleted = 0
+        where a.isDeleted = 0
+        <if test="pojo.customerTaskId != null">
+            and a.`id` = #{pojo.customerTaskId}
+        </if>
+        <if test="pojo.taskNo != null">
+            and a.`taskNo` like concat('%', #{pojo.taskNo}, '%')
+        </if>
     </select>
 
     <sql id="getCustomerTaskFlow4DispatchWhereCommon">
