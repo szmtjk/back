@@ -217,7 +217,7 @@
 
 
     <select id="queryMyOrderInfo" resultType="Map" parameterType="Map">
-        SELECT A1.id, A3.goodsName, A3.loadingTime, A3.dischargeTime, A4.`name` AS startPortName,  A5.`name` AS endPortName, A2.specialTip,A1.`status`,A1.`checkStatus`,A1.`gpsAddress`
+        SELECT A1.id, A3.goodsName, A3.loadingTime, A3.dischargeTime, A4.`name` AS startPortName,  A5.`name` AS endPortName, A2.specialTip,A1.`status`,A1.`checkStatus`,A1.`gpsAddress`,
         CASE WHEN A1.`status` = 1 THEN '已预约' WHEN A1.`status` = 2 THEN '已取消' ELSE '其它' END statusName,
         CASE WHEN A1.`checkStatus` = 0 THEN '待审核' WHEN A1.`checkStatus` = 1 THEN '审核通过' WHEN A1.`checkStatus` = 2
         THEN '审核未通过' ELSE '其它' END checkStatusName,A2.dispatchWeight
