@@ -120,7 +120,7 @@ public abstract class BaseCRUDService<DO extends BaseModelAndDO, Model extends B
                 return ret;
             }
             if (dao.update(dataObject) > 0) {
-                if (!isBizOperationAfterAddPassed(ret, model, dataObject)) {
+                if (!isBizOperationAfterModifyPassed(ret, model, dataObject)) {
                     ret.setErrTip(ErrCode.ADD_SUB_ERR);
                     return ret;
                 }
@@ -211,6 +211,16 @@ public abstract class BaseCRUDService<DO extends BaseModelAndDO, Model extends B
      * @return true 校验通过
      */
     protected boolean isBizCheckPassed(JsonRet<?> ret, Model model) {
+        return true;
+    }
+
+    /**
+     * 更新数据前的业务逻辑校验
+     * @param ret
+     * @param id
+     * @return true:允许执行更新操作 false:禁止执行更新操作
+     */
+    protected boolean isBizModifyAllowed(JsonRet<?> ret, Long id) {
         return true;
     }
 

@@ -9,6 +9,12 @@ public class SailingInfoQuery extends BaseQueryPage {
 
     private Long id;
 
+    private String key;
+
+    private String status;
+
+    private Long orderId;
+
     public Long getId() {
         return id;
     }
@@ -16,8 +22,6 @@ public class SailingInfoQuery extends BaseQueryPage {
     public void setId(Long id) {
         this.id = id;
     }
-
-    private String key;
 
     public String getKey() {
         return key;
@@ -27,13 +31,19 @@ public class SailingInfoQuery extends BaseQueryPage {
         this.key = key;
     }
 
-    private  String status;
-
     public String getStatus() {
         return status;
     }
 
     public void setStatus(String status) {
         this.status = status;
+    }
+
+    public Long getOrderId() {
+        return orderId;
+    }
+
+    public void setOrderId(Long orderId) {
+        this.orderId = orderId;
     }
 }

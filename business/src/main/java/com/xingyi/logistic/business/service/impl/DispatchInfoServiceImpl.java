@@ -3,6 +3,7 @@ package com.xingyi.logistic.business.service.impl;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.TypeReference;
 import com.xingyi.logistic.business.db.dao.DispatchInfoDAO;
+import com.xingyi.logistic.business.db.dao.SailingInfoDAO;
 import com.xingyi.logistic.business.db.dao.ShipDAO;
 import com.xingyi.logistic.business.db.dao.base.BaseDAO;
 import com.xingyi.logistic.business.db.entity.*;
@@ -23,6 +24,7 @@ import com.xingyi.logistic.common.bean.ErrCode;
 import com.xingyi.logistic.common.bean.JsonRet;
 import com.xingyi.logistic.common.bean.MiniUIJsonRet;
 import com.xingyi.logistic.common.bean.QueryType;
+import okhttp3.internal.framed.ErrorCode;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeanUtils;
@@ -52,6 +54,9 @@ public class DispatchInfoServiceImpl extends BaseCRUDService<DispatchInfoDO, Dis
     private ShipDAO shipDAO;
 
     @Autowired
+    private SailingInfoDAO sailingInfoDAO;
+
+    @Autowired
     private DispatchInfoConverter dispatchInfoConverter;
 
     @Autowired
@@ -68,6 +73,9 @@ public class DispatchInfoServiceImpl extends BaseCRUDService<DispatchInfoDO, Dis
 
     @Autowired
     private CustomerTaskFlow4DispatchQueryConverter customerTaskFlow4DispatchQueryConverter;
+
+    @Autowired
+    private SailingInfoQueryConverter sailingInfoQueryConverter;
 
     @Autowired
     private CustomerTaskFlowService customerTaskFlowService;
@@ -461,9 +469,11 @@ public class DispatchInfoServiceImpl extends BaseCRUDService<DispatchInfoDO, Dis
         List<DispatchFlagInfo> delList = dispatchInfoParam.getPlanList().stream().filter(o->o.getFlag() == 2).collect(Collectors.toList());
         List<DispatchFlagInfo> addList = dispatchInfoParam.getPlanList().stream().filter(o->o.getFlag() == 3).collect(Collectors.toList());
 
-        //余量确认
-
         try {
+            if (!isUpdateAndDelAllowed(ret, updateList, delList)) {
+                return ret;
+            }
+
             updateList.forEach(o->{
                 boolean isNeedSendMsgToDev = false;
                 if (PrimitiveUtil.getPrimitive(o.getStashStatus()) == 1) {//暂存状态
@@ -511,6 +521,40 @@ public class DispatchInfoServiceImpl extends BaseCRUDService<DispatchInfoDO, Dis
             LOG.error("confirmDispatchInfoPlan err, param:{}", JsonUtil.toJson(dispatchInfoParam), e);
         }
         return ret;
+    }
+
+    /**
+     * 检测更新或删除是否允许操作
+     * @param ret
+     * @param updateList
+     * @param delList
+     * @return
+     */
+    private boolean isUpdateAndDelAllowed(JsonRet<?> ret, List<DispatchFlagInfo> updateList, List<DispatchFlagInfo> delList) {
+        boolean isUpdateAllowed = true;
+        for (DispatchFlagInfo dispatchFlagInfo : updateList) {
+            if (isSailingInfoExists(dispatchFlagInfo.getId())) {
+                isUpdateAllowed = false;
+                break;
+            }
+        }
+        if (!isUpdateAllowed) {
+            ret.setErrTip(ErrCode.DISPATCH_MODIFY_FORBIDDEN);
+            return false;
+        }
+
+        boolean isDelAllowed = true;
+        for (DispatchFlagInfo dispatchFlagInfo : delList) {
+            if (isSailingInfoExists(dispatchFlagInfo.getId())) {
+                isDelAllowed = false;
+                break;
+            }
+        }
+        if (!isDelAllowed) {
+            ret.setErrTip(ErrCode.DISPATCH_DEL_FORBIDDEN);
+            return false;
+        }
+        return true;
     }
 
     private void sendMsgToDev(DispatchFlagInfo dispatchFlagInfo) {
@@ -600,5 +644,12 @@ public class DispatchInfoServiceImpl extends BaseCRUDService<DispatchInfoDO, Dis
             LOG.error("query report six err, param:{}", JsonUtil.toJson(param), e);
         }
         return ret;
+    }
+
+    private boolean isSailingInfoExists(Long dispatchInfoId) {
+        SailingInfoQuery query = new SailingInfoQuery();
+        query.setOrderId(dispatchInfoId);
+        SailingInfoDBQuery dbQuery = sailingInfoQueryConverter.toDOCondition(query);
+        return sailingInfoDAO.getCount(dbQuery) > 0;
     }
 }
