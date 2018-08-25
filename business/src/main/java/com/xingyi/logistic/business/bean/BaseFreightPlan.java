@@ -10,7 +10,7 @@ public class BaseFreightPlan extends BaseModelAndDO {
     private Integer shipFlag;//船舶类型1、熟料2、散装3、集装箱
 
     private String time;//年月份
-    private Integer revUnit;//收货单位
+    private String revUnit;//收货单位
     private Integer goodsName;//货物名称
     private Long plan; //计划
     /**
@@ -40,11 +40,11 @@ public class BaseFreightPlan extends BaseModelAndDO {
         this.time = time;
     }
 
-    public Integer getRevUnit() {
+    public String getRevUnit() {
         return revUnit;
     }
 
-    public void setRevUnit(Integer revUnit) {
+    public void setRevUnit(String revUnit) {
         this.revUnit = revUnit;
     }
 

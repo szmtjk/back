@@ -8,27 +8,37 @@ import com.xingyi.logistic.common.annotation.AllowedNumber;
  */
 public class BaseShipOil extends BaseModelAndDO {
 
-    private String fuelQuantity;//实际加油量
-    private String unitPrice;//油的单价
+    private Float fuelQuantity;//实际加油量
+    private Float unitPrice;//油的单价
     private Long refuelingTime;//实际加油时间
+
+    private String disId;//调度单号
     private String shipId;
     @AllowedNumber(values = {0, 1, 2})
     private Integer status;// 扣款类型：预扣/实扣
     private String description;//备注
 
-    public String getFuelQuantity() {
+    public String getDisId() {
+        return disId;
+    }
+
+    public void setDisId(String disId) {
+        this.disId = disId;
+    }
+
+    public Float getFuelQuantity() {
         return fuelQuantity;
     }
 
-    public void setFuelQuantity(String fuelQuantity) {
+    public void setFuelQuantity(Float fuelQuantity) {
         this.fuelQuantity = fuelQuantity;
     }
 
-    public String getUnitPrice() {
+    public Float getUnitPrice() {
         return unitPrice;
     }
 
-    public void setUnitPrice(String unitPrice) {
+    public void setUnitPrice(Float unitPrice) {
         this.unitPrice = unitPrice;
     }
 

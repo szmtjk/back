@@ -7,7 +7,7 @@ public class BasePlanRefueling extends BaseModelAndDO {
 
     private String disId;//调度单号
     private String shipId;//船号
-    private String planRefueling;//计划加油
+    private Float planRefueling;//计划加油
     private String description;//bz
 
     public String getDescription() {
@@ -34,11 +34,11 @@ public class BasePlanRefueling extends BaseModelAndDO {
         this.shipId = shipId;
     }
 
-    public String getPlanRefueling() {
+    public Float getPlanRefueling() {
         return planRefueling;
     }
 
-    public void setPlanRefueling(String planRefueling) {
+    public void setPlanRefueling(Float planRefueling) {
         this.planRefueling = planRefueling;
     }
 }

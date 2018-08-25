@@ -13,7 +13,7 @@ import javax.validation.constraints.NotNull;
 public class BasePreBuckleOil extends BaseModelAndDO {
 
     private String shipId;//船号
-    private String preBuckleOil;//预扣油款
+    private Float preBuckleOil;//预扣油款
     private Long preBuckleTime;//扣款时间
     private String description;//bz
 
@@ -33,11 +33,11 @@ public class BasePreBuckleOil extends BaseModelAndDO {
         this.shipId = shipId;
     }
 
-    public String getPreBuckleOil() {
+    public Float getPreBuckleOil() {
         return preBuckleOil;
     }
 
-    public void setPreBuckleOil(String preBuckleOil) {
+    public void setPreBuckleOil(Float preBuckleOil) {
         this.preBuckleOil = preBuckleOil;
     }
 
