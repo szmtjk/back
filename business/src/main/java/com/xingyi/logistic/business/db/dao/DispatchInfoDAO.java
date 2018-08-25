@@ -3,9 +3,11 @@ package com.xingyi.logistic.business.db.dao;
 import com.xingyi.logistic.business.db.dao.base.BaseDAO;
 import com.xingyi.logistic.business.db.entity.CustomerTaskFlow4DispatchDBQuery;
 import com.xingyi.logistic.business.db.entity.CustomerTaskFlow4DispatchDO;
+import com.xingyi.logistic.business.db.entity.CustomerTaskShipDO;
 import com.xingyi.logistic.business.db.entity.DispatchInfoDBQuery;
 import com.xingyi.logistic.business.db.entity.DispatchInfoDO;
 import com.xingyi.logistic.business.model.Combox;
+import com.xingyi.logistic.business.model.CustomerTaskParam;
 import com.xxx.boot.jdbc.annotation.Dao;
 import org.apache.ibatis.annotations.Param;
 
@@ -32,5 +34,7 @@ public interface DispatchInfoDAO extends BaseDAO<DispatchInfoDO, DispatchInfoDBQ
      * @return
      */
     List<Map<String,Object>> getDispatchInfoInfo(@Param("pojo")DispatchInfoDBQuery pojo);
+
+    List<CustomerTaskShipDO> getShipsByCustomerTaskNo(@Param("pojo")CustomerTaskParam pojo);
 
 }

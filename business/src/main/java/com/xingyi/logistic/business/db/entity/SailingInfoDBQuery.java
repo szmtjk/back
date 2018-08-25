@@ -9,6 +9,10 @@ public class SailingInfoDBQuery extends BaseDBQueryPage {
 
     private String key;
 
+    private  String status;
+
+    private Long orderId;
+
     public String getKey() {
         return key;
     }
@@ -17,13 +21,19 @@ public class SailingInfoDBQuery extends BaseDBQueryPage {
         this.key = key;
     }
 
-    private  String status;
-
     public String getStatus() {
         return status;
     }
 
     public void setStatus(String status) {
         this.status = status;
+    }
+
+    public Long getOrderId() {
+        return orderId;
+    }
+
+    public void setOrderId(Long orderId) {
+        this.orderId = orderId;
     }
 }

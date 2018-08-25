@@ -1,19 +1,23 @@
 package com.xingyi.logistic.business.service.impl;
 
 import com.xingyi.logistic.business.db.dao.CustomerTaskDAO;
+import com.xingyi.logistic.business.db.dao.CustomerTaskFlowDAO;
 import com.xingyi.logistic.business.db.dao.base.BaseDAO;
 import com.xingyi.logistic.business.db.entity.CustomerTaskDBQuery;
 import com.xingyi.logistic.business.db.entity.CustomerTaskDO;
 import com.xingyi.logistic.business.db.entity.CustomerTaskDetailDO;
+import com.xingyi.logistic.business.db.entity.CustomerTaskFlowDBQuery;
 import com.xingyi.logistic.business.model.Combox;
 import com.xingyi.logistic.business.model.CustomerTask;
 import com.xingyi.logistic.business.model.CustomerTaskDetail;
+import com.xingyi.logistic.business.model.CustomerTaskFlowQuery;
 import com.xingyi.logistic.business.model.CustomerTaskQuery;
 import com.xingyi.logistic.business.service.CustomerTaskService;
 import com.xingyi.logistic.business.service.base.BaseCRUDService;
 import com.xingyi.logistic.business.service.base.ModelConverter;
 import com.xingyi.logistic.business.service.base.QueryConditionConverter;
 import com.xingyi.logistic.business.service.converter.CustomerTaskConverter;
+import com.xingyi.logistic.business.service.converter.CustomerTaskFlowQueryConverter;
 import com.xingyi.logistic.business.service.converter.CustomerTaskQueryConverter;
 import com.xingyi.logistic.common.bean.ErrCode;
 import com.xingyi.logistic.common.bean.JsonRet;
@@ -38,10 +42,16 @@ public class CustomerTaskServiceImpl extends BaseCRUDService<CustomerTaskDO, Cus
     private CustomerTaskDAO customerTaskDAO;
 
     @Autowired
+    private CustomerTaskFlowDAO customerTaskFlowDAO;
+
+    @Autowired
     private CustomerTaskConverter customerTaskConverter;
 
     @Autowired
     private CustomerTaskQueryConverter customerTaskQueryConverter;
+
+    @Autowired
+    private CustomerTaskFlowQueryConverter customerTaskFlowQueryConverter;
 
     @Override
     protected ModelConverter<CustomerTaskDO, CustomerTask> getModelConverter() {
@@ -98,5 +108,31 @@ public class CustomerTaskServiceImpl extends BaseCRUDService<CustomerTaskDO, Cus
             LOG.error("[ERROR]get list", e);
             return JsonRet.getErrRet(ErrCode.GET_ERR);
         }
+    }
+
+    @Override
+    protected boolean isBizModifyAllowed(JsonRet<?> ret, Long id) {
+        boolean isAllowed = !isCustomerTaskFlowExists(id);
+        if (!isAllowed) {
+            ret.setErrTip(ErrCode.CUSTOMER_TASK_MODIFY_FORBIDDEN);
+        }
+        return isAllowed;
+    }
+
+    @Override
+    protected boolean isBizDelAllowed(JsonRet<?> ret, Long id) {
+        boolean isAllowed = !isCustomerTaskFlowExists(id);
+        if (!isAllowed) {
+            ret.setErrTip(ErrCode.CUSTOMER_TASK_DEL_FORBIDDEN);
+        }
+        return isAllowed;
+    }
+
+    private boolean isCustomerTaskFlowExists(Long id) {
+        CustomerTaskFlowQuery query = new CustomerTaskFlowQuery();
+        query.setKey(String.valueOf(id));
+        CustomerTaskFlowDBQuery dbQuery = customerTaskFlowQueryConverter.toDOCondition(query);
+        int count = customerTaskFlowDAO.getCount(dbQuery);
+        return count > 0;
     }
 }

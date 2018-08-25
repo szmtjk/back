@@ -447,6 +447,7 @@
     <sql id="pageQueryWhereCommon1">
         where SI1.`isDeleted` = 0
         <if test="pojo.id != null"> AND SI1.`id` = #{pojo.id} </if>
+        <if test="pojo.orderId != null"> AND DI1.`orderId` = #{pojo.orderId} </if>
         <if test="pojo.key != null">
             AND (
 
@@ -462,6 +463,7 @@
     <sql id="pageQueryWhereCommon">
         where A1.`isDeleted` = 0
         <if test="pojo.id != null"> AND A1.`id` = #{pojo.id} </if>
+        <if test="pojo.orderId != null"> AND A3.`orderId` = #{pojo.orderId} </if>
         <if test="pojo.key != null">
             AND (
 

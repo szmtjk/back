@@ -110,4 +110,9 @@ public class DispatchController extends BaseCRUDController<DispatchInfo, Dispatc
     public JsonRet<Object> getReportSixList(@JsonParam ReportParam param) {
         return dispatchInfoService.getReportSixList(param);
     }
+
+    @RequestMapping("/getShipsByCustomerTaskNo")
+    public JsonRet<Object> getShipsByCustomerTaskNo(CustomerTaskParam param) {
+        return dispatchInfoService.getShipsByCustomerTaskNo(param);
+    }
 }
