@@ -768,7 +768,7 @@
     <select  id="getAppById" parameterType="java.lang.Long" resultMap="mRetShipMap">
 
         SELECT A1.shipNo, A1.`name`, A1.mobile, A1.identity, A1.bankCardNo,
-        A1.bankName, A1.idPhoto, A1.idPhotoF, A1.bankCardPhoto, A1.shipPhoto, A1.preLoad
+        A1.bankName, A1.idPhoto, A1.idPhotoF, A1.bankCardPhoto, A1.shipPhoto, A1.preLoad,A2.id
         FROM Ship A1
         INNER JOIN AppUser A2 ON A1.id=A2.shipInfoId
         WHERE A2.id = #{id}

@@ -16,6 +16,20 @@
         <result property="isDeleted" column="isDeleted"/>
     </resultMap>
 
+    <sql id="all_column">
+        a.`id`
+        ,a.`userId`
+        ,a.`notificationTitle`
+        ,a.`msgTitle`
+        ,a.`msgContent`
+        ,a.`extrasParam`
+        ,a.`creator`
+        ,a.`created`
+        ,a.`updater`
+        ,a.`updated`
+        ,a.`isDeleted`
+    </sql>
+
     <insert id="insertSelective" useGeneratedKeys="true" keyProperty="pojo.id">
         INSERT INTO PushAppMsg
         <trim prefix="(" suffix=")" suffixOverrides=",">
@@ -70,7 +84,46 @@
     <select id="getAppById" parameterType="java.lang.Long" resultMap="AllColumnMap">
         SELECT * FROM `PushAppMsg`
         WHERE `userId` = #{id} AND `isDeleted` = 0
-</select>
+    </select>
+
+    <select id="getExistCount" resultType="java.lang.Integer" parameterType="Map" >
+        SELECT  count(id)
+        FROM  `PushAppMsg`
+        where `isDeleted` = 0
+        <if test="pojo.id != null"> AND `id` != #{pojo.id} </if>
+        limit 1
+    </select>
+
+    <select id="getCount" resultType="java.lang.Integer" parameterType="Map" >
+        SELECT  count(a.id)
+        FROM  `PushAppMsg` a LEFT JOIN `AppUser` b on a.userId = b.id
+        <include refid="pageQueryWhereCommon"/>
+        limit 1
+    </select>
+
+    <select id="queryByPage" resultMap="AllColumnMap" parameterType="Map">
+        select <include refid="all_column"/>
+        from `PushAppMsg` a  LEFT JOIN `AppUser` b on a.userId = b.id
+        <include refid="pageQueryWhereCommon"/>
+        order by a.`created` desc
+        <include refid="pageCommon"/>
+    </select>
+
+    <sql id="pageQueryWhereCommon">
+        where a.`isDeleted` = 0
+        <if test="pojo.id != null"> AND a.`userId` = #{pojo.id} </if>
+        <if test="pojo.key != null">
+            AND a.`userId` =${pojo.key}'
+        </if>
+    </sql>
+
+    <select id="getListById" resultMap="AllColumnMap" parameterType="Map">
+        select <include refid="all_column"/>
+        from `PushAppMsg` a  LEFT JOIN `AppUser` b on a.userId = b.id
+        where a.`isDeleted` = 0
+        AND a.`userId` = ${id}
+        order by a.`created` desc
+    </select>
 
     <sql id="pageCommon">
         <choose>

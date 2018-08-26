@@ -6,6 +6,7 @@ import com.xingyi.logistic.business.model.PushAppMsgQuery;
 import com.xingyi.logistic.business.service.BaseService;
 import com.xingyi.logistic.business.service.PushAppMsgService;
 import com.xingyi.logistic.common.bean.JsonRet;
+import com.xingyi.logistic.config.JsonParam;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -26,5 +27,10 @@ public class PushAppMsgController extends BaseCRUDController<PushAppMsg,PushAppM
     @RequestMapping(value = "/getAppById", method = {RequestMethod.GET,RequestMethod.POST})
     public JsonRet<Object> getAppById() {
         return pushAppMsgService.getAppById(SessionUtil.getAppUser());
+    }
+
+    @RequestMapping(value = "/getPage", method = {RequestMethod.GET,RequestMethod.POST})
+    public JsonRet<Object> getPage(@JsonParam PushAppMsgQuery pushAppMsgQuery) {
+        return super.getList(pushAppMsgQuery);
     }
 }
