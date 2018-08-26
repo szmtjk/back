@@ -605,7 +605,7 @@
          </if>-->
     </sql>
     <select id="queryReportThreeList"  resultType="Map" >
-        SELECT  (select sp.shipNo from Ship sp where sp.id = a.shipId) as shipId,CASE a.eventId WHEN 1 THEN '不接电话'  WHEN 2 THEN '停船过夜'  WHEN 3 THEN '不服调配'  WHEN 4 THEN '修船'  WHEN 5 THEN '保养'  WHEN 6 THEN '事故停航'  WHEN 7 THEN '私事停航'  WHEN 8 THEN '春节放假'  WHEN 9 THEN '装卸货异常情况'  ELSE '' END as eventId
+       <!-- SELECT  (select sp.shipNo from Ship sp where sp.id = a.shipId) as shipId,CASE a.eventId WHEN 1 THEN '不接电话'  WHEN 2 THEN '停船过夜'  WHEN 3 THEN '不服调配'  WHEN 4 THEN '修船'  WHEN 5 THEN '保养'  WHEN 6 THEN '事故停航'  WHEN 7 THEN '私事停航'  WHEN 8 THEN '春节放假'  WHEN 9 THEN '装卸货异常情况'  ELSE '' END as eventId
         , CASE IFNULL(c.sl,0) WHEN 0 THEN '-' ELSE c.sl END  as sl,a.zs ,b.bz FROM ((
         SELECT s.shipId, t.eventId, count(s.shipId) AS zs FROM (
         SELECT 1 AS eventId FROM DUAL
@@ -639,6 +639,48 @@
 
         GROUP BY shipId,eventId ORDER BY shipId,eventId) c ON  (a.shipId = c.shipId) and a.eventId = c.eventId ) LEFT JOIN
         (select shipId, GROUP_CONCAT(description) AS bz from ShipEvent where isDeleted = 0 group by shipId )b on a.shipId = b.shipId
+        order by  a.shipId ,a.eventId-->
+        SELECT  (select sp.shipNo from Ship sp where sp.id = a.shipId) as shipId,
+        CASE a.eventId WHEN 1 THEN '不接电话（次）'  WHEN 2 THEN '停船过夜（次）'  WHEN 3 THEN '不服调配（次）'  WHEN 4 THEN '修船（天）'  WHEN 5 THEN '保养（天）'  WHEN 6 THEN '事故停航（天）'  WHEN 7 THEN '私事停航（天）'  WHEN 8 THEN '春节放假（天）'  WHEN 9 THEN '装卸货异常情况（天）'  ELSE '' END as eventId
+        , CASE IFNULL(c.sl,0) WHEN 0 THEN '-' ELSE c.sl END  as sl,e.zs ,b.bz FROM (
+            (
+            SELECT s.shipId, t.eventId FROM (
+            SELECT 1 AS eventId FROM DUAL
+            UNION ALL
+            SELECT 2 AS eventId FROM DUAL
+            UNION ALL
+            SELECT 3 AS eventId FROM DUAL
+            UNION ALL
+            SELECT 4 AS eventId FROM DUAL
+            UNION ALL
+            SELECT 5 AS eventId FROM DUAL
+            UNION ALL
+            SELECT 6 AS eventId FROM DUAL
+            UNION ALL
+            SELECT 7 AS eventId FROM DUAL
+            UNION ALL
+            SELECT 8 AS eventId FROM DUAL
+            UNION ALL
+            SELECT 9 AS eventId FROM DUAL ) t,
+            ShipEvent s
+            WHERE 1=1 and s.isDeleted = 0
+            and ( s.beginDate between date_add(date_add( str_to_date(#{0}, '%Y-%m-%d'), interval -1 month), interval 1 day ) and str_to_date(#{1}, '%Y-%m-%d')
+            or s.endDate between date_add(date_add( str_to_date(#{2}, '%Y-%m-%d'), interval -1 month), interval 1 day ) and str_to_date(#{3}, '%Y-%m-%d') )
+            group by s.shipId, t.eventId ORDER BY s.shipId, t.eventId ) a
+        LEFT JOIN
+            (select shipId,eventId,case when eventId ='1' or eventId ='2'  or eventId ='3' then SUM(dayNum) else sum(getdays(date_format(beginDate, '%Y-%m-%d'),date_format(endDate, '%Y-%m-%d')  ,#{4}) ) end as sl  from ShipEvent  where 1=1 and isDeleted = 0
+            and ( beginDate between date_add(date_add( str_to_date(#{5}, '%Y-%m-%d'), interval -1 month), interval 1 day ) and str_to_date(#{6}, '%Y-%m-%d')
+            or endDate between date_add(date_add( str_to_date(#{7}, '%Y-%m-%d'), interval -1 month), interval 1 day ) and str_to_date(#{8}, '%Y-%m-%d') )
+            GROUP BY shipId,eventId ORDER BY shipId,eventId) c
+            ON  (a.shipId = c.shipId) and a.eventId = c.eventId )
+        LEFT JOIN
+            (select shipId, GROUP_CONCAT(description) AS bz from ShipEvent where isDeleted = 0 group by shipId )b
+            on a.shipId = b.shipId
+        LEFT JOIN
+            (select count(shipId) as zs,shipId from SailingInfo where
+            ( date_format(FROM_UNIXTIME(arriveSPortTime), '%Y-%m-%d') between date_add(date_add( str_to_date(#{9}, '%Y-%m-%d'), interval -1 month), interval 1 day ) and str_to_date(#{10}, '%Y-%m-%d')
+            or date_format(FROM_UNIXTIME(arriveSPortTime), '%Y-%m-%d') between date_add(date_add( str_to_date(#{11}, '%Y-%m-%d'), interval -1 month), interval 1 day ) and str_to_date(#{12}, '%Y-%m-%d') )GROUP BY shipId ) e
+            on a.shipId =e.shipId
         order by  a.shipId ,a.eventId
     </select>
 
@@ -650,7 +692,7 @@
         select '集装箱' as lx,
         case when  ta.jhsl is null then '-' else  ta.jhsl end  as jhsl,
         case when tb.sjsl is null then '-' else tb.sjsl end as sjsl,
-        case when ta.jhsl is null or tb.sjsl is null then '-' else FORMAT(tb.sjsl /ta.jhsl,2) end  as wcl
+        case when ta.jhsl is null or tb.sjsl is null then '-' else CONCAT(FORMAT(tb.sjsl /ta.jhsl *100,2) ,  '%') end  as wcl
          from (select sum(plan) as jhsl, '3' as lx  from FreightPlan  where time = #{0} and shipFlag ='3' and isDeleted = '0'  ) ta ,
         (select  sum(dischargeWeight) as sjsl ,'3' as lx from CustomerTaskFlow a , DispatchInfo b , SailingInfo c
         where b.customerTaskFlowId = a.id and c.orderId = b.id  and a.goodsType = '3' and c.isDeleted = '0'
@@ -662,7 +704,7 @@
         select  CASE tt.lx WHEN 1 THEN '碎石'  WHEN 2 THEN '市场煤炭'  WHEN 3 THEN '华能电煤'  WHEN 4 THEN '浙能电煤'  WHEN 5 THEN '铜精矿'  WHEN 6 THEN 'PAT'  WHEN 7 THEN '经营业务'  WHEN 8 THEN '其他业务'   ELSE '' END   as lx ,
         case when tb.jhsl is null then '-' else tb.jhsl end  as jhsl,
         case when tt.sjsl is null then '-' else tt.sjsl end as sjsl,
-        case when tb.jhsl is null or tt.sjsl is null then '-' else FORMAT(tt.sjsl /tb.jhsl,2) end  as wcl
+        case when tb.jhsl is null or tt.sjsl is null then '-' else CONCAT(FORMAT(tt.sjsl /tb.jhsl*100,2) ,  '%') end  as wcl
             from (  select t.lx, ta.sjsl from (SELECT 1 AS lx FROM DUAL
             UNION ALL
             SELECT 2 AS lx FROM DUAL
@@ -687,7 +729,7 @@
         select tb.lx as lx  ,
         case when tb.jhsl is null then '-' else tb.jhsl end as jhsl,
         case when tb.sjsl is null then '-' else tb.sjsl end as sjsl,
-        case when tb.jhsl is null or tb.sjsl is null then '-' else FORMAT(tb.sjsl/tb.jhsl ,2) end  as wcl
+        case when tb.jhsl is null or tb.sjsl is null then '-' else CONCAT(FORMAT((tb.sjsl/tb.jhsl )*100,2) ,  '%') end  as wcl
             from (
             select a.lx ,b.jhsl ,a.sjsl from  ( select  sum(dischargeWeight) as sjsl ,a.receiver as lx from CustomerTaskFlow a , DispatchInfo b , SailingInfo c
             where b.customerTaskFlowId = a.id and c.orderId = b.id  and a.goodsType = '1' and c.isDeleted = '0'
@@ -706,7 +748,7 @@
         CASE tt.lx WHEN 1 THEN '650吨以上'  WHEN 2 THEN '650吨以下'  WHEN 3 THEN '碎石船'  WHEN 4 THEN '兴能散装船'  WHEN 5 THEN '兴能集装箱船'  WHEN 6 THEN '兴一航运散装船'  WHEN 7 THEN '兴一航运集装箱船'   END   as lx ,
         case when tb.jhsl is null then '-' else tb.jhsl end  as jhsl,
         case when tt.sjsl is null then '-' else tt.sjsl end as sjsl,
-        case when tb.jhsl is null or tt.sjsl is null then '-' else FORMAT(tt.sjsl/tb.jhsl ,2) end  as wcl
+        case when tb.jhsl is null or tt.sjsl is null then '-' else CONCAT(FORMAT(tt.sjsl/tb.jhsl *100,2) ,  '%') end  as wcl
         from (  select t.lx, ta.sjsl from (SELECT 1 AS lx FROM DUAL
         UNION ALL
         SELECT 2 AS lx FROM DUAL

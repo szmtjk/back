@@ -13,6 +13,7 @@ import javax.validation.constraints.NotNull;
 public class BasePreBuckleOil extends BaseModelAndDO {
 
     private String shipId;//船号
+    private String disId;//调度单号
     private Float preBuckleOil;//预扣油款
     private Long preBuckleTime;//扣款时间
     private String description;//bz
@@ -47,5 +48,12 @@ public class BasePreBuckleOil extends BaseModelAndDO {
 
     public void setPreBuckleTime(Long preBuckleTime) {
         this.preBuckleTime = preBuckleTime;
+    }
+    public String getDisId() {
+        return disId;
+    }
+
+    public void setDisId(String disId) {
+        this.disId = disId;
     }
 }

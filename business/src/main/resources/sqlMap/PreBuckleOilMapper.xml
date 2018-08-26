@@ -5,6 +5,7 @@
     <resultMap id="AllColumnMap" type="com.xingyi.logistic.business.db.entity.PreBuckleOilDO">
         <result property="id" column="id"/>
         <result property="shipId" column="shipId"/>
+        <result property="disId" column="disId"/>
         <result property="preBuckleOil" column="preBuckleOil"/>
         <result property="preBuckleTime" column="preBuckleTime"/>
         <result property="description" column="description"/>
@@ -16,6 +17,7 @@
     <sql id="all_column">
         a.`id`
         ,a.`shipId`
+        ,a.`disId`
         ,a.`preBuckleOil`
         ,a.`preBuckleTime`
         ,a.`description`
@@ -32,6 +34,7 @@
         INSERT INTO PreBuckleOil
         <trim prefix="(" suffix=")" suffixOverrides=",">
             <if test="pojo.shipId!=null"> `shipId`,</if>
+            <if test="pojo.disId!=null"> `disId`,</if>
             <if test="pojo.preBuckleOil!=null"> `preBuckleOil`,</if>
             <if test="pojo.preBuckleTime!=null"> `preBuckleTime`,</if>
             <if test="pojo.description!=null"> `description`,</if>
@@ -44,6 +47,7 @@
         VALUES
         <trim prefix="(" suffix=")" suffixOverrides=",">
             <if test="pojo.shipId!=null">#{pojo.shipId},</if>
+            <if test="pojo.disId!=null">#{pojo.disId},</if>
             <if test="pojo.preBuckleOil!=null">#{pojo.preBuckleOil},</if>
             <if test="pojo.preBuckleTime!=null">#{pojo.preBuckleTime},</if>
             <if test="pojo.description!=null">#{pojo.description},</if>
@@ -60,6 +64,7 @@
         UPDATE PreBuckleOil
         <set>
             <if test="pojo.shipId!=null"> `shipId` = #{pojo.shipId},</if>
+            <if test="pojo.disId!=null"> `disId` = #{pojo.disId},</if>
             <if test="pojo.preBuckleOil!=null"> `preBuckleOil`= #{pojo.preBuckleOil},</if>
             <if test="pojo.preBuckleTime!=null"> `preBuckleTime`= #{pojo.preBuckleTime},</if>
             <if test="pojo.description!=null"> `description`= #{pojo.description},</if>
