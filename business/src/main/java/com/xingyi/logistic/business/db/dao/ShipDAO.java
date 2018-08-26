@@ -25,7 +25,7 @@ public interface ShipDAO extends BaseDAO<ShipDO, ShipDBQuery> {
     int queryReportFiveCount(@Param("pojo") ShipDBQuery pojo);
     List<Map<String, Object>> queryReportFiveList(@Param("pojo") ShipDBQuery pojo);
 
-    List<Map<String, Object>> queryReportThreeList(String time1, String time2, String time3, String time4);
+    List<Map<String, Object>> queryReportThreeList(String time1, String time2, String time3, String time4,String time5, String time6, String time7, String time8,String time9, String time10, String time11, String time12,String time13);
 
     List<Map<String, Object>> getReportFour2ThreeList(String time1, String time2);
 

@@ -245,13 +245,13 @@ public class DispatchInfoServiceImpl extends BaseCRUDService<DispatchInfoDO, Dis
         BeanUtils.copyProperties(param, shipQuery);
         String time;
         if(!StringUtils.isEmpty(param.getKey())){
-            time =param.getKey()+"-01";
+            time =param.getKey()+"-25";
         } else {
             return list;
         }
        //time = "2018-03-01";
         try {
-            list = shipDAO.queryReportThreeList(time,time,time,time);
+            list = shipDAO.queryReportThreeList(time,time,time,time,param.getKey(),time,time,time,time,time,time,time,time);
         } catch(Exception e) {
 
             LOG.error("query report one err, param:{}", JsonUtil.toJson(param), e);

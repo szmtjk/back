@@ -250,9 +250,23 @@
         select A2.shipNo, A1.*, A2.id as shipId,CASE WHEN (UNIX_TIMESTAMP(now())-UNIX_TIMESTAMP(STR_TO_DATE(A1.gpsTime,"%Y-%m-%d %H:%i:%s ")))/60 > 10 THEN 0 ELSE 1 END AS online
         FROM `ShipCurrentGps` A1
         INNER JOIN Ship  A2 ON A1.devId = A2.gpsDeviceId
+        <if test="pojo.taskNo != null and pojo.taskNo != ''">
+            INNER JOIN (
+            select a.id as taskId, a.taskNo as customerTaskNo, b.id as customerTaskFlowId,
+            b.taskNo as customerTaskFlowNo, c.shipId, d.shipNo, d.gpsDeviceId
+            from CustomerTask a
+            inner join CustomerTaskFlow b on b.taskId = a.id and b.isDeleted = 0
+            inner join DispatchInfo c on c.customerTaskFlowId = b.id and c.isDeleted = 0
+            inner join Ship d on d.id = c.shipId and d.isDeleted = 0
+            where a.isDeleted = 0
+            and a.`taskNo` like concat('%', #{pojo.taskNo}, '%')
+            ) A3 ON A3.gpsDeviceId=A1.devId
+        </if>
         WHERE A1.longitude != 0 AND A1.longitude is not NULL
         <if test="pojo.shipNo != null"> AND A2.shipNo like concat('%', #{pojo.shipNo}, '%') </if>
         <if test="pojo.devId != null"> AND A1.devId like concat('%', #{pojo.devId}, '%') </if>
+        <if test="pojo.online == 2 "> AND (UNIX_TIMESTAMP(now())-UNIX_TIMESTAMP(STR_TO_DATE(A1.gpsTime,"%Y-%m-%d %H:%i:%s ")))/60 > 10 </if>
+        <if test="pojo.online == 1 "> AND (UNIX_TIMESTAMP(now())-UNIX_TIMESTAMP(STR_TO_DATE(A1.gpsTime,"%Y-%m-%d %H:%i:%s ")))/60 <![CDATA[<=]]> 10 </if>
     </select>
 
     <select id="queryComboxShipInfo" resultMap="mRetComboxMap" parameterType="Map">

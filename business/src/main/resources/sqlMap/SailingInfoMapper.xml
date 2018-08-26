@@ -304,7 +304,8 @@
           SA1.departPortTime leaveSPortTime,SA1.preArriveEPortTime,
           SA1.actualArriveEPortTime,SA1.startchargeTime,SA1.dischargeTime,SA1.dischargeWeight,SA1.created sailingCreateTime,
           SA1.dischargeDelayFee,SA1.allowance,IFNULL(SA1.status,A1.dispatchStatus) status,
-          SA1.loadCentiPic,SA1.loadExPic,SA1.loadExDes,SA1.dischargeCentiPic,SA1.dischargeExPic,SA1.dischargeExDes
+          SA1.loadCentiPic,SA1.loadExPic,SA1.loadExDes,SA1.dischargeCentiPic,SA1.dischargeExPic,SA1.dischargeExDes,
+          SA1.cutWire,SA1.cutOther,SA1.cutOtherDes
         FROM (<include refid="v_dispatchTask"/>) A1
         LEFT JOIN SailingInfo SA1 ON SA1.orderId=A1.dispatchId AND SA1.isDeleted=0
         <include refid="dispatchCondition"/>

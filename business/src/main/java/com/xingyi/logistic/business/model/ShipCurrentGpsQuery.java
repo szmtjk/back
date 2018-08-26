@@ -8,6 +8,16 @@ import com.xingyi.logistic.business.bean.BaseQueryPage;
 public class ShipCurrentGpsQuery extends BaseQueryPage {
     private String shipNo;
     private String devId;
+    private int online;
+    private String taskNo;
+
+    public String getTaskNo() {
+        return taskNo;
+    }
+
+    public void setTaskNo(String taskNo) {
+        this.taskNo = taskNo;
+    }
 
     public String getShipNo() {
         return shipNo;
@@ -25,4 +35,11 @@ public class ShipCurrentGpsQuery extends BaseQueryPage {
         this.devId = devId;
     }
 
+    public int getOnline() {
+        return online;
+    }
+
+    public void setOnline(int online) {
+        this.online = online;
+    }
 }
