@@ -9,6 +9,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.web.servlet.ServletComponentScan;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.EnableAspectJAutoProxy;
 import org.springframework.core.env.Environment;
 import org.springframework.http.converter.HttpMessageConverter;
 import org.springframework.web.method.support.HandlerMethodArgumentResolver;
@@ -27,6 +28,7 @@ import java.util.List;
 @ComponentScan("com.xingyi.logistic")
 @ServletComponentScan
 @SpringBootApplication
+@EnableAspectJAutoProxy(proxyTargetClass = true)
 public class MycWebConfig extends WebMvcConfigurerAdapter {
 
     @Override

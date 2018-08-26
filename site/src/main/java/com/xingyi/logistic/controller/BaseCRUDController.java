@@ -1,5 +1,6 @@
 package com.xingyi.logistic.controller;
 
+import com.xingyi.logistic.aop.annotation.Operation;
 import com.xingyi.logistic.business.bean.BaseModelAndDO;
 import com.xingyi.logistic.business.bean.BaseQueryPage;
 import com.xingyi.logistic.business.service.BaseService;
@@ -22,16 +23,19 @@ import java.util.Map;
  */
 public abstract class BaseCRUDController<Model extends BaseModelAndDO, Condition extends BaseQueryPage> extends BaseController {
 
+    @Operation("新增")
     @RequestMapping(value = "/add", method = RequestMethod.POST)
     public JsonRet<Long> add(@JsonParam Model model) {
         return getBaseService().add(model);
     }
 
+    @Operation("修改")
     @RequestMapping(value = "/modify", method = RequestMethod.POST)
     public JsonRet<Boolean> modify(@JsonParam Model model) {
         return getBaseService().modify(model);
     }
 
+    @Operation("删除")
     @RequestMapping(value = "/del", method = {RequestMethod.POST,RequestMethod.GET})
     public JsonRet<Boolean> del(@RequestParam Long id) {
         return getBaseService().del(id);

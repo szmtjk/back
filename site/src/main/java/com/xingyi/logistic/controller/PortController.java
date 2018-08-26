@@ -1,5 +1,6 @@
 package com.xingyi.logistic.controller;
 
+import com.xingyi.logistic.aop.annotation.Biz;
 import com.xingyi.logistic.business.model.Port;
 import com.xingyi.logistic.business.model.PortQuery;
 import com.xingyi.logistic.business.service.BaseService;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 /**
  * Created by Jadic on 2017/12/31.
  */
+@Biz("港口信息")
 @RestController
 @RequestMapping("/port")
 public class PortController extends BaseCRUDController<Port, PortQuery> {

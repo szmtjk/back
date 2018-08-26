@@ -1,5 +1,7 @@
 package com.xingyi.logistic.controller;
 
+import com.xingyi.logistic.aop.annotation.Biz;
+import com.xingyi.logistic.aop.annotation.Operation;
 import com.xingyi.logistic.business.util.JPushClientUtil;
 import com.xingyi.logistic.config.JsonParam;
 import com.xingyi.logistic.filter.AuthenticationFilter;
@@ -13,17 +15,20 @@ import org.springframework.web.bind.annotation.RestController;
  */
 @RestController
 @RequestMapping("/test")
+@Biz("测试")
 public class TestController extends BaseController {
 
 
     @Value("${aa.bb}")
     private String test;
 
+    @Operation("hi2")
     @RequestMapping(value = "/hi2", method = RequestMethod.GET)
     public String testHi2() {
         return test;
     }
 
+    @Operation
     @RequestMapping(value = "/changeFilterEnabled", method = RequestMethod.GET)
     public String changeFilterEnabled() {
         AuthenticationFilter.isEnabled = !AuthenticationFilter.isEnabled;

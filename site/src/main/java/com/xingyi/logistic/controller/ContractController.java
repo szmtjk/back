@@ -1,5 +1,6 @@
 package com.xingyi.logistic.controller;
 
+import com.xingyi.logistic.aop.annotation.Biz;
 import com.xingyi.logistic.business.model.Contract;
 import com.xingyi.logistic.business.model.ContractQuery;
 import com.xingyi.logistic.business.service.BaseService;
@@ -12,6 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 /**
  * 合同信息
  */
+@Biz("合同信息")
 @RestController
 @RequestMapping("/contract")
 public class ContractController extends BaseCRUDController<Contract, ContractQuery> {
