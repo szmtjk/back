@@ -7,7 +7,16 @@ import com.xingyi.logistic.business.bean.BaseDBQueryPage;
  */
 public class OperationLogDBQuery extends BaseDBQueryPage {
 
+    private Long userId;
     private String key;
+
+    public Long getUserId() {
+        return userId;
+    }
+
+    public void setUserId(Long userId) {
+        this.userId = userId;
+    }
 
     public String getKey() {
         return key;
