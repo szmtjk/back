@@ -1,5 +1,6 @@
 package com.xingyi.logistic.authentication.controller;
 
+import com.xingyi.logistic.aop.annotation.Biz;
 import com.xingyi.logistic.authentication.model.ActionResources;
 import com.xingyi.logistic.authentication.model.ActionResourcesQuery;
 import com.xingyi.logistic.authentication.service.ActionResourcesService;
@@ -17,6 +18,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+@Biz("actionResource")
 @RequestMapping("/action")
 @RestController
 public class ActionResourcesController extends BaseCRUDController<ActionResources, ActionResourcesQuery> {

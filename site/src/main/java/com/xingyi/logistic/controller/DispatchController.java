@@ -1,6 +1,14 @@
 package com.xingyi.logistic.controller;
 
-import com.xingyi.logistic.business.model.*;
+import com.xingyi.logistic.aop.annotation.Biz;
+import com.xingyi.logistic.aop.annotation.Operation;
+import com.xingyi.logistic.business.model.CustomerTaskFlow4DispatchQuery;
+import com.xingyi.logistic.business.model.CustomerTaskParam;
+import com.xingyi.logistic.business.model.DispatchInfo;
+import com.xingyi.logistic.business.model.DispatchInfoParam;
+import com.xingyi.logistic.business.model.DispatchInfoQuery;
+import com.xingyi.logistic.business.model.GetDispatchShipParam;
+import com.xingyi.logistic.business.model.ReportParam;
 import com.xingyi.logistic.business.service.BaseService;
 import com.xingyi.logistic.business.service.DispatchInfoService;
 import com.xingyi.logistic.common.bean.JsonRet;
@@ -16,6 +24,7 @@ import java.util.Map;
 /**
  * Created by Jadic on 2018/1/21.
  */
+@Biz("任务调度")
 @RestController
 @RequestMapping("/dispatch")
 public class DispatchController extends BaseCRUDController<DispatchInfo, DispatchInfoQuery> {
@@ -45,6 +54,7 @@ public class DispatchController extends BaseCRUDController<DispatchInfo, Dispatc
         return dispatchInfoService.getAvailableShips(param);
     }
 
+    @Operation("提交调度计划")
     @RequestMapping(value = "/confirmPlan", method = RequestMethod.POST)
     public JsonRet<Boolean> confirmDispatchInfoPlan(@JsonParam DispatchInfoParam dispatchInfoParam) {
         return dispatchInfoService.confirmDispatchInfoPlan(dispatchInfoParam);

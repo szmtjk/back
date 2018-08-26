@@ -1,6 +1,7 @@
 package com.xingyi.logistic.controller;
 
 
+import com.xingyi.logistic.aop.annotation.Biz;
 import com.xingyi.logistic.business.model.ShippingPlan;
 import com.xingyi.logistic.business.model.ShippingPlanQuery;
 import com.xingyi.logistic.business.service.BaseService;
@@ -12,6 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 /**
  * 船运计划管理
  */
+@Biz("船运计划管理")
 @RestController
 @RequestMapping("/shippingPlan")
 public class ShippingPlanController extends BaseCRUDController<ShippingPlan,ShippingPlanQuery> {

@@ -1,5 +1,7 @@
 package com.xingyi.logistic.controller;
 
+import com.xingyi.logistic.aop.annotation.Biz;
+import com.xingyi.logistic.aop.annotation.Operation;
 import com.xingyi.logistic.authentication.util.SessionUtil;
 import com.xingyi.logistic.business.model.TempDispatchShip;
 import com.xingyi.logistic.business.model.TempDispatchShipQuery;
@@ -17,6 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 /**
  * 临调船舶
  */
+@Biz("临调船舶")
 @RestController
 @RequestMapping("/tempDispatchShip")
 public class TempDispatchShipController extends BaseCRUDController<TempDispatchShip, TempDispatchShipQuery> {
@@ -33,6 +36,7 @@ public class TempDispatchShipController extends BaseCRUDController<TempDispatchS
      * @param model
      * @return
      */
+    @Operation("app上传船信息")
     @RequestMapping(value = "/appAdd", method = RequestMethod.POST)
     public JsonRet<Long> appAdd(@JsonParam TempDispatchShip model)
     {
@@ -48,30 +52,6 @@ public class TempDispatchShipController extends BaseCRUDController<TempDispatchS
             }
         }
         return ret;
-    }
-
-    @Override
-    public JsonRet<Long> add(TempDispatchShip tempDispatchShip) {
-        return super.add(tempDispatchShip);
-    }
-    @Override
-    public JsonRet<Boolean> modify(TempDispatchShip tempDispatchShip) {
-        return super.modify(tempDispatchShip);
-    }
-
-    @Override
-    public JsonRet<Boolean> del(Long id) {
-        return super.del(id);
-    }
-
-    @Override
-    public JsonRet<TempDispatchShip> getById(Long id) {
-        return super.getById(id);
-    }
-
-    @Override
-    public JsonRet<Object> getList(TempDispatchShipQuery tempDispatchShipQuery) {
-        return super.getList(tempDispatchShipQuery);
     }
 
     @Override

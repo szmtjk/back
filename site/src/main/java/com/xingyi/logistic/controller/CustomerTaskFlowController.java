@@ -1,5 +1,6 @@
 package com.xingyi.logistic.controller;
 
+import com.xingyi.logistic.aop.annotation.Biz;
 import com.xingyi.logistic.business.model.Combox;
 import com.xingyi.logistic.business.model.CustomerTaskFlow;
 import com.xingyi.logistic.business.model.CustomerTaskFlowQuery;
@@ -18,6 +19,7 @@ import java.util.Map;
 /**
  * 客户任务流向
  */
+@Biz("客户任务流向")
 @RestController
 @RequestMapping("/customerTaskFlow")
 public class CustomerTaskFlowController extends BaseCRUDController<CustomerTaskFlow, CustomerTaskFlowQuery> {

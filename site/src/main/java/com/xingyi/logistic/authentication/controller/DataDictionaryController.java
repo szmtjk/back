@@ -1,5 +1,6 @@
 package com.xingyi.logistic.authentication.controller;
 
+import com.xingyi.logistic.aop.annotation.Biz;
 import com.xingyi.logistic.authentication.model.DataDictionary;
 import com.xingyi.logistic.authentication.model.DataDictionaryQuery;
 import com.xingyi.logistic.authentication.service.DataDictionaryService;
@@ -12,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+@Biz("数据字典")
 @RequestMapping("/dataDictionary")
 @RestController
 public class DataDictionaryController extends BaseCRUDController<DataDictionary,DataDictionaryQuery> {

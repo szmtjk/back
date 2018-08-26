@@ -2,6 +2,8 @@ package com.xingyi.logistic.authentication.controller;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.serializer.SerializerFeature;
+import com.xingyi.logistic.aop.annotation.Biz;
+import com.xingyi.logistic.aop.annotation.Operation;
 import com.xingyi.logistic.authentication.model.*;
 import com.xingyi.logistic.authentication.security.User;
 import com.xingyi.logistic.authentication.service.*;
@@ -25,6 +27,7 @@ import java.util.List;
  * @author tsingtao_tung
  * Created At: 2018/1/21 上午2:28.
  */
+@Biz
 @RequestMapping("/user")
 @RestController
 public class UserController extends BaseCRUDController<UserProfile,UserProfileQuery>{
@@ -46,6 +49,7 @@ public class UserController extends BaseCRUDController<UserProfile,UserProfileQu
 	}
 
 
+	@Operation("新增")
     @Override
     public JsonRet<Long> add(@JsonParam UserProfile userProfile)
     {
@@ -61,7 +65,7 @@ public class UserController extends BaseCRUDController<UserProfile,UserProfileQu
         return ret;
     }
 
-
+    @Operation("修改")
     @Override
     public JsonRet<Boolean> modify(@JsonParam UserProfile userProfile)
     {
@@ -74,6 +78,7 @@ public class UserController extends BaseCRUDController<UserProfile,UserProfileQu
         return userProfileService.modify(userProfile);
     }
 
+    @Operation("删除")
     @RequestMapping(value = "/delUser", method = RequestMethod.POST)
     public JsonRet<Boolean> delUser(@JsonParam UserProfile userProfile) {
         localAuthService.del(userProfile.getLocalId());
@@ -84,6 +89,7 @@ public class UserController extends BaseCRUDController<UserProfile,UserProfileQu
      * 设置用户角色
      * @param user
      */
+    @Operation("设置用户角色")
     @RequestMapping(value = "/setRoles", method = RequestMethod.GET)
     public JsonRet<Object> setRoles(@RequestBody User user){
         Long userId = user.getProfile().getId();

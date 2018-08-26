@@ -1,6 +1,6 @@
 package com.xingyi.logistic.controller;
 
-import com.xingyi.logistic.business.model.CustomerTaskFlow4DispatchQuery;
+import com.xingyi.logistic.aop.annotation.Biz;
 import com.xingyi.logistic.business.model.SailingInfo;
 import com.xingyi.logistic.business.model.SailingInfoQuery;
 import com.xingyi.logistic.business.service.BaseService;
@@ -19,6 +19,7 @@ import java.util.Map;
 /**
  * 航次信息
  */
+@Biz("航次信息")
 @RestController
 @RequestMapping("/sailingInfo")
 public class SailingInfoController extends BaseCRUDController<SailingInfo, SailingInfoQuery> {

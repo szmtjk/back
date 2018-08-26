@@ -48,7 +48,7 @@ public class OperationLogAspect {
 //        System.out.println(JSON.toJSONString(operationLog));
 //    }
 //
-//    @AfterReturning(value = "@annotation(operation) && execution(* com.xingyi.logistic.controller.BaseCRUDController+.add(..))"
+//    @AfterReturning(value = "@annotation(operation) && execution(* com.xingyi.logistic.controller.BaseCRUDController+.*(..))"
 //            ,returning = "ret")
 //    public void logAfterBizOperation2(JoinPoint jp, Operation operation, Object ret) {
 //        System.out.println("jp:" + JSON.toJSONString(jp.getArgs()));

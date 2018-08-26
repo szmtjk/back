@@ -1,5 +1,7 @@
 package com.xingyi.logistic.authentication.controller;
 
+import com.xingyi.logistic.aop.annotation.Biz;
+import com.xingyi.logistic.aop.annotation.Operation;
 import com.xingyi.logistic.authentication.model.UserRoles;
 import com.xingyi.logistic.authentication.model.UserRolesQuery;
 import com.xingyi.logistic.authentication.service.UserRolesService;
@@ -16,6 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 import java.util.Map;
 
+@Biz("用户角色")
 @RequestMapping("/userRoles")
 @RestController
 public class UserRolesController extends BaseCRUDController<UserRoles,UserRolesQuery> {
@@ -28,6 +31,7 @@ public class UserRolesController extends BaseCRUDController<UserRoles,UserRolesQ
      * @param model
      * @return
      */
+    @Operation("设置用户角色")
     @RequestMapping(value = "/addfly", method = RequestMethod.POST)
     public JsonRet<Boolean> addfly(@JsonParam UserRoles model)
     {

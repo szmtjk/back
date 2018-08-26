@@ -1,5 +1,6 @@
 package com.xingyi.logistic.controller;
 
+import com.xingyi.logistic.aop.annotation.Biz;
 import com.xingyi.logistic.business.model.LeftDispatch4CheckQuery;
 import com.xingyi.logistic.business.model.LeftDispatchInfo;
 import com.xingyi.logistic.business.model.LeftDispatchInfoQuery;
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 /**
  * 余量临调信息
  */
+@Biz("余量临调")
 @RestController
 @RequestMapping("/leftDispatchInfo")
 public class LeftDispatchInfoController extends BaseCRUDController<LeftDispatchInfo, LeftDispatchInfoQuery> {

@@ -1,5 +1,7 @@
 package com.xingyi.logistic.authentication.controller;
 
+import com.xingyi.logistic.aop.annotation.Biz;
+import com.xingyi.logistic.aop.annotation.Operation;
 import com.xingyi.logistic.authentication.model.ActionResources;
 import com.xingyi.logistic.authentication.model.RoleResources;
 import com.xingyi.logistic.authentication.model.Roles;
@@ -19,6 +21,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
+@Biz("角色信息")
 @RequestMapping("/roles")
 @RestController
 public class RolesController extends BaseCRUDController<Roles,RolesQuery> {
@@ -34,6 +37,7 @@ public class RolesController extends BaseCRUDController<Roles,RolesQuery> {
         return this.rolesService;
     }
 
+    @Operation("设置资源")
     @RequestMapping(value = "/setResources", method = RequestMethod.GET)
     public JsonRet<Object> setResources(@RequestBody Roles role){
         if(null == role || null == role.getId()){

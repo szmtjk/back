@@ -1,5 +1,6 @@
 package com.xingyi.logistic.controller;
 
+import com.xingyi.logistic.aop.annotation.Biz;
 import com.xingyi.logistic.business.model.OperationLog;
 import com.xingyi.logistic.business.model.OperationLogQuery;
 import com.xingyi.logistic.business.service.BaseService;
@@ -11,6 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 /**
  * Created by xiaohu on 2018/8/25.
  */
+@Biz("操作日志")
 @RestController
 @RequestMapping("/operationLog")
 public class OperationLogController extends BaseCRUDController<OperationLog, OperationLogQuery> {

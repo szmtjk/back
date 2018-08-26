@@ -1,5 +1,6 @@
 package com.xingyi.logistic.controller;
 
+import com.xingyi.logistic.aop.annotation.Biz;
 import com.xingyi.logistic.business.model.Combox;
 import com.xingyi.logistic.business.model.CustomerTask;
 import com.xingyi.logistic.business.model.CustomerTaskDetail;
@@ -25,6 +26,7 @@ import java.util.Map;
 /**
  * 客户任务
  */
+@Biz("客户任务")
 @RestController
 @RequestMapping("/customerTask")
 public class CustomerTaskController extends BaseCRUDController<CustomerTask, CustomerTaskQuery> {
