@@ -17,6 +17,9 @@
         <result property="updated" column="updated"/>
         <result property="creatorName" column="creatorName"/>
         <result property="updaterName" column="updaterName"/>
+        <result property="preAmountTotal" column="preAmountTotal"/>
+        <result property="actualAmountTotal" column="actualAmountTotal"/>
+        <result property="leftAmountTotal" column="leftAmountTotal"/>
     </resultMap>
 
     <sql id="all_column">
@@ -132,6 +135,22 @@
             AND (a.`fuelQuantity` like concat('%', #{pojo.key}, '%') or a.`unitPrice` like concat('%', #{pojo.key}, '%'))
         </if>
     </sql>
+
+    <select id="calculateRemainingOil" resultMap="AllColumnMap" parameterType="java.lang.Long">
+        select a.shipId, ifnull(a.preAmount, 0) as preAmountTotal, ifnull(b.actualAmount, 0) as actualAmountTotal, (ifnull(a.preAmount, 0)-ifnull(b.actualAmount, 0)) as leftAmountTotal
+        from (select a1.shipId, sum(preBuckleOil) as preAmount
+        from PreBuckleOil a1
+        <if test="shipId != null">
+            where a1.`shipId` = #{shipId}
+        </if>
+        GROUP BY a1.shipId
+        ) a
+        left join (
+        select a2.shipId, sum(a2.fuelQuantity*a2.unitPrice) as actualAmount
+        from ShipOil a2
+        where a2.`status`=1
+        group by a2.shipId) b on b.shipId = a.shipId
+    </select>
 
     <sql id="pageCommon">
         <choose>

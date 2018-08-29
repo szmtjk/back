@@ -18,6 +18,36 @@ public class BaseShipOil extends BaseModelAndDO {
     private Integer status;// 扣款类型：预扣/实扣
     private String description;//备注
 
+    private Float preAmountTotal;
+
+    private Float actualAmountTotal;
+
+    private Float leftAmountTotal;
+
+    public Float getPreAmountTotal() {
+        return preAmountTotal;
+    }
+
+    public Float getActualAmountTotal() {
+        return actualAmountTotal;
+    }
+
+    public Float getLeftAmountTotal() {
+        return leftAmountTotal;
+    }
+
+    public void setPreAmountTotal(Float preAmountTotal) {
+        this.preAmountTotal = preAmountTotal;
+    }
+
+    public void setActualAmountTotal(Float actualAmountTotal) {
+        this.actualAmountTotal = actualAmountTotal;
+    }
+
+    public void setLeftAmountTotal(Float leftAmountTotal) {
+        this.leftAmountTotal = leftAmountTotal;
+    }
+
     public String getDisId() {
         return disId;
     }

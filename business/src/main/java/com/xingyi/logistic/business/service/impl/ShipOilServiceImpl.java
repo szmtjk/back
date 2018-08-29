@@ -12,8 +12,12 @@ import com.xingyi.logistic.business.service.base.ModelConverter;
 import com.xingyi.logistic.business.service.base.QueryConditionConverter;
 import com.xingyi.logistic.business.service.converter.ShipOilConverter;
 import com.xingyi.logistic.business.service.converter.ShipOilQueryConverter;
+import com.xingyi.logistic.common.bean.ErrCode;
+import com.xingyi.logistic.common.bean.JsonRet;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 /**
  * Created by wzf on 2018/1/1.
@@ -43,5 +47,21 @@ public class ShipOilServiceImpl extends BaseCRUDService<ShipOilDO, ShipOil, Ship
     @Override
     protected QueryConditionConverter<ShipOilQuery, ShipOilDBQuery> getConditionConverter() {
         return shipOilQueryConverter;
+    }
+
+
+    @Override
+    public JsonRet<List<ShipOilDO>> calculateRemainingOil(ShipOilDO shipOilDO) {
+        try {
+
+            List<ShipOilDO> dataObject = shipOilDAO.calculateRemainingOil(shipOilDO);
+            if (dataObject == null) {
+                return JsonRet.getErrRet(ErrCode.DATA_NOT_EXIST);
+            } else {
+                return JsonRet.getSuccessRet(dataObject);
+            }
+        } catch (Exception e) {
+            return JsonRet.getErrRet(ErrCode.GET_ERR);
+        }
     }
 }

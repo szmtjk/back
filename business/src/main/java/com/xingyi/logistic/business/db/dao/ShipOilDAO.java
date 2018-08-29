@@ -14,5 +14,7 @@ import java.util.List;
 @Dao
 public interface ShipOilDAO extends BaseDAO<ShipOilDO, ShipOilDBQuery> {
 
+    List<ShipOilDO> calculateRemainingOil(ShipOilDO shipOilDO);
+
 
 }
