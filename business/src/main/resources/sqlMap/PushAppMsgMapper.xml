@@ -14,6 +14,8 @@
         <result property="updater" column="updater"/>
         <result property="updated" column="updated"/>
         <result property="isDeleted" column="isDeleted"/>
+        <result property="shipNo" column="shipNo"/>
+        <result property="nickName" column="nickName"/>
     </resultMap>
 
     <sql id="all_column">
@@ -28,6 +30,8 @@
         ,a.`updater`
         ,a.`updated`
         ,a.`isDeleted`
+        ,c.`shipNo`
+        ,b.`nickName`
     </sql>
 
     <insert id="insertSelective" useGeneratedKeys="true" keyProperty="pojo.id">
@@ -97,13 +101,16 @@
     <select id="getCount" resultType="java.lang.Integer" parameterType="Map" >
         SELECT  count(a.id)
         FROM  `PushAppMsg` a LEFT JOIN `AppUser` b on a.userId = b.id
+        LEFT JOIN `Ship` c ON c.id = b.shipInfoId
         <include refid="pageQueryWhereCommon"/>
         limit 1
     </select>
 
     <select id="queryByPage" resultMap="AllColumnMap" parameterType="Map">
         select <include refid="all_column"/>
-        from `PushAppMsg` a  LEFT JOIN `AppUser` b on a.userId = b.id
+        from `PushAppMsg` a
+        LEFT JOIN `AppUser` b on a.userId = b.id
+        LEFT JOIN `Ship` c ON c.id = b.shipInfoId
         <include refid="pageQueryWhereCommon"/>
         order by a.`created` desc
         <include refid="pageCommon"/>
@@ -113,16 +120,19 @@
         where a.`isDeleted` = 0
         <if test="pojo.id != null"> AND a.`userId` = #{pojo.id} </if>
         <if test="pojo.key != null">
-            AND a.`userId` =${pojo.key}'
+            AND a.`userId` =${pojo.key}
         </if>
     </sql>
 
     <select id="getListById" resultMap="AllColumnMap" parameterType="Map">
-        select <include refid="all_column"/>
-        from `PushAppMsg` a  LEFT JOIN `AppUser` b on a.userId = b.id
-        where a.`isDeleted` = 0
-        AND a.`userId` = ${id}
-        order by a.`created` desc
+        select c.shipNo,b.nickName,a.notificationTitle,a.msgTitle,a.msgContent,a.created
+        from `PushAppMsg` a
+        LEFT JOIN `AppUser` b ON b.id = a.userId
+        LEFT JOIN `Ship` c ON c.id = b.shipInfoId
+        WHERE a.`isDeleted` = 0
+        <if test="id != null">
+            AND c.`id` = ${id}
+        </if>
     </select>
 
     <sql id="pageCommon">

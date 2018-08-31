@@ -19,6 +19,8 @@ import com.xingyi.logistic.qiangdan.model.AppUser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class PushAppMsgServiceImpl extends BaseCRUDService<PushAppMsgDO,PushAppMsg,PushAppMsgDBQuery,PushAppMsgQuery> implements PushAppMsgService {
 
@@ -58,6 +60,21 @@ public class PushAppMsgServiceImpl extends BaseCRUDService<PushAppMsgDO,PushAppM
                 return JsonRet.getErrRet(ErrCode.DATA_NOT_EXIST);
             } else {
                 return JsonRet.getSuccessRet(getModelConverter().toModel(dataObject));
+            }
+        } catch (Exception e) {
+            return JsonRet.getErrRet(ErrCode.GET_ERR);
+        }
+    }
+
+    @Override
+    public JsonRet<List<PushAppMsgDO>> getListById(PushAppMsgDO pushAppMsgDO) {
+        try {
+
+            List<PushAppMsgDO> dataObject = pushAppMsgDAO.getListById(pushAppMsgDO);
+            if (dataObject == null) {
+                return JsonRet.getErrRet(ErrCode.DATA_NOT_EXIST);
+            } else {
+                return JsonRet.getSuccessRet(dataObject);
             }
         } catch (Exception e) {
             return JsonRet.getErrRet(ErrCode.GET_ERR);

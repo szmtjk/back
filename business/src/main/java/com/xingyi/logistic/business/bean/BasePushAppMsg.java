@@ -32,6 +32,26 @@ public class BasePushAppMsg extends BaseModelAndDO{
 
     private Integer isDeleted;
 
+    private String shipNo;
+
+    private String nickName;
+
+    public String getShipNo() {
+        return shipNo;
+    }
+
+    public String getNickName() {
+        return nickName;
+    }
+
+    public void setShipNo(String shipNo) {
+        this.shipNo = shipNo;
+    }
+
+    public void setNickName(String nickName) {
+        this.nickName = nickName;
+    }
+
     public Long getUserId() {
         return userId;
     }
