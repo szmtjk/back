@@ -189,14 +189,11 @@ public class ReservationServiceImpl extends BaseCRUDService<ReservationDO,Reserv
     }
 
 
-    public JsonRet<Object> getAppById(AppUser mAppUser)
+    public JsonRet<Object> getAppById(Map<String, Object> map)
     {
         try {
-            if (mAppUser == null || mAppUser.getId() == null) {
-                return JsonRet.getErrRet(ErrCode.ID_INVALID);
-            }
 
-            ReservationDO dataObject = reservationDAO.getAppById(mAppUser.getId());
+            ReservationDO dataObject = reservationDAO.getAppById(map);
             if (dataObject == null) {
                 return JsonRet.getSuccessRet(getModelConverter().toModel(dataObject));
             } else {

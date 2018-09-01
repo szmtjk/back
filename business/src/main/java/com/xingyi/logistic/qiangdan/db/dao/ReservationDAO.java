@@ -4,6 +4,7 @@ import com.xingyi.logistic.business.db.dao.base.BaseDAO;
 import com.xingyi.logistic.business.db.entity.ShipDO;
 import com.xingyi.logistic.qiangdan.db.entity.ReservationDBQuery;
 import com.xingyi.logistic.qiangdan.db.entity.ReservationDO;
+import com.xingyi.logistic.qiangdan.model.Reservation;
 import com.xxx.boot.jdbc.annotation.Dao;
 import org.apache.ibatis.annotations.Param;
 
@@ -17,5 +18,5 @@ public interface ReservationDAO extends BaseDAO<ReservationDO,ReservationDBQuery
 
     List<Map<String, Object>> queryMyOrderInfo(@Param("pojo")Map<String, Object> map);
 
-    ReservationDO getAppById(@Param("id")Long userId);
+    ReservationDO getAppById(Map<String, Object> map);
 }

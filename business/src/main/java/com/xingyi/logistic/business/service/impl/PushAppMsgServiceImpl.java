@@ -20,6 +20,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class PushAppMsgServiceImpl extends BaseCRUDService<PushAppMsgDO,PushAppMsg,PushAppMsgDBQuery,PushAppMsgQuery> implements PushAppMsgService {
@@ -79,5 +80,11 @@ public class PushAppMsgServiceImpl extends BaseCRUDService<PushAppMsgDO,PushAppM
         } catch (Exception e) {
             return JsonRet.getErrRet(ErrCode.GET_ERR);
         }
+    }
+
+    @Override
+    public PushAppMsgDO getReservationInfo(Map<String, Object> map) {
+        PushAppMsgDO pushAppMsgDO = pushAppMsgDAO.getReservationInfo(map);
+        return pushAppMsgDO;
     }
 }

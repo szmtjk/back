@@ -13,7 +13,7 @@ public interface ReservationService extends BaseService<Reservation,ReservationQ
 
     JsonRet<Object> queryMyOrderInfo(Map<String, Object> map);
 
-    JsonRet<Object> getAppById(AppUser mAppUser);
+    JsonRet<Object> getAppById(Map<String, Object> map);
 
     JsonRet<Boolean> check(ReservationCheckParam reservationCheckParam);
 

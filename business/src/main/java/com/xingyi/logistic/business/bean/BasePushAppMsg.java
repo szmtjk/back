@@ -36,6 +36,30 @@ public class BasePushAppMsg extends BaseModelAndDO{
 
     private String nickName;
 
+    private Long leftDispatchId;
+
+    private Long dispatchWeight;
+
+    private String goodsName;
+
+    private  Long loadingTime;
+
+    public Long getLeftDispatchId() {
+        return leftDispatchId;
+    }
+
+    public Long getDispatchWeight() {
+        return dispatchWeight;
+    }
+
+    public String getGoodsName() {
+        return goodsName;
+    }
+
+    public Long getLoadingTime() {
+        return loadingTime;
+    }
+
     public String getShipNo() {
         return shipNo;
     }
@@ -98,6 +122,22 @@ public class BasePushAppMsg extends BaseModelAndDO{
 
     public void setIsDeleted(Integer isDeleted) {
         this.isDeleted = isDeleted;
+    }
+
+    public void setLeftDispatchId(Long leftDispatchId) {
+        this.leftDispatchId = leftDispatchId;
+    }
+
+    public void setDispatchWeight(Long dispatchWeight) {
+        this.dispatchWeight = dispatchWeight;
+    }
+
+    public void setGoodsName(String goodsName) {
+        this.goodsName = goodsName;
+    }
+
+    public void setLoadingTime(Long loadingTime) {
+        this.loadingTime = loadingTime;
     }
 
     @Override

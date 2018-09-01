@@ -16,6 +16,10 @@
         <result property="isDeleted" column="isDeleted"/>
         <result property="shipNo" column="shipNo"/>
         <result property="nickName" column="nickName"/>
+        <result property="leftDispatchId" column="leftDispatchId"/>
+        <result property="dispatchWeight" column="dispatchWeight"/>
+        <result property="goodsName" column="goodsName"/>
+        <result property="loadingTime" column="loadingTime"/>
     </resultMap>
 
     <sql id="all_column">
@@ -145,4 +149,15 @@
             </otherwise>
         </choose>
     </sql>
+
+    <select id="getReservationInfo" resultMap="AllColumnMap" parameterType="Map">
+        select a.leftDispatchId,b.dispatchWeight,c.goodsName,c.loadingTime
+        from `Reservation` a
+        LEFT JOIN `LeftDispatchInfo` b ON a.leftDispatchId = b.id
+        LEFT JOIN `CustomerTaskFlow` c ON b.customerTaskFlowId = c.id
+        WHERE a.`isDeleted` = 0
+        AND a.`leftDispatchId` = ${leftDispatchId}
+        AND a.`userId` = ${userId}
+    </select>
+
 </mapper>

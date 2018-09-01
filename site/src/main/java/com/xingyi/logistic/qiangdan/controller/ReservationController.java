@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.HashMap;
 import java.util.Map;
 
 @RestController
@@ -57,8 +58,12 @@ public class ReservationController extends BaseCRUDController<Reservation, Reser
     }
 
     @RequestMapping(value = "/getAppById", method = {RequestMethod.GET,RequestMethod.POST})
-    public JsonRet<Object> getAppById() {
-        return reservationService.getAppById(SessionUtil.getAppUser());
+    public JsonRet<Object> getAppById(Reservation reservation) {
+        AppUser mAppUser = SessionUtil.getAppUser();
+        Map<String, Object> map = new HashMap<String, Object>();
+        map.put("id",mAppUser.getId());
+        map.put("leftDispatchId",reservation.getLeftDispatchId());
+        return reservationService.getAppById(map);
     }
 
 
