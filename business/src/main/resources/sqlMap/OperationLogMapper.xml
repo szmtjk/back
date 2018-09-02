@@ -96,6 +96,8 @@
             AND (`bizType` like concat('%', #{pojo.key}, '%')
                  or
                  `operationType` like concat('%', #{pojo.key}, '%')
+                or
+                `userId` like concat('%', #{pojo.key}, '%')
                 )
         </if>
     </sql>

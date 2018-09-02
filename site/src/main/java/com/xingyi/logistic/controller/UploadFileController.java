@@ -93,4 +93,30 @@ public class UploadFileController extends BaseController{
     }
 
 
+    @RequestMapping(value = "/newUpfile", method = RequestMethod.POST)
+    @ResponseBody
+    public JsonRet<Object> upLoad(@RequestParam MultipartFile fileName) throws Exception {
+
+        // 创建I流--图片文件myFile转化为流--读入程序!
+        InputStream inputStream = fileName.getInputStream();
+        // 改为uuid名!
+        String newFileName = getNewName(fileName);
+        // 查找即将上传到服务器中的真实路径!
+        File file = new File(this.baseDir);
+        if (!file.exists()) {
+            file.mkdirs();
+        }
+        // 程序 写出 上传服务器!
+        FileOutputStream fileOutputStream = new FileOutputStream(baseDir + "/" + newFileName);
+        // 复制多功能文件(图片)以及关闭流
+        IOUtils.copy(inputStream, fileOutputStream);
+
+        inputStream.close();
+        fileOutputStream.close();
+        Map<String, Object> params = new HashMap<>();
+        params.put("filePath","/xyl/upload/"+newFileName);
+        return JsonRet.getSuccessRet(params);
+    }
+
+
 }
