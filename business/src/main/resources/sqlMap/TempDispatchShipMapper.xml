@@ -23,6 +23,8 @@
         <result property="updated" column="updated"/>
         <result property="creatorName" column="creatorName"/>
         <result property="updaterName" column="updaterName"/>
+        <result property="userName" column="userName"/>
+        <result property="nickName" column="nickName"/>
     </resultMap>
 
     <resultMap id="tempDispatchShipMap" type="com.xingyi.logistic.business.db.entity.TempDispatchShipDO">
@@ -69,6 +71,8 @@
     <sql id="all_column_user">
         <include refid="all_column"/>
         ,b.`realName` as creatorName
+        ,c.`userName` as userName
+        ,c.`nickName` as nickName
     </sql>
 
     <insert id="insertSelective" useGeneratedKeys="true" keyProperty="pojo.id">
@@ -177,6 +181,7 @@
     <select id="queryByPage" resultMap="AllColumnMap" parameterType="Map">
         select <include refid="all_column_user"/>
         from `Ship` a LEFT JOIN `UserProfile` b on a.creator = b.id
+        LEFT JOIN `AppUser` c on a.id = c.shipInfoId
         <include refid="pageQueryWhereCommon"/>
         order by a.`created` desc
         <include refid="pageCommon"/>

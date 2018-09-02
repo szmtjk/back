@@ -24,6 +24,24 @@ public class BaseTempDispatchShip extends BaseModelAndDO {
     @AllowedNumber(values = {1, 2})
     private Integer status;//状态  1：启用  2：禁用
     private String description;//备注
+    private String userName;//用户名
+    private String nickName;//用户昵称
+
+    public String getUserName() {
+        return userName;
+    }
+
+    public String getNickName() {
+        return nickName;
+    }
+
+    public void setUserName(String userName) {
+        this.userName = userName;
+    }
+
+    public void setNickName(String nickName) {
+        this.nickName = nickName;
+    }
 
     public String getShipNo() {
         return shipNo;
