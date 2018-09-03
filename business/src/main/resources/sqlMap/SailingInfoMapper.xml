@@ -392,7 +392,7 @@
     </sql>
     <!-- 调度任务视图 -->
     <sql id="v_dispatchTask">
-        SELECT  A1.id dispatchId,A1.orderNo dispatchNo,A1.preWeight preOcccurWeight,
+        SELECT  A1.id dispatchId,A1.orderNo dispatchNo,A1.preLoad preOcccurWeight,
         A1.preArriveTime requireArriveTime,A1.dispatchType,A1.created dispatchCreateTime,A1.status dispatchStatus,
         T1.*,
         S1.*

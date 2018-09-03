@@ -460,7 +460,7 @@
     <select id="queryReportSixList"  resultType="Map" parameterType="Map">
         select a.loadTime, ( select shipNo from Ship b where b.id = a.shipId ) as shipNo,
         t.goodsName,t.sender,t.name,t.receiver,t.preWeight,a.loadWeight,a.dischargeWeight,
-        a.poundBalance,a.poundBalance/a.loadWeight,a.poundBalance- a.loadWeight*0.995,
+        a.poundBalance,a.poundBalance/a.loadWeight,a.poundBalance- a.loadWeight*0.995,a.allowance,
         (SELECT p.name from Port p where p.id = t.startPortId) as portName,
         case when t.unitPrice is not null then t.unitPrice ELSE t.deposit end as kpdj,
         a.bucklePrice,
