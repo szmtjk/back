@@ -115,7 +115,7 @@ public class JPushClientUtil {
                         .setAlert(notificationTitle)
                         .addPlatformNotification(AndroidNotification.newBuilder()
                                 .setAlert(notificationTitle)
-                                .setTitle(notificationTitle)
+                                .setTitle(msgTitle)
                                 //此字段为透传字段，不会显示在通知栏。用户可以通过此字段来做一些定制需求，如特定的key传要指定跳转的页面（value）
                                 .addExtra("androidNotification extras key", extrasparam)
                                 .build()
@@ -168,7 +168,7 @@ public class JPushClientUtil {
                         .setAlert(notificationTitle)
                         .addPlatformNotification(AndroidNotification.newBuilder()
                                 .setAlert(notificationTitle)
-                                .setTitle(notificationTitle)
+                                .setTitle(msgTitle)
                                 //此字段为透传字段，不会显示在通知栏。用户可以通过此字段来做一些定制需求，如特定的key传要指定跳转的页面（value）
                                 .addExtra("androidNotification extras key", extrasparam)
                                 .build()
@@ -229,7 +229,7 @@ public class JPushClientUtil {
                         .addPlatformNotification(AndroidNotification.newBuilder()
 
                                 .setAlert(notificationTitle)
-                                .setTitle(notificationTitle)
+                                .setTitle(msgTitle)
                                 //此字段为透传字段，不会显示在通知栏。用户可以通过此字段来做一些定制需求，如特定的key传要指定跳转的页面（value）
                                 .addExtra("androidNotification extras key", extrasparam)
 
