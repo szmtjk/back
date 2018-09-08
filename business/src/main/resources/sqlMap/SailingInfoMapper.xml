@@ -235,18 +235,6 @@
     </select>
 
 
-    <select id="getCount" resultType="java.lang.Integer" parameterType="Map" >
-        SELECT  count(A1.id)
-        FROM SailingInfo A1
-        LEFT JOIN Ship A2 ON A1.shipId=A2.id
-        LEFT JOIN DispatchInfo A3 ON A3.id=A1.orderId
-        LEFT JOIN CustomerTaskFlow  A4 ON A4.id=A3.customerTaskFlowId
-        LEFT JOIN CustomerTask A5 ON A5.id=A4.taskId
-        LEFT JOIN Customer A6 ON A6.id= A5.customerId
-        <include refid="pageQueryWhereCommon"/>
-        limit 1
-    </select>
-
 
     <!-- 加载所有的 -->
     <select id="queryDispatchShipInfo" resultType="Map" parameterType="Map">
@@ -461,10 +449,24 @@
         </if>
     </sql>
 
+
+    <select id="getCount" resultType="java.lang.Integer" parameterType="Map" >
+        SELECT  count(A1.id)
+        FROM SailingInfo A1
+        LEFT JOIN Ship A2 ON A1.shipId=A2.id
+        LEFT JOIN DispatchInfo A3 ON A3.id=A1.orderId
+        LEFT JOIN CustomerTaskFlow  A4 ON A4.id=A3.customerTaskFlowId
+        LEFT JOIN CustomerTask A5 ON A5.id=A4.taskId
+        LEFT JOIN Customer A6 ON A6.id= A5.customerId
+        <include refid="pageQueryWhereCommon"/>
+        limit 1
+    </select>
+
+
     <sql id="pageQueryWhereCommon">
         where A1.`isDeleted` = 0
         <if test="pojo.id != null"> AND A1.`id` = #{pojo.id} </if>
-        <if test="pojo.orderId != null"> AND A3.`orderId` = #{pojo.orderId} </if>
+        <if test="pojo.orderId != null"> AND A1.`orderId` = #{pojo.orderId} </if>
         <if test="pojo.key != null">
             AND (
 
