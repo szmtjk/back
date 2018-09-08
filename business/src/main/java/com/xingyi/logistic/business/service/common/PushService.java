@@ -52,7 +52,7 @@ public class PushService {
         String msgTitle = pushAppMsgDO.getGoodsName()+pushAppMsgDO.getDispatchWeight()+"吨已通过审核";
         String msgContent = "您在"+loadingTimes+"预约的"+pushAppMsgDO.getDispatchWeight()+"吨的"+pushAppMsgDO.getGoodsName()+"已通过审核!";
         String extrasParam = "";
-        JPushClientUtil.sendToAliasUser(notificationTitle, msgTitle, msgContent, extrasParam, String.valueOf(reservation.getUserId()));
+        JPushClientUtil.sendToAliasUser(msgTitle, msgTitle, msgContent, extrasParam, String.valueOf(reservation.getUserId()));
         PushAppMsgDO pushAppMsg = new PushAppMsgDO();
         PushAppMsgDBQuery pushAppMsgDBQuery = new PushAppMsgDBQuery();
         pushAppMsg.setUserId(reservation.getUserId());
