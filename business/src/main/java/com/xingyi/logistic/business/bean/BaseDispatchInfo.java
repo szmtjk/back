@@ -11,8 +11,8 @@ public class BaseDispatchInfo extends BaseModelAndDO {
     private Long shipId;
     private String shipNo;
     private Integer shipFlag;
-    private Integer preWeight;
-    private Integer preLoad;
+    private Integer preWeight;//预报吨位
+    private Integer preLoad;//预发吨位
     private Integer preArriveTime;
     private Double preSettleAmount;
     private Double actualTransferPrice;

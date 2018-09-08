@@ -35,7 +35,7 @@ public class ReservationConverter extends ModelConverter<ReservationDO,Reservati
             dst.setDispatchType(2);
             dst.setPreArriveTime(src.getPreArrivePortTime());
             dst.setPreLoad(src.getPreActualLoad());
-            dst.setPreWeight(src.getPreLoad());
+            dst.setPreWeight(reservation.getPreLoad());
             dst.setShipFlag(3);
             if (src.getDispatchId() != null) {
                 dst.setId(src.getDispatchId().longValue());

@@ -10,6 +10,7 @@
         <result property="shipLatitude" column="shipLatitude"/>
         <result property="gpsAddress" column="gpsAddress"/>
         <result property="preLoad" column="preLoad"/>
+        <result property="preActualLoad" column="preActualLoad"/>
         <result property="preArrivePortTime" column="preArrivePortTime"/>
         <result property="shipEmptyPhoto" column="shipEmptyPhoto"/>
         <result property="shipReference" column="shipReference"/>
@@ -43,10 +44,10 @@
         ,a.`shipReference`
         ,a.`status`
         ,a.`checkStatus`
-        ,d.`actualTransferPrice`
-        ,d.`preSettleAmount`
+        ,ifnull(d.`actualTransferPrice`, a.actualTransferPrice) as actualTransferPrice
+        ,ifnull(d.`preSettleAmount`, a.preSettleAmount) as preSettleAmount
         ,d.`settleType`
-        ,d.`preLoad` as preActualLoad
+        ,ifnull(d.`preLoad`, a.preActualLoad) as preActualLoad
     </sql>
 
     <sql id="all_columnToApp">
@@ -62,6 +63,7 @@
         ,a.`shipLatitude`
         ,a.`gpsAddress`
         ,a.`preLoad`
+        ,a.`preActualLoad`
         ,a.`preArrivePortTime`
         ,a.`shipEmptyPhoto`
         ,a.`shipReference`
@@ -79,6 +81,7 @@
             <if test="pojo.shipLatitude!=null"> `shipLatitude`,</if>
             <if test="pojo.gpsAddress!=null"> `gpsAddress`,</if>
             <if test="pojo.preLoad!=null"> `preLoad`,</if>
+            <if test="pojo.preActualLoad!=null"> `preActualLoad`,</if>
             <if test="pojo.preArrivePortTime!=null"> `preArrivePortTime`,</if>
             <if test="pojo.shipEmptyPhoto!=null"> `shipEmptyPhoto`,</if>
             <if test="pojo.shipReference!=null"> `shipReference`,</if>
@@ -97,6 +100,7 @@
             <if test="pojo.shipLatitude!=null">#{pojo.shipLatitude},</if>
             <if test="pojo.gpsAddress!=null">#{pojo.gpsAddress},</if>
             <if test="pojo.preLoad!=null">#{pojo.preLoad},</if>
+            <if test="pojo.preActualLoad!=null">#{pojo.preActualLoad},</if>
             <if test="pojo.preArrivePortTime!=null">#{pojo.preArrivePortTime},</if>
             <if test="pojo.shipEmptyPhoto!=null">#{pojo.shipEmptyPhoto},</if>
             <if test="pojo.shipReference!=null">#{pojo.shipReference},</if>
@@ -119,6 +123,7 @@
             <if test="pojo.shipLatitude!=null">`shipLatitude` = #{pojo.shipLatitude},</if>
             <if test="pojo.gpsAddress!=null">`gpsAddress` = #{pojo.gpsAddress},</if>
             <if test="pojo.preLoad!=null">`preLoad` = #{pojo.preLoad},</if>
+            <if test="pojo.preActualLoad!=null">`preActualLoad` = #{pojo.preActualLoad},</if>
             <if test="pojo.preArrivePortTime!=null">`preArrivePortTime` = #{pojo.preArrivePortTime},</if>
             <if test="pojo.shipEmptyPhoto!=null">`shipEmptyPhoto` = #{pojo.shipEmptyPhoto},</if>
             <if test="pojo.shipReference!=null">`shipReference` = #{pojo.shipReference},</if>

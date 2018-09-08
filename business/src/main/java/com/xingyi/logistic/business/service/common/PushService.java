@@ -3,7 +3,6 @@ package com.xingyi.logistic.business.service.common;
 import com.xingyi.logistic.business.db.dao.PushAppMsgDAO;
 import com.xingyi.logistic.business.db.entity.PushAppMsgDBQuery;
 import com.xingyi.logistic.business.db.entity.PushAppMsgDO;
-import com.xingyi.logistic.business.model.PushAppMsg;
 import com.xingyi.logistic.business.model.ReservationCheckFlagInfo;
 import com.xingyi.logistic.business.service.PushAppMsgService;
 import com.xingyi.logistic.business.util.JPushClientUtil;
@@ -14,7 +13,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.text.SimpleDateFormat;
-import java.util.*;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Created by xiaohu on 2018/6/28.
@@ -43,6 +44,7 @@ public class PushService {
         Map<String,Object> map = new HashMap<>();
         map.put("leftDispatchId",reservation.getLeftDispatchId());
         map.put("userId",reservation.getUserId());
+        map.put("reservationId",reservation.getId());
         PushAppMsgDO pushAppMsgDO = pushAppMsgService.getReservationInfo(map);
         Long loadingTime = pushAppMsgDO.getLoadingTime();
         Date date = new Date(loadingTime*1000);
@@ -76,7 +78,11 @@ public class PushService {
         Map<String,Object> map = new HashMap<>();
         map.put("leftDispatchId",reservation.getLeftDispatchId());
         map.put("userId",reservation.getUserId());
+        map.put("reservationId",reservation.getId());
         PushAppMsgDO pushAppMsgDO = pushAppMsgService.getReservationInfo(map);
+        if (pushAppMsgDO == null) {
+            return;
+        }
         Long loadingTime = pushAppMsgDO.getLoadingTime();
         Date date = new Date(loadingTime*1000);
         SimpleDateFormat sd = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");

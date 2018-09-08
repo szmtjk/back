@@ -158,6 +158,7 @@
         WHERE a.`isDeleted` = 0
         AND a.`leftDispatchId` = ${leftDispatchId}
         AND a.`userId` = ${userId}
+        AND a.`id` = ${reservationId}
     </select>
 
 </mapper>
