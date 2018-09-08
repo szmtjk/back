@@ -128,6 +128,7 @@ public class ReservationServiceImpl extends BaseCRUDService<ReservationDO,Reserv
                     return ret;
                 }
             }
+            o.setDispatchId(0L);
             reservationDAO.update(reservationConverter.toUpdatedReservationDO(o, 2));
             pushService.pushReservationFalsed(reservationRet.getData(), o);
         }
