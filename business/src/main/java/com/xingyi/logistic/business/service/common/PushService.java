@@ -50,11 +50,11 @@ public class PushService {
         Date date = new Date(loadingTime*1000);
         SimpleDateFormat sd = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         String loadingTimes = sd.format(date);
-        String notificationTitle = "兴一物流";
+        String notificationTitle = "兴一船运抢单";
         String msgTitle = pushAppMsgDO.getGoodsName()+pushAppMsgDO.getDispatchWeight()+"吨已通过审核";
         String msgContent = "您在"+loadingTimes+"预约的"+pushAppMsgDO.getDispatchWeight()+"吨的"+pushAppMsgDO.getGoodsName()+"已通过审核!";
         String extrasParam = "";
-        JPushClientUtil.sendToAliasUser(notificationTitle, msgTitle, msgContent, extrasParam, String.valueOf(reservation.getUserId()));
+        JPushClientUtil.sendToAliasUser(msgTitle, notificationTitle, msgContent, extrasParam, String.valueOf(reservation.getUserId()));
         PushAppMsgDO pushAppMsg = new PushAppMsgDO();
         PushAppMsgDBQuery pushAppMsgDBQuery = new PushAppMsgDBQuery();
         pushAppMsg.setUserId(reservation.getUserId());
@@ -87,11 +87,11 @@ public class PushService {
         Date date = new Date(loadingTime*1000);
         SimpleDateFormat sd = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         String loadingTimes = sd.format(date);
-        String notificationTitle = "兴一物流";
+        String notificationTitle = "兴一船运抢单";
         String msgTitle = pushAppMsgDO.getGoodsName()+pushAppMsgDO.getDispatchWeight()+"吨未通过审核";
         String msgContent = "您在"+loadingTimes+"预约的"+pushAppMsgDO.getDispatchWeight()+"吨的"+pushAppMsgDO.getGoodsName()+"未通过审核!";
         String extrasParam = "";
-        JPushClientUtil.sendToAliasUser(notificationTitle, msgTitle, msgContent, extrasParam, String.valueOf(reservation.getUserId()));
+        JPushClientUtil.sendToAliasUser(msgTitle, notificationTitle, msgContent, extrasParam, String.valueOf(reservation.getUserId()));
         PushAppMsgDO pushAppMsg = new PushAppMsgDO();
         PushAppMsgDBQuery pushAppMsgDBQuery = new PushAppMsgDBQuery();
         pushAppMsg.setUserId(reservation.getUserId());
