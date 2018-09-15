@@ -116,6 +116,7 @@
     <select id="getCount" resultType="java.lang.Integer" parameterType="Map" >
         SELECT  count(a.id)
         FROM  `ShipOil` a LEFT JOIN `UserProfile` b on a.creator = b.id
+        LEFT JOIN `Ship` c on a.shipId = c.id
         <include refid="pageQueryWhereCommon"/>
         limit 1
     </select>
@@ -123,6 +124,7 @@
     <select id="queryByPage" resultMap="AllColumnMap" parameterType="Map">
         select <include refid="all_column_user"/>
         from `ShipOil` a  LEFT JOIN `UserProfile` b on a.creator = b.id
+        LEFT JOIN `Ship` c on a.shipId = c.id
         <include refid="pageQueryWhereCommon"/>
         order by a.`created` desc
         <include refid="pageCommon"/>
@@ -132,7 +134,7 @@
         where a.`isDeleted` = 0
         <if test="pojo.id != null"> AND a.`id` = #{pojo.id} </if>
         <if test="pojo.key != null">
-            AND (a.`fuelQuantity` like concat('%', #{pojo.key}, '%') or a.`unitPrice` like concat('%', #{pojo.key}, '%'))
+            AND (a.`fuelQuantity` like concat('%', #{pojo.key}, '%') or a.`unitPrice` like concat('%', #{pojo.key}, '%') or c.`shipNo` like concat('%', #{pojo.key}, '%') )
         </if>
     </sql>
 

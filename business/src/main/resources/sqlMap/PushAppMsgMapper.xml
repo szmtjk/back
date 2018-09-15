@@ -124,7 +124,7 @@
         where a.`isDeleted` = 0
         <if test="pojo.id != null"> AND a.`userId` = #{pojo.id} </if>
         <if test="pojo.key != null">
-            AND a.`userId` =${pojo.key}
+            AND (a.`userId` =${pojo.key} or c.`shipNo` like concat('%', #{pojo.key}, '%'))
         </if>
     </sql>
 

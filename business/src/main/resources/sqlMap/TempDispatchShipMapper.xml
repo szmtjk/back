@@ -155,6 +155,7 @@
     <select id="getById" parameterType="java.lang.Long" resultMap="AllColumnMap">
         SELECT <include refid="all_column_user"/>
         FROM `Ship` a LEFT JOIN `UserProfile` b on a.creator = b.id
+        LEFT JOIN `AppUser` c on a.id = c.shipInfoId
         WHERE a.`id` = #{id} and a.`isDeleted` = 0 and a.`shipFlag` = 3
         LIMIT 1
     </select>

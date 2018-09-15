@@ -115,7 +115,6 @@
     <update id="del" parameterType="java.lang.Long">
         UPDATE CustomerTask
         SET `isDeleted` = 1 ,
-        <if test="pojo.updater!=null">`updater` = #{pojo.updater},</if>
         `updated` = UNIX_TIMESTAMP(now())
         WHERE `id` = #{id} and `isDeleted` = 0
         LIMIT 1

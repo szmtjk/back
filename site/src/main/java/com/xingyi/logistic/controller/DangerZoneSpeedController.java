@@ -5,8 +5,11 @@ import com.xingyi.logistic.business.model.DangerZoneSpeed;
 import com.xingyi.logistic.business.model.DangerZoneSpeedQuery;
 import com.xingyi.logistic.business.service.BaseService;
 import com.xingyi.logistic.business.service.DangerZoneSpeedService;
+import com.xingyi.logistic.common.bean.JsonRet;
+import com.xingyi.logistic.config.JsonParam;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
@@ -23,5 +26,10 @@ public class DangerZoneSpeedController extends BaseCRUDController<DangerZoneSpee
     @Override
     protected BaseService<DangerZoneSpeed, DangerZoneSpeedQuery> getBaseService() {
         return dangerZoneSpeedService;
+    }
+
+    @RequestMapping(value = "/getPage", method = RequestMethod.POST)
+    public JsonRet<Object> getPage(@JsonParam DangerZoneSpeedQuery dangerZoneSpeedQuery) {
+        return super.getList(dangerZoneSpeedQuery);
     }
 }
