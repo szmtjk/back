@@ -106,6 +106,7 @@
         SELECT  count(a.id)
         FROM  `PushAppMsg` a LEFT JOIN `AppUser` b on a.userId = b.id
         LEFT JOIN `Ship` c ON c.id = b.shipInfoId
+        LEFT JOIN `DispatchInfo` d on d.shipId = c.id
         <include refid="pageQueryWhereCommon"/>
         limit 1
     </select>
@@ -115,6 +116,7 @@
         from `PushAppMsg` a
         LEFT JOIN `AppUser` b on a.userId = b.id
         LEFT JOIN `Ship` c ON c.id = b.shipInfoId
+        LEFT JOIN `DispatchInfo` d on d.shipId = c.id
         <include refid="pageQueryWhereCommon"/>
         order by a.`created` desc
         <include refid="pageCommon"/>
@@ -123,8 +125,8 @@
     <sql id="pageQueryWhereCommon">
         where a.`isDeleted` = 0
         <if test="pojo.id != null"> AND a.`userId` = #{pojo.id} </if>
-        <if test="pojo.key != null">
-            AND (a.`userId` =${pojo.key} or c.`shipNo` like concat('%', #{pojo.key}, '%'))
+        <if test="pojo.key != null and pojo.key != ''" >
+            AND d.`id` = #{pojo.key}
         </if>
     </sql>
 

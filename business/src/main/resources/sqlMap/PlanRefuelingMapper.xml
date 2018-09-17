@@ -111,8 +111,11 @@
     <sql id="pageQueryWhereCommon">
         where a.`isDeleted` = 0
         <if test="pojo.id != null"> AND a.`id` = #{pojo.id} </if>
-        <if test="pojo.key != null and pojo.key != ''">
-            AND (a.`disId` = #{pojo.key} )
+        <if test="pojo.shipId != null and pojo.shipId != ''">
+            AND (a.`shipId` = #{pojo.shipId} )
+        </if>
+        <if test="pojo.disId != null and pojo.disId != ''">
+            AND (a.`disId` = #{pojo.disId} )
         </if>
     </sql>
 

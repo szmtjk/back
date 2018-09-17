@@ -108,6 +108,7 @@
         SELECT  count(a.id)
         FROM  `ShipEvent` a  LEFT JOIN `UserProfile` b on a.creator = b.id
         LEFT JOIN `Ship` c on a.shipId = c.id
+        LEFT JOIN `DispatchInfo` d on d.shipId = c.id
         <include refid="pageQueryWhereCommon"/>
         limit 1
     </select>
@@ -116,6 +117,7 @@
         select <include refid="all_column_user"/>
         from `ShipEvent` a LEFT JOIN `UserProfile` b on a.creator = b.id
         LEFT JOIN `Ship` c on a.shipId = c.id
+        LEFT JOIN `DispatchInfo` d on d.shipId = c.id
         <include refid="pageQueryWhereCommon"/>
         order by a.`created` desc
         <include refid="pageCommon"/>
@@ -124,8 +126,8 @@
     <sql id="pageQueryWhereCommon">
         where a.`isDeleted` = 0
         <if test="pojo.id != null"> AND a.`id` = #{pojo.id} </if>
-        <if test="pojo.key != null">
-            AND (a.`eventId` like concat('%', #{pojo.key}, '%') or c.`shipNo` like concat('%', #{pojo.key}, '%') )
+        <if test="pojo.key != null and pojo.key != ''" >
+            AND d.`id` = #{pojo.key}
         </if>
     </sql>
 
