@@ -307,14 +307,20 @@
         <if test="pojo.id != null"> AND A1.`dispatchId` = #{pojo.id} </if>
         <if test="pojo.status != null and pojo.status != '14'"> AND IFNULL(SA1.status,A1.dispatchStatus)  = #{pojo.status} </if>
         <if test="pojo.status != null and pojo.status == '14'"> AND (IFNULL(SA1.status,A1.dispatchStatus) between 1 and 4) </if>
-        <if test="pojo.key != null">
+        <if test="pojo.shipId != null and pojo.shipId != ''">
+            AND (A1.`shipId` = #{pojo.shipId} )
+        </if>
+        <if test="pojo.disId != null and pojo.disId != ''">
+            AND (A1.`dispatchId` = #{pojo.disId} )
+        </if>
+        <!--<if test="pojo.key != null">
             AND (
             A1.`shipNo` like concat('%', #{pojo.key}, '%')
             or A1.`taskNo` like concat('%', #{pojo.key}, '%')
             or A1.`flowTaskNo` like concat('%', #{pojo.key}, '%')
             or A1.`dispatchNo` like concat('%', #{pojo.key}, '%')
             )
-        </if>
+        </if>-->
     </sql>
 
     <!-- 加载所有有航次的船舶任务 -->
@@ -437,7 +443,13 @@
         where SI1.`isDeleted` = 0
         <if test="pojo.id != null"> AND SI1.`id` = #{pojo.id} </if>
         <if test="pojo.orderId != null"> AND DI1.`orderId` = #{pojo.orderId} </if>
-        <if test="pojo.key != null">
+        <if test="pojo.shipId != null and pojo.shipId != ''">
+            AND (DI1.`shipId` = #{pojo.shipId} )
+        </if>
+        <if test="pojo.disId != null and pojo.disId != ''">
+            AND (DI1.`id` = #{pojo.disId} )
+        </if>
+        <!--<if test="pojo.key != null">
             AND (
 
             S1.`shipNo` like concat('%', #{pojo.key}, '%')
@@ -446,7 +458,7 @@
             or DI1.`orderNo` like concat('%', #{pojo.key}, '%')
             )
 
-        </if>
+        </if>-->
     </sql>
 
 
@@ -467,7 +479,13 @@
         where A1.`isDeleted` = 0
         <if test="pojo.id != null"> AND A1.`id` = #{pojo.id} </if>
         <if test="pojo.orderId != null"> AND A1.`orderId` = #{pojo.orderId} </if>
-        <if test="pojo.key != null">
+        <if test="pojo.shipId != null and pojo.shipId != ''">
+            AND (A3.`shipId` = #{pojo.shipId} )
+        </if>
+        <if test="pojo.disId != null and pojo.disId != ''">
+            AND (A3.`id` = #{pojo.disId} )
+        </if>
+        <!--<if test="pojo.key != null">
             AND (
 
             A2.`shipNo` like concat('%', #{pojo.key}, '%')
@@ -476,7 +494,7 @@
             or A3.`orderNo` like concat('%', #{pojo.key}, '%')
             )
 
-        </if>
+        </if>-->
     </sql>
 
     <sql id="pageCommon">

@@ -15,6 +15,26 @@ public class SailingInfoQuery extends BaseQueryPage {
 
     private Long orderId;
 
+    private Long shipId;
+
+    private Long disId;
+
+    public Long getShipId() {
+        return shipId;
+    }
+
+    public Long getDisId() {
+        return disId;
+    }
+
+    public void setShipId(Long shipId) {
+        this.shipId = shipId;
+    }
+
+    public void setDisId(Long disId) {
+        this.disId = disId;
+    }
+
     public Long getId() {
         return id;
     }
