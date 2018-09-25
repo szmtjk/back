@@ -8,6 +8,7 @@ import com.xingyi.logistic.authentication.util.SessionUtil;
 import com.xingyi.logistic.business.model.OperationLog;
 import com.xingyi.logistic.business.service.OperationLogService;
 import com.xingyi.logistic.common.bean.JsonRet;
+import com.xingyi.logistic.qiangdan.model.AppUser;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.AfterReturning;
 import org.aspectj.lang.annotation.Aspect;
@@ -81,6 +82,7 @@ public class OperationLogAspect {
         }
         OperationLog log = new OperationLog();
         log.setUserId(getCurrentUserId());
+        log.setUserType(getCurrentUserType());
         log.setBizType(bizName);
         log.setOperationType(operation.value());
         log.setRequestParam(JSON.toJSONString(jp.getArgs()));
@@ -94,8 +96,27 @@ public class OperationLogAspect {
         operationLogService.add(log);
     }
 
+    private Integer getCurrentUserType() {
+        UserProfile profile = SessionUtil.getProfile();
+        if (profile != null && profile.getId() > 0) {
+            return 1;
+        }
+        AppUser appUser = SessionUtil.getAppUser();
+        if (appUser != null && appUser.getId() > 0) {
+            return 2;
+        }
+        return 0;
+    }
+
     private Long getCurrentUserId() {
         UserProfile profile = SessionUtil.getProfile();
-        return profile != null ? profile.getId() : 0L;
+        if (profile != null && profile.getId() > 0) {
+            return profile.getId();
+        }
+        AppUser appUser = SessionUtil.getAppUser();
+        if (appUser != null && appUser.getId() > 0) {
+            return appUser.getId();
+        }
+        return 0L;
     }
 }

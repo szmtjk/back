@@ -6,6 +6,7 @@ package com.xingyi.logistic.business.bean;
 public class BaseOperationLog extends BaseModelAndDO {
 
     private Long userId;
+    private Integer userType;
     private String bizType;
     private String operationType;
     private String requestParam;
@@ -19,6 +20,14 @@ public class BaseOperationLog extends BaseModelAndDO {
 
     public void setUserId(Long userId) {
         this.userId = userId;
+    }
+
+    public Integer getUserType() {
+        return userType;
+    }
+
+    public void setUserType(Integer userType) {
+        this.userType = userType;
     }
 
     public String getBizType() {

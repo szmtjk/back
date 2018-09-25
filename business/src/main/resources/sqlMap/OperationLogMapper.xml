@@ -5,6 +5,7 @@
     <resultMap id="AllColumnMap" type="com.xingyi.logistic.business.db.entity.OperationLogDO">
         <result property="id" column="id"/>
         <result property="userId" column="userId"/>
+        <result property="userType" column="userType"/>
         <result property="bizType" column="bizType"/>
         <result property="operationType" column="operationType"/>
         <result property="created" column="created"/>
@@ -13,6 +14,7 @@
     <sql id="all_column">
         `id`
         ,`userId`
+        ,`userType`
         ,`bizType`
         ,`operationType`
         ,`requestParam`
@@ -25,6 +27,7 @@
         INSERT INTO OperationLog
         <trim prefix="(" suffix=")" suffixOverrides=",">
             <if test="pojo.userId!=null"> `userId`,</if>
+            <if test="pojo.userType!=null"> `userType`,</if>
             <if test="pojo.bizType!=null"> `bizType`,</if>
             <if test="pojo.operationType!=null"> `operationType`,</if>
             <if test="pojo.requestParam!=null"> `requestParam`,</if>
@@ -35,6 +38,7 @@
         VALUES
         <trim prefix="(" suffix=")" suffixOverrides=",">
             <if test="pojo.userId!=null">#{pojo.userId},</if>
+            <if test="pojo.userType!=null">#{pojo.userType},</if>
             <if test="pojo.bizType!=null">#{pojo.bizType},</if>
             <if test="pojo.operationType!=null">#{pojo.operationType},</if>
             <if test="pojo.requestParam!=null">#{pojo.requestParam},</if>
@@ -49,6 +53,7 @@
         UPDATE OperationLog
         <set>
             <if test="pojo.userId!=null">`userId` = #{pojo.userId},</if>
+            <if test="pojo.userType!=null">`userType` = #{pojo.userType},</if>
             <if test="pojo.bizType!=null">`bizType` = #{pojo.bizType},</if>
             <if test="pojo.operationType!=null">`operationType` = #{pojo.operationType},</if>
             <if test="pojo.requestParam!=null">`requestParam` = #{pojo.requestParam},</if>
