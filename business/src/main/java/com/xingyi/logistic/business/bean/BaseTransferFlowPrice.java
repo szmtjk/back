@@ -11,8 +11,8 @@ public class BaseTransferFlowPrice extends BaseModelAndDO {
     private Long transferPriceId;//运价信息id
     @NotNull
     private Long flowId; // 流向编号
-    private Long unitPrice;//运价
-    private Long suggestUnitPrice;//参考运价
+    private float unitPrice;//运价
+    private float suggestUnitPrice;//参考运价
     private String startDate;//执行开始日期
     private String endDate;//执行结束日期
 
@@ -32,19 +32,19 @@ public class BaseTransferFlowPrice extends BaseModelAndDO {
         this.flowId = flowId;
     }
 
-    public Long getUnitPrice() {
+    public float getUnitPrice() {
         return unitPrice;
     }
 
-    public void setUnitPrice(Long unitPrice) {
+    public void setUnitPrice(float unitPrice) {
         this.unitPrice = unitPrice;
     }
 
-    public Long getSuggestUnitPrice() {
+    public float getSuggestUnitPrice() {
         return suggestUnitPrice;
     }
 
-    public void setSuggestUnitPrice(Long suggestUnitPrice) {
+    public void setSuggestUnitPrice(float suggestUnitPrice) {
         this.suggestUnitPrice = suggestUnitPrice;
     }
 

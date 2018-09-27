@@ -14,10 +14,10 @@ public class BaseContractFlow extends BaseModelAndDO {
     private Long contractId;//合同id
     @NotNull
     private Long flowId;//流向id
-    private Long unitPrice;//运价
+    private float unitPrice;//运价
     @AllowedNumber(values = {1, 2})
     private Integer ticketStatus;//开票与否  1：开  2：不开
-    private Long lastUnitPrice;//上期合同运价
+    private float lastUnitPrice;//上期合同运价
 
     public Long getContractId() {
         return contractId;
@@ -35,11 +35,11 @@ public class BaseContractFlow extends BaseModelAndDO {
         this.flowId = flowId;
     }
 
-    public Long getUnitPrice() {
+    public float getUnitPrice() {
         return unitPrice;
     }
 
-    public void setUnitPrice(Long unitPrice) {
+    public void setUnitPrice(float unitPrice) {
         this.unitPrice = unitPrice;
     }
 
@@ -51,11 +51,11 @@ public class BaseContractFlow extends BaseModelAndDO {
         this.ticketStatus = ticketStatus;
     }
 
-    public Long getLastUnitPrice() {
+    public float getLastUnitPrice() {
         return lastUnitPrice;
     }
 
-    public void setLastUnitPrice(Long lastUnitPrice) {
+    public void setLastUnitPrice(float lastUnitPrice) {
         this.lastUnitPrice = lastUnitPrice;
     }
 }
