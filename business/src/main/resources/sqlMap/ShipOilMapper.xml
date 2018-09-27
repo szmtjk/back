@@ -141,13 +141,12 @@
         </if>
     </sql>
 
-    <select id="calculateRemainingOil" resultMap="AllColumnMap" parameterType="java.lang.Long">
-        select a.shipId, ifnull(a.preAmount, 0) as preAmountTotal, ifnull(b.actualAmount, 0) as actualAmountTotal, (ifnull(a.preAmount, 0)-ifnull(b.actualAmount, 0)) as leftAmountTotal
+    <!-- 加载所有已调度的船舶任务 -->
+    <select id="calculateRemainingOilCount" resultType="java.lang.Integer" parameterType="Map">
+
+        SELECT  count(1)
         from (select a1.shipId, sum(preBuckleOil) as preAmount
         from PreBuckleOil a1
-        <if test="shipId != null">
-            where a1.`shipId` = #{shipId}
-        </if>
         GROUP BY a1.shipId
         ) a
         left join (
@@ -155,6 +154,35 @@
         from ShipOil a2
         where a2.`status`=1
         group by a2.shipId) b on b.shipId = a.shipId
+        <if test="pojo.key != null and pojo.key !=''">
+        where a.shipId = (
+        select a3.shipId
+        from DispatchInfo a3
+        where a3.`isDeleted`=0
+            and a3.`id` = #{pojo.key})
+        </if>
+        limit 1
+    </select>
+
+    <select id="calculateRemainingOil" resultType="Map" parameterType="Map">
+        select a.shipId, ifnull(a.preAmount, 0) as preAmountTotal, ifnull(b.actualAmount, 0) as actualAmountTotal, (ifnull(a.preAmount, 0)-ifnull(b.actualAmount, 0)) as leftAmountTotal
+        from (select a1.shipId, sum(preBuckleOil) as preAmount
+        from PreBuckleOil a1
+        GROUP BY a1.shipId
+        ) a
+        left join (
+        select a2.shipId, sum(a2.fuelQuantity*a2.unitPrice) as actualAmount
+        from ShipOil a2
+        where a2.`status`=1
+        group by a2.shipId) b on b.shipId = a.shipId
+        <if test="pojo.key != null and pojo.key !=''">
+        where a.shipId = (
+        select a3.shipId
+        from DispatchInfo a3
+        where a3.`isDeleted`=0
+            and a3.`id` = #{pojo.key})
+        </if>
+        <include refid="pageCommon"/>
     </select>
 
     <sql id="pageCommon">

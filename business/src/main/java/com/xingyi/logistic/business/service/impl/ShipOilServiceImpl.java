@@ -12,18 +12,28 @@ import com.xingyi.logistic.business.service.base.ModelConverter;
 import com.xingyi.logistic.business.service.base.QueryConditionConverter;
 import com.xingyi.logistic.business.service.converter.ShipOilConverter;
 import com.xingyi.logistic.business.service.converter.ShipOilQueryConverter;
+import com.xingyi.logistic.business.util.JsonUtil;
+import com.xingyi.logistic.business.util.ParamValidator;
 import com.xingyi.logistic.common.bean.ErrCode;
 import com.xingyi.logistic.common.bean.JsonRet;
+import com.xingyi.logistic.common.bean.MiniUIJsonRet;
+import com.xingyi.logistic.common.bean.QueryType;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by wzf on 2018/1/1.
  */
 @Service
 public class ShipOilServiceImpl extends BaseCRUDService<ShipOilDO, ShipOil, ShipOilDBQuery, ShipOilQuery> implements ShipOilService {
+
+    private static final Logger LOG = LoggerFactory.getLogger(ShipOilServiceImpl.class);
 
     @Autowired
     private ShipOilDAO shipOilDAO;
@@ -51,17 +61,40 @@ public class ShipOilServiceImpl extends BaseCRUDService<ShipOilDO, ShipOil, Ship
 
 
     @Override
-    public JsonRet<List<ShipOilDO>> calculateRemainingOil(ShipOilDO shipOilDO) {
+    public JsonRet<Object> calculateRemainingOil(ShipOilQuery query) {
+
+        JsonRet<Object> ret = new JsonRet<>();
+        if (!ParamValidator.isParamValid(ret, query)) {
+            return ret;
+        }
+
         try {
 
-            List<ShipOilDO> dataObject = shipOilDAO.calculateRemainingOil(shipOilDO);
-            if (dataObject == null) {
-                return JsonRet.getErrRet(ErrCode.DATA_NOT_EXIST);
-            } else {
-                return JsonRet.getSuccessRet(dataObject);
+            ShipOilDBQuery dbQuery = shipOilQueryConverter.toDOCondition(query);
+
+            int count = shipOilDAO.calculateRemainingOilCount(dbQuery);
+
+            List<Map<String, Object>> pageList = null;
+            if (count > 0) {
+                pageList = shipOilDAO.calculateRemainingOil(dbQuery);
             }
+
+            if (query.getQueryParamFlag() == QueryType.MINIUI.getCode()) {
+                MiniUIJsonRet<Object> miniUIJsonRet = new MiniUIJsonRet<>();
+                miniUIJsonRet.setSuccessData(count, pageList);
+                return miniUIJsonRet;
+            } else {
+                Map<String, Object> params = new HashMap<>();
+                params.put("total", count);
+                params.put("list",  pageList);
+                return JsonRet.getSuccessRet(params);
+            }
+
         } catch (Exception e) {
+            LOG.error("获取剩余油款失败, param:{}", JsonUtil.toJson(query), e);
             return JsonRet.getErrRet(ErrCode.GET_ERR);
         }
+
+
     }
 }

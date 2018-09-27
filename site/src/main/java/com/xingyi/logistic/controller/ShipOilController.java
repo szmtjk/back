@@ -7,6 +7,7 @@ import com.xingyi.logistic.business.model.ShipOilQuery;
 import com.xingyi.logistic.business.service.BaseService;
 import com.xingyi.logistic.business.service.ShipOilService;
 import com.xingyi.logistic.common.bean.JsonRet;
+import com.xingyi.logistic.config.JsonParam;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -31,8 +32,8 @@ public class ShipOilController extends BaseCRUDController<ShipOil, ShipOilQuery>
     }
 
     @RequestMapping(value = "/calculateRemainingOil", method = {RequestMethod.GET,RequestMethod.POST})
-    public JsonRet<List<ShipOilDO>> calculateRemainingOil(ShipOilDO shipOilDO) {
-        return shipOilService.calculateRemainingOil(shipOilDO);
+    public JsonRet<Object> calculateRemainingOil(@JsonParam ShipOilQuery query) {
+        return shipOilService.calculateRemainingOil(query);
     }
 
 }

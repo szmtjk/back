@@ -12,5 +12,5 @@ import java.util.List;
  */
 public interface ShipOilService extends BaseService<ShipOil, ShipOilQuery> {
 
-    JsonRet<List<ShipOilDO>> calculateRemainingOil(ShipOilDO shipOilDO);
+    JsonRet<Object> calculateRemainingOil(ShipOilQuery query);
 }
