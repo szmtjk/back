@@ -154,6 +154,7 @@
     <select id="getCount" resultType="java.lang.Integer" parameterType="Map" >
         SELECT  count(a.id)
         FROM  `ShipStaff` a LEFT JOIN `UserProfile` b on a.creator = b.id
+        left join `DispatchInfo` c on a.shipId = c.shipId
         <include refid="pageQueryWhereCommon"/>
         limit 1
     </select>
@@ -161,6 +162,7 @@
     <select id="queryByPage" resultMap="AllColumnMap" parameterType="Map">
         select <include refid="all_column_user"/>
         from `ShipStaff` a LEFT JOIN `UserProfile` b on a.creator = b.id
+        left join `DispatchInfo` c on a.shipId = c.shipId
         <include refid="pageQueryWhereCommon"/>
         order by a.`created` desc
         <include refid="pageCommon"/>
@@ -171,6 +173,9 @@
         <if test="pojo.id != null"> AND a.`id` = #{pojo.id} </if>
         <if test="pojo.key != null">
            AND  (a.`name` like concat('%', #{pojo.key}, '%') or a.`mobile` like concat('%', #{pojo.key}, '%'))
+        </if>
+        <if test="pojo.shipId != null and pojo.shipId != ''">
+            AND (c.`id` = #{pojo.shipId} )
         </if>
     </sql>
 

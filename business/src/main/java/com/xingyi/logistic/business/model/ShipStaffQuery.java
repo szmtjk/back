@@ -8,11 +8,21 @@ import com.xingyi.logistic.business.bean.BaseQueryPage;
 public class ShipStaffQuery extends BaseQueryPage {
     private String key;
 
+    private String shipId;
+
     public String getKey() {
         return key;
     }
 
     public void setKey(String key) {
         this.key = key;
+    }
+
+    public String getShipId() {
+        return shipId;
+    }
+
+    public void setShipId(String shipId) {
+        this.shipId = shipId;
     }
 }
