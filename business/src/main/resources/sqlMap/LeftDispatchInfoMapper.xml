@@ -27,6 +27,12 @@
         <result property="flowName" column="flowName"/>
         <result property="loadingTime" column="loadingTime"/>
         <result property="dischargeTime" column="dischargeTime"/>
+
+        <result property="totalWeight" column="totalWeight"/>
+        <result property="leftWeight" column="leftWeight"/>
+        <result property="flowTaskNo" column="flowTaskNo"/>
+        <result property="taskNo" column="taskNo"/>
+
     </resultMap>
 
     <resultMap id="LeftDispatch4CheckColumnMap" type="com.xingyi.logistic.business.db.entity.LeftDispatch4CheckDO">
@@ -68,6 +74,12 @@
         , '' flowName
         , '' loadingTime
         , '' dischargeTime
+
+        , '' totalWeight
+        , '' leftWeight
+        , '' flowTaskNo
+        , '' taskNo
+
     </sql>
 
     <insert id="insertSelective" useGeneratedKeys="true" keyProperty="pojo.id">
@@ -168,7 +180,10 @@
     </select>
 
     <select id="queryByPage" resultMap="AllColumnMap" parameterType="Map">
-        SELECT A1.*, A2.goodsName, A6.`name` AS startPortName, A7.`name` AS endPortName, A4.fullName AS customerName, A5.`name` AS flowName, A2.loadingTime, A2.dischargeTime
+        SELECT A1.*, A2.goodsName, A6.`name` AS startPortName, A7.`name` AS endPortName, A4.fullName AS customerName,
+        A5.`name` AS flowName, A2.loadingTime, A2.dischargeTime,
+        A2.totalWeight,A2.totalWeight - (case when e.preLoad is null then 0 else e.preLoad end) as leftWeight,A2.taskNo flowTaskNo,
+        A1.taskStatus,A3.taskNo
         FROM LeftDispatchInfo A1
         LEFT JOIN CustomerTaskFlow A2 ON A1.customerTaskFlowId=A2.id
         LEFT JOIN CustomerTask A3 ON A3.id=A2.taskId
@@ -176,6 +191,11 @@
         LEFT JOIN Flow A5 ON A5.id = A2.flowId
         LEFT JOIN `Port` A6 ON A6.id=A2.startPortId
         Left join `Port` A7 ON A7.id = A2.endPortId
+        Left join ( SELECT aa.customerTaskFlowId, sum(preLoad) as preLoad
+        from DispatchInfo aa
+        where aa.isDeleted = 0 and aa.status >= 0
+        group by aa.customerTaskFlowId
+        ) e on e.customerTaskFlowId = A2.id
         <include refid="pageQueryWhereCommon"/>
         order by A1.`id` desc
         <include refid="pageCommon"/>

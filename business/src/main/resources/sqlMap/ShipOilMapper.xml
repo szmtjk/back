@@ -146,13 +146,13 @@
 
         SELECT  count(1)
         from (select a1.shipId, sum(preBuckleOil) as preAmount
-        from PreBuckleOil a1
+        from PreBuckleOil a1 where a1.`isDeleted`=0
         GROUP BY a1.shipId
         ) a
         left join (
         select a2.shipId, sum(a2.fuelQuantity*a2.unitPrice) as actualAmount
         from ShipOil a2
-        where a2.`status`=1
+        where a2.`status`=1 and  a2.`isDeleted`=0
         group by a2.shipId) b on b.shipId = a.shipId
         <if test="pojo.key != null and pojo.key !=''">
         where a.shipId = (

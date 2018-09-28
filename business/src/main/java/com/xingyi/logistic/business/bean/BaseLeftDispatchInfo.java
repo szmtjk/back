@@ -74,6 +74,43 @@ public class BaseLeftDispatchInfo extends BaseModelAndDO{
     private String loadingTime;
     private String dischargeTime;
 
+    private int totalWeight;
+    private int leftWeight;
+    private String flowTaskNo;
+    private String taskNo;
+
+    public int getTotalWeight() {
+        return totalWeight;
+    }
+
+    public void setTotalWeight(int totalWeight) {
+        this.totalWeight = totalWeight;
+    }
+
+    public int getLeftWeight() {
+        return leftWeight;
+    }
+
+    public void setLeftWeight(int leftWeight) {
+        this.leftWeight = leftWeight;
+    }
+
+    public String getFlowTaskNo() {
+        return flowTaskNo;
+    }
+
+    public void setFlowTaskNo(String flowTaskNo) {
+        this.flowTaskNo = flowTaskNo;
+    }
+
+    public String getTaskNo() {
+        return taskNo;
+    }
+
+    public void setTaskNo(String taskNo) {
+        this.taskNo = taskNo;
+    }
+
     public String getLoadingTime() {
         return loadingTime;
     }
