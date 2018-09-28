@@ -39,4 +39,6 @@ public interface SailingInfoService extends BaseService<SailingInfo,SailingInfoQ
      * @return
      */
     JsonRet<Object> getSailingShipTaskList(SailingInfoQuery query);
+
+    JsonRet<Boolean> modifyBalance(Long id);
 }

@@ -167,4 +167,21 @@ public class SailingInfoImpl extends BaseCRUDService<SailingInfoDO, SailingInfo,
     protected QueryConditionConverter<SailingInfoQuery, SailingInfoDBQuery> getConditionConverter() {
         return sailingInfoQueryConverter;
     }
+    @Override
+    public JsonRet<Boolean> modifyBalance(Long id) {
+        JsonRet<Boolean> ret = new JsonRet<>();
+        try {
+            if (id == null) {
+                return JsonRet.getErrRet(ErrCode.ID_INVALID);
+            }
+            if (sailingInfoDAO.modifyBalance(id) > 0) {
+                return JsonRet.getSuccessRet(true);
+            } else {
+                return JsonRet.getErrRet(ErrCode.MODIFY_ERR);
+            }
+        } catch (Exception e) {
+            LOG.error("[ERROR]delete, id:{}", id, e);
+            return JsonRet.getErrRet(ErrCode.MODIFY_ERR);
+        }
+    }
 }

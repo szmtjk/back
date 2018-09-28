@@ -1,6 +1,7 @@
 package com.xingyi.logistic.controller;
 
 import com.xingyi.logistic.aop.annotation.Biz;
+import com.xingyi.logistic.aop.annotation.Operation;
 import com.xingyi.logistic.business.model.SailingInfo;
 import com.xingyi.logistic.business.model.SailingInfoQuery;
 import com.xingyi.logistic.business.service.BaseService;
@@ -60,6 +61,11 @@ public class SailingInfoController extends BaseCRUDController<SailingInfo, Saili
         return sailingInfoService.getDispatchShipTaskList(query);
     }
 
+    @Operation("船舶运费结算")
+    @RequestMapping(value = "/modifyBalance", method = {RequestMethod.POST,RequestMethod.GET})
+    public JsonRet<Boolean> modifyBalance(@RequestParam Long id) {
+        return sailingInfoService.modifyBalance(id);
+    }
 
     @Override
     protected BaseService<SailingInfo,SailingInfoQuery> getBaseService() {

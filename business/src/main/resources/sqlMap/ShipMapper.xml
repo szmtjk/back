@@ -458,16 +458,13 @@
     </select>
 
     <select id="queryReportSixList"  resultType="Map" parameterType="Map">
-        select a.loadTime, ( select shipNo from Ship b where b.id = a.shipId ) as shipNo,
+        select a.id,a.loadTime, ( select shipNo from Ship b where b.id = a.shipId ) as shipNo,
         t.goodsName,t.sender,t.name,t.receiver,t.preWeight,a.loadWeight,a.dischargeWeight,
-        a.poundBalance,a.poundBalance/a.loadWeight,a.poundBalance- a.loadWeight*0.995,a.allowance,
-        (SELECT p.name from Port p where p.id = t.startPortId) as portName,
-        case when t.unitPrice is not null then t.unitPrice ELSE t.deposit end as kpdj,
-        a.bucklePrice,
-        (t.oil*( select so.unitPrice from ShipOil so where so.shipId = a.shipId and so.status='2') ) as shipOil,
-        ((a.loadWeight/a.dischargeWeight)*(case when t.unitPrice is not null then t.unitPrice ELSE t.deposit end)) as kpje,
-        case when t.unitPrice is not null then t.unitPrice ELSE t.deposit end as cydj,
-        ((a.loadWeight/a.dischargeWeight)*(case when t.unitPrice is not null then t.unitPrice ELSE t.deposit end)) -a.bucklePrice -(t.oil*( select so.unitPrice from ShipOil so where so.shipId = a.shipId and so.status='2') ) as cyje
+        t.actualTransferPrice,a.bucklePrice,a.cutWire,a.cutOther,a.allowance,a.balanceDate,
+        (case when t.settleType='11' or t.settleType='12' then IFNULL(a.loadWeight*t.actualTransferPrice,0) else IFNULL(a.dischargeWeight*t.actualTransferPrice,0) end) as actualTransferMoney,
+        (case when t.status=1 then IFNULL(t.preBuckleOil,0) else IFNULL(t.status*t.fuelQuantity,0) end) as shipOil,
+        ((case when t.settleType='11' or t.settleType='12' then a.loadWeight*t.actualTransferPrice else a.dischargeWeight*t.actualTransferPrice end)+a.dischargeDelayFee+a.allowance-a.bucklePrice-a.cutWire-a.cutOther-(case when t.status=1 then IFNULL(t.preBuckleOil,0) else IFNULL(t.status*t.fuelQuantity,0) end)) BalanceMoney
+
 
         <include refid="queryReportSixCommon"/>
         order by a.created DESC
@@ -476,9 +473,13 @@
 
     <sql id="queryReportSixCommon">
         from
-        SailingInfo a  LEFT JOIN ( select d.oil, d.id,b.goodsName,b.sender,c.name,b.receiver,d.preWeight,b.startPortId,d.actualTransferPrice as deposit,e.unitPrice
+        SailingInfo a  LEFT JOIN ( select po.preBuckleOil,so.status,so.fuelQuantity,so.unitPrice,d.settleType,d.oil, d.id,b.goodsName,b.sender,c.name,b.receiver,d.preWeight,b.startPortId,d.actualTransferPrice
         from Contract c LEFT JOIN ContractFlow e on e.contractId = c.id
-        LEFT JOIN CustomerTaskFlow b on b.taskId = e.id  LEFT JOIN DispatchInfo d ON d.customerTaskFlowId = b.id ) t
+        LEFT JOIN CustomerTaskFlow b on b.taskId = e.id
+        LEFT JOIN DispatchInfo d ON d.customerTaskFlowId = b.id
+        LEFT JOIN ShipOil so ON so.disId = d.id
+        LEFT JOIN PreBuckleOil po ON po.disId = d.id
+        ) t
         ON a.orderId = t.id
         where a.isDeleted = '0' and a.status = '5'
         <if test="pojo.key != null and pojo.key != ''">

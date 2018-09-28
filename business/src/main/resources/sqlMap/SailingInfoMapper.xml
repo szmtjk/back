@@ -217,6 +217,14 @@
         LIMIT 1
     </update>
 
+    <update id="modifyBalance" parameterType="java.lang.Long">
+        UPDATE SailingInfo
+        SET balanceDate=UNIX_TIMESTAMP(now()),
+        `updated` = UNIX_TIMESTAMP(now())
+        WHERE `id` = #{id} and `isDeleted` = 0
+        LIMIT 1
+    </update>
+
     <select id="getById" parameterType="java.lang.Long" resultMap="AllColumnMap">
         SELECT <include refid="all_column"/>
         FROM `SailingInfo`

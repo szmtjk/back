@@ -5,6 +5,7 @@ import com.xingyi.logistic.business.db.entity.CustomerTaskFlow4DispatchDBQuery;
 import com.xingyi.logistic.business.db.entity.CustomerTaskFlow4DispatchDO;
 import com.xingyi.logistic.business.db.entity.SailingInfoDBQuery;
 import com.xingyi.logistic.business.db.entity.SailingInfoDO;
+import com.xingyi.logistic.common.bean.JsonRet;
 import com.xxx.boot.jdbc.annotation.Dao;
 import org.apache.ibatis.annotations.Param;
 
@@ -45,4 +46,6 @@ public interface SailingInfoDAO extends BaseDAO<SailingInfoDO, SailingInfoDBQuer
     int getSailingShipTaskCount(@Param("pojo")SailingInfoDBQuery pojo);
 
     List<Map<String, Object>> getSailingShipTaskList(@Param("pojo")SailingInfoDBQuery pojo);
+
+    int modifyBalance(@Param("id") Long id);
 }
