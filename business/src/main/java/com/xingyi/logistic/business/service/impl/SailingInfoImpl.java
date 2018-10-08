@@ -59,6 +59,12 @@ public class SailingInfoImpl extends BaseCRUDService<SailingInfoDO, SailingInfo,
         return true;
     }
 
+    @Override
+    protected boolean isBizDelAllowed(JsonRet<?> ret, Long id){
+        taskStatusService.updateDispatchStatus(sailingInfoDAO.getById(id).getOrderId(),0);
+        return true;
+    }
+
     /**
      * 加载调度的船
      * @param map

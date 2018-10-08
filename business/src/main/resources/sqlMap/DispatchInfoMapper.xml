@@ -60,6 +60,13 @@
         ORDER BY b.updated DESC
     </select>
 
+    <select id="getShipInfoFromDispatchInfo" resultType="Map" parameterType="Map">
+        select distinct b.shipId as shipId, (select shipNo from Ship s where s.id = b.shipId ) as shipNo
+        from `DispatchInfo` b
+        WHERE b.isDeleted = 0 and b.orderNo <![CDATA[ <> ]]> ''
+        <if test="pojo.key != null and pojo.key != ''"> AND b.shipId = #{pojo.key} </if>
+    </select>
+
     <sql id="all_column">
         a.`id`
         ,a.`customerTaskFlowId`

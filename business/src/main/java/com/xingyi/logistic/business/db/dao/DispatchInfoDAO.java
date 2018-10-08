@@ -35,6 +35,12 @@ public interface DispatchInfoDAO extends BaseDAO<DispatchInfoDO, DispatchInfoDBQ
      */
     List<Map<String,Object>> getDispatchInfoInfo(@Param("pojo")DispatchInfoDBQuery pojo);
 
+    /**
+     * 根据调度单获取船号
+     * @return
+     */
+    List<Map<String,Object>> getShipInfoFromDispatchInfo(@Param("pojo")DispatchInfoDBQuery pojo);
+
     List<CustomerTaskShipDO> getShipsByCustomerTaskNo(@Param("pojo")CustomerTaskParam pojo);
 
 }

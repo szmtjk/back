@@ -25,6 +25,8 @@ public interface DispatchInfoService extends BaseService<DispatchInfo, DispatchI
 
     List<Map<String,Object>> getDispatchInfoInfo(ReportParam param);
 
+    List<Map<String,Object>> getShipInfoFromDispatchInfo(ReportParam param);
+
     List<Map<String,Object>> getReportThreeList(ReportParam param);
 
     List<Map<String,Object>> getReportFour2ThreeList(ReportParam param);

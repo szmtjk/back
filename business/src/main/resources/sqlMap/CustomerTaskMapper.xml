@@ -235,8 +235,8 @@
             d.dischargeTime, d.dischargeWeight, d.dischargeDelayFee, d.allowance
         from CustomerTask a
         left join CustomerTaskFlow b on b.taskId=a.id
-        left join DispatchInfo c on c.customerTaskFlowId=b.id
-        left join SailingInfo d on d.orderId=c.id
+        left join DispatchInfo c on c.customerTaskFlowId=b.id and c.isDeleted=0
+        left join SailingInfo d on d.orderId=c.id and d.isDeleted=0
         left join Customer e on e.id=a.customerId
         left join Contract f on f.id=a.contractId
         left join Flow g on g.id=b.flowId

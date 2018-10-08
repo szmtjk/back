@@ -49,6 +49,14 @@ public class DispatchController extends BaseCRUDController<DispatchInfo, Dispatc
         return dispatchInfoService.getDispatchInfoInfo(param);
     }
 
+    /**
+     * 从调度单中获取船号
+     */
+    @RequestMapping(value = "/getShipInfoFromDispatchInfo", method = RequestMethod.POST)
+    public List<Map<String,Object>> getShipInfoFromDispatchInfo(@JsonParam ReportParam param) {
+        return dispatchInfoService.getShipInfoFromDispatchInfo(param);
+    }
+
     @RequestMapping(value = "/getAvailableShips", method = RequestMethod.POST)
     public JsonRet<Object> getAvailableShips(@JsonParam GetDispatchShipParam param) {
         return dispatchInfoService.getAvailableShips(param);

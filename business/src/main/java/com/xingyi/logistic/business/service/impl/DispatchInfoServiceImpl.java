@@ -105,6 +105,25 @@ public class DispatchInfoServiceImpl extends BaseCRUDService<DispatchInfoDO, Dis
         return list;
     }
 
+    /**
+     * 根据调度单号获取船号
+     * @return
+     */
+    public List<Map<String,Object>> getShipInfoFromDispatchInfo(ReportParam param)
+    {
+        List<Map<String,Object>>  list = new ArrayList<Map<String,Object>>();
+        DispatchInfoQuery dispatchInfoQuery = new DispatchInfoQuery();
+        BeanUtils.copyProperties(param, dispatchInfoQuery);
+        try {
+            DispatchInfoDBQuery dispatchInfoDBQuery = dispatchInfoQueryConverter.toDOCondition(dispatchInfoQuery);
+            list = dispatchInfoDAO.getShipInfoFromDispatchInfo(dispatchInfoDBQuery);
+        } catch(Exception e) {
+
+            LOG.error("query getShipInfoFromDispatchInfo err, param:{}", JsonUtil.toJson(param), e);
+        }
+        return list;
+    }
+
     @Override
     public JsonRet<Object> getCustomerTaskFlows(CustomerTaskFlow4DispatchQuery query) {
         try {

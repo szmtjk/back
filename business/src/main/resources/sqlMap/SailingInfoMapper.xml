@@ -374,7 +374,7 @@
                 A1.sailingArea,A1.taskStatus taskFlowStatus,
                 A1.loadingTime preLoadTime,A1.dischargeTime preDischargeTime,A1.created flowTaskCreateTime,
                 A3.id customerId,A3.fullName customerFullName,A3.simpleName companySimpleName,
-                P1.id startPortId,P1.name startPortName,P2.id endPortId,P2.name endPortName
+                P1.id startPortId,P1.name startPortName,P2.id endPortId,P2.name endPortName,A4.sailingTime
 
         FROM CustomerTaskFlow A1
 		INNER JOIN CustomerTask A2 ON A2.id=A1.taskId
