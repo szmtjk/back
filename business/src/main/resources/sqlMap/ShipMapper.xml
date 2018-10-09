@@ -763,7 +763,7 @@
         SELECT 6 AS lx FROM DUAL
         UNION ALL
         SELECT 7 AS lx FROM DUAL ) t LEFT JOIN
-       <!-- 船运月平均航次计划 个
+       <!-- 船运月平 均航次计划  个
         (select  sum(dischargeWeight) as sjsl ,b.shipLevel as lx from  SailingInfo a ,Ship b-->
         (select  count(dischargeWeight) as sjsl ,b.shipLevel as lx from  SailingInfo a ,Ship b
         where a.shipId = b.id  and a.isDeleted = '0'
