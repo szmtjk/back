@@ -693,7 +693,7 @@
         select '集装箱' as lx,
         case when  ta.jhsl is null then '-' else  ta.jhsl end  as jhsl,
         case when tb.sjsl is null then '-' else tb.sjsl end as sjsl,
-        case when ta.jhsl is null or tb.sjsl is null then '-' else CONCAT(FORMAT(tb.sjsl /ta.jhsl *100,2) ,  '%') end  as wcl
+        case when ta.jhsl is null or tb.sjsl is null then '-' else CONCAT(FORMAT(tb.sjsl/10000 /ta.jhsl *100,2) ,  '%') end  as wcl
          from (select sum(plan) as jhsl, '3' as lx  from FreightPlan  where time = #{0} and shipFlag ='3' and isDeleted = '0'  ) ta ,
         (select  sum(dischargeWeight) as sjsl ,'3' as lx from CustomerTaskFlow a , DispatchInfo b , SailingInfo c
         where b.customerTaskFlowId = a.id and c.orderId = b.id  and a.goodsType = '3' and c.isDeleted = '0'
@@ -705,7 +705,7 @@
         select  CASE tt.lx WHEN 1 THEN '碎石'  WHEN 2 THEN '市场煤炭'  WHEN 3 THEN '华能电煤'  WHEN 4 THEN '浙能电煤'  WHEN 5 THEN '铜精矿'  WHEN 6 THEN 'PAT'  WHEN 7 THEN '经营业务'  WHEN 8 THEN '其他业务'   ELSE '' END   as lx ,
         case when tb.jhsl is null then '-' else tb.jhsl end  as jhsl,
         case when tt.sjsl is null then '-' else tt.sjsl end as sjsl,
-        case when tb.jhsl is null or tt.sjsl is null then '-' else CONCAT(FORMAT(tt.sjsl /tb.jhsl*100,2) ,  '%') end  as wcl
+        case when tb.jhsl is null or tt.sjsl is null then '-' else CONCAT(FORMAT(tt.sjsl /10000/tb.jhsl*100,2) ,  '%') end  as wcl
             from (  select t.lx, ta.sjsl from (SELECT 1 AS lx FROM DUAL
             UNION ALL
             SELECT 2 AS lx FROM DUAL
@@ -730,7 +730,7 @@
         select tb.lx as lx  ,
         case when tb.jhsl is null then '-' else tb.jhsl end as jhsl,
         case when tb.sjsl is null then '-' else tb.sjsl end as sjsl,
-        case when tb.jhsl is null or tb.sjsl is null then '-' else CONCAT(FORMAT((tb.sjsl/tb.jhsl )*100,2) ,  '%') end  as wcl
+        case when tb.jhsl is null or tb.sjsl is null then '-' else CONCAT(FORMAT((tb.sjsl/10000/tb.jhsl )*100,2) ,  '%') end  as wcl
             from (
             select a.lx ,b.jhsl ,a.sjsl from  ( select  sum(dischargeWeight) as sjsl ,a.receiver as lx from CustomerTaskFlow a , DispatchInfo b , SailingInfo c
             where b.customerTaskFlowId = a.id and c.orderId = b.id  and a.goodsType = '1' and c.isDeleted = '0'
@@ -749,7 +749,7 @@
         CASE tt.lx WHEN 1 THEN '650吨以上'  WHEN 2 THEN '650吨以下'  WHEN 3 THEN '碎石船'  WHEN 4 THEN '兴能散装船'  WHEN 5 THEN '兴能集装箱船'  WHEN 6 THEN '兴一航运散装船'  WHEN 7 THEN '兴一航运集装箱船'   END   as lx ,
         case when tb.jhsl is null then '-' else tb.jhsl end  as jhsl,
         case when tt.sjsl is null then '-' else tt.sjsl end as sjsl,
-        case when tb.jhsl is null or tt.sjsl is null then '-' else CONCAT(FORMAT(tt.sjsl/tb.jhsl *100,2) ,  '%') end  as wcl
+        case when tb.jhsl is null or tt.sjsl is null then '-' else CONCAT(FORMAT(tt.sjsl/10000/tb.jhsl *100,2) ,  '%') end  as wcl
         from (  select t.lx, ta.sjsl from (SELECT 1 AS lx FROM DUAL
         UNION ALL
         SELECT 2 AS lx FROM DUAL
@@ -763,7 +763,9 @@
         SELECT 6 AS lx FROM DUAL
         UNION ALL
         SELECT 7 AS lx FROM DUAL ) t LEFT JOIN
-        (select  sum(dischargeWeight) as sjsl ,b.shipLevel as lx from  SailingInfo a ,Ship b
+       <!-- 船运月平均航次计划 个
+        (select  sum(dischargeWeight) as sjsl ,b.shipLevel as lx from  SailingInfo a ,Ship b-->
+        (select  count(dischargeWeight) as sjsl ,b.shipLevel as lx from  SailingInfo a ,Ship b
         where a.shipId = b.id  and a.isDeleted = '0'
         and FROM_UNIXTIME( a.dischargeTime, '%Y-%m' ) =  #{0}  group by  b.shipLevel ) ta on t.lx = ta.lx  ) tt LEFT JOIN
         (select sum(plan) as jhsl, shipClass lx  from ShippingPlan  where time = #{1} and isDeleted = '0' group by shipClass) tb on tt.lx = tb.lx  order by tt.lx
