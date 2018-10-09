@@ -163,7 +163,7 @@
     <update id="updateDispatchInfoStatus">
         update DispatchInfo
         set status = #{status}
-        where id = #{dispatchInfoId} and status &lt; #{status}
+        where isDeleted = 0 and id = #{dispatchInfoId}
     </update>
 
     <update id="updateCustomerTaskStatus4Dispatch">

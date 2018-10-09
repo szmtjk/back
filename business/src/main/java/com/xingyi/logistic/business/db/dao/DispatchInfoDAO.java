@@ -6,7 +6,6 @@ import com.xingyi.logistic.business.db.entity.CustomerTaskFlow4DispatchDO;
 import com.xingyi.logistic.business.db.entity.CustomerTaskShipDO;
 import com.xingyi.logistic.business.db.entity.DispatchInfoDBQuery;
 import com.xingyi.logistic.business.db.entity.DispatchInfoDO;
-import com.xingyi.logistic.business.model.Combox;
 import com.xingyi.logistic.business.model.CustomerTaskParam;
 import com.xxx.boot.jdbc.annotation.Dao;
 import org.apache.ibatis.annotations.Param;
@@ -27,7 +26,6 @@ public interface DispatchInfoDAO extends BaseDAO<DispatchInfoDO, DispatchInfoDBQ
     int updateCustomerTaskStatus4Dispatch(@Param("customerTaskFlowId") long customerTaskFlowId);
 
     int updateDispatchInfoStatus(@Param("dispatchInfoId") long dispatchInfoId, @Param("status") int status);
-
 
     /**
      * 加载调度单号
