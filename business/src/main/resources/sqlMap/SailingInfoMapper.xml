@@ -321,14 +321,14 @@
         <if test="pojo.disId != null and pojo.disId != ''">
             AND (A1.`dispatchId` = #{pojo.disId} )
         </if>
-        <!--<if test="pojo.key != null">
+        <if test="pojo.key != null">
             AND (
             A1.`shipNo` like concat('%', #{pojo.key}, '%')
             or A1.`taskNo` like concat('%', #{pojo.key}, '%')
             or A1.`flowTaskNo` like concat('%', #{pojo.key}, '%')
             or A1.`dispatchNo` like concat('%', #{pojo.key}, '%')
             )
-        </if>-->
+        </if>
     </sql>
 
     <!-- 加载所有有航次的船舶任务 -->
@@ -457,7 +457,7 @@
         <if test="pojo.disId != null and pojo.disId != ''">
             AND (DI1.`id` = #{pojo.disId} )
         </if>
-        <!--<if test="pojo.key != null">
+        <if test="pojo.key != null">
             AND (
 
             S1.`shipNo` like concat('%', #{pojo.key}, '%')
@@ -466,7 +466,7 @@
             or DI1.`orderNo` like concat('%', #{pojo.key}, '%')
             )
 
-        </if>-->
+        </if>
     </sql>
 
 
@@ -493,7 +493,7 @@
         <if test="pojo.disId != null and pojo.disId != ''">
             AND (A3.`id` = #{pojo.disId} )
         </if>
-        <!--<if test="pojo.key != null">
+        <if test="pojo.key != null">
             AND (
 
             A2.`shipNo` like concat('%', #{pojo.key}, '%')
@@ -502,7 +502,7 @@
             or A3.`orderNo` like concat('%', #{pojo.key}, '%')
             )
 
-        </if>-->
+        </if>
     </sql>
 
     <sql id="pageCommon">

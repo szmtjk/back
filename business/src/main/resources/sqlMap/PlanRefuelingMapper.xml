@@ -11,6 +11,8 @@
         <result property="creator" column="creator"/>
         <result property="created" column="created"/>
         <result property="updated" column="updated"/>
+
+        <result property="orderNo" column="orderNo"/>
     </resultMap>
 
     <sql id="all_column">
@@ -23,10 +25,24 @@
         ,a.`created`
         ,a.`updater`
         ,a.`updated`
+        ,'' orderNo
     </sql>
     <sql id="all_column_user">
         <include refid="all_column"/>
         ,b.`realName` as creatorName
+    </sql>
+    <sql id="all_column_user_list">
+        a.`id`
+        ,a.`shipId`
+        ,a.`disId`
+        ,a.`planRefueling`
+        ,a.`description`
+        ,a.`creator`
+        ,a.`created`
+        ,a.`updater`
+        ,a.`updated`
+        ,b.`realName` as creatorName
+        ,c.orderNo
     </sql>
     <insert id="insertSelective" useGeneratedKeys="true" keyProperty="pojo.id">
         INSERT INTO PlanRefueling
@@ -101,8 +117,10 @@
     </select>
 
     <select id="queryByPage" resultMap="AllColumnMap" parameterType="Map">
-        select <include refid="all_column_user"/>
-        from `PlanRefueling` a LEFT JOIN `UserProfile` b on a.creator = b.id
+        select <include refid="all_column_user_list"/>
+        from `PlanRefueling` a
+        LEFT JOIN DispatchInfo c on c.id=a.disId
+        LEFT JOIN `UserProfile` b on a.creator = b.id
         <include refid="pageQueryWhereCommon"/>
         order by a.`created` desc
         <include refid="pageCommon"/>

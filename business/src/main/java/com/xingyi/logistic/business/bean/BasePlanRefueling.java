@@ -10,6 +10,16 @@ public class BasePlanRefueling extends BaseModelAndDO {
     private Float planRefueling;//计划加油
     private String description;//bz
 
+    private String orderNo;
+
+    public String getOrderNo() {
+        return orderNo;
+    }
+
+    public void setOrderNo(String orderNo) {
+        this.orderNo = orderNo;
+    }
+
     public String getDescription() {
         return description;
     }

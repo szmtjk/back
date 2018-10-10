@@ -140,5 +140,6 @@
 	    r.isDeleted = 0
       AND r.id = ur.roleId
       AND ur.userId = #{userId}
+      ORDER BY code asc
     </select>
 </mapper>
