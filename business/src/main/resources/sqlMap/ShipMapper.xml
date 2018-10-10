@@ -459,12 +459,11 @@
 
     <select id="queryReportSixList"  resultType="Map" parameterType="Map">
         select a.id,a.loadTime, ( select shipNo from Ship b where b.id = a.shipId ) as shipNo,
-        t.goodsName,t.sender,t.name,t.receiver,t.preWeight,a.loadWeight,a.dischargeWeight,
-        t.actualTransferPrice,a.bucklePrice,a.cutWire,a.cutOther,a.allowance,a.balanceDate,
-        (case when t.settleType='11' or t.settleType='12' then IFNULL(a.loadWeight*t.actualTransferPrice,0) else IFNULL(a.dischargeWeight*t.actualTransferPrice,0) end) as actualTransferMoney,
-        (case when t.status=1 then IFNULL(t.preBuckleOil,0) else IFNULL(t.status*t.fuelQuantity,0) end) as shipOil,
-        ((case when t.settleType='11' or t.settleType='12' then a.loadWeight*t.actualTransferPrice else a.dischargeWeight*t.actualTransferPrice end)+a.dischargeDelayFee+a.allowance-a.bucklePrice-a.cutWire-a.cutOther-(case when t.status=1 then IFNULL(t.preBuckleOil,0) else IFNULL(t.status*t.fuelQuantity,0) end)) BalanceMoney
-
+        b.goodsName,b.sender,c.name,b.receiver,d.preWeight,a.loadWeight,a.dischargeWeight,
+        d.actualTransferPrice,a.bucklePrice,a.cutWire,a.cutOther,a.allowance,a.balanceDate,
+        (case when d.settleType='11' or d.settleType='12' then IFNULL(a.loadWeight*d.actualTransferPrice,0) else IFNULL(a.dischargeWeight*d.actualTransferPrice,0) end) as actualTransferMoney,
+        (case when so.status=1 then IFNULL(po.preBuckleOil,0) else IFNULL(so.status*so.fuelQuantity,0) end) as shipOil,
+        ((case when d.settleType='11' or d.settleType='12' then a.loadWeight*d.actualTransferPrice else a.dischargeWeight*d.actualTransferPrice end)+a.dischargeDelayFee+a.allowance-a.bucklePrice-a.cutWire-a.cutOther-(case when so.status=1 then IFNULL(po.preBuckleOil,0) else IFNULL(so.status*so.fuelQuantity,0) end)) BalanceMoney
 
         <include refid="queryReportSixCommon"/>
         order by a.created DESC
@@ -473,14 +472,12 @@
 
     <sql id="queryReportSixCommon">
         from
-        SailingInfo a  LEFT JOIN ( select po.preBuckleOil,so.status,so.fuelQuantity,so.unitPrice,d.settleType,d.oil, d.id,b.goodsName,b.sender,c.name,b.receiver,d.preWeight,b.startPortId,d.actualTransferPrice
-        from Contract c LEFT JOIN ContractFlow e on e.contractId = c.id
-        LEFT JOIN CustomerTaskFlow b on b.taskId = e.id
-        LEFT JOIN DispatchInfo d ON d.customerTaskFlowId = b.id
+        SailingInfo a  LEFT JOIN DispatchInfo d ON a.orderId = d.id
+        LEFT JOIN CustomerTaskFlow b ON d.customerTaskFlowId = b.id
+        LEFT JOIN ContractFlow e  on b.taskId = e.id
+        LEFT JOIN  Contract c  on e.contractId = c.id
         LEFT JOIN ShipOil so ON so.disId = d.id
         LEFT JOIN PreBuckleOil po ON po.disId = d.id
-        ) t
-        ON a.orderId = t.id
         where a.isDeleted = '0' and a.status = '5'
         <if test="pojo.key != null and pojo.key != ''">
             AND (a.`shipNo` like concat('%', #{pojo.key}, '%') )
@@ -502,17 +499,17 @@
     </select>
 
     <select id="queryReportOneList"  resultType="Map" parameterType="Map">
-        select a.loadTime, ( select shipNo from Ship b where b.id = a.shipId ) as shipNo,
-        t.goodsName,t.sender,t.name,t.receiver,t.preWeight,a.loadWeight,a.dischargeWeight,
+        select a.loadTime,a.orderId, ( select shipNo from Ship b where b.id = a.shipId ) as shipNo,
+        b.goodsName,b.sender,c.name,b.receiver,d.preWeight,a.loadWeight,a.dischargeWeight,
         a.poundBalance,IFNULL(a.poundBalance/a.loadWeight,0) hs ,a.poundBalance- a.loadWeight*0.995 cchs,
-        (SELECT p.name from Port p where p.id = t.startPortId) as portName,
-        case when t.unitPrice is not null then t.unitPrice ELSE t.deposit end as kpdj,
+        (SELECT p.name from Port p where p.id = b.startPortId) as portName,
+        case when e.unitPrice is not null then e.unitPrice ELSE d.actualTransferPrice end as kpdj,
         (select p.planRefueling from PlanRefueling p where p.shipId = a.shipId and p.disId = a.orderId) as kcy ,
         a.bucklePrice,
-         (t.oil*( select so.unitPrice from ShipOil so where so.shipId = a.shipId and so.status='2') ) as shipOil,
-        FORMAT(((a.loadWeight/a.dischargeWeight)*(case when t.unitPrice is not null then t.unitPrice ELSE t.deposit end)),2) as kpje,
-        case when t.unitPrice is not null then t.unitPrice ELSE t.deposit end as cydj,
-        FORMAT((((a.loadWeight/a.dischargeWeight)*(case when t.unitPrice is not null then t.unitPrice ELSE t.deposit end))-IFNULL(a.bucklePrice,0)-IFNULL((t.oil*( select so.unitPrice from ShipOil so where so.shipId = a.shipId and so.status='2') ),0) ), 2 ) as cyje
+        (d.oil*( select so.unitPrice from ShipOil so where so.shipId = a.shipId and so.status='2') ) as shipOil,
+        FORMAT(((a.loadWeight/a.dischargeWeight)*(case when e.unitPrice is not null then e.unitPrice ELSE d.actualTransferPrice end)),2) as kpje,
+        case when e.unitPrice is not null then e.unitPrice ELSE d.actualTransferPrice end as cydj,
+        FORMAT((((a.loadWeight/a.dischargeWeight)*(case when e.unitPrice is not null then e.unitPrice ELSE d.actualTransferPrice end))-IFNULL(a.bucklePrice,0)-IFNULL((d.oil*( select so.unitPrice from ShipOil so where so.shipId = a.shipId and so.status='2') ),0) ), 2 ) as cyje
 
         <include refid="queryReportOneCommon"/>
          order by a.created DESC
@@ -521,10 +518,9 @@
 
     <sql id="queryReportOneCommon">
         from
-        SailingInfo a  LEFT JOIN ( select d.oil, d.id,b.goodsName,b.sender,c.name,b.receiver,d.preWeight,b.startPortId,d.actualTransferPrice as deposit,e.unitPrice
-        from Contract c LEFT JOIN ContractFlow e on e.contractId = c.id
-        LEFT JOIN CustomerTaskFlow b on b.taskId = e.id  LEFT JOIN DispatchInfo d ON d.customerTaskFlowId = b.id ) t
-        ON a.orderId = t.id
+        SailingInfo a LEFT JOIN DispatchInfo d on a.orderId = d.id
+        LEFT JOIN CustomerTaskFlow b on d.customerTaskFlowId = b.id LEFT JOIN  ContractFlow e  on b.taskId = e.id
+        LEFT JOIN  Contract c on e.contractId = c.id
         where a.isDeleted = '0' and a.status = '5'
         <if test="pojo.key != null and pojo.key != ''">
             AND (a.`shipNo` like concat('%', #{pojo.key}, '%') )
@@ -579,7 +575,8 @@
         ,d.receiver,d.sender,d.goodsType from SailingInfo a, Ship b,DispatchInfo c,CustomerTaskFlow d where
         a.shipId = b.id and a.orderId = c.id and c.customerTaskFlowId =d.id
         <if test="pojo.key != null and pojo.key != ''">
-            and FROM_UNIXTIME( a.actualArriveEPortTime, '%Y-%m' )  = #{pojo.key}
+           <!--and FROM_UNIXTIME( a.actualArriveEPortTime, '%Y-%m' )  = #{pojo.key}-->
+           and FROM_UNIXTIME(a.actualArriveEPortTime, '%Y-%m-%d' ) between date_add(date_add( str_to_date( #{pojo.key}, '%Y-%m-%d'), interval -1 month), interval 1 day ) and str_to_date( #{pojo.key}, '%Y-%m-%d')
         </if>
         <if test="pojo.name != null">
             AND  (b.`shipNo` like concat('%', #{pojo.name}, '%') )
@@ -693,7 +690,7 @@
         select '集装箱' as lx,
         case when  ta.jhsl is null then '-' else  ta.jhsl end  as jhsl,
         case when tb.sjsl is null then '-' else tb.sjsl end as sjsl,
-        case when ta.jhsl is null or tb.sjsl is null then '-' else CONCAT(FORMAT(tb.sjsl /ta.jhsl *100,2) ,  '%') end  as wcl
+        case when ta.jhsl is null or tb.sjsl is null then '-' else CONCAT(FORMAT(tb.sjsl/10000 /ta.jhsl *100,2) ,  '%') end  as wcl
          from (select sum(plan) as jhsl, '3' as lx  from FreightPlan  where time = #{0} and shipFlag ='3' and isDeleted = '0'  ) ta ,
         (select  sum(dischargeWeight) as sjsl ,'3' as lx from CustomerTaskFlow a , DispatchInfo b , SailingInfo c
         where b.customerTaskFlowId = a.id and c.orderId = b.id  and a.goodsType = '3' and c.isDeleted = '0'
@@ -705,7 +702,7 @@
         select  CASE tt.lx WHEN 1 THEN '碎石'  WHEN 2 THEN '市场煤炭'  WHEN 3 THEN '华能电煤'  WHEN 4 THEN '浙能电煤'  WHEN 5 THEN '铜精矿'  WHEN 6 THEN 'PAT'  WHEN 7 THEN '经营业务'  WHEN 8 THEN '其他业务'   ELSE '' END   as lx ,
         case when tb.jhsl is null then '-' else tb.jhsl end  as jhsl,
         case when tt.sjsl is null then '-' else tt.sjsl end as sjsl,
-        case when tb.jhsl is null or tt.sjsl is null then '-' else CONCAT(FORMAT(tt.sjsl /tb.jhsl*100,2) ,  '%') end  as wcl
+        case when tb.jhsl is null or tt.sjsl is null then '-' else CONCAT(FORMAT(tt.sjsl /10000/tb.jhsl*100,2) ,  '%') end  as wcl
             from (  select t.lx, ta.sjsl from (SELECT 1 AS lx FROM DUAL
             UNION ALL
             SELECT 2 AS lx FROM DUAL
@@ -730,7 +727,7 @@
         select tb.lx as lx  ,
         case when tb.jhsl is null then '-' else tb.jhsl end as jhsl,
         case when tb.sjsl is null then '-' else tb.sjsl end as sjsl,
-        case when tb.jhsl is null or tb.sjsl is null then '-' else CONCAT(FORMAT((tb.sjsl/tb.jhsl )*100,2) ,  '%') end  as wcl
+        case when tb.jhsl is null or tb.sjsl is null then '-' else CONCAT(FORMAT((tb.sjsl/10000/tb.jhsl )*100,2) ,  '%') end  as wcl
             from (
             select a.lx ,b.jhsl ,a.sjsl from  ( select  sum(dischargeWeight) as sjsl ,a.receiver as lx from CustomerTaskFlow a , DispatchInfo b , SailingInfo c
             where b.customerTaskFlowId = a.id and c.orderId = b.id  and a.goodsType = '1' and c.isDeleted = '0'
@@ -763,7 +760,9 @@
         SELECT 6 AS lx FROM DUAL
         UNION ALL
         SELECT 7 AS lx FROM DUAL ) t LEFT JOIN
-        (select  sum(dischargeWeight) as sjsl ,b.shipLevel as lx from  SailingInfo a ,Ship b
+       <!-- 船运月平 均航次计划  个
+        (select  sum(dischargeWeight) as sjsl ,b.shipLevel as lx from  SailingInfo a ,Ship b-->
+        (select  count(dischargeWeight) as sjsl ,b.shipLevel as lx from  SailingInfo a ,Ship b
         where a.shipId = b.id  and a.isDeleted = '0'
         and FROM_UNIXTIME( a.dischargeTime, '%Y-%m' ) =  #{0}  group by  b.shipLevel ) ta on t.lx = ta.lx  ) tt LEFT JOIN
         (select sum(plan) as jhsl, shipClass lx  from ShippingPlan  where time = #{1} and isDeleted = '0' group by shipClass) tb on tt.lx = tb.lx  order by tt.lx
