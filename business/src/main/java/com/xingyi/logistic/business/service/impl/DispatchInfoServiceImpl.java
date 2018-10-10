@@ -340,6 +340,9 @@ public class DispatchInfoServiceImpl extends BaseCRUDService<DispatchInfoDO, Dis
             SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM");
             param.setKey( formatter.format(currentTime) );
         }
+        if(!StringUtils.isEmpty(param.getKey())) {
+            param.setKey( param.getKey()+"-25" );
+        }
         BeanUtils.copyProperties(param, shipQuery);
         try {
             ShipDBQuery shipDBQuery = shipQueryConverter.toDOCondition(shipQuery);
