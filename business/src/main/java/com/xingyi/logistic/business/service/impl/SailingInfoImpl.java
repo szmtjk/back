@@ -105,11 +105,15 @@ public class SailingInfoImpl extends BaseCRUDService<SailingInfoDO, SailingInfo,
             if (count > 0) {
                 pageList = sailingInfoDAO.getDispatchShipTaskList(dbQuery);
             }
+            LOG.info("ParamFlag:"+query.getQueryParamFlag().toString());
+            LOG.info("miniui code:"+QueryType.MINIUI.getCode());
             if (query.getQueryParamFlag() == QueryType.MINIUI.getCode()) {
+                LOG.info("paramflag=miniui code");
                 MiniUIJsonRet<Object> miniUIJsonRet = new MiniUIJsonRet<>();
                 miniUIJsonRet.setSuccessData(count, pageList);
                 return miniUIJsonRet;
             } else {
+                LOG.info("paramflag!=miniui code");
                 Map<String, Object> params = new HashMap<>();
                 params.put("total", count);
                 params.put("list",  pageList);

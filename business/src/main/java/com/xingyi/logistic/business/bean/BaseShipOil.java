@@ -24,6 +24,16 @@ public class BaseShipOil extends BaseModelAndDO {
 
     private Float leftAmountTotal;
 
+    private String orderNo;
+
+    public String getOrderNo() {
+        return orderNo;
+    }
+
+    public void setOrderNo(String orderNo) {
+        this.orderNo = orderNo;
+    }
+
     public Float getPreAmountTotal() {
         return preAmountTotal;
     }
