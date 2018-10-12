@@ -221,9 +221,61 @@
         ,b.`realName` as creatorName
     </sql>
     <sql id="all_column_staff">
-        <include refid="all_column"/>
+        a.`id`
+        ,a.`shipNo`
+        ,a.`shipFlag`
+        ,a.`shipType`
+        ,a.`shipLevel`
+        ,a.`length`
+        ,a.`width`
+        ,a.`depth`
+        ,a.`totalWeight`
+        ,a.`netWeight`
+        <!-- ,a.`feeWeight`-->
+        ,a.`levelAWeight`
+        ,a.`levelBWeight`
+        ,a.`levelCWeight`
+        ,a.`buildDate`
+        ,a.`customerId`
+        ,a.`checkRegisterNo`
+        <!-- ,a.`checkNo`-->
+        ,a.`shipID`
+        ,a.`sailingArea`
+        ,a.`sailingAreaA`
+        ,a.`sailingAreaB`
+        ,a.`sailingAreaC`
+        ,a.`firstRegisterNo`
+        <!--,a.`sailingDepth`-->
+        ,a.`buildFactory`
+        ,a.`aisID`
+        ,a.`gpsDeviceId`
+        ,a.`oldShipName`
+        ,a.`runType`
+        ,a.`rebuildDate`
+        <!--,a.`insuranceDate`-->
+        ,a.`checkDate`
+        ,a.`repairDate`
+        ,a.`description`
+        ,a.`creator`
+        ,a.`created`
+        ,a.`updater`
+        ,a.`updated`
+        ,a.`name`
+        ,a.`mobile`
+        ,a.`preLoad`
+        ,a.`identity`
+        ,a.`bankCardNo`
+        ,a.`bankName`
+        ,a.`idPhoto`
+        ,a.`idPhotoF`
+        ,a.`bankCardPhoto`
+        ,a.`shipPhoto`
+        ,a.`from`
+        ,a.`status`
+        ,a.`fitStatus`
+        ,a.`noFitCause`
         ,IFNULL(b.`name`,a.name) as captain
-        ,IFNULL(b.`mobile`,a.name) as combineMobile
+        ,IFNULL(b.`mobile`,a.mobile) as combineMobile
     </sql>
 
     <insert id="insertSelective" useGeneratedKeys="true" keyProperty="pojo.id">
@@ -460,7 +512,7 @@
     <select id="queryReportSixList"  resultType="Map" parameterType="Map">
         select a.id,a.loadTime, ( select shipNo from Ship b where b.id = a.shipId ) as shipNo,
         b.goodsName,b.sender,c.name,b.receiver,d.preWeight,a.loadWeight,a.dischargeWeight,
-        d.actualTransferPrice,a.bucklePrice,a.cutWire,a.cutOther,a.allowance,a.balanceDate,
+        d.actualTransferPrice,a.bucklePrice,a.cutWire,a.cutOther,a.allowance,a.balanceDate,a.dischargeDelayFee,
         (case when d.settleType='11' or d.settleType='12' then IFNULL(a.loadWeight*d.actualTransferPrice,0) else IFNULL(a.dischargeWeight*d.actualTransferPrice,0) end) as actualTransferMoney,
         (case when so.status=1 then IFNULL(po.preBuckleOil,0) else IFNULL(so.status*so.fuelQuantity,0) end) as shipOil,
         ((case when d.settleType='11' or d.settleType='12' then a.loadWeight*d.actualTransferPrice else a.dischargeWeight*d.actualTransferPrice end)+a.dischargeDelayFee+a.allowance-a.bucklePrice-a.cutWire-a.cutOther-(case when so.status=1 then IFNULL(po.preBuckleOil,0) else IFNULL(so.status*so.fuelQuantity,0) end)) BalanceMoney
@@ -483,10 +535,10 @@
             AND (a.`shipNo` like concat('%', #{pojo.key}, '%') )
         </if>
         <if test="pojo.startTime != null and pojo.startTime != ''">
-            and  FROM_UNIXTIME( a.dischargeTime, '%Y-%m' ) &gt;= #{pojo.startTime}
+            and  FROM_UNIXTIME( a.loadTime, '%Y-%m' ) &gt;= #{pojo.startTime}
         </if>
         <if test="pojo.endTime != null and pojo.endTime != ''">
-            and  FROM_UNIXTIME( a.dischargeTime, '%Y-%m' ) &lt;= #{pojo.endTime}
+            and  FROM_UNIXTIME( a.loadTime, '%Y-%m' ) &lt;= #{pojo.endTime}
         </if>
         <!-- <if test="pojo.key != null and pojo.key != ''">
             AND (a.`shipNo` like concat('%', #{pojo.key}, '%') )
