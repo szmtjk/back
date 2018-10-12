@@ -1,6 +1,7 @@
 package com.xingyi.logistic.config;
 
 import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.TypeReference;
 import com.xingyi.logistic.business.util.JsonUtil;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
@@ -80,6 +81,9 @@ public class JsonParamArgumentResolver implements HandlerMethodArgumentResolver 
     }
 
     private String convertToJsonString(String parameterString) {
+        if (isNotEmptyJsonMapString(parameterString)) {
+            return parameterString;
+        }
         final Map<String, String> map = new HashMap<>();
         if (StringUtils.isNotEmpty(parameterString)) {
             Arrays.stream(parameterString.split("&")).forEach(o -> splitQueryParameter(o, map));
@@ -92,6 +96,19 @@ public class JsonParamArgumentResolver implements HandlerMethodArgumentResolver 
             }
             return null;
         }
+    }
+
+    private boolean isNotEmptyJsonMapString(String parameterString) {
+        if (StringUtils.isNotEmpty(parameterString)) {
+            try {
+                Map<String, Object> jsonMap = JSON.parseObject(parameterString, new TypeReference<Map<String, Object>>() {
+                });
+                return !CollectionUtils.isEmpty(jsonMap);
+            } catch (Exception e) {
+                return false;
+            }
+        }
+        return false;
     }
 
     private void splitQueryParameter(String kv, Map<String, String> map)  {
