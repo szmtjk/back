@@ -20,6 +20,8 @@
         <result property="preAmountTotal" column="preAmountTotal"/>
         <result property="actualAmountTotal" column="actualAmountTotal"/>
         <result property="leftAmountTotal" column="leftAmountTotal"/>
+
+        <result property="orderNo" column="orderNo"/>
     </resultMap>
 
     <sql id="all_column">
@@ -35,11 +37,29 @@
         ,a.`created`
         ,a.`updater`
         ,a.`updated`
+        ,'' orderNo
     </sql>
 
     <sql id="all_column_user">
         <include refid="all_column"/>
         ,b.`realName` as creatorName
+    </sql>
+
+    <sql id="all_column_user_list">
+        a.`id`
+        ,a.`shipId`
+        ,a.`status`
+        ,a.`disId`
+        ,a.`fuelQuantity`
+        ,a.`unitPrice`
+        ,a.`refuelingTime`
+        ,a.`description`
+        ,a.`creator`
+        ,a.`created`
+        ,a.`updater`
+        ,a.`updated`
+        ,b.`realName` as creatorName
+        ,d.orderNo
     </sql>
     <insert id="insertSelective" useGeneratedKeys="true" keyProperty="pojo.id">
         INSERT INTO ShipOil
@@ -122,9 +142,10 @@
     </select>
 
     <select id="queryByPage" resultMap="AllColumnMap" parameterType="Map">
-        select <include refid="all_column_user"/>
+        select <include refid="all_column_user_list"/>
         from `ShipOil` a  LEFT JOIN `UserProfile` b on a.creator = b.id
         LEFT JOIN `Ship` c on a.shipId = c.id
+        LEFT JOIN DispatchInfo d on d.id=a.disId
         <include refid="pageQueryWhereCommon"/>
         order by a.`created` desc
         <include refid="pageCommon"/>

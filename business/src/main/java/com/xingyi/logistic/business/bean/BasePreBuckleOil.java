@@ -17,7 +17,15 @@ public class BasePreBuckleOil extends BaseModelAndDO {
     private Float preBuckleOil;//预扣油款
     private Long preBuckleTime;//扣款时间
     private String description;//bz
+    private String orderNo;
 
+    public String getOrderNo() {
+        return orderNo;
+    }
+
+    public void setOrderNo(String orderNo) {
+        this.orderNo = orderNo;
+    }
     public String getDescription() {
         return description;
     }

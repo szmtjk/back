@@ -67,6 +67,10 @@ public class ShipConverter extends ModelConverter<ShipDO, Ship> {
                 }
                 dst.setSailArea(areas.toString());
             }
+            if(src.getShipFlag()==3)
+            {
+                dst.setPreWeight(src.getPreLoad());
+            }
         }
         return dst;
     }
