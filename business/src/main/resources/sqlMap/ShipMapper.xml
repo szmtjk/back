@@ -458,7 +458,7 @@
     </select>
 
     <select id="queryReportSixList"  resultType="Map" parameterType="Map">
-        select a.id,a.loadTime, ( select shipNo from Ship b where b.id = a.shipId ) as shipNo,
+        select distinct a.id,a.loadTime, ( select shipNo from Ship b where b.id = a.shipId ) as shipNo,
         b.goodsName,b.sender,c.name,b.receiver,d.preWeight,a.loadWeight,a.dischargeWeight,
         d.actualTransferPrice,a.bucklePrice,a.cutWire,a.cutOther,a.allowance,a.balanceDate,
         (case when d.settleType='11' or d.settleType='12' then IFNULL(a.loadWeight*d.actualTransferPrice,0) else IFNULL(a.dischargeWeight*d.actualTransferPrice,0) end) as actualTransferMoney,
@@ -466,21 +466,22 @@
         ((case when d.settleType='11' or d.settleType='12' then a.loadWeight*d.actualTransferPrice else a.dischargeWeight*d.actualTransferPrice end)+a.dischargeDelayFee+a.allowance-a.bucklePrice-a.cutWire-a.cutOther-(case when so.status=1 then IFNULL(po.preBuckleOil,0) else IFNULL(so.status*so.fuelQuantity,0) end)) BalanceMoney
 
         <include refid="queryReportSixCommon"/>
-        order by a.created DESC
+        <!--order by a.created DESC-->
         <include refid="pageCommon"/>
     </select>
 
     <sql id="queryReportSixCommon">
         from
-        SailingInfo a  LEFT JOIN DispatchInfo d ON a.orderId = d.id
-        LEFT JOIN CustomerTaskFlow b ON d.customerTaskFlowId = b.id
-        LEFT JOIN ContractFlow e  on b.taskId = e.id
-        LEFT JOIN  Contract c  on e.contractId = c.id
+        SailingInfo a LEFT JOIN DispatchInfo d on a.orderId = d.id
+        LEFT JOIN CustomerTaskFlow b on d.customerTaskFlowId = b.id
+        LEFT JOIN CustomerTask ct on b.taskId = ct.id
+        LEFT JOIN Contract c on ct.contractId = c.id
+        LEFT JOIN ContractFlow e  on  e.contractId = c.id
         LEFT JOIN ShipOil so ON so.disId = d.id
         LEFT JOIN PreBuckleOil po ON po.disId = d.id
         where a.isDeleted = '0' and a.status = '5'
         <if test="pojo.key != null and pojo.key != ''">
-            AND (a.`shipNo` like concat('%', #{pojo.key}, '%') )
+            AND (a.`shipId` in ( select id from Ship where shipNo like concat('%', #{pojo.key}, '%') ))
         </if>
         <if test="pojo.startTime != null and pojo.startTime != ''">
             and  FROM_UNIXTIME( a.dischargeTime, '%Y-%m' ) &gt;= #{pojo.startTime}
@@ -499,7 +500,7 @@
     </select>
 
     <select id="queryReportOneList"  resultType="Map" parameterType="Map">
-        select a.loadTime,a.orderId, ( select shipNo from Ship b where b.id = a.shipId ) as shipNo,
+        select distinct a.loadTime,a.orderId, ( select shipNo from Ship b where b.id = a.shipId ) as shipNo,
         b.goodsName,b.sender,c.name,b.receiver,d.preWeight,a.loadWeight,a.dischargeWeight,
         a.poundBalance,IFNULL(a.poundBalance/a.loadWeight,0) hs ,a.poundBalance- a.loadWeight*0.995 cchs,
         (SELECT p.name from Port p where p.id = b.startPortId) as portName,
@@ -512,18 +513,20 @@
         FORMAT((((a.loadWeight/a.dischargeWeight)*(case when e.unitPrice is not null then e.unitPrice ELSE d.actualTransferPrice end))-IFNULL(a.bucklePrice,0)-IFNULL((d.oil*( select so.unitPrice from ShipOil so where so.shipId = a.shipId and so.status='2') ),0) ), 2 ) as cyje
 
         <include refid="queryReportOneCommon"/>
-         order by a.created DESC
+        <!-- order by a.created DESC-->
         <include refid="pageCommon"/>
     </select>
 
     <sql id="queryReportOneCommon">
         from
         SailingInfo a LEFT JOIN DispatchInfo d on a.orderId = d.id
-        LEFT JOIN CustomerTaskFlow b on d.customerTaskFlowId = b.id LEFT JOIN  ContractFlow e  on b.taskId = e.id
-        LEFT JOIN  Contract c on e.contractId = c.id
+        LEFT JOIN CustomerTaskFlow b on d.customerTaskFlowId = b.id
+        LEFT JOIN CustomerTask ct on b.taskId = ct.id
+        LEFT JOIN Contract c on ct.contractId = c.id
+        LEFT JOIN ContractFlow e  on  e.contractId = c.id
         where a.isDeleted = '0' and a.status = '5'
         <if test="pojo.key != null and pojo.key != ''">
-            AND (a.`shipNo` like concat('%', #{pojo.key}, '%') )
+            AND (a.`shipId` in ( select id from Ship where shipNo like concat('%', #{pojo.key}, '%') ))
         </if>
         <if test="pojo.startTime != null and pojo.startTime != ''">
             and  FROM_UNIXTIME( a.dischargeTime, '%Y-%m' ) &gt;= #{pojo.startTime}
@@ -546,7 +549,7 @@
         (SELECT CASE when c.selfBuckle ='1' then '是' else '否' end
         from CustomerTaskFlow c  where  a.customerTaskFlowId = c.id) as selfBuckle
         <include refid="queryReportFiveCommon"/>
-        order by a.created DESC
+         order by a.created DESC
         <include refid="pageCommon"/>
 
     </select>

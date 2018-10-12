@@ -7,7 +7,7 @@ public class BaseShippingPlan extends BaseModelAndDO {
     private Integer shipClass;//船级
 
     private String time;//年月份
-    private Long plan; //计划
+    private String plan; //计划
     /**
      * 备注
 
@@ -35,11 +35,11 @@ public class BaseShippingPlan extends BaseModelAndDO {
         this.time = time;
     }
 
-    public Long getPlan() {
+    public String getPlan() {
         return plan;
     }
 
-    public void setPlan(Long plan) {
+    public void setPlan(String plan) {
         this.plan = plan;
     }
 
