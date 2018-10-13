@@ -99,7 +99,7 @@ public class CustomerTaskController extends BaseCRUDController<CustomerTask, Cus
 
     private JsonRet<Object> getTaskDetailMiniUIList(CustomerTaskQuery condition) {
         MiniUIJsonRet<Object> miniUIJsonRet = new MiniUIJsonRet<>();
-        JsonRet<Integer> totalRet = customerTaskService.getTotal(condition);
+        JsonRet<Integer> totalRet = customerTaskService.getTaskDetailTotal(condition.getKey());
         if (totalRet.isSuccess()) {
             miniUIJsonRet.setTotal(totalRet.getData());
             if (PrimitiveUtil.getPrimitive(totalRet.getData(), 0) > 0) {

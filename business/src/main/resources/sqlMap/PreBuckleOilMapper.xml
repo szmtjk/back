@@ -52,7 +52,7 @@
         <trim prefix="(" suffix=")" suffixOverrides=",">
             <if test="pojo.shipId!=null"> `shipId`,</if>
             <if test="pojo.disId!=null"> `disId`,</if>
-            <if test="pojo.preBuckleOil!=null"> `preBuckleOil`,</if>
+            <if test="pojo.preBuckleOil!=null and pojo.disId!=''"> `preBuckleOil`,</if>
             <if test="pojo.preBuckleTime!=null"> `preBuckleTime`,</if>
             <if test="pojo.description!=null"> `description`,</if>
             <if test="pojo.creator!=null"> `creator`,</if>
@@ -64,7 +64,7 @@
         VALUES
         <trim prefix="(" suffix=")" suffixOverrides=",">
             <if test="pojo.shipId!=null">#{pojo.shipId},</if>
-            <if test="pojo.disId!=null">#{pojo.disId},</if>
+            <if test="pojo.disId!=null and pojo.disId!=''">#{pojo.disId},</if>
             <if test="pojo.preBuckleOil!=null">#{pojo.preBuckleOil},</if>
             <if test="pojo.preBuckleTime!=null">#{pojo.preBuckleTime},</if>
             <if test="pojo.description!=null">#{pojo.description},</if>
@@ -81,7 +81,7 @@
         UPDATE PreBuckleOil
         <set>
             <if test="pojo.shipId!=null"> `shipId` = #{pojo.shipId},</if>
-            <if test="pojo.disId!=null"> `disId` = #{pojo.disId},</if>
+            <if test="pojo.disId!=null and pojo.disId!=''"> `disId` = #{pojo.disId},</if>
             <if test="pojo.preBuckleOil!=null"> `preBuckleOil`= #{pojo.preBuckleOil},</if>
             <if test="pojo.preBuckleTime!=null"> `preBuckleTime`= #{pojo.preBuckleTime},</if>
             <if test="pojo.description!=null"> `description`= #{pojo.description},</if>

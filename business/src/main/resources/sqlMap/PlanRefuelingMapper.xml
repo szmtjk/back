@@ -48,7 +48,7 @@
         INSERT INTO PlanRefueling
         <trim prefix="(" suffix=")" suffixOverrides=",">
             <if test="pojo.shipId!=null"> `shipId`,</if>
-            <if test="pojo.disId!=null"> `disId`,</if>
+            <if test="pojo.disId!=null and pojo.disId!=''"> `disId`,</if>
             <if test="pojo.planRefueling!=null"> `planRefueling`,</if>
             <if test="pojo.description!=null"> `description`,</if>
             <if test="pojo.creator!=null"> `creator`,</if>
@@ -60,7 +60,7 @@
         VALUES
         <trim prefix="(" suffix=")" suffixOverrides=",">
             <if test="pojo.shipId!=null">#{pojo.shipId},</if>
-            <if test="pojo.disId!=null">#{pojo.disId},</if>
+            <if test="pojo.disId!=null and pojo.disId!=''">#{pojo.disId},</if>
             <if test="pojo.planRefueling!=null">#{pojo.planRefueling},</if>
             <if test="pojo.description!=null">#{pojo.description},</if>
             <if test="pojo.creator!=null">#{pojo.creator},</if>
@@ -76,7 +76,7 @@
         UPDATE PlanRefueling
         <set>
             <if test="pojo.shipId!=null"> `shipId` = #{pojo.shipId},</if>
-            <if test="pojo.disId!=null"> `disId`= #{pojo.disId},</if>
+            <if test="pojo.disId!=null and pojo.disId!=''"> `disId`= #{pojo.disId},</if>
             <if test="pojo.planRefueling!=null"> `planRefueling`= #{pojo.planRefueling},</if>
             <if test="pojo.description!=null"> `description`= #{pojo.description},</if>
             <if test="pojo.updater!=null">`updater` = #{pojo.updater},</if>

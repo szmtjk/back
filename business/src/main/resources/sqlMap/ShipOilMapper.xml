@@ -66,7 +66,7 @@
         <trim prefix="(" suffix=")" suffixOverrides=",">
             <if test="pojo.shipId!=null"> `shipId`,</if>
             <if test="pojo.status!=null"> `status`,</if>
-            <if test="pojo.disId!=null"> `disId`,</if>
+            <if test="pojo.disId!=null and pojo.disId!=''"> `disId`,</if>
             <if test="pojo.fuelQuantity!=null"> `fuelQuantity`,</if>
             <if test="pojo.unitPrice!=null"> `unitPrice`,</if>
             <if test="pojo.refuelingTime!=null"> `refuelingTime`,</if>
@@ -80,7 +80,7 @@
         <trim prefix="(" suffix=")" suffixOverrides=",">
             <if test="pojo.shipId!=null">#{pojo.shipId},</if>
             <if test="pojo.status!=null">#{pojo.status},</if>
-            <if test="pojo.disId!=null">#{pojo.disId},</if>
+            <if test="pojo.disId!=null and pojo.disId!=''">#{pojo.disId},</if>
             <if test="pojo.fuelQuantity!=null">#{pojo.fuelQuantity},</if>
             <if test="pojo.unitPrice!=null">#{pojo.unitPrice},</if>
             <if test="pojo.refuelingTime!=null">#{pojo.refuelingTime},</if>
@@ -98,7 +98,7 @@
         <set>
             <if test="pojo.shipId!=null">`shipId` = #{pojo.shipId},</if>
             <if test="pojo.status!=null">`status` = #{pojo.status},</if>
-            <if test="pojo.disId!=null">`disId` = #{pojo.disId},</if>
+            <if test="pojo.disId!=null and pojo.disId!=''">`disId` = #{pojo.disId},</if>
             <if test="pojo.fuelQuantity!=null">`fuelQuantity` = #{pojo.fuelQuantity},</if>
             <if test="pojo.unitPrice!=null">`unitPrice` = #{pojo.unitPrice},</if>
             <if test="pojo.refuelingTime!=null">`refuelingTime` = #{pojo.refuelingTime},</if>
