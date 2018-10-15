@@ -213,8 +213,8 @@
         select count(1)
         from CustomerTask a
         left join CustomerTaskFlow b on b.taskId=a.id
-        left join DispatchInfo c on c.customerTaskFlowId=b.id
-        left join SailingInfo d on d.orderId=c.id
+        left join DispatchInfo c on c.customerTaskFlowId=b.id and c.isDeleted=0
+        left join SailingInfo d on d.orderId=c.id and d.isDeleted=0
         left join Customer e on e.id=a.customerId
         left join Contract f on f.id=a.contractId
         left join Flow g on g.id=b.flowId
@@ -222,13 +222,18 @@
         left join Port i on i.id=b.endPortId
         left join Ship j on j.id=c.shipId
         where a.isDeleted = 0
-        <if test="key != null">
-            and a.taskNo like concat('%', #{key}, '%')
+        <if test="key != null and key !=''">
+            and (
+            a.taskNo like concat('%', #{key}, '%')
+            or b.taskNo like concat('%', #{key}, '%')
+            or c.orderNo like concat('%', #{key}, '%')
+            or j.shipNo like concat('%', #{key}, '%')
+            )
         </if>
     </select>
 
     <select id="getTaskDetailByPage" parameterType="Map" resultMap="taskDetailColumnMap">
-        select a.taskStatus, a.taskNo, e.fullName, f.`name` as contractName, a.totalLoad, g.`name` as flowName, b.goodsName, b.goodsType,
+        select IFNULL(d.status,c.status) taskStatus, a.taskNo, e.fullName, f.`name` as contractName, a.totalLoad, g.`name` as flowName, b.goodsName, b.goodsType,
             b.totalWeight, h.name as startPortName, i.`name` as endPortName, b.loadingTime as loadDate,
             b.dischargeTime as dischargeDate, j.shipNo, j.shipFlag, c.preWeight, c.preLoad, c.actualTransferPrice,
             c.preArriveTime, d.arriveSPortTime, d.loadTime, d.loadWeight, d.preArriveEPortTime, d.actualArriveEPortTime,
@@ -244,8 +249,13 @@
         left join Port i on i.id=b.endPortId
         left join Ship j on j.id=c.shipId
         where a.isDeleted = 0
-        <if test="pojo.key != null">
-            and a.taskNo like concat('%', #{pojo.key}, '%')
+        <if test="pojo.key != null and pojo.key !=''">
+            and (
+            a.taskNo like concat('%', #{pojo.key}, '%')
+            or b.taskNo like concat('%', #{pojo.key}, '%')
+            or c.orderNo like concat('%', #{pojo.key}, '%')
+            or j.shipNo like concat('%', #{pojo.key}, '%')
+            )
         </if>
         order by a.id, b.id, c.id, d.id
         <include refid="pageCommon"/>
