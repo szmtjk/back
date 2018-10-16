@@ -505,7 +505,7 @@
     </select>
 
     <select id="queryReportSixCount" resultType="java.lang.Integer" parameterType="Map" >
-        select count(1)
+        select count(distinct a.loadTime,a.orderId,b.goodsName,b.sender,c.name,b.receiver,d.preWeight,a.loadWeight,a.dischargeWeight,a.bucklePrice, d.actualTransferPrice)
         <include refid="queryReportSixCommon"/>
     </select>
 
@@ -547,7 +547,7 @@
     </sql>
 
      <select id="queryReportOneCount" resultType="java.lang.Integer" parameterType="Map" >
-        select count(1)
+         select count(distinct a.loadTime,a.orderId,b.goodsName,b.sender,c.name,b.receiver,d.preWeight,a.loadWeight,a.dischargeWeight,a.bucklePrice, d.actualTransferPrice)
         <include refid="queryReportOneCommon"/>
     </select>
 
