@@ -18,6 +18,7 @@ import com.xingyi.logistic.common.bean.JsonRet;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.*;
 /**
  * Created by wzf on 2018/1/1.
  */
@@ -44,12 +45,31 @@ public class StaffSignImpl extends BaseCRUDService<StaffSignDO, StaffSign, Staff
     }
 
     @Override
+    public JsonRet<List<StaffSign>> getList(StaffSignQuery queryPage)
+    {
+        UserProfile profile = getCurrentUser();
+        if (profile != null) {
+            queryPage.setStaffId(profile.getId().intValue());
+        }
+        return super.getList(queryPage);
+    }
+
+    @Override
     public JsonRet<Long> add(StaffSign contractFlow){
         UserProfile profile = getCurrentUser();
         if (profile != null) {
             contractFlow.setStaffId(profile.getId().intValue());
         }
         return super.add(contractFlow);
+    }
+
+    @Override
+    public JsonRet<Integer> getTotal(StaffSignQuery query) {
+        UserProfile profile = getCurrentUser();
+        if (profile != null) {
+            query.setStaffId(profile.getId().intValue());
+        }
+        return super.getTotal(query);
     }
 
     @Override

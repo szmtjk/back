@@ -117,6 +117,7 @@
     <sql id="pageQueryWhereCommon">
         where a.`isDeleted` = 0
         <if test="pojo.id != null"> AND a.`id` = #{pojo.id} </if>
+        <if test="pojo.staffId != null"> AND a.`staffId` = #{pojo.staffId} </if>
         <if test="pojo.key != null">
             AND b.`realName` LIKE '%${pojo.key}%'
         </if>
