@@ -1,6 +1,7 @@
 package com.xingyi.logistic.controller;
 
 import com.xingyi.logistic.aop.annotation.Biz;
+import com.xingyi.logistic.authentication.model.UserProfile;
 import com.xingyi.logistic.business.model.StaffSign;
 import com.xingyi.logistic.business.model.StaffSignQuery;
 import com.xingyi.logistic.business.service.BaseService;

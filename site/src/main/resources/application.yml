@@ -22,7 +22,7 @@ druid:
       role: master
       driverClassName: com.mysql.jdbc.Driver
       mapperLocations: classpath*:sqlMap/**/*Mapper.xml
-      url: jdbc:mysql://127.0.0.1:3306/xyl?zeroDateTimeBehavior=convertToNull&useUnicode=true&characterEncoding=UTF-8
+      url: jdbc:mysql://112.11.223.225:33517/xyl?zeroDateTimeBehavior=convertToNull&useUnicode=true&characterEncoding=UTF-8
       username: root
       password: uAiqwVwjJ8-i
       initialSize: 5
@@ -36,7 +36,7 @@ druid:
 # active mq gps real
 spring:
   activemq:
-    broker-url: tcp://192.168.0.253:61616
+    broker-url: tcp://112.11.223.225:16332
   http:
     multipart:
       maxFileSize: 10Mb
@@ -78,7 +78,7 @@ druid:
       role: master
       driverClassName: com.mysql.jdbc.Driver
       mapperLocations: classpath*:sqlMap/**/*Mapper.xml
-      url: jdbc:mysql://127.0.0.1:3306/xyl?zeroDateTimeBehavior=convertToNull&useUnicode=true&characterEncoding=UTF-8
+      url: jdbc:mysql://112.11.223.225:33517/xyl?zeroDateTimeBehavior=convertToNull&useUnicode=true&characterEncoding=UTF-8
       username: root
       password: uAiqwVwjJ8-i
       initialSize: 5

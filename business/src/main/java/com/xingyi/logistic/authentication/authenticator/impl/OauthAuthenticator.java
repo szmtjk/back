@@ -59,7 +59,7 @@ public class OauthAuthenticator implements Authenticator {
 		}
 
 		//第三方 token 过期，刷新第三方 token
-		if(System.currentTimeMillis() - oauthExpire > 0){
+		/*if(System.currentTimeMillis() - oauthExpire > 0){
 			TokenResult tokenResult = this.weiXinService.refreshToken(oAuth.getRefreshToken());
 			if(!tokenResult.isSuccess()){
 				return jsonRet;
@@ -77,7 +77,7 @@ public class OauthAuthenticator implements Authenticator {
 			String newToken = appUserId + ":" + newMd5 + expire;
 			newToken = Base64Utils.encodeToString(newToken.getBytes());
 			SessionUtil.setToken(newToken);
-		}
+		}*/
 
 		Subject subject = new Subject(appUser,true);
 		SessionUtil.setSubject(subject);
