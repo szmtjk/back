@@ -128,7 +128,7 @@ public class WeChatService {
         }
     }
 
-    @Scheduled(fixedRate = 3600 * 1000, fixedDelay = 1800 * 000L)
+    @Scheduled(fixedRate = 3600 * 1000, initialDelay = 1800 * 000L)
     public void refresh() {
         tokenMap.keySet().forEach(this::refreshToken);
     }
