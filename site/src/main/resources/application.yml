@@ -53,23 +53,26 @@ oauth:
     appId: wx716e867a8dfc27bb
     secretKey: 39a1e707862681e0690dfb6336e6dc87
 
-aa:
-  bb: default
+wechat:
+  appSecretConfigList:
+    -
+      appType: 1  # 公众号
+      appId: wx65b6b370eb08f5fa
+      appSecret: 0d7139ff0e7a7b762bec805fb2d4c13a
+    -
+      appType: 2  # 小程序
+      appId: wx95ec521df9ec5a9e
+      appSecret: 4a034346e26c946b48b2a75c2a290b24
 
 # Different profiles' configuration
 ---
 spring:
   profiles: dev
 
-aa:
-  bb: dev1
 
 ---
 spring:
   profiles: prd
-
-aa:
-  bb: prd1
 
 druid:
   datasource:

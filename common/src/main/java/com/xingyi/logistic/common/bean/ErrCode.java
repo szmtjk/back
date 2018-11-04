@@ -28,6 +28,16 @@ public enum ErrCode {
     DISPATCH_MODIFY_FORBIDDEN(30005, "已存在航次信息，禁止修改"),
     DISPATCH_DEL_FORBIDDEN(30006, "已存在航次信息，禁止删除"),
 
+    WECHAT_NOT_BIND(40000, "未绑定"),
+    WECHAT_CODE_EMPTY(40001, "未指定code"),
+    WECHAT_APP_TYPE_INVALID(40002, "指定的appType无效"),
+    WECHAT_GET_OPENID_ERR(40003, "获取openId失败"),
+    WECHAT_ACCESS_TOKEN_EMPTY(40004, "无access token"),
+    WECHAT_GET_UNIONID_ERR(40005, "获取openId失败"),
+    WECHAT_BIND_USER_NOT_EXIST(40006, "未获取到绑定的用户信息"),
+    WECHAT_ALREADY_BIND(40007, "已被绑定"),
+    WECHAT_BIND_ERR(40008, "绑定操作失败"),
+
     WEIXIN_AUTHORITY_FORBIDDEN(70000,"用户禁止授权"),
 
     AUTHORITY_SETTING_ERR(89999,"设置角色权限错误"),

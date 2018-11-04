@@ -53,7 +53,7 @@ public class GpsServer extends BaseCRUDController<ShipCurrentGps, ShipCurrentGps
         {
             manageShipCurrentGps.add(shipCurrentGps);
         }
-        System.out.println("shipCurrentGpsService---------------------" + shiGpsFlys.size());
+        //System.out.println("shipCurrentGpsService---------------------" + shiGpsFlys.size());
         SaveThread mSaveThread = new SaveThread();
         mSaveThread.start();
 
@@ -208,7 +208,7 @@ public class GpsServer extends BaseCRUDController<ShipCurrentGps, ShipCurrentGps
                 }catch (Exception e){
                     e.printStackTrace();
                 }
-                System.out.println("manageShipCurrentGps----"+ updatecount.get()+"----------------" + manageShipCurrentGps.size());
+                //System.out.println("manageShipCurrentGps----"+ updatecount.get()+"----------------" + manageShipCurrentGps.size());
                 updatecount.getAndSet(0);
             }
         }

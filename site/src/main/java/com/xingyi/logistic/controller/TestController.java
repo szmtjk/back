@@ -5,7 +5,6 @@ import com.xingyi.logistic.aop.annotation.Operation;
 import com.xingyi.logistic.business.util.JPushClientUtil;
 import com.xingyi.logistic.config.JsonParam;
 import com.xingyi.logistic.filter.AuthenticationFilter;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
@@ -17,16 +16,6 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/test")
 @Biz("测试")
 public class TestController extends BaseController {
-
-
-    @Value("${aa.bb}")
-    private String test;
-
-    @Operation("hi2")
-    @RequestMapping(value = "/hi2", method = RequestMethod.GET)
-    public String testHi2() {
-        return test;
-    }
 
     @Operation
     @RequestMapping(value = "/changeFilterEnabled", method = RequestMethod.GET)

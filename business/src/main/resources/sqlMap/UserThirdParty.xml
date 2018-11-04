@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!--  Generate by autoSQLMap Powered by duxing@Taobao -->
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.xingyi.logistic.business.db.dao.UserThirdPartyDAO">
+    <resultMap id="AllColumnMap" type="com.xingyi.logistic.business.db.entity.UserThirdPartyDO">
+        <result property="id" column="id"/>
+        <result property="userId" column="userId"/>
+        <result property="thirdType" column="thirdType"/>
+        <result property="thirdId" column="thirdId"/>
+        <result property="thirdName" column="thirdName"/>
+        <result property="extra" column="extra"/>
+        <result property="created" column="created"/>
+        <result property="updated" column="updated"/>
+    </resultMap>
+
+    <sql id="all_column">
+        a.`id`
+        ,a.`userId`
+        ,a.`thirdType`
+        ,a.`thirdId`
+        ,a.`thirdName`
+        ,a.`extra`
+        ,a.`created`
+        ,a.`updated`
+    </sql>
+
+    <insert id="insertSelective" useGeneratedKeys="true" keyProperty="pojo.id">
+        INSERT INTO UserThirdParty
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="pojo.userId!=null"> `userId`,</if>
+            <if test="pojo.thirdType!=null"> `thirdType`,</if>
+            <if test="pojo.thirdId!=null"> `thirdId`,</if>
+            <if test="pojo.thirdName!=null"> `thirdName`,</if>
+            <if test="pojo.extra!=null"> `extra`,</if>
+            `created`,
+            `updated`
+        </trim>
+        VALUES
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="pojo.userId!=null">#{pojo.userId},</if>
+            <if test="pojo.thirdType!=null">#{pojo.thirdType},</if>
+            <if test="pojo.thirdId!=null">#{pojo.thirdId},</if>
+            <if test="pojo.thirdName!=null">#{pojo.thirdName},</if>
+            <if test="pojo.extra!=null">#{pojo.extra},</if>
+            UNIX_TIMESTAMP(now()),
+            UNIX_TIMESTAMP(now())
+        </trim>
+    </insert>
+
+    <!--auto generated Code-->
+    <update id="update">
+        UPDATE UserThirdParty
+        <set>
+            <if test="pojo.userId!=null"> `userId` = #{pojo.userId},</if>
+            <if test="pojo.thirdType!=null"> `thirdType` = #{pojo.thirdType},</if>
+            <if test="pojo.thirdId!=null"> `thirdId` = #{pojo.thirdId},</if>
+            <if test="pojo.thirdName!=null"> `thirdName` = #{pojo.thirdName},</if>
+            <if test="pojo.extra!=null"> `extra` = #{pojo.extra},</if>
+            `updated` = UNIX_TIMESTAMP(now())
+        </set>
+        WHERE `id` = #{pojo.id} and `isDeleted` = 0
+        LIMIT 1
+    </update>
+
+    <update id="del" parameterType="java.lang.Long">
+        UPDATE UserThirdParty
+        SET `isDeleted` = 1 ,
+        `updated` = UNIX_TIMESTAMP(now())
+        WHERE `id` = #{id} and `isDeleted` = 0
+        LIMIT 1
+    </update>
+
+    <select id="getById" parameterType="java.lang.Long" resultMap="AllColumnMap">
+        SELECT <include refid="all_column"/>
+        FROM `UserThirdParty` a
+        WHERE a.`id` = #{id} and a.`isDeleted` = 0
+        LIMIT 1
+    </select>
+
+    <select id="getByUserIdAndThirdType" parameterType="java.lang.Long" resultMap="AllColumnMap">
+        SELECT <include refid="all_column"/>
+        FROM `UserThirdParty` a
+        WHERE a.`isDeleted` = 0 and a.`userId` = #{id} and a.`thirdType` = #{thirdType}
+        LIMIT 1
+    </select>
+
+    <select id="getExistCount" resultType="java.lang.Integer" parameterType="Map" >
+        SELECT  count(id)
+        FROM  `UserThirdParty`
+        where `isDeleted` = 0
+        <if test="pojo.id != null"> AND `id` != #{pojo.id} </if>
+        <if test="pojo.userId != null"> AND `userId` = #{pojo.userId} </if>
+        <if test="pojo.thirdType != null"> AND `thirdType` = #{pojo.thirdType} </if>
+        limit 1
+    </select>
+
+    <select id="getCount" resultType="java.lang.Integer" parameterType="Map" >
+        SELECT  count(a.id)
+        FROM  `UserThirdParty` a
+        <include refid="pageQueryWhereCommon"/>
+        limit 1
+    </select>
+
+    <select id="queryByPage" resultMap="AllColumnMap" parameterType="Map">
+        select <include refid="all_column"/>
+        from `UserThirdParty` a
+        <include refid="pageQueryWhereCommon"/>
+        order by a.`created` desc
+        <include refid="pageCommon"/>
+    </select>
+
+    <sql id="pageQueryWhereCommon">
+        where a.`isDeleted` = 0
+        <if test="pojo.id != null"> AND a.`id` = #{pojo.id} </if>
+        <if test="pojo.userId != null"> AND a.`userId` = #{pojo.userId} </if>
+        <if test="pojo.thirdId != null"> AND a.`thirdId` = #{pojo.thirdId} </if>
+        <if test="pojo.thirdType != null"> AND a.`thirdType` = #{pojo.thirdType} </if>
+        <if test="pojo.thirdName != null"> AND a.`thirdName` = #{pojo.thirdName} </if>
+    </sql>
+
+    <sql id="pageCommon">
+        <choose>
+            <when test="pojo.startRow != null and pojo.startRow gt -1 and pojo.limitNum != null and pojo.limitNum gt 0">
+                limit #{pojo.startRow}, #{pojo.limitNum}
+            </when>
+            <otherwise>
+                limit 20
+            </otherwise>
+        </choose>
+    </sql>
+</mapper>

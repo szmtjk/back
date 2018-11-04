@@ -13,7 +13,7 @@ public class JsonUtil {
     }
 
     public static <T> T toObject(String json, Class<T> clazz) {
-        return JSON.parseObject(json, new TypeReference<T>(){});
+        return JSON.parseObject(json, clazz);
     }
 
     public static <T> T toObject(String json, TypeReference<T> type) {

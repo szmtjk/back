@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.xingyi.logistic.business.db.dao.UserThirdPartyDetailDAO">
+    <resultMap id="AllColumnMap" class="com.xingyi.logistic.business.db.entity.UserThirdPartyDetailDO">
+        <result property="id" column="ID"/>
+        <result property="thirdType" column="THIRDTYPE"/>
+        <result property="thirdId" column="THIRDID"/>
+        <result property="appType" column="APPTYPE"/>
+        <result property="thirdId2" column="THIRDID2"/>
+        <result property="extra" column="EXTRA"/>
+        <result property="created" column="CREATED"/>
+        <result property="updated" column="UPDATED"/>
+        <result property="isDeleted" column="ISDELETED"/>
+    </resultMap>
+
+    <sql id="all_column">
+        `ID`
+        ,`THIRDTYPE`
+        ,`THIRDID`
+        ,`APPTYPE`
+        ,`THIRDID2`
+        ,`EXTRA`
+        ,`CREATED`
+        ,`UPDATED`
+        ,`ISDELETED`
+    </sql>
+
+    <insert id="insertSelective" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO `UserThirdPartyDetail`
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            THIRDTYPE,
+            THIRDID,
+            APPTYPE,
+            THIRDID2,
+            EXTRA,
+            CREATED,
+            UPDATED,
+            ISDELETED,
+        </trim>
+        VALUES
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="thirdType!=null">#{thirdType},</if>
+            <if test="thirdId!=null">#{thirdId},</if>
+            <if test="appType!=null">#{appType},</if>
+            <if test="thirdId2!=null">#{thirdId2},</if>
+            <if test="extra!=null">#{extra},</if>
+            UNIX_TIMESTAMP(now()),
+            UNIX_TIMESTAMP(now()),
+            <if test="isDeleted!=null">#{isDeleted},</if>
+        </trim>
+    </insert>
+
+    <update id="update">
+        UPDATE `UserThirdPartyDetail`
+        SET
+        <trim prefix="" suffix="" suffixOverrides=",">
+            <if test="thirdType!=null">`THIRDTYPE` = #{thirdType},</if>
+            <if test="thirdId!=null">`THIRDID` = #{thirdId},</if>
+            <if test="appType!=null">`APPTYPE` = #{appType},</if>
+            <if test="thirdId2!=null">`THIRDID2` = #{thirdId2},</if>
+            <if test="extra!=null">`EXTRA` = #{extra},</if>
+            UNIX_TIMESTAMP(now()),
+            <if test="isDeleted!=null">`ISDELETED` = #{isDeleted},</if>
+        </trim>
+        WHERE `id` = #{id} and `isDeleted` = 0
+        LIMIT 1
+    </update>
+
+    <update id="del" parameterType="java.lang.Long">
+        UPDATE `UserThirdPartyDetail`
+        SET `isDeleted` = 1 ,
+        `updated` = UNIX_TIMESTAMP(now())
+        WHERE `id` = #{id} and `isDeleted` = 0
+        LIMIT 1
+    </update>
+
+    <select id="getExistCount" resultType="java.lang.Integer" parameterType="Map" >
+        SELECT  count(id)
+        FROM  `UserThirdPartyDetail`
+        where `isDeleted` = 0
+        <if test="id != null"> AND `id` != #{id} </if>
+        <!-- other query condition to be added -->
+        limit 1
+    </select>
+
+    <select id="getCount" resultType="java.lang.Integer" parameterType="Map" >
+        SELECT  count(id)
+        FROM  `UserThirdPartyDetail`
+        where `isDeleted` = 0
+        <!-- other query condition to be added -->
+        limit 1
+    </select>
+
+    <select id="queryByPage" resultMap="AllColumnMap" parameterType="Map">
+        select <include refid="all_column"/>
+        from `UserThirdPartyDetail`
+        where `isDeleted` = 0
+        <!-- other query condition to be added -->
+        order by `id` desc
+        <include refid="pageCommon"/>
+    </select>
+
+    <sql id="pageCommon">
+        <choose>
+        <when test="startRow != null and startRow gt -1 and limitNum != null and limitNum gt 0">
+            limit #{startRow}, #{limitNum}
+        </when>
+        <otherwise>
+            limit 200
+        </otherwise>
+        </choose>
+    </sql>
+</mapper>

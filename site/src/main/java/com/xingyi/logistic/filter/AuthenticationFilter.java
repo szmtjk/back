@@ -2,6 +2,7 @@ package com.xingyi.logistic.filter;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.serializer.SerializerFeature;
+import com.google.common.collect.Lists;
 import com.xingyi.logistic.authentication.authenticator.AuthenticateChain;
 import com.xingyi.logistic.authentication.authenticator.impl.LocalAuthenticator;
 import com.xingyi.logistic.authentication.authenticator.impl.OauthAuthenticator;
@@ -9,12 +10,18 @@ import com.xingyi.logistic.common.bean.JsonRet;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.core.annotation.Order;
 
-import javax.servlet.*;
+import javax.servlet.Filter;
+import javax.servlet.FilterChain;
+import javax.servlet.FilterConfig;
+import javax.servlet.ServletException;
+import javax.servlet.ServletRequest;
+import javax.servlet.ServletResponse;
 import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.List;
 
 /**
  * @author tsingtao_tung
@@ -25,6 +32,11 @@ import java.io.PrintWriter;
 public class AuthenticationFilter implements Filter {
 
 	public static boolean isEnabled = true;
+
+	private static final List<String> URL_WHITE_LIST = Lists.newArrayList(
+			"/dangerZoneSpeed/getList", "/webjars", "/api", "/swagger-ui.html", "/swagger-resources",
+			"/v2/api-docs", "/port/getList", "/gps/loadReal", "/waterLevel/getList", "/dangerZone/getList", "/wechat"
+	);
 
 	@Override
 	public void init(FilterConfig filterConfig) throws ServletException {
@@ -53,23 +65,14 @@ public class AuthenticationFilter implements Filter {
 		String requestURI = httpRequest.getRequestURI();
 		String ctx = httpRequest.getContextPath();
 		String requestPath = requestURI.replace(ctx,"");
-		System.out.println("-getList--------------------------------------------------" + requestPath);
-		System.out.println("-getList--------------------------------------------------" + requestPath.startsWith("/port/getList"));
-		System.out.println("-token--------------------------------------------------" + httpRequest.getHeader("token"));
-		System.out.println("-getParameter--------------------------------------------------" +  httpRequest.getParameter("token"));
-		if ((requestPath.startsWith("/dangerZoneSpeed/getList")
-				|| requestPath.startsWith("/webjars")
-				|| requestPath.startsWith("/api")
-				|| requestPath.startsWith("/swagger-ui.html")
-				|| requestPath.startsWith("/swagger-resources")
-				|| requestPath.startsWith("/v2/api-docs")
-				|| requestPath.startsWith("/port/getList")
-				|| requestPath.startsWith("/gps/loadReal")
-				|| requestPath.startsWith("/waterLevel/getList")
-				|| requestPath.startsWith("/dangerZone/getList")) && httpRequest.getHeader("token") == null)
+//		System.out.println("-getList--------------------------------------------------" + requestPath);
+//		System.out.println("-getList--------------------------------------------------" + requestPath.startsWith("/port/getList"));
+//		System.out.println("-token--------------------------------------------------" + httpRequest.getHeader("token"));
+//		System.out.println("-getParameter--------------------------------------------------" +  httpRequest.getParameter("token"));
+		if (isRequestStartsWithInWhitelist(requestPath) && httpRequest.getHeader("token") == null)
 		{
 
-			System.out.println("---------------------------------------------------");
+			//System.out.println("---------------------------------------------------");
 			chain.doFilter(request,response);
 		}
 		else if(!requestPath.startsWith("/signin") && !requestPath.startsWith("/test")){
@@ -103,6 +106,15 @@ public class AuthenticationFilter implements Filter {
 		}else{
 			chain.doFilter(request,response);
 		}
+	}
+
+	private boolean isRequestStartsWithInWhitelist(String requestPath) {
+		for (String url : URL_WHITE_LIST) {
+			if (requestPath.startsWith(url)) {
+				return true;
+			}
+		}
+		return false;
 	}
 
 	@Override
