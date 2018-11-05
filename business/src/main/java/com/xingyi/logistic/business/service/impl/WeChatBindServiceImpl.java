@@ -8,9 +8,12 @@ import com.xingyi.logistic.authentication.util.DigestUtil;
 import com.xingyi.logistic.business.bean.wechat.AppSecretConfig;
 import com.xingyi.logistic.business.bean.wechat.AppType;
 import com.xingyi.logistic.business.bean.wechat.OpenIdResponse;
+import com.xingyi.logistic.business.bean.wechat.ThirdType;
 import com.xingyi.logistic.business.bean.wechat.UnionIdResponse;
 import com.xingyi.logistic.business.model.UserThirdParty;
+import com.xingyi.logistic.business.model.UserThirdPartyDetail;
 import com.xingyi.logistic.business.model.UserThirdPartyQuery;
+import com.xingyi.logistic.business.service.UserThirdPartyDetailService;
 import com.xingyi.logistic.business.service.UserThirdPartyService;
 import com.xingyi.logistic.business.service.WeChatBindService;
 import com.xingyi.logistic.common.bean.ErrCode;
@@ -35,6 +38,9 @@ public class WeChatBindServiceImpl implements WeChatBindService {
 
     @Autowired
     private UserThirdPartyService userThirdPartyService;
+
+    @Autowired
+    private UserThirdPartyDetailService userThirdPartyDetailService;
 
     @Autowired
     private LocalAuthService localAuthService;
@@ -138,17 +144,25 @@ public class WeChatBindServiceImpl implements WeChatBindService {
         }
 
         // 建立绑定关系
-        UserThirdParty userThirdParty = new UserThirdParty();
-        userThirdParty.setThirdId(unionIdResponse.getUnionId());
-        userThirdParty.setThirdType(0);
-        userThirdParty.setThirdName(unionIdResponse.getNickName());
-        userThirdParty.setUserId(localAuth.getUserId());
-        JsonRet<Long> addRet = userThirdPartyService.add(userThirdParty);
-        if (addRet.isSuccess()) {
-            return JsonRet.getSuccessRet(true);
-        } else {
-            return JsonRet.getErrRet(ErrCode.WECHAT_BIND_ERR);
+        UserThirdPartyDetail userThirdPartyDetail = new UserThirdPartyDetail();
+        userThirdPartyDetail.setThirdId(unionIdResponse.getUnionId());
+        userThirdPartyDetail.setThirdId2(unionIdResponse.getOpenId());
+        userThirdPartyDetail.setThirdType(ThirdType.WECHAT);
+        userThirdPartyDetail.setAppType(AppType.MP);
+        JsonRet<Long> detailAddRet = userThirdPartyDetailService.add(userThirdPartyDetail);
+        if (detailAddRet.isSuccess()) {
+            UserThirdParty userThirdParty = new UserThirdParty();
+            userThirdParty.setThirdId(unionIdResponse.getUnionId());
+            userThirdParty.setThirdType(0);
+            userThirdParty.setThirdName(unionIdResponse.getNickName());
+            userThirdParty.setUserId(localAuth.getUserId());
+            JsonRet<Long> addRet = userThirdPartyService.add(userThirdParty);
+            if (addRet.isSuccess()) {
+                return JsonRet.getSuccessRet(true);
+            }
         }
+
+        return JsonRet.getErrRet(ErrCode.WECHAT_BIND_ERR);
     }
 
     @Override
@@ -172,6 +186,7 @@ public class WeChatBindServiceImpl implements WeChatBindService {
         UserThirdParty userThirdParty = userThirdPartyRet.getData().get(0);
         JsonRet<Boolean> delRet = userThirdPartyService.del(userThirdParty.getId());
         if (delRet.isSuccess()) {
+            userThirdPartyDetailService.delByThirdId(userThirdParty.getThirdId(), userThirdParty.getThirdType());
             return JsonRet.getSuccessRet(true);
         } else {
             return JsonRet.getErrRet(ErrCode.WECHAT_UNBIND_ERR);
