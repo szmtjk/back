@@ -151,6 +151,33 @@ public class WeChatBindServiceImpl implements WeChatBindService {
         }
     }
 
+    @Override
+    public JsonRet<Object> unbindFromMP(String code) {
+        // 获取微信用户信息
+        JsonRet<UnionIdResponse> unionIdRet = getUnionId(code, AppType.MP);
+        if (!unionIdRet.isSuccess()) {
+            return JsonRet.getErrRet(unionIdRet.getErrCode(), unionIdRet.getMsg());
+        }
+
+        // 校验当前微信用户是否已经绑定
+        UnionIdResponse unionIdResponse = unionIdRet.getData();
+        UserThirdPartyQuery queryParam = new UserThirdPartyQuery();
+        queryParam.setThirdId(unionIdResponse.getUnionId());
+        JsonRet<List<UserThirdParty>> userThirdPartyRet = userThirdPartyService.getList(queryParam);
+        if (!userThirdPartyRet.isSuccess() || CollectionUtils.isEmpty(userThirdPartyRet.getData())) {
+            return JsonRet.getErrRet(ErrCode.WECHAT_NOT_BIND);
+        }
+
+        //解除绑定关系
+        UserThirdParty userThirdParty = userThirdPartyRet.getData().get(0);
+        JsonRet<Boolean> delRet = userThirdPartyService.del(userThirdParty.getId());
+        if (delRet.isSuccess()) {
+            return JsonRet.getSuccessRet(true);
+        } else {
+            return JsonRet.getErrRet(ErrCode.WECHAT_UNBIND_ERR);
+        }
+    }
+
     private JsonRet<UnionIdResponse> getUnionId(String code, int appType) {
         if (StringUtils.isEmpty(code)) {
             return JsonRet.getErrRet(ErrCode.WECHAT_APP_TYPE_INVALID);

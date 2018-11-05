@@ -11,4 +11,6 @@ public interface WeChatBindService {
 
     JsonRet<Object> bindFromMP(String code, String userName, String userPass);
 
+    JsonRet<Object> unbindFromMP(String code);
+
 }

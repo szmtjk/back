@@ -49,4 +49,15 @@ public class WechatBindController {
         return weChatBindService.bindFromMP(code, userName, userPass);
     }
 
+    /**
+     * 将当前微信账号绑定后台账号
+     * @param code
+     * @return
+     */
+    @RequestMapping(value = "/unbindFromMP", method = RequestMethod.POST)
+    public JsonRet<Object> unbindMP(String code) {
+        return weChatBindService.unbindFromMP(code);
+    }
+
+
 }

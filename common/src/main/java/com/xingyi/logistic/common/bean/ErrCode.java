@@ -37,6 +37,7 @@ public enum ErrCode {
     WECHAT_BIND_USER_NOT_EXIST(40006, "未获取到绑定的用户信息"),
     WECHAT_ALREADY_BIND(40007, "已被绑定"),
     WECHAT_BIND_ERR(40008, "绑定操作失败"),
+    WECHAT_UNBIND_ERR(40009, "解绑操作失败"),
 
     WEIXIN_AUTHORITY_FORBIDDEN(70000,"用户禁止授权"),
 
