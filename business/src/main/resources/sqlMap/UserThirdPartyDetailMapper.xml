@@ -57,7 +57,7 @@
             <if test="pojo.extra!=null">`extra` = #{pojo.extra},</if>
             UNIX_TIMESTAMP(now()),
         </trim>
-        WHERE `id` = #{id} and `isDeleted` = 0
+        WHERE `id` = #{pojo.id} and `isDeleted` = 0
         LIMIT 1
     </update>
 
@@ -83,11 +83,11 @@
         SELECT  count(id)
         FROM  `UserThirdPartyDetail`
         where `isDeleted` = 0
-        <if test="id != null"> AND `id` != #{pojo.id} </if>
-        <if test="thirdType!=null"> AND `thirdType` = #{pojo.thirdType},</if>
-        <if test="thirdId!=null"> AND `thirdId` = #{pojo.thirdId},</if>
-        <if test="appType!=null"> AND `appType` = #{pojo.appType},</if>
-        <if test="thirdId2!=null"> AND `thirdId2` = #{pojo.thirdId2},</if>
+        <if test="pojo.id != null"> AND `id` != #{pojo.id} </if>
+        <if test="pojo.thirdType!=null"> AND `thirdType` = #{pojo.thirdType},</if>
+        <if test="pojo.thirdId!=null"> AND `thirdId` = #{pojo.thirdId},</if>
+        <if test="pojo.appType!=null"> AND `appType` = #{pojo.appType},</if>
+        <if test="pojo.thirdId2!=null"> AND `thirdId2` = #{pojo.thirdId2},</if>
         limit 1
     </select>
 
@@ -95,11 +95,11 @@
         SELECT  count(id)
         FROM  `UserThirdPartyDetail`
         where `isDeleted` = 0
-        <if test="id != null"> AND `id` != #{id} </if>
-        <if test="thirdType!=null"> AND `thirdType` = #{pojo.thirdType},</if>
-        <if test="thirdId!=null"> AND `thirdId` = #{pojo.thirdId},</if>
-        <if test="appType!=null"> AND `appType` = #{pojo.appType},</if>
-        <if test="thirdId2!=null"> AND `thirdId2` = #{pojo.thirdId2},</if>
+        <if test="pojo.id != null"> AND `id` != #{id} </if>
+        <if test="pojo.thirdType!=null"> AND `thirdType` = #{pojo.thirdType},</if>
+        <if test="pojo.thirdId!=null"> AND `thirdId` = #{pojo.thirdId},</if>
+        <if test="pojo.appType!=null"> AND `appType` = #{pojo.appType},</if>
+        <if test="pojo.thirdId2!=null"> AND `thirdId2` = #{pojo.thirdId2},</if>
         limit 1
     </select>
 
@@ -107,18 +107,18 @@
         select <include refid="all_column"/>
         from `UserThirdPartyDetail`
         where `isDeleted` = 0
-        <if test="id != null"> AND `id` != #{id} </if>
-        <if test="thirdType!=null"> AND `thirdType` = #{pojo.thirdType},</if>
-        <if test="thirdId!=null"> AND `thirdId` = #{pojo.thirdId},</if>
-        <if test="appType!=null"> AND `appType` = #{pojo.appType},</if>
-        <if test="thirdId2!=null"> AND `thirdId2` = #{pojo.thirdId2},</if>
+        <if test="pojo.id != null"> AND `id` != #{id} </if>
+        <if test="pojo.thirdType!=null"> AND `thirdType` = #{pojo.thirdType},</if>
+        <if test="pojo.thirdId!=null"> AND `thirdId` = #{pojo.thirdId},</if>
+        <if test="pojo.appType!=null"> AND `appType` = #{pojo.appType},</if>
+        <if test="pojo.thirdId2!=null"> AND `thirdId2` = #{pojo.thirdId2},</if>
         order by `id` desc
         <include refid="pageCommon"/>
     </select>
 
     <sql id="pageCommon">
         <choose>
-            <when test="startRow != null and startRow gt -1 and limitNum != null and limitNum gt 0">
+            <when test="pojo.startRow != null and pojo.startRow gt -1 and pojo.limitNum != null and pojo.limitNum gt 0">
                 limit #{startRow}, #{limitNum}
             </when>
             <otherwise>
