@@ -26,11 +26,13 @@
     <insert id="insertSelective" useGeneratedKeys="true" keyProperty="pojo.id">
         INSERT INTO `UserThirdPartyDetail`
         <trim prefix="(" suffix=")" suffixOverrides=",">
-            thirdType,
-            thirdId,
-            appType,
-            thirdId2,
-            extra,
+
+
+            <if test="pojo.thirdType!=null">thirdType, </if>
+            <if test="pojo.thirdId!=null">thirdId, </if>
+            <if test="pojo.appType!=null">appType, </if>
+            <if test="pojo.thirdId2!=null">thirdId2, </if>
+            <if test="pojo.extra!=null">extra, </if>
             created,
             updated,
         </trim>
