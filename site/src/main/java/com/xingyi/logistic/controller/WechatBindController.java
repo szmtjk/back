@@ -3,12 +3,15 @@ package com.xingyi.logistic.controller;
 import com.xingyi.logistic.business.service.WeChatBindService;
 import com.xingyi.logistic.common.bean.JsonRet;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 /**
  * Created by xiaohu on 2018/10/26.
  */
+@Controller
 @RequestMapping("/wechat")
 public class WechatBindController {
 
@@ -33,6 +36,7 @@ public class WechatBindController {
      * @return
      */
     @RequestMapping(value = "/checkBind", method = RequestMethod.POST)
+    @ResponseBody
     public JsonRet<Object> checkBind(String code, int appType) {
         return weChatBindService.checkBind(code, appType);
     }
@@ -45,6 +49,7 @@ public class WechatBindController {
      * @return
      */
     @RequestMapping(value = "/bindFromMP", method = RequestMethod.POST)
+    @ResponseBody
     public JsonRet<Object> bindMP(String code, String userName, String userPass) {
         return weChatBindService.bindFromMP(code, userName, userPass);
     }
@@ -55,6 +60,7 @@ public class WechatBindController {
      * @return
      */
     @RequestMapping(value = "/unbindFromMP", method = RequestMethod.POST)
+    @ResponseBody
     public JsonRet<Object> unbindMP(String code) {
         return weChatBindService.unbindFromMP(code);
     }
