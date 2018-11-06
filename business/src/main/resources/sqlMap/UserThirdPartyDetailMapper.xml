@@ -23,7 +23,7 @@
         ,`updated`
     </sql>
 
-    <insert id="insertSelective" useGeneratedKeys="true" keyProperty="id">
+    <insert id="insertSelective" useGeneratedKeys="true" keyProperty="pojo.id">
         INSERT INTO `UserThirdPartyDetail`
         <trim prefix="(" suffix=")" suffixOverrides=",">
             thirdType,
