@@ -59,35 +59,22 @@ public class WeChatBindServiceImpl implements WeChatBindService {
             return JsonRet.getErrRet(ErrCode.WECHAT_APP_TYPE_INVALID);
         }
 
-        //获取openId
-        OpenIdResponse openIdResponse = weChatService.getOpenId(appSecretConfig.getAppId(), appSecretConfig.getAppSecret(), code);
-        if (openIdResponse == null) {
-            return JsonRet.getErrRet(ErrCode.WECHAT_GET_OPENID_ERR);
+        JsonRet<String> unionIdRet = null;
+        if (appType == AppType.MP) {
+            unionIdRet = getUnionIdFromMP(appSecretConfig, code);
+        } else if (appType == AppType.MINI_PROGRAM) {
+            unionIdRet = getUnionIdFromMiniProgram(appSecretConfig, code);
+        } else {
+            return JsonRet.getErrRet(ErrCode.WECHAT_APP_TYPE_INVALID);
         }
-        if (StringUtils.isEmpty(openIdResponse.getOpenId())) {
-            return JsonRet.getErrRet(ErrCode.WECHAT_GET_OPENID_ERR.getCode(), openIdResponse.getErrMsg());
+        if (!unionIdRet.isSuccess()) {
+            return JsonRet.getErrRet(unionIdRet.getErrCode(), unionIdRet.getMsg());
         }
-
-        //获取accessToken
-//        String accessToken = weChatService.getAccessToken(appSecretConfig.getAppId(), appSecretConfig.getAppSecret());
-//        if (StringUtils.isEmpty(accessToken)) {
-//            return JsonRet.getErrRet(ErrCode.WECHAT_ACCESS_TOKEN_EMPTY);
-//        }
-        String accessToken = openIdResponse.getAccessToken();
-
-        //获取unionId
-        String openId = openIdResponse.getOpenId();
-        UnionIdResponse unionIdResponse = weChatService.getUnionId(accessToken, openId);
-        if (unionIdResponse == null) {
-            return JsonRet.getErrRet(ErrCode.WECHAT_GET_UNIONID_ERR);
-        }
-        if (StringUtils.isEmpty(unionIdResponse.getUnionId())) {
-            return JsonRet.getErrRet(ErrCode.WECHAT_GET_UNIONID_ERR.getCode(), unionIdResponse.getErrMsg());
-        }
+        String unionId = unionIdRet.getData();
 
         //根据unionId获取user信息
         UserThirdPartyQuery queryParam = new UserThirdPartyQuery();
-        queryParam.setThirdId(unionIdResponse.getUnionId());
+        queryParam.setThirdId(unionId);
         JsonRet<List<UserThirdParty>> userThirdPartyRet = userThirdPartyService.getList(queryParam);
         if (!userThirdPartyRet.isSuccess() || CollectionUtils.isEmpty(userThirdPartyRet.getData())) {
             return JsonRet.getErrRet(ErrCode.WECHAT_NOT_BIND);
@@ -108,6 +95,44 @@ public class WeChatBindServiceImpl implements WeChatBindService {
         } else {
             return JsonRet.getSuccessRet(localAuth.getLoginName());
         }
+    }
+
+    private JsonRet<String> getUnionIdFromMP(AppSecretConfig appSecretConfig, String code) {
+        //获取openId
+        OpenIdResponse openIdResponse = weChatService.getOpenId(appSecretConfig.getAppId(), appSecretConfig.getAppSecret(), code);
+        if (openIdResponse == null) {
+            return JsonRet.getErrRet(ErrCode.WECHAT_GET_OPENID_ERR);
+        }
+        if (StringUtils.isEmpty(openIdResponse.getOpenId())) {
+            return JsonRet.getErrRet(ErrCode.WECHAT_GET_OPENID_ERR.getCode(), openIdResponse.getErrMsg());
+        }
+
+        //获取unionId
+        String openId = openIdResponse.getOpenId();
+        UnionIdResponse unionIdResponse = weChatService.getUnionId(openIdResponse.getAccessToken(), openId);
+        if (unionIdResponse == null) {
+            return JsonRet.getErrRet(ErrCode.WECHAT_GET_UNIONID_ERR);
+        }
+        if (StringUtils.isEmpty(unionIdResponse.getUnionId())) {
+            return JsonRet.getErrRet(ErrCode.WECHAT_GET_UNIONID_ERR.getCode(), unionIdResponse.getErrMsg());
+        }
+        return JsonRet.getSuccessRet(unionIdResponse.getUnionId());
+    }
+
+    private JsonRet<String> getUnionIdFromMiniProgram(AppSecretConfig appSecretConfig, String code) {
+        //获取openId 小程序中获取openId的时候，如果用户已经关注过公众号，则会直接返回unionId
+        OpenIdResponse openIdResponse = weChatService.getMiniProgramOpenId(appSecretConfig.getAppId(), appSecretConfig.getAppSecret(), code);
+        if (openIdResponse == null) {
+            return JsonRet.getErrRet(ErrCode.WECHAT_GET_OPENID_ERR);
+        }
+        if (StringUtils.isEmpty(openIdResponse.getOpenId())) {
+            return JsonRet.getErrRet(ErrCode.WECHAT_GET_OPENID_ERR.getCode(), openIdResponse.getErrMsg());
+        }
+
+        if (StringUtils.isEmpty(openIdResponse.getUnionId())) {// 如果小程序返回的结果中午unionId则说明用户未关注过公众号
+            return JsonRet.getErrRet(ErrCode.WECHAT_NOT_BIND);
+        }
+        return JsonRet.getSuccessRet(openIdResponse.getUnionId());
     }
 
     @Override

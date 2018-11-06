@@ -85,6 +85,17 @@ public class WeChatService {
         return getWeChatResponse(response, OpenIdResponse.class);
     }
 
+    public OpenIdResponse getMiniProgramOpenId(String appId, String appSecret, String code) {
+        String baseUrl = "https://api.weixin.qq.com/sns/jscode2session";
+        Map<String, String> params = new HashMap<>();
+        params.put("appid", appId);
+        params.put("secret", appSecret);
+        params.put("js_code", code);
+        params.put("grant_type", "authorization_code");
+        String url = HttpClientUtil.buildUrl(baseUrl, params);
+        String response = HttpClientUtil.doGet(url);
+        return getWeChatResponse(response, OpenIdResponse.class);
+    }
 
     public UnionIdResponse getUnionId(String accessToken, String openId) {
         String baseUrl = "https://api.weixin.qq.com/sns/userinfo";
