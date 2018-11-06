@@ -18,6 +18,8 @@ import com.xingyi.logistic.business.service.UserThirdPartyService;
 import com.xingyi.logistic.business.service.WeChatBindService;
 import com.xingyi.logistic.common.bean.ErrCode;
 import com.xingyi.logistic.common.bean.JsonRet;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -33,6 +35,8 @@ import java.util.Objects;
  */
 @Service
 public class WeChatBindServiceImpl implements WeChatBindService {
+
+    private static final Logger LOG = LoggerFactory.getLogger(WeChatBindServiceImpl.class);
 
     @Autowired
     private WeChatService weChatService;
@@ -51,6 +55,7 @@ public class WeChatBindServiceImpl implements WeChatBindService {
 
     @Override
     public JsonRet<Object> checkBind(String code, int appType) {
+        LOG.info("checkBind, code:{}, appType:{}", code, appType);
         if (StringUtils.isEmpty(code)) {
             return JsonRet.getErrRet(ErrCode.WECHAT_APP_TYPE_INVALID);
         }
@@ -72,6 +77,7 @@ public class WeChatBindServiceImpl implements WeChatBindService {
             return JsonRet.getErrRet(unionIdRet.getErrCode(), unionIdRet.getMsg());
         }
         String unionId = unionIdRet.getData();
+        LOG.info("checkBind, unionId:{}", unionId);
 
         //根据unionId获取user信息
         UserThirdPartyQuery queryParam = new UserThirdPartyQuery();
@@ -86,6 +92,7 @@ public class WeChatBindServiceImpl implements WeChatBindService {
             return JsonRet.getErrRet(ErrCode.WECHAT_BIND_USER_NOT_EXIST);
         }
 
+        LOG.info("checkBind, unionId:{} bind to user:{}", unionId, localAuth.getLoginName());
         //如果是来自小程序的，则执行登录过程，返回token，其余的则返回绑定的userName
         if (appType == AppType.MINI_PROGRAM) {
             long expire = System.currentTimeMillis() + this.tokenExpire;
@@ -138,6 +145,7 @@ public class WeChatBindServiceImpl implements WeChatBindService {
 
     @Override
     public JsonRet<Object> bindFromMP(String code, String userName, String userPass) {
+        LOG.info("bind from mp, code:{}, userName:{}", code, userName);
         // 校验用户名、密码是否正确 从SignController中拷贝
         LocalAuthQuery localAuthQuery = new LocalAuthQuery(userName);
         JsonRet<List<LocalAuth>> localAuthRet = this.localAuthService.getList(localAuthQuery);
@@ -163,8 +171,8 @@ public class WeChatBindServiceImpl implements WeChatBindService {
         UserThirdParty userThirdPartyBound = null;
         if (userThirdPartyRet.isSuccess() && !CollectionUtils.isEmpty(userThirdPartyRet.getData())) {
             userThirdPartyBound = userThirdPartyRet.getData().get(0);
+            LOG.info("bind from mp, sys user:{} bound to wechat user:{}", userName, userThirdPartyBound.getThirdName());
         }
-
 
         // 获取微信用户信息
         JsonRet<UnionIdResponse> unionIdRet = getUnionId(code, AppType.MP);
@@ -201,7 +209,7 @@ public class WeChatBindServiceImpl implements WeChatBindService {
         if (detailAddRet.isSuccess()) {
             UserThirdParty userThirdParty = new UserThirdParty();
             userThirdParty.setThirdId(unionIdResponse.getUnionId());
-            userThirdParty.setThirdType(0);
+            userThirdParty.setThirdType(ThirdType.WECHAT);
             userThirdParty.setThirdName(unionIdResponse.getNickName());
             userThirdParty.setUserId(localAuth.getUserId());
             JsonRet<Long> addRet = userThirdPartyService.add(userThirdParty);
@@ -260,16 +268,9 @@ public class WeChatBindServiceImpl implements WeChatBindService {
             return JsonRet.getErrRet(ErrCode.WECHAT_GET_OPENID_ERR.getCode(), openIdResponse.getErrMsg());
         }
 
-        //获取accessToken
-//        String accessToken = weChatService.getAccessToken(appSecretConfig.getAppId(), appSecretConfig.getAppSecret());
-//        if (StringUtils.isEmpty(accessToken)) {
-//            return JsonRet.getErrRet(ErrCode.WECHAT_ACCESS_TOKEN_EMPTY);
-//        }
-        String accessToken = openIdResponse.getAccessToken();
-
         //获取unionId
         String openId = openIdResponse.getOpenId();
-        UnionIdResponse unionIdResponse = weChatService.getUnionId(accessToken, openId);
+        UnionIdResponse unionIdResponse = weChatService.getUnionId(openIdResponse.getAccessToken(), openId);
         if (unionIdResponse == null) {
             return JsonRet.getErrRet(ErrCode.WECHAT_GET_UNIONID_ERR);
         }
