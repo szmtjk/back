@@ -26,6 +26,7 @@ import org.springframework.util.CollectionUtils;
 import org.springframework.util.StringUtils;
 
 import java.util.List;
+import java.util.Objects;
 
 /**
  * Created by xiaohu on 2018/11/2.
@@ -154,17 +155,38 @@ public class WeChatBindServiceImpl implements WeChatBindService {
             return JsonRet.getErrRet(ErrCode.AUTHTICATION_PASSWD_ERROR.getCode(), ErrCode.AUTHTICATION_PASSWD_ERROR.getMsg());
         }
 
+        //校验后台用户是否已经被其他用户绑定
+        UserThirdPartyQuery queryParam = new UserThirdPartyQuery();
+        queryParam.setUserId(localAuth.getUserId());
+        queryParam.setThirdType(ThirdType.WECHAT);
+        JsonRet<List<UserThirdParty>> userThirdPartyRet = userThirdPartyService.getList(queryParam);
+        UserThirdParty userThirdPartyBound = null;
+        if (userThirdPartyRet.isSuccess() && !CollectionUtils.isEmpty(userThirdPartyRet.getData())) {
+            userThirdPartyBound = userThirdPartyRet.getData().get(0);
+        }
+
+
         // 获取微信用户信息
         JsonRet<UnionIdResponse> unionIdRet = getUnionId(code, AppType.MP);
         if (!unionIdRet.isSuccess()) {
             return JsonRet.getErrRet(unionIdRet.getErrCode(), unionIdRet.getMsg());
         }
+        UnionIdResponse unionIdResponse = unionIdRet.getData();
+
+        // 如果当前系统账号已绑定至某个微信账号
+        if (userThirdPartyBound != null) {
+            if (Objects.equals(unionIdResponse.getUnionId(), userThirdPartyBound.getThirdId())) {// 与当前微信账号一致，则提示已绑定
+                return JsonRet.getErrRet(ErrCode.WECHAT_ALREADY_BIND);
+            } else {// 与当前微信账号不一致，则提示已绑定其他微信账号信息，当前操作中断
+                return JsonRet.getErrRet(ErrCode.WECHAT_SYS_USER_BIND_BY_OTHER_ERR.getCode(), "当前系统账号已被其他微信账号绑定:" + userThirdPartyBound.getThirdName());
+            }
+        }
 
         // 校验当前微信用户是否已经绑定
-        UnionIdResponse unionIdResponse = unionIdRet.getData();
-        UserThirdPartyQuery queryParam = new UserThirdPartyQuery();
+        queryParam = new UserThirdPartyQuery();
         queryParam.setThirdId(unionIdResponse.getUnionId());
-        JsonRet<List<UserThirdParty>> userThirdPartyRet = userThirdPartyService.getList(queryParam);
+        queryParam.setThirdType(ThirdType.WECHAT);
+        userThirdPartyRet = userThirdPartyService.getList(queryParam);
         if (userThirdPartyRet.isSuccess() && !CollectionUtils.isEmpty(userThirdPartyRet.getData())) {
             return JsonRet.getErrRet(ErrCode.WECHAT_ALREADY_BIND);
         }

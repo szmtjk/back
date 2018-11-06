@@ -38,6 +38,7 @@ public enum ErrCode {
     WECHAT_ALREADY_BIND(40007, "已被绑定"),
     WECHAT_BIND_ERR(40008, "绑定操作失败"),
     WECHAT_UNBIND_ERR(40009, "解绑操作失败"),
+    WECHAT_SYS_USER_BIND_BY_OTHER_ERR(40010, "当前系统账号已被其他微信账号绑定"),
 
     WEIXIN_AUTHORITY_FORBIDDEN(70000,"用户禁止授权"),
 
