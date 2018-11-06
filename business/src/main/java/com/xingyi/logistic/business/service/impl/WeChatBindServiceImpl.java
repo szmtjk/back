@@ -69,10 +69,11 @@ public class WeChatBindServiceImpl implements WeChatBindService {
         }
 
         //获取accessToken
-        String accessToken = weChatService.getAccessToken(appSecretConfig.getAppId(), appSecretConfig.getAppSecret());
-        if (StringUtils.isEmpty(accessToken)) {
-            return JsonRet.getErrRet(ErrCode.WECHAT_ACCESS_TOKEN_EMPTY);
-        }
+//        String accessToken = weChatService.getAccessToken(appSecretConfig.getAppId(), appSecretConfig.getAppSecret());
+//        if (StringUtils.isEmpty(accessToken)) {
+//            return JsonRet.getErrRet(ErrCode.WECHAT_ACCESS_TOKEN_EMPTY);
+//        }
+        String accessToken = openIdResponse.getAccessToken();
 
         //获取unionId
         String openId = openIdResponse.getOpenId();
@@ -213,10 +214,11 @@ public class WeChatBindServiceImpl implements WeChatBindService {
         }
 
         //获取accessToken
-        String accessToken = weChatService.getAccessToken(appSecretConfig.getAppId(), appSecretConfig.getAppSecret());
-        if (StringUtils.isEmpty(accessToken)) {
-            return JsonRet.getErrRet(ErrCode.WECHAT_ACCESS_TOKEN_EMPTY);
-        }
+//        String accessToken = weChatService.getAccessToken(appSecretConfig.getAppId(), appSecretConfig.getAppSecret());
+//        if (StringUtils.isEmpty(accessToken)) {
+//            return JsonRet.getErrRet(ErrCode.WECHAT_ACCESS_TOKEN_EMPTY);
+//        }
+        String accessToken = openIdResponse.getAccessToken();
 
         //获取unionId
         String openId = openIdResponse.getOpenId();
