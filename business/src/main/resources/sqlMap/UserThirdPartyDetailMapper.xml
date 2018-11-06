@@ -84,10 +84,10 @@
         FROM  `UserThirdPartyDetail`
         where `isDeleted` = 0
         <if test="pojo.id != null"> AND `id` != #{pojo.id} </if>
-        <if test="pojo.thirdType!=null"> AND `thirdType` = #{pojo.thirdType},</if>
-        <if test="pojo.thirdId!=null"> AND `thirdId` = #{pojo.thirdId},</if>
-        <if test="pojo.appType!=null"> AND `appType` = #{pojo.appType},</if>
-        <if test="pojo.thirdId2!=null"> AND `thirdId2` = #{pojo.thirdId2},</if>
+        <if test="pojo.thirdType!=null"> AND `thirdType` = #{pojo.thirdType}</if>
+        <if test="pojo.thirdId!=null"> AND `thirdId` = #{pojo.thirdId}</if>
+        <if test="pojo.appType!=null"> AND `appType` = #{pojo.appType}</if>
+        <if test="pojo.thirdId2!=null"> AND `thirdId2` = #{pojo.thirdId2}</if>
         limit 1
     </select>
 
@@ -96,10 +96,10 @@
         FROM  `UserThirdPartyDetail`
         where `isDeleted` = 0
         <if test="pojo.id != null"> AND `id` != #{id} </if>
-        <if test="pojo.thirdType!=null"> AND `thirdType` = #{pojo.thirdType},</if>
-        <if test="pojo.thirdId!=null"> AND `thirdId` = #{pojo.thirdId},</if>
-        <if test="pojo.appType!=null"> AND `appType` = #{pojo.appType},</if>
-        <if test="pojo.thirdId2!=null"> AND `thirdId2` = #{pojo.thirdId2},</if>
+        <if test="pojo.thirdType!=null"> AND `thirdType` = #{pojo.thirdType}</if>
+        <if test="pojo.thirdId!=null"> AND `thirdId` = #{pojo.thirdId}</if>
+        <if test="pojo.appType!=null"> AND `appType` = #{pojo.appType}</if>
+        <if test="pojo.thirdId2!=null"> AND `thirdId2` = #{pojo.thirdId2}</if>
         limit 1
     </select>
 
@@ -108,10 +108,10 @@
         from `UserThirdPartyDetail`
         where `isDeleted` = 0
         <if test="pojo.id != null"> AND `id` != #{id} </if>
-        <if test="pojo.thirdType!=null"> AND `thirdType` = #{pojo.thirdType},</if>
-        <if test="pojo.thirdId!=null"> AND `thirdId` = #{pojo.thirdId},</if>
-        <if test="pojo.appType!=null"> AND `appType` = #{pojo.appType},</if>
-        <if test="pojo.thirdId2!=null"> AND `thirdId2` = #{pojo.thirdId2},</if>
+        <if test="pojo.thirdType!=null"> AND `thirdType` = #{pojo.thirdType}</if>
+        <if test="pojo.thirdId!=null"> AND `thirdId` = #{pojo.thirdId}</if>
+        <if test="pojo.appType!=null"> AND `appType` = #{pojo.appType}</if>
+        <if test="pojo.thirdId2!=null"> AND `thirdId2` = #{pojo.thirdId2}</if>
         order by `id` desc
         <include refid="pageCommon"/>
     </select>
