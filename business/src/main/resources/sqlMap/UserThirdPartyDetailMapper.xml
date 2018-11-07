@@ -71,7 +71,7 @@
         LIMIT 1
     </update>
 
-    <update id="delByThirdId" parameterType="java.lang.Long">
+    <update id="delByThirdId">
         UPDATE `UserThirdPartyDetail`
         SET `isDeleted` = 1 ,
         `updated` = UNIX_TIMESTAMP(now())
