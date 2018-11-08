@@ -169,8 +169,9 @@ public class WeChatService {
             if (split.length == 2) {
                 String appId = split[0];
                 String appSecret = split[1];
-                String accessToken = HttpClientUtil.getAccessToken(appId, appSecret);
-                if (!StringUtils.isEmpty(accessToken)) {
+                AccessTokenResponse checkedAccessToken = getCheckedAccessToken(appId, appSecret);
+                if (checkedAccessToken != null && !StringUtils.isEmpty(checkedAccessToken.getAccessToken())) {
+                    String accessToken = checkedAccessToken.getAccessToken();
                     tokenMap.put(tokenKey, accessToken);
                     LOG.info("refresh token, key:{}, new token:{}", tokenKey, accessToken);
                 }
