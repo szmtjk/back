@@ -137,7 +137,7 @@
       SELECT * FROM LocalAuth WHERE userId = #{userId}
     </select>
 
-    <select id="queryByUserId" resultMap="AllColumnMap">
+    <select id="queryByUserName" resultMap="AllColumnMap">
         SELECT <include refid="all_column"/>
         FROM LocalAuth
         WHERE loginName = #{userName}
