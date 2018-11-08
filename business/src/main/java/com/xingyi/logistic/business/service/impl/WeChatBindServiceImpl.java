@@ -239,7 +239,9 @@ public class WeChatBindServiceImpl implements WeChatBindService {
             return JsonRet.getErrRet(ErrCode.WECHAT_NOT_BIND);
         }
         UserThirdPartyDetail userThirdPartyDetail = detailListRet.getData().get(0);
-        String response = weChatService.sendTestTemplateMsg(userThirdPartyDetail.getThirdId2());
+        AppSecretConfig appSecretConfig = weChatService.getAppSecretConfig(AppType.MP);
+        String accessToken = weChatService.getAccessToken(appSecretConfig.getAppId(), appSecretConfig.getAppSecret())
+        String response = weChatService.sendTestTemplateMsg(userThirdPartyDetail.getThirdId2(), accessToken);
         return JsonRet.getSuccessRet(response);
     }
 

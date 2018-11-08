@@ -119,7 +119,7 @@ public class WeChatService {
         return getWeChatResponse(response, UnionIdResponse.class);
     }
 
-    public String sendTestTemplateMsg(String toUser) {
+    public String sendTestTemplateMsg(String toUser, String accessToken) {
         TemplateMsgData templateMsgData = new TemplateMsgData();
         templateMsgData.setToUser(toUser);
         templateMsgData.setTemplateId("rxjqJPbwa-pWUfE3sr4ppKpN7MBsTn1PWvjHFrxB_OE");
@@ -132,7 +132,7 @@ public class WeChatService {
         dataMap.put("keyword5", new ValueColorPair("苏A 12345", "#120FE9"));
         dataMap.put("remark", new ValueColorPair("有问题请联系尽早联系调度员", "#120FE9"));
         templateMsgData.setData(dataMap);
-        String baseUrl = "https://api.weixin.qq.com/cgi-bin/message/template/send?access_token=15_VoAuQ7u9UIE_CcmGkvZzbJfcPfURUOIqvzv4VP0OqekqBC6pF3WUJHbKYpV122gFXezfY7qgaWC1y7XbyWgwLsikkPC11zXU-mGt6rSx3YrTzmc_Aj5bAN0FOdtLKBil5rwFa-8KNbA2QMtvQDPaAGAMZL";
+        String baseUrl = "https://api.weixin.qq.com/cgi-bin/message/template/send?access_token=" + accessToken;
         return HttpClientUtil.post(baseUrl, JsonUtil.toJson(templateMsgData));
     }
 
