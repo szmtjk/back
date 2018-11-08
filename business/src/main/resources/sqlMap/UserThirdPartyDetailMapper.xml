@@ -121,7 +121,7 @@
     <sql id="pageCommon">
         <choose>
             <when test="pojo.startRow != null and pojo.startRow gt -1 and pojo.limitNum != null and pojo.limitNum gt 0">
-                limit #{pojo.startRow}, #{pojo.imitNum}
+                limit #{pojo.startRow}, #{pojo.limitNum}
             </when>
             <otherwise>
                 limit 20
