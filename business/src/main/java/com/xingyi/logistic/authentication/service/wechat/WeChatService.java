@@ -4,7 +4,9 @@ import com.xingyi.logistic.authentication.util.HttpClientUtil;
 import com.xingyi.logistic.business.bean.wechat.AccessTokenResponse;
 import com.xingyi.logistic.business.bean.wechat.AppSecretConfig;
 import com.xingyi.logistic.business.bean.wechat.OpenIdResponse;
+import com.xingyi.logistic.business.bean.wechat.TemplateMsgData;
 import com.xingyi.logistic.business.bean.wechat.UnionIdResponse;
+import com.xingyi.logistic.business.bean.wechat.ValueColorPair;
 import com.xingyi.logistic.business.util.JsonUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -115,6 +117,23 @@ public class WeChatService {
             }
         }
         return getWeChatResponse(response, UnionIdResponse.class);
+    }
+
+    public String sendTestTemplateMsg(String toUser) {
+        TemplateMsgData templateMsgData = new TemplateMsgData();
+        templateMsgData.setToUser(toUser);
+        templateMsgData.setTemplateId("rxjqJPbwa-pWUfE3sr4ppKpN7MBsTn1PWvjHFrxB_OE");
+        Map<String, ValueColorPair> dataMap = new HashMap<>();
+        dataMap.put("first", new ValueColorPair("这是测试内容", "#120FE9"));
+        dataMap.put("keyword1", new ValueColorPair("1a2399ad", "#120FE9"));
+        dataMap.put("keyword2", new ValueColorPair("王定喜", "#120FE9"));
+        dataMap.put("keyword3", new ValueColorPair("10月23日 13:12", "#120FE9"));
+        dataMap.put("keyword4", new ValueColorPair("南京->北京", "#120FE9"));
+        dataMap.put("keyword5", new ValueColorPair("苏A 12345", "#120FE9"));
+        dataMap.put("remark", new ValueColorPair("有问题请联系尽早联系调度员", "#120FE9"));
+        templateMsgData.setData(dataMap);
+        String baseUrl = "https://api.weixin.qq.com/cgi-bin/message/template/send?access_token=15_VoAuQ7u9UIE_CcmGkvZzbJfcPfURUOIqvzv4VP0OqekqBC6pF3WUJHbKYpV122gFXezfY7qgaWC1y7XbyWgwLsikkPC11zXU-mGt6rSx3YrTzmc_Aj5bAN0FOdtLKBil5rwFa-8KNbA2QMtvQDPaAGAMZL";
+        return HttpClientUtil.post(baseUrl, JsonUtil.toJson(templateMsgData));
     }
 
     private <T> T getWeChatResponse(String response, Class<T> clazz) {

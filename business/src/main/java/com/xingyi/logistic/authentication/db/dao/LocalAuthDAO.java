@@ -13,4 +13,6 @@ public interface LocalAuthDAO extends BaseDAO<LocalAuthDO,LocalAuthDBQuery> {
      * @return
      */
     LocalAuthDO queryByUserId(Long userId);
+
+    LocalAuthDO queryByUserName(String userName);
 }

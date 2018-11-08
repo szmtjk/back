@@ -7,7 +7,7 @@ import java.util.Map;
 /**
  * Created by xiaohu on 2018/10/26.
  */
-public class TemplateMsgData extends BaseResonpse {
+public class TemplateMsgData {
 
     @JSONField(name = "touser")
     private String toUser;

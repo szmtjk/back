@@ -51,4 +51,14 @@ public class LocalAuthServiceImpl extends BaseCRUDService<LocalAuthDO,LocalAuth,
 		}
         return localAuth;
     }
+
+    @Override
+    public LocalAuth queryByUserName(String userName) {
+        LocalAuth localAuth = null;
+        LocalAuthDO localAuthDO = this.localAuthDAO.queryByUserName(userName);
+        if(null != localAuthDO){
+            localAuth = this.localAuthConverter.toModel(localAuthDO);
+        }
+        return localAuth;
+    }
 }

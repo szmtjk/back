@@ -11,4 +11,6 @@ public interface LocalAuthService extends BaseService<LocalAuth,LocalAuthQuery> 
      * @return
      */
     LocalAuth queryByUserId(Long userId);
+
+    LocalAuth queryByUserName(String userName);
 }

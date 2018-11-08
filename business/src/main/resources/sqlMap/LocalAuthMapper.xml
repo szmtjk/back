@@ -137,4 +137,11 @@
       SELECT * FROM LocalAuth WHERE userId = #{userId}
     </select>
 
+    <select id="queryByUserId" resultMap="AllColumnMap">
+        SELECT <include refid="all_column"/>
+        FROM LocalAuth
+        WHERE loginName = #{userName}
+        limit 1
+    </select>
+
 </mapper>

@@ -65,5 +65,10 @@ public class WechatBindController {
         return weChatBindService.unbindFromMP(code);
     }
 
+    @RequestMapping(value = "/sendTestMPMsg", method = RequestMethod.POST)
+    @ResponseBody
+    public JsonRet<Object> sendTestMPMsg(String userName) {
+        return weChatBindService.sendTestMPMsg(userName);
+    }
 
 }
