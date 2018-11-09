@@ -17,6 +17,7 @@ import com.xingyi.logistic.business.model.UserThirdPartyQuery;
 import com.xingyi.logistic.business.service.UserThirdPartyDetailService;
 import com.xingyi.logistic.business.service.UserThirdPartyService;
 import com.xingyi.logistic.business.service.WeChatBindService;
+import com.xingyi.logistic.business.util.DateUtils;
 import com.xingyi.logistic.common.bean.ErrCode;
 import com.xingyi.logistic.common.bean.JsonRet;
 import org.slf4j.Logger;
@@ -222,8 +223,13 @@ public class WeChatBindServiceImpl implements WeChatBindService {
             return JsonRet.getErrRet(ErrCode.AUTHTICATION_NOT_EXIST);
         }
 
+        return sendTestMPMsg(localAuth.getUserId(), null, "现在时间:" + DateUtils.formatDatetime(System.currentTimeMillis()));
+    }
+
+    @Override
+    public JsonRet<Object> sendTestMPMsg(Long userId, String testFirst, String testRemark) {
         UserThirdPartyQuery queryParam = new UserThirdPartyQuery();
-        queryParam.setUserId(localAuth.getUserId());
+        queryParam.setUserId(userId);
         queryParam.setThirdType(ThirdType.WECHAT);
         JsonRet<List<UserThirdParty>> userThirdPartyRet = userThirdPartyService.getList(queryParam);
         if (!userThirdPartyRet.isSuccess() || CollectionUtils.isEmpty(userThirdPartyRet.getData())) {
@@ -241,7 +247,7 @@ public class WeChatBindServiceImpl implements WeChatBindService {
         UserThirdPartyDetail userThirdPartyDetail = detailListRet.getData().get(0);
         AppSecretConfig appSecretConfig = weChatService.getAppSecretConfig(AppType.MP);
         String accessToken = weChatService.getAccessToken(appSecretConfig.getAppId(), appSecretConfig.getAppSecret());
-        String response = weChatService.sendTestTemplateMsg(userThirdPartyDetail.getThirdId2(), accessToken);
+        String response = weChatService.sendTestTemplateMsg(userThirdPartyDetail.getThirdId2(), accessToken, testFirst, testRemark);
         return JsonRet.getSuccessRet(response);
     }
 

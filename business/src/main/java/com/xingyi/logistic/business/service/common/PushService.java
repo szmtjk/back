@@ -5,6 +5,7 @@ import com.xingyi.logistic.business.db.entity.PushAppMsgDBQuery;
 import com.xingyi.logistic.business.db.entity.PushAppMsgDO;
 import com.xingyi.logistic.business.model.ReservationCheckFlagInfo;
 import com.xingyi.logistic.business.service.PushAppMsgService;
+import com.xingyi.logistic.business.service.WeChatBindService;
 import com.xingyi.logistic.business.util.JPushClientUtil;
 import com.xingyi.logistic.qiangdan.model.Reservation;
 import org.slf4j.Logger;
@@ -30,6 +31,9 @@ public class PushService {
 
     @Autowired
     PushAppMsgService pushAppMsgService;
+
+    @Autowired
+    private WeChatBindService weChatBindService;
 
     /**
      * 推送预约通过信息
@@ -64,6 +68,9 @@ public class PushService {
         pushAppMsg.setExtrasParam(extrasParam);
         pushAppMsgDAO.insertSelective(pushAppMsg);
         LOG.info("reservation passed, and msg pushed to user:{}", reservation.getUserId());
+
+        //测试推送公众号消息
+        weChatBindService.sendTestMPMsg(reservation.getUserId(), msgTitle, msgContent);
     }
 
     /**

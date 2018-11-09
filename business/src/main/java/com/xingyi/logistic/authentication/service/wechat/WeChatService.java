@@ -119,18 +119,24 @@ public class WeChatService {
         return getWeChatResponse(response, UnionIdResponse.class);
     }
 
-    public String sendTestTemplateMsg(String toUser, String accessToken) {
+    public String sendTestTemplateMsg(String toUser, String accessToken, String testFirst, String testRemark) {
+        if (StringUtils.isEmpty(testFirst)) {
+            testFirst = "这是测试内容";
+        }
+        if (StringUtils.isEmpty(testRemark)) {
+            testRemark = "有问题请联系尽早联系调度员";
+        }
         TemplateMsgData templateMsgData = new TemplateMsgData();
         templateMsgData.setToUser(toUser);
         templateMsgData.setTemplateId("rxjqJPbwa-pWUfE3sr4ppKpN7MBsTn1PWvjHFrxB_OE");
         Map<String, ValueColorPair> dataMap = new HashMap<>();
-        dataMap.put("first", new ValueColorPair("这是测试内容", "#120FE9"));
+        dataMap.put("first", new ValueColorPair(testFirst, "#120FE9"));
         dataMap.put("keyword1", new ValueColorPair("1a2399ad", "#120FE9"));
         dataMap.put("keyword2", new ValueColorPair("王定喜", "#120FE9"));
         dataMap.put("keyword3", new ValueColorPair("10月23日 13:12", "#120FE9"));
         dataMap.put("keyword4", new ValueColorPair("南京->北京", "#120FE9"));
         dataMap.put("keyword5", new ValueColorPair("苏A 12345", "#120FE9"));
-        dataMap.put("remark", new ValueColorPair("有问题请联系尽早联系调度员", "#120FE9"));
+        dataMap.put("remark", new ValueColorPair(testRemark, "#120FE9"));
         templateMsgData.setData(dataMap);
         String baseUrl = "https://api.weixin.qq.com/cgi-bin/message/template/send?access_token=" + accessToken;
         return HttpClientUtil.post(baseUrl, JsonUtil.toJson(templateMsgData));
