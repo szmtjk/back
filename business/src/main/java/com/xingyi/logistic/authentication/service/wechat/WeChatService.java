@@ -132,7 +132,7 @@ public class WeChatService {
         Map<String, ValueColorPair> dataMap = new HashMap<>();
         dataMap.put("first", new ValueColorPair(testFirst, "#120FE9"));
         dataMap.put("keyword1", new ValueColorPair("1a2399ad", "#120FE9"));
-        dataMap.put("keyword2", new ValueColorPair("王定喜", "#120FE9"));
+        dataMap.put("keyword2", new ValueColorPair("小王", "#120FE9"));
         dataMap.put("keyword3", new ValueColorPair("10月23日 13:12", "#120FE9"));
         dataMap.put("keyword4", new ValueColorPair("南京->北京", "#120FE9"));
         dataMap.put("keyword5", new ValueColorPair("苏A 12345", "#120FE9"));
