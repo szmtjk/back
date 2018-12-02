@@ -24,6 +24,7 @@
         <result property="goodsSubType" column="goodsSubType"/>
         <result property="created" column="created"/>
         <result property="updated" column="updated"/>
+        <result property="settleType" column="settleType"/>
     </resultMap>
 
     <sql id="all_column">
@@ -48,6 +49,7 @@
         ,`creator`
         ,`created`
         ,`updated`
+        ,`settleType`
     </sql>
 
     <insert id="insertSelective" useGeneratedKeys="true" keyProperty="pojo.id">
@@ -70,6 +72,7 @@
             <if test="pojo.description!=null"> `description`,</if>
             <if test="pojo.goodsType!=null"> `goodsType`,</if>
             <if test="pojo.goodsSubType!=null"> `goodsSubType`,</if>
+            <if test="pojo.settleType!=null"> `settleType`,</if>
             `created`,
             `updated`
         </trim>
@@ -92,6 +95,7 @@
             <if test="pojo.description!=null">#{pojo.description},</if>
             <if test="pojo.goodsType!=null">#{pojo.goodsType},</if>
             <if test="pojo.goodsSubType!=null">#{pojo.goodsSubType},</if>
+            <if test="pojo.settleType!=null">#{pojo.settleType},</if>
             UNIX_TIMESTAMP(now()),
             UNIX_TIMESTAMP(now())
         </trim>
@@ -118,6 +122,7 @@
             <if test="pojo.description!=null">`description` = #{pojo.description},</if>
             <if test="pojo.goodsType!=null">`goodsType` = #{pojo.goodsType},</if>
             <if test="pojo.goodsSubType!=null">`goodsSubType` = #{pojo.goodsSubType},</if>
+            <if test="pojo.settleType!=null">`settleType` = #{pojo.settleType},</if>
             `updated` = UNIX_TIMESTAMP(now())
         </set>
         WHERE `id` = #{pojo.id} and `isDeleted` = 0

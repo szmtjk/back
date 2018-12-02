@@ -39,6 +39,16 @@ public class BaseContract extends BaseModelAndDO {
 
     private Long cheyun;
 
+    private Integer settleType;
+
+    public Integer getSettleType() {
+        return settleType;
+    }
+
+    public void setSettleType(Integer settleType) {
+        this.settleType = settleType;
+    }
+
     @AllowedNumber(values = {1, 2})
     private Integer status; //状态 1：启用  2：禁用
 

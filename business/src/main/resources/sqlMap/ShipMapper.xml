@@ -560,7 +560,15 @@
         (select p.planRefueling from PlanRefueling p where p.shipId = a.shipId and p.disId = a.orderId) as kcy ,
         a.bucklePrice,
         (d.oil*( select so.unitPrice from ShipOil so where so.shipId = a.shipId and so.status='2') ) as shipOil,
+
         IFNULL(FORMAT(((a.loadWeight/a.dischargeWeight)*(case when e.unitPrice is not null then e.unitPrice ELSE d.actualTransferPrice end)),2),0) as kpje,
+
+        case when c.settleType ='11' or c.settleType = '12' then
+        IFNULL(FORMAT((a.loadWeight*e.unitPrice),2),0)
+        else
+        IFNULL(FORMAT((a.dischargeWeight*e.unitPrice),2),0)
+        end
+        as kpje,
         d.actualTransferPrice as cydj,
         case when d.settleType='11' or d.settleType='12' then
         FORMAT(( d.actualTransferPrice*a.loadWeight-IFNULL(a.bucklePrice,0)-IFNULL((d.oil*( select so.unitPrice from ShipOil so where so.shipId = a.shipId and so.status='2') ),0) ), 2 )
@@ -818,12 +826,17 @@
         SELECT 6 AS lx FROM DUAL
         UNION ALL
         SELECT 7 AS lx FROM DUAL ) t LEFT JOIN
-       <!-- 船运月平 均航次计划  个
-        (select  sum(dischargeWeight) as sjsl ,b.shipLevel as lx from  SailingInfo a ,Ship b-->
-        (select  count(dischargeWeight) as sjsl ,b.shipLevel as lx from  SailingInfo a ,Ship b
+        (
+        select  count(a.id) as sjsl ,b.shipLevel as lx from  SailingInfo a ,Ship b
         where a.shipId = b.id  and a.isDeleted = '0'
-        and FROM_UNIXTIME( a.dischargeTime, '%Y-%m' ) =  #{0}  group by  b.shipLevel ) ta on t.lx = ta.lx
-        LEFT JOIN ( select count(shipLevel) as shipSum ,shipLevel lx from Ship where isDeleted = '0' GROUP BY shipLevel ) tc on t.lx = tc.lx
+        and FROM_UNIXTIME( a.loadTime, '%Y-%m' ) =  #{0}  group by  b.shipLevel
+        ) ta on t.lx = ta.lx
+        LEFT JOIN (
+        select  count(distinct a.shipId) as shipSum ,b.shipLevel as lx from  SailingInfo a ,Ship b
+        where a.shipId = b.id  and a.isDeleted = '0'
+        and FROM_UNIXTIME( a.loadTime, '%Y-%m' ) =  #{0}  group by  b.shipLevel
+
+        ) tc on t.lx = tc.lx
         ) tt LEFT JOIN
         (select sum(plan) as jhsl, shipClass lx  from ShippingPlan  where time = #{1} and isDeleted = '0' group by shipClass) tb on tt.lx = tb.lx  order by tt.lx
     </select>
