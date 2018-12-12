@@ -81,7 +81,8 @@ public class DatasourceDescription extends DruidDataSource {
         buf.append(getMapperLocations());
         buf.append(",\n\tusername:");
         buf.append(getUsername());
-
+        buf.append(",\n\turl:");
+        buf.append(getUrl());
         buf.append("\n"+last);
 
         return buf.toString();

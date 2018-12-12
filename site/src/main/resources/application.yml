@@ -3,35 +3,12 @@ spring:
     active: @profiles@
 
 ---
-# You can change the default http port
 server:
   port: 16722
   contextPath: /xyl
 
 fee:
   rule: 0
-
-# default db config
-druid:
-  group:
-    defaultGroup: d_myc
-    balance: robin
-  datasource:
-    - identity: myc_master
-      group: d_myc
-      role: master
-      driverClassName: com.mysql.jdbc.Driver
-      mapperLocations: classpath*:sqlMap/**/*Mapper.xml
-      url: jdbc:mysql://127.0.0.1:3306/xyl?zeroDateTimeBehavior=convertToNull&useUnicode=true&characterEncoding=UTF-8
-      username: root
-      password: uAiqwVwjJ8-i
-      initialSize: 5
-      filters: stat
-      maxActive: 8
-      minIdle: 5
-      maxWait: 50000
-      validationQuery: SELECT 1
-
 
 # active mq gps real
 spring:
@@ -67,23 +44,72 @@ wechat:
 # Different profiles' configuration
 ---
 spring:
+  profiles: local
+
+druid:
+  group:
+    defaultGroup: d_myc
+    balance: robin
+  datasource:
+    -
+      identity: myc_master
+      group: d_myc
+      role: master
+      driverClassName: com.mysql.jdbc.Driver
+      mapperLocations: classpath*:sqlMap/**/*Mapper.xml
+      url: jdbc:mysql://47.92.210.161:6033/mtjk_dev?zeroDateTimeBehavior=convertToNull&useUnicode=true&characterEncoding=UTF-8
+      username: root
+      password: szMtjk_2018
+      initialSize: 5
+      filters: stat
+      maxActive: 8
+      minIdle: 5
+      maxWait: 50000
+      validationQuery: SELECT 1
+
+---
+spring:
   profiles: dev
 
+druid:
+  group:
+    defaultGroup: d_myc
+    balance: robin
+  datasource:
+    -
+      identity: myc_master
+      group: d_myc
+      role: master
+      driverClassName: com.mysql.jdbc.Driver
+      mapperLocations: classpath*:sqlMap/**/*Mapper.xml
+      url: jdbc:mysql://127.0.0.1:6033/mtjk_dev?zeroDateTimeBehavior=convertToNull&useUnicode=true&characterEncoding=UTF-8
+      username: root
+      password: szMtjk_2018
+      initialSize: 5
+      filters: stat
+      maxActive: 8
+      minIdle: 5
+      maxWait: 50000
+      validationQuery: SELECT 1
 
 ---
 spring:
   profiles: prd
 
 druid:
+  group:
+    defaultGroup: d_myc
+    balance: robin
   datasource:
-    - identity: myc_master
+    -
+      identity: myc_master
       group: d_myc
       role: master
       driverClassName: com.mysql.jdbc.Driver
       mapperLocations: classpath*:sqlMap/**/*Mapper.xml
-      url: jdbc:mysql://127.0.0.1:3306/xyl?zeroDateTimeBehavior=convertToNull&useUnicode=true&characterEncoding=UTF-8
+      url: jdbc:mysql://127.0.0.1:6033/mtjk_prd?zeroDateTimeBehavior=convertToNull&useUnicode=true&characterEncoding=UTF-8
       username: root
-      password: uAiqwVwjJ8-i
+      password: szMtjk_2018
       initialSize: 5
       filters: stat
       maxActive: 8
