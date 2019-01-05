@@ -4,7 +4,7 @@
 boot-jdbc/target/
 common/target/
 business/target/
-site/target/
+web/target/
 target/
 impl/logs/
 *.jar
@@ -14,7 +14,7 @@ impl/logs/
 out/
 boot-jdbc/build/**/*.*
 common/build/**/*.*
-site/build/**/*
+web/build/**/*
 business/build/**/*.*
 
 # temp ignore

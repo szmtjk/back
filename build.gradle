@@ -1,7 +1,7 @@
 def vJavaLang = '1.8'
 
-def javaProjects = [project(':site'), project(':common'), project(':business'), project(':boot-jdbc')]
-def bootProjects = [project(':site')]
+def javaProjects = [project(':web'), project(':common'), project(':business'), project(':boot-jdbc')]
+def bootProjects = [project(':web')]
 
 ext {
     mobBootVersion = '1.1.1'

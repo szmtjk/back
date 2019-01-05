@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!--  Generate by autoSQLMap Powered by duxing@Taobao -->
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.xingyi.logistic.authentication.db.dao.ActionResourcesDAO">
-    <resultMap id="AllColumnMap" type="com.xingyi.logistic.authentication.db.entity.ActionResourcesDO">
+<mapper namespace="com.szmtjk.authentication.db.dao.ActionResourcesDAO">
+    <resultMap id="AllColumnMap" type="com.szmtjk.authentication.db.entity.ActionResourcesDO">
         <result property="id" column="id"/>
         <result property="code" column="code"/>
         <result property="name" column="name"/>
