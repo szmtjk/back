@@ -1,6 +1,6 @@
 package com.szmtjk.business.db.entity;
 
-import com.szmtjk.business.bean.BaseDBQueryPage;
+import com.szmtjk.business.bean.base.BaseDBQueryPage;
 
 /**
  * Created by xiaohu on 2018/8/25.

@@ -1,6 +1,8 @@
 package com.szmtjk.business.bean;
 
 
+import com.szmtjk.business.bean.base.BaseModelAndDO;
+
 /**
  * 三方基础信息
  */

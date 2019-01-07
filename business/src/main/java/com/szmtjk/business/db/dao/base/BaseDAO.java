@@ -1,6 +1,6 @@
 package com.szmtjk.business.db.dao.base;
 
-import com.szmtjk.business.bean.BaseDBQueryPage;
+import com.szmtjk.business.bean.base.BaseDBQueryPage;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;

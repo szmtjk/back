@@ -1,6 +1,6 @@
 package com.szmtjk.qiangdan.db.entity;
 
-import com.szmtjk.business.bean.BaseDBQueryPage;
+import com.szmtjk.business.bean.base.BaseDBQueryPage;
 
 public class AppUserDBQuery extends BaseDBQueryPage {
     private String key;

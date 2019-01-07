@@ -2,7 +2,7 @@ package com.szmtjk.authentication.service;
 
 import com.szmtjk.authentication.model.UserRoles;
 import com.szmtjk.authentication.model.UserRolesQuery;
-import com.szmtjk.business.service.BaseService;
+import com.szmtjk.business.service.base.BaseService;
 import com.xxx.common.bean.JsonRet;
 
 import java.util.List;

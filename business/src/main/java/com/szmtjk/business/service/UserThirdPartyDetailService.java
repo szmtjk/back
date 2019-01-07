@@ -2,6 +2,7 @@ package com.szmtjk.business.service;
 
 import com.szmtjk.business.model.UserThirdPartyDetail;
 import com.szmtjk.business.model.UserThirdPartyDetailQuery;
+import com.szmtjk.business.service.base.BaseService;
 import com.xxx.common.bean.JsonRet;
 
 /**

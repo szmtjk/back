@@ -1,5 +1,7 @@
 package com.szmtjk.business.bean;
 
+import com.szmtjk.business.bean.base.BaseModelAndDO;
+
 /**
  * Created by xiaohu on 2018/8/25.
  */

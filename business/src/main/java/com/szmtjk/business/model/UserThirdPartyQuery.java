@@ -1,6 +1,6 @@
 package com.szmtjk.business.model;
 
-import com.szmtjk.business.bean.BaseQueryPage;
+import com.szmtjk.business.bean.base.BaseQueryPage;
 
 public class UserThirdPartyQuery extends BaseQueryPage {
 

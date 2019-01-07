@@ -1,7 +1,7 @@
 package com.szmtjk.business.service.base;
 
-import com.szmtjk.business.bean.BaseDBQueryPage;
-import com.szmtjk.business.bean.BaseQueryPage;
+import com.szmtjk.business.bean.base.BaseDBQueryPage;
+import com.szmtjk.business.bean.base.BaseQueryPage;
 import com.szmtjk.business.util.PrimitiveUtil;
 
 /**

@@ -1,6 +1,6 @@
 package com.szmtjk.authentication.model;
 
-import com.szmtjk.business.bean.BaseQueryPage;
+import com.szmtjk.business.bean.base.BaseQueryPage;
 
 public class ActionResourcesQuery extends BaseQueryPage {
     private String key;

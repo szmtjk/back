@@ -8,6 +8,11 @@ public enum ErrCode {
     PARAM_MISS(10000, "参数为空"),
     PARAM_INVALID(10001, "参数不合法"),
 
+    GET_DAO_ERR(10100, "获取DAO失败"),
+    GET_MODEL_CONVERTER_ERR(10101, "获取ModelConverter失败"),
+    GET_CONDITION_CONVERTER_ERR(10102, "获取ConditionConverter失败"),
+    GET_SERVICE_ERR(10103, "获取Service失败"),
+
     DATA_REPEATED(20001, "数据重复"),
     DATA_NOT_EXIST(20002, "数据不存在"),
     ID_INVALID(20003, "ID不合法"),
@@ -19,14 +24,11 @@ public enum ErrCode {
     RESER_DATA_REPEATED(20009, "不能多次预约"),
     FIRST_INPUT_PRELOAD(20010, "首填预报吨位"),
 
-    CUSTOMER_TASK_MODIFY_FORBIDDEN(30001, "已存在客户任务流向，禁止修改"),
-    CUSTOMER_TASK_DEL_FORBIDDEN(30002, "已存在客户任务流向，禁止删除"),
+    MOBILE_INVALID(30000, "手机号不合法"),
+    SEND_SMS_ERR(30001, "发送短信验证码失败"),
+    SMS_CODE_INVALID(30002, "短信验证码不正确"),
 
-    CUSTOMER_TASK_FLOW_MODIFY_FORBIDDEN(30003, "已存在任务调度，禁止修改"),
-    CUSTOMER_TASK_FLOW_DEL_FORBIDDEN(30004, "已存在任务调度，禁止删除"),
-
-    DISPATCH_MODIFY_FORBIDDEN(30005, "已存在航次信息，禁止修改"),
-    DISPATCH_DEL_FORBIDDEN(30006, "已存在航次信息，禁止删除"),
+    ADD_NEW_USER_ERR(31000, "新注册用户失败"),
 
     WECHAT_NOT_BIND(40000, "未绑定"),
     WECHAT_CODE_EMPTY(40001, "未指定code"),
@@ -39,6 +41,8 @@ public enum ErrCode {
     WECHAT_BIND_ERR(40008, "绑定操作失败"),
     WECHAT_UNBIND_ERR(40009, "解绑操作失败"),
     WECHAT_SYS_USER_BIND_BY_OTHER_ERR(40010, "当前系统账号已被其他微信账号绑定"),
+    MOBILE_REGISTERED_WITHOUT_THIRD_BIND(40011, "手机号已注册"),
+    WECHAT_SYS_USER_BIND_BY_OTHER_MOBILE(40012, "当前微信号已绑定其他手机号"),
 
     WEIXIN_AUTHORITY_FORBIDDEN(70000,"用户禁止授权"),
 

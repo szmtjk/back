@@ -6,7 +6,7 @@ buildscript {
 }
 
 springBoot {
-    mainClass = 'com.xingyi.logistic.Application'
+    mainClass = 'com.szmtjk.web.Application'
 }
 jar{
     baseName = 'xyl'

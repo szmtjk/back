@@ -2,8 +2,9 @@ package com.szmtjk.business.bean;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.serializer.SerializerFeature;
+import com.szmtjk.business.bean.base.BaseModelAndDO;
 
-public class BasePushAppMsg extends BaseModelAndDO{
+public class BasePushAppMsg extends BaseModelAndDO {
 
     /**
      * 用户id

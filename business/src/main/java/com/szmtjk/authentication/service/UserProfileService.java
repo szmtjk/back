@@ -2,7 +2,7 @@ package com.szmtjk.authentication.service;
 
 import com.szmtjk.authentication.model.UserProfile;
 import com.szmtjk.authentication.model.UserProfileQuery;
-import com.szmtjk.business.service.BaseService;
+import com.szmtjk.business.service.base.BaseService;
 
 /**
  * @author tsingtao_tung

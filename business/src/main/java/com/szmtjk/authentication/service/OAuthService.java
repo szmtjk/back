@@ -2,7 +2,7 @@ package com.szmtjk.authentication.service;
 
 import com.szmtjk.authentication.model.OAuth;
 import com.szmtjk.authentication.model.OAuthQuery;
-import com.szmtjk.business.service.BaseService;
+import com.szmtjk.business.service.base.BaseService;
 import com.xxx.common.bean.JsonRet;
 
 /**

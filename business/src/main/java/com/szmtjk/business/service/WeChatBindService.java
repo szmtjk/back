@@ -16,4 +16,7 @@ public interface WeChatBindService {
     JsonRet<Object> sendTestMPMsg(String userName);
 
     JsonRet<Object> sendTestMPMsg(Long userId, String testFirst, String testRemark);
+
+    JsonRet<Object> bindMobile(String code, String mobile, String smsCode);
+    JsonRet<Object> unbindMobile(String code, String mobile, String smsCode);
 }

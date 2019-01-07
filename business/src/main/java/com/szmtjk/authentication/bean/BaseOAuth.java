@@ -1,6 +1,6 @@
 package com.szmtjk.authentication.bean;
 
-import com.szmtjk.business.bean.BaseModelAndDO;
+import com.szmtjk.business.bean.base.BaseModelAndDO;
 
 public class BaseOAuth extends BaseModelAndDO {
     private Long userId;

@@ -1,7 +1,7 @@
 package com.szmtjk.authentication.service;
 
 import com.szmtjk.authentication.model.LocalAuth;
-import com.szmtjk.business.service.BaseService;
+import com.szmtjk.business.service.base.BaseService;
 import com.szmtjk.authentication.model.LocalAuthQuery;
 
 public interface LocalAuthService extends BaseService<LocalAuth,LocalAuthQuery> {

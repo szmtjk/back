@@ -1,6 +1,6 @@
 package com.szmtjk.business.model;
 
-import com.szmtjk.business.bean.BaseQueryPage;
+import com.szmtjk.business.bean.base.BaseQueryPage;
 
 /**
  * Created by xiaohu on 2018/8/25.

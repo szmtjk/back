@@ -2,7 +2,7 @@ package com.szmtjk.authentication.service;
 
 import com.szmtjk.authentication.model.Roles;
 import com.szmtjk.authentication.model.RolesQuery;
-import com.szmtjk.business.service.BaseService;
+import com.szmtjk.business.service.base.BaseService;
 
 import java.util.List;
 
