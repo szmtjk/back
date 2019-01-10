@@ -69,7 +69,7 @@ public class WeChatBindServiceImpl implements WeChatBindService {
     public JsonRet<Object> checkBind(String code, int appType) {
         LOG.info("checkBind, code:{}, appType:{}", code, appType);
         if (StringUtils.isEmpty(code)) {
-            return JsonRet.getErrRet(ErrCode.WECHAT_APP_TYPE_INVALID);
+            return JsonRet.getErrRet(ErrCode.WECHAT_CODE_EMPTY);
         }
         //根据appType获取相应的appId, appSecret
         AppSecretConfig appSecretConfig = weChatService.getAppSecretConfig(appType);
