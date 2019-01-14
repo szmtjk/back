@@ -34,7 +34,7 @@ public class ExamCategoryController extends BaseCRUDController<ExamCategory, Exa
 
         if(result.isSuccess()) {
             List<ExamCategory> categories = result.getData();
-            LOG.info("categories size=" + categories.size());
+            LOG.info("categories  size=" + categories.size());
             Iterator<ExamCategory> categoryIterator = categories.iterator();
             while(categoryIterator.hasNext()){
                 ExamCategory category = categoryIterator.next();
