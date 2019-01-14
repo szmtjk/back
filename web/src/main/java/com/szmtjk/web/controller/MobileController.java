@@ -23,7 +23,7 @@ public class MobileController {
      * @param mobile
      * @return
      */
-    @RequestMapping(value = "/sendSMSCode", method = RequestMethod.POST)
+    @RequestMapping(value = {"/sendSMSCode", "/getSMSCode"}, method = RequestMethod.POST)
     @ResponseBody
     public JsonRet<Object> sendSMSCode(String mobile) {
         return mobileService.sendSMSCode(mobile);

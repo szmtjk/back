@@ -10,6 +10,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 
 /**
  * Created by xiaohu on 2019/1/7.
@@ -24,6 +25,9 @@ public class MobileServiceImpl implements MobileService {
 
     @Override
     public JsonRet<Object> sendSMSCode(String mobile) {
+        if (StringUtils.isEmpty(mobile)) {
+            return JsonRet.getErrRet(ErrCode.MOBILE_INVALID);
+        }
         if (!SMSUtil.isValidMobile(mobile)) {
             return JsonRet.getErrRet(ErrCode.MOBILE_INVALID);
         }
