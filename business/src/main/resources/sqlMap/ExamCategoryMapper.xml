@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.szmtjk.business.db.dao.ExamCategoryDAO">
+    <resultMap id="AllColumnMap" type="com.szmtjk.business.db.entity.ExamCategoryDO">
+        <result property="id" column="ID" />
+        <result property="name" column="NAME" />
+        <result property="examId" column="EXAMID" />
+        <result property="summary" column="SUMMARY" />
+        <result property="summaryDoctor" column="SUMMARYDOCTOR" />
+        <result property="summaryDate" column="SUMMARYDATE" />
+        <result property="created" column="CREATED" />
+        <result property="updated" column="UPDATED" />
+        <result property="isDeleted" column="ISDELETED" />
+    </resultMap>
+
+    <sql id="all_column">
+        `ID`,
+        `NAME`,
+        `EXAMID`,
+        `SUMMARY`,
+        `SUMMARYDOCTOR`,
+        `SUMMARYDATE`,
+        `CREATED`,
+        `UPDATED`,
+        `ISDELETED`
+    </sql>
+
+    <select id="getById" parameterType="java.lang.Long" resultMap="AllColumnMap">
+        SELECT <include refid="all_column"/>
+        FROM `ExamReport`
+        WHERE `id` = #{id}
+    </select>
+
+    <insert id="insertSelective" useGeneratedKeys="true" keyProperty="pojo.id">
+        INSERT INTO `ExamCategory`
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="pojo.name!=null">`NAME`,</if>
+            <if test="pojo.examId!=null">`EXAMID`,</if>
+            <if test="pojo.summary!=null">`SUMMARY`,</if>
+            <if test="pojo.summaryDoctor!=null">`SUMMARYDOCTOR`,</if>
+            <if test="pojo.summaryDate!=null">`SUMMARYDATE`,</if>
+            `CREATED`,
+            `updated`,
+            `ISDELETED`
+        </trim>
+        VALUES
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="pojo.name!=null">#{pojo.name},</if>
+            <if test="pojo.examId!=null">#{pojo.examId},</if>
+            <if test="pojo.summary!=null">#{pojo.summary},</if>
+            <if test="pojo.summaryDoctor!=null">#{pojo.summaryDoctor},</if>
+            <if test="pojo.summaryDate!=null">#{pojo.summaryDate},</if>
+            UNIX_TIMESTAMP(now()),
+            UNIX_TIMESTAMP(now()),
+            0
+        </trim>
+    </insert>
+
+    <update id="update">
+        UPDATE `ExamCategory`
+        SET
+        <trim prefix="" suffix="" suffixOverrides=",">
+            <if test="pojo.name!=null">`NAME` = #{pojo.name},</if>
+            <if test="pojo.examId!=null">`EXAMID` = #{pojo.examId},</if>
+            <if test="pojo.summary!=null">`SUMMARY` = #{pojo.summary},</if>
+            <if test="pojo.summaryDoctor!=null">`SUMMARYDOCTOR` = #{pojo.summaryDoctor},</if>
+            <if test="pojo.summaryDate!=null">`SUMMARYDATE` = #{pojo.summaryDate},</if>
+            UNIX_TIMESTAMP(now()),
+            <if test="pojo.isDeleted!=null">`ISDELETED` = #{pojo.isDeleted},</if>
+        </trim>
+        WHERE `id` = #{pojo.id} and `isDeleted` = 0
+        LIMIT 1
+    </update>
+
+    <update id="del" parameterType="java.lang.Long">
+        UPDATE `ExamCategory`
+        SET `isDeleted` = 1 ,
+        `updated` = UNIX_TIMESTAMP(now())
+        WHERE `id` = #{pojo.id} and `isDeleted` = 0
+        LIMIT 1
+    </update>
+
+    <select id="getExistCount" resultType="java.lang.Integer" parameterType="Map" >
+        SELECT 0 FROM DUAL
+    </select>
+
+    <select id="getCount" resultType="java.lang.Integer" parameterType="Map" >
+        SELECT  count(id)
+        FROM  `ExamCategory`
+        <include refid="pageQueryWhereCommon" />
+        limit 1
+    </select>
+
+    <select id="queryByPage" resultMap="AllColumnMap" parameterType="Map">
+        select <include refid="all_column"/>
+        from `ExamCategory`
+        <include refid="pageQueryWhereCommon" />
+        order by `id` desc
+        <include refid="pageCommon"/>
+    </select>
+
+    <sql id="pageQueryWhereCommon">
+        where `isDeleted` = 0
+        <if test="pojo.examId != null"> AND `EXAMID` = #{pojo.examId} </if>
+    </sql>
+
+    <sql id="pageCommon">
+        <choose>
+        <when test="pojo.startRow != null and pojo.startRow gt -1 and pojo.limitNum != null and pojo.limitNum gt 0">
+            limit #{pojo.startRow}, #{pojo.limitNum}
+        </when>
+        <otherwise>
+            limit 200
+        </otherwise>
+        </choose>
+    </sql>
+</mapper>

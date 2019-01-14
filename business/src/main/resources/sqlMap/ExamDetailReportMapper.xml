@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.szmtjk.business.db.dao.ExamDetailReportDAO">
+    <resultMap id="AllColumnMap" type="com.szmtjk.business.db.entity.ExamDetailReportDO">
+        <result property="id" column="ID" />
+        <result property="categoryId" column="CATEGORYID" />
+        <result property="itemName" column="ITEMNAME" />
+        <result property="itemUnit" column="ITEMUNIT" />
+        <result property="result" column="RESULT" />
+        <result property="referenceRange" column="REFERENCERANGE" />
+        <result property="tip" column="TIP" />
+        <result property="created" column="CREATED" />
+        <result property="updated" column="UPDATED" />
+        <result property="isDeleted" column="ISDELETED" />
+    </resultMap>
+
+    <sql id="all_column">
+        `ID`,
+        `NAME`,
+        `EXAMID`,
+        `SUMMARY`,
+        `SUMMARYDOCTOR`,
+        `SUMMARYDATE`,
+        `CREATED`,
+        `UPDATED`,
+        `ISDELETED`
+    </sql>
+
+    <select id="getById" parameterType="java.lang.Long" resultMap="AllColumnMap">
+        SELECT <include refid="all_column"/>
+        FROM `ExamReport`
+        WHERE `id` = #{id}
+    </select>
+
+    <insert id="insertSelective" useGeneratedKeys="true" keyProperty="pojo.id">
+        INSERT INTO `ExamDetailReport`
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="pojo.categoryId!=null">`CATEGORYID`,</if>
+            <if test="pojo.itemName!=null">`ITEMNAME`,</if>
+            <if test="pojo.itemUnit!=null">`ITEMUNIT`,</if>
+            <if test="pojo.result!=null">`RESULT`,</if>
+            <if test="pojo.referenceRange!=null">`REFERENCERANGE`,</if>
+            <if test="pojo.tip!=null">`TIP`,</if>
+            `CREATED`,
+            `updated`,
+            `ISDELETED`
+        </trim>
+        VALUES
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="pojo.categoryId!=null">#{pojo.categoryId},</if>
+            <if test="pojo.itemName!=null">#{pojo.itemName},</if>
+            <if test="pojo.itemUnit!=null">#{pojo.itemUnit},</if>
+            <if test="pojo.result!=null">#{pojo.result},</if>
+            <if test="pojo.referenceRange!=null">#{pojo.referenceRange},</if>
+            <if test="pojo.tip!=null">#{pojo.tip},</if>
+            UNIX_TIMESTAMP(now()),
+            UNIX_TIMESTAMP(now()),
+            0
+        </trim>
+    </insert>
+
+    <update id="update">
+        UPDATE `ExamDetailReport`
+        SET
+        <trim prefix="" suffix="" suffixOverrides=",">
+            <if test="pojo.categoryId!=null">`CATEGORYID` = #{pojo.categoryId},</if>
+            <if test="pojo.itemName!=null">`ITEMNAME` = #{pojo.itemName},</if>
+            <if test="pojo.itemUnit!=null">`ITEMUNIT` = #{pojo.itemUnit},</if>
+            <if test="pojo.result!=null">`RESULT` = #{pojo.result},</if>
+            <if test="pojo.referenceRange!=null">`REFERENCERANGE` = #{pojo.referenceRange},</if>
+            <if test="pojo.tip!=null">`TIP` = #{pojo.tip},</if>
+            UNIX_TIMESTAMP(now()),
+            <if test="pojo.isDeleted!=null">`ISDELETED` = #{pojo.isDeleted},</if>
+        </trim>
+        WHERE `id` = #{pojo.id} and `isDeleted` = 0
+        LIMIT 1
+    </update>
+
+    <update id="del" parameterType="java.lang.Long">
+        UPDATE `ExamDetailReport`
+        SET `isDeleted` = 1 ,
+        `updated` = UNIX_TIMESTAMP(now())
+        WHERE `id` = #{pojo.id} and `isDeleted` = 0
+        LIMIT 1
+    </update>
+
+    <select id="getExistCount" resultType="java.lang.Integer" parameterType="Map" >
+        SELECT 0 FROM DUAL
+    </select>
+
+    <select id="getCount" resultType="java.lang.Integer" parameterType="Map" >
+        SELECT  count(id)
+        FROM  `ExamDetailReport`
+        <include refid="pageQueryWhereCommon" />
+        limit 1
+    </select>
+
+    <select id="queryByPage" resultMap="AllColumnMap" parameterType="Map">
+        select <include refid="all_column"/>
+        from `ExamDetailReport`
+        <include refid="pageQueryWhereCommon" />
+        order by `id` desc
+        <include refid="pageCommon"/>
+    </select>
+
+    <sql id="pageQueryWhereCommon">
+        where `isDeleted` = 0
+        <if test="pojo.examId != null"> AND `EXAMID` = #{pojo.examId} </if>
+    </sql>
+
+    <sql id="pageCommon">
+        <choose>
+        <when test="pojo.startRow != null and pojo.startRow gt -1 and pojo.limitNum != null and pojo.limitNum gt 0">
+            limit #{pojo.startRow}, #{pojo.limitNum}
+        </when>
+        <otherwise>
+            limit 200
+        </otherwise>
+        </choose>
+    </sql>
+</mapper>
