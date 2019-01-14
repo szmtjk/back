@@ -55,6 +55,8 @@ public class WechatBindController {
         return weChatBindService.checkBind(code, AppType.MP);
     }
 
+    @RequestMapping(value = "/bindMobile", method = RequestMethod.POST)
+    @ResponseBody
     public JsonRet<Object> bindMobile(String code, String mobile, String smsCode) {
         return weChatBindService.bindMobile(code, mobile, smsCode);
     }
