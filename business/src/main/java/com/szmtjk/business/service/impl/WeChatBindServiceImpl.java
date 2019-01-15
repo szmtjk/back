@@ -68,44 +68,11 @@ public class WeChatBindServiceImpl implements WeChatBindService {
     @Override
     public JsonRet<Object> checkBind(String code, int appType) {
         LOG.info("checkBind, code:{}, appType:{}", code, appType);
-        if (StringUtils.isEmpty(code)) {
-            return JsonRet.getErrRet(ErrCode.WECHAT_CODE_EMPTY);
-        }
-        //根据appType获取相应的appId, appSecret
-        AppSecretConfig appSecretConfig = weChatService.getAppSecretConfig(appType);
-        if (appSecretConfig == null) {
-            return JsonRet.getErrRet(ErrCode.WECHAT_APP_TYPE_INVALID);
-        }
-
-        JsonRet<String> unionIdRet;
-        if (appType == AppType.MP) {
-            unionIdRet = getUnionIdFromMP(appSecretConfig, code);
-        } else if (appType == AppType.MINI_PROGRAM) {
-            unionIdRet = getUnionIdFromMiniProgram(appSecretConfig, code);
-        } else {
-            return JsonRet.getErrRet(ErrCode.WECHAT_APP_TYPE_INVALID);
-        }
-        if (!unionIdRet.isSuccess()) {
-            return JsonRet.getErrRet(unionIdRet.getErrCode(), unionIdRet.getMsg());
-        }
-        String unionId = unionIdRet.getData();
-        LOG.info("checkBind, unionId:{}", unionId);
-
-        //根据unionId获取user信息
-        UserThirdPartyQuery queryParam = new UserThirdPartyQuery();
-        queryParam.setThirdId(unionId);
-        queryParam.setThirdType(ThirdType.WECHAT);
-        JsonRet<List<UserThirdParty>> userThirdPartyRet = userThirdPartyService.getList(queryParam);
-        if (!userThirdPartyRet.isSuccess() || CollectionUtils.isEmpty(userThirdPartyRet.getData())) {
-            return JsonRet.getErrRet(ErrCode.WECHAT_NOT_BIND);
-        }
-        UserThirdParty userThirdParty = userThirdPartyRet.getData().get(0);
-        JsonRet<User> userRet = userService.getById(userThirdParty.getUserId());
+        JsonRet<User> userRet = getUserByCode(code, appType);
         if (!userRet.isSuccess() || userRet.getData() == null) {
-            return JsonRet.getErrRet(ErrCode.WECHAT_BIND_USER_NOT_EXIST);
+            return JsonRet.getErrRet(userRet.getErrCode(), userRet.getMsg());
         }
         User user = userRet.getData();
-        LOG.info("checkBind, unionId:{} bind to userName:{}, mobile", unionId, user.getUserName(), user.getMobile());
         //如果是来自小程序的，则执行登录过程，返回token，其余的则返回绑定的userName
 //        if (appType == AppType.MINI_PROGRAM) {
 ////            long expire = System.currentTimeMillis() + this.tokenExpire;
@@ -322,6 +289,46 @@ public class WeChatBindServiceImpl implements WeChatBindService {
     @Override
     public JsonRet<Object> unbindMobile(String code, String mobile, String smsCode) {
         return null;
+    }
+
+    @Override
+    public JsonRet<User> getUserByCode(String code, int appType) {
+        if (StringUtils.isEmpty(code)) {
+            return JsonRet.getErrRet(ErrCode.WECHAT_CODE_EMPTY);
+        }
+        //根据appType获取相应的appId, appSecret
+        AppSecretConfig appSecretConfig = weChatService.getAppSecretConfig(appType);
+        if (appSecretConfig == null) {
+            return JsonRet.getErrRet(ErrCode.WECHAT_APP_TYPE_INVALID);
+        }
+
+        JsonRet<String> unionIdRet;
+        if (appType == AppType.MP) {
+            unionIdRet = getUnionIdFromMP(appSecretConfig, code);
+        } else if (appType == AppType.MINI_PROGRAM) {
+            unionIdRet = getUnionIdFromMiniProgram(appSecretConfig, code);
+        } else {
+            return JsonRet.getErrRet(ErrCode.WECHAT_APP_TYPE_INVALID);
+        }
+        if (!unionIdRet.isSuccess()) {
+            return JsonRet.getErrRet(unionIdRet.getErrCode(), unionIdRet.getMsg());
+        }
+        String unionId = unionIdRet.getData();
+
+        //根据unionId获取user信息
+        UserThirdPartyQuery queryParam = new UserThirdPartyQuery();
+        queryParam.setThirdId(unionId);
+        queryParam.setThirdType(ThirdType.WECHAT);
+        JsonRet<List<UserThirdParty>> userThirdPartyRet = userThirdPartyService.getList(queryParam);
+        if (!userThirdPartyRet.isSuccess() || CollectionUtils.isEmpty(userThirdPartyRet.getData())) {
+            return JsonRet.getErrRet(ErrCode.WECHAT_NOT_BIND);
+        }
+        UserThirdParty userThirdParty = userThirdPartyRet.getData().get(0);
+        JsonRet<User> userRet = userService.getById(userThirdParty.getUserId());
+        if (!userRet.isSuccess() || userRet.getData() == null) {
+            return JsonRet.getErrRet(ErrCode.WECHAT_BIND_USER_NOT_EXIST);
+        }
+        return JsonRet.getSuccessRet(userRet.getData());
     }
 
     private JsonRet<String> getUnionIdFromMP(AppSecretConfig appSecretConfig, String code) {

@@ -1,5 +1,6 @@
 package com.szmtjk.business.service;
 
+import com.szmtjk.business.model.User;
 import com.xxx.common.bean.JsonRet;
 
 /**
@@ -19,4 +20,6 @@ public interface WeChatBindService {
 
     JsonRet<Object> bindMobile(String code, String mobile, String smsCode);
     JsonRet<Object> unbindMobile(String code, String mobile, String smsCode);
+
+    JsonRet<User> getUserByCode(String code, int appType);
 }
