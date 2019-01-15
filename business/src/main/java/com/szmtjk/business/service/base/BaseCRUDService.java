@@ -330,7 +330,7 @@ public abstract class BaseCRUDService<DO extends BaseModelAndDO, Model extends B
 
     protected QueryConditionConverter<QueryPage, DBQueryPage> getConditionConverter() {
         try {
-            Object bean = ApplicationContextHolder.getBean(getCurrentModelName(), "ConditionConverter");
+            Object bean = ApplicationContextHolder.getBean(getCurrentModelName(), "QueryConverter");
             if (bean != null && bean instanceof QueryConditionConverter) {
                 QueryConditionConverter<QueryPage, DBQueryPage> converter = (QueryConditionConverter<QueryPage, DBQueryPage>)bean;
                 return converter;
