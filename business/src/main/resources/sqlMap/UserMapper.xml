@@ -61,6 +61,13 @@
         LIMIT 1
     </update>
 
+    <select id="getById" parameterType="java.lang.Long" resultMap="AllColumnMap">
+        SELECT <include refid="all_column"/>
+        FROM `User` a
+        WHERE a.`id` = #{id} and a.`isDeleted` = 0
+        LIMIT 1
+    </select>
+
     <select id="getExistCount" resultType="java.lang.Integer" parameterType="Map" >
         SELECT  count(id)
         FROM  `User`
