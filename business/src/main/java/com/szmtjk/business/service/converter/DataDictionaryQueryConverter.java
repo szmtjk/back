@@ -2,7 +2,7 @@ package com.szmtjk.business.service.converter;
 
 import com.szmtjk.authentication.db.entity.DataDictionaryDBQuery;
 import com.szmtjk.authentication.model.DataDictionaryQuery;
-import com.szmtjk.business.service.base.QueryConditionConverter;
+import com.szmtjk.business.converter.base.QueryConditionConverter;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Component;
 

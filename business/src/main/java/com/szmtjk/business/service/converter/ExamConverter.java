@@ -1,6 +1,6 @@
 package com.szmtjk.business.service.converter;
 
-import com.szmtjk.business.service.base.ModelConverter;
+import com.szmtjk.business.converter.base.ModelConverter;
 import com.szmtjk.business.db.entity.ExamDO;
 import com.szmtjk.business.model.Exam;
 import org.springframework.beans.BeanUtils;

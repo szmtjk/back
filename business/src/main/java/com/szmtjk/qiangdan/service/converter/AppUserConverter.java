@@ -1,6 +1,6 @@
 package com.szmtjk.qiangdan.service.converter;
 
-import com.szmtjk.business.service.base.ModelConverter;
+import com.szmtjk.business.converter.base.ModelConverter;
 import com.szmtjk.qiangdan.db.entity.AppUserDO;
 import com.szmtjk.qiangdan.model.AppUser;
 import org.springframework.beans.BeanUtils;

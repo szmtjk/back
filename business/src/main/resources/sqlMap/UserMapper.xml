@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.szmtjk.business.db.dao.UserDAO">
-    <resultMap id="AllColumnMap" class="com.szmtjk.business.db.entity.UserDO">
+    <resultMap id="AllColumnMap" type="com.szmtjk.business.db.entity.UserDO">
         <result property="id" column="ID"/>
         <result property="userName" column="USERNAME"/>
         <result property="userPass" column="USERPASS"/>
@@ -21,24 +21,22 @@
         ,`ISDELETED`
     </sql>
 
-    <insert id="insertSelective" useGeneratedKeys="true" keyProperty="id">
+    <insert id="insertSelective" useGeneratedKeys="true" keyProperty="pojo.id">
         INSERT INTO `User`
         <trim prefix="(" suffix=")" suffixOverrides=",">
-            USERNAME,
-            USERPASS,
-            MOBILE,
+            <if test="pojo.userName!=null">USERNAME,</if>
+            <if test="pojo.userPass!=null">USERPASS,</if>
+            <if test="pojo.mobile!=null">MOBILE,</if>
             CREATED,
-            UPDATED,
-            ISDELETED,
+            UPDATED
         </trim>
         VALUES
         <trim prefix="(" suffix=")" suffixOverrides=",">
-            <if test="userName!=null">#{userName},</if>
-            <if test="userPass!=null">#{userPass},</if>
-            <if test="mobile!=null">#{mobile},</if>
+            <if test="pojo.userName!=null">#{pojo.userName},</if>
+            <if test="pojo.userPass!=null">#{pojo.userPass},</if>
+            <if test="pojo.mobile!=null">#{pojo.mobile},</if>
             UNIX_TIMESTAMP(now()),
-            UNIX_TIMESTAMP(now()),
-            <if test="isDeleted!=null">#{isDeleted},</if>
+            UNIX_TIMESTAMP(now())
         </trim>
     </insert>
 
@@ -46,11 +44,10 @@
         UPDATE `User`
         SET
         <trim prefix="" suffix="" suffixOverrides=",">
-            <if test="userName!=null">`USERNAME` = #{userName},</if>
-            <if test="userPass!=null">`USERPASS` = #{userPass},</if>
-            <if test="mobile!=null">`MOBILE` = #{mobile},</if>
-            UNIX_TIMESTAMP(now()),
-            <if test="isDeleted!=null">`ISDELETED` = #{isDeleted},</if>
+            <if test="pojo.userName!=null">`USERNAME` = #{pojo.userName},</if>
+            <if test="pojo.userPass!=null">`USERPASS` = #{pojo.userPass},</if>
+            <if test="pojo.mobile!=null">`MOBILE` = #{pojo.mobile},</if>
+            UNIX_TIMESTAMP(now())
         </trim>
         WHERE `id` = #{id} and `isDeleted` = 0
         LIMIT 1
@@ -68,9 +65,9 @@
         SELECT  count(id)
         FROM  `User`
         where `isDeleted` = 0
-        <if test="id != null"> AND `id` != #{id} </if>
-        <if test="userName != null"> AND `userName` != #{userName} </if>
-        <if test="mobile != null"> AND `mobile` != #{mobile} </if>
+        <if test="pojo.id != null"> AND `id` != #{pojo.id} </if>
+        <if test="pojo.userName != null"> AND `userName` != #{pojo.userName} </if>
+        <if test="pojo.mobile != null"> AND `mobile` != #{pojo.mobile} </if>
         limit 1
     </select>
 
@@ -78,8 +75,8 @@
         SELECT  count(id)
         FROM  `User`
         where `isDeleted` = 0
-        <if test="userName != null"> AND `userName` != #{userName} </if>
-        <if test="mobile != null"> AND `mobile` != #{mobile} </if>
+        <if test="pojo.userName != null"> AND `userName` != #{pojo.userName} </if>
+        <if test="pojo.mobile != null"> AND `mobile` != #{pojo.mobile} </if>
         limit 1
     </select>
 
@@ -87,16 +84,16 @@
         select <include refid="all_column"/>
         from `User`
         where `isDeleted` = 0
-        <if test="userName != null"> AND `userName` != #{userName} </if>
-        <if test="mobile != null"> AND `mobile` != #{mobile} </if>
+        <if test="pojo.userName != null"> AND `userName` != #{pojo.userName} </if>
+        <if test="pojo.mobile != null"> AND `mobile` != #{pojo.mobile} </if>
         order by `id` desc
         <include refid="pageCommon"/>
     </select>
 
     <sql id="pageCommon">
         <choose>
-        <when test="startRow != null and startRow gt -1 and limitNum != null and limitNum gt 0">
-            limit #{startRow}, #{limitNum}
+        <when test="pojo.startRow != null and pojo.startRow gt -1 and pojo.limitNum != null and pojo.limitNum gt 0">
+            limit #{pojo.startRow}, #{pojo.limitNum}
         </when>
         <otherwise>
             limit 200

@@ -1,7 +1,7 @@
 package com.szmtjk.business.service.converter;
 
 import com.szmtjk.qiangdan.db.entity.AppUserDBQuery;
-import com.szmtjk.business.service.base.QueryConditionConverter;
+import com.szmtjk.business.converter.base.QueryConditionConverter;
 import com.szmtjk.qiangdan.model.AppUserQuery;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Component;

@@ -1,6 +1,6 @@
 package com.szmtjk.authentication.service.converter;
 
-import com.szmtjk.business.service.base.ModelConverter;
+import com.szmtjk.business.converter.base.ModelConverter;
 import com.szmtjk.authentication.db.entity.OAuthDO;
 import com.szmtjk.authentication.model.OAuth;
 import org.springframework.beans.BeanUtils;

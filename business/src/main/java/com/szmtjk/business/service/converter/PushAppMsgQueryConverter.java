@@ -1,7 +1,7 @@
 package com.szmtjk.business.service.converter;
 
 import com.szmtjk.business.model.PushAppMsgQuery;
-import com.szmtjk.business.service.base.QueryConditionConverter;
+import com.szmtjk.business.converter.base.QueryConditionConverter;
 import com.szmtjk.business.db.entity.PushAppMsgDBQuery;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Component;

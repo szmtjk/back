@@ -2,7 +2,7 @@ package com.szmtjk.authentication.service.converter;
 
 import com.szmtjk.authentication.db.entity.ActionResourcesDO;
 import com.szmtjk.authentication.model.ActionResources;
-import com.szmtjk.business.service.base.ModelConverter;
+import com.szmtjk.business.converter.base.ModelConverter;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Component;
 

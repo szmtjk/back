@@ -2,7 +2,7 @@ package com.szmtjk.business.service.converter;
 
 import com.szmtjk.business.db.entity.ExamDetailReportDO;
 import com.szmtjk.business.model.ExamDetailReport;
-import com.szmtjk.business.service.base.ModelConverter;
+import com.szmtjk.business.converter.base.ModelConverter;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Component;
 

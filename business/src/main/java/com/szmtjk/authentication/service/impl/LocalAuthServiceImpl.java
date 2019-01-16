@@ -2,8 +2,8 @@ package com.szmtjk.authentication.service.impl;
 
 import com.szmtjk.authentication.db.entity.LocalAuthDO;
 import com.szmtjk.authentication.model.LocalAuthQuery;
-import com.szmtjk.business.service.base.ModelConverter;
-import com.szmtjk.business.service.base.QueryConditionConverter;
+import com.szmtjk.business.converter.base.ModelConverter;
+import com.szmtjk.business.converter.base.QueryConditionConverter;
 import com.szmtjk.authentication.db.dao.LocalAuthDAO;
 import com.szmtjk.authentication.db.entity.LocalAuthDBQuery;
 import com.szmtjk.authentication.model.LocalAuth;

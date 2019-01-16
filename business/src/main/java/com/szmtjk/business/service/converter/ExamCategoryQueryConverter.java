@@ -2,7 +2,7 @@ package com.szmtjk.business.service.converter;
 
 import com.szmtjk.business.db.entity.ExamCategoryDBQuery;
 import com.szmtjk.business.model.ExamCategoryQuery;
-import com.szmtjk.business.service.base.QueryConditionConverter;
+import com.szmtjk.business.converter.base.QueryConditionConverter;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Component;
 

@@ -9,9 +9,7 @@ import org.springframework.context.annotation.Configuration;
  */
 @Configuration
 @MobMapperScan(basePackages = {
-        "com.szmtjk.business.db.dao",
-        "com.szmtjk.authentication.db.dao",
-        "com.szmtjk.qiangdan.db.dao"
+        "com.szmtjk"
 }, annotationClass = Dao.class)
 public class DBConfig {
 

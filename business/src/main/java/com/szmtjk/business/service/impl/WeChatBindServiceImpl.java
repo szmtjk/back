@@ -271,7 +271,7 @@ public class WeChatBindServiceImpl implements WeChatBindService {
             user.setUserName(mobile);
             user.setMobile(mobile);
             JsonRet<Long> addUserRet = userService.add(user);
-            if (!addUserRet.isSuccess() || PrimitiveUtil.isGTZero(addUserRet.getData())) {
+            if (!addUserRet.isSuccess() || !PrimitiveUtil.isGTZero(addUserRet.getData())) {
                 return JsonRet.getErrRet(ErrCode.ADD_NEW_USER_ERR);
             }
             user.setId(addUserRet.getData());
@@ -412,7 +412,7 @@ public class WeChatBindServiceImpl implements WeChatBindService {
             userQuery.setMobile(mobile);
             userQuery.setUserName(userName);
             JsonRet<List<User>> userListRet = userService.getList(userQuery);
-            if (userListRet.isSuccess() && userListRet.getData() != null) {
+            if (userListRet.isSuccess() && !CollectionUtils.isEmpty(userListRet.getData())) {
                 return userListRet.getData().get(0);
             }
         }
