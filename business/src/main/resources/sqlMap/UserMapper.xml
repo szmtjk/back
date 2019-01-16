@@ -72,9 +72,9 @@
         SELECT  count(id)
         FROM  `User`
         where `isDeleted` = 0
-        <if test="pojo.id != null"> AND `id` != #{pojo.id} </if>
-        <if test="pojo.userName != null"> AND `userName` != #{pojo.userName} </if>
-        <if test="pojo.mobile != null"> AND `mobile` != #{pojo.mobile} </if>
+        <if test="pojo.id != null"> AND `id` = #{pojo.id} </if>
+        <if test="pojo.userName != null"> AND `userName` = #{pojo.userName} </if>
+        <if test="pojo.mobile != null"> AND `mobile` = #{pojo.mobile} </if>
         limit 1
     </select>
 
@@ -82,8 +82,8 @@
         SELECT  count(id)
         FROM  `User`
         where `isDeleted` = 0
-        <if test="pojo.userName != null"> AND `userName` != #{pojo.userName} </if>
-        <if test="pojo.mobile != null"> AND `mobile` != #{pojo.mobile} </if>
+        <if test="pojo.userName != null"> AND `userName` = #{pojo.userName} </if>
+        <if test="pojo.mobile != null"> AND `mobile` = #{pojo.mobile} </if>
         limit 1
     </select>
 
@@ -91,8 +91,8 @@
         select <include refid="all_column"/>
         from `User`
         where `isDeleted` = 0
-        <if test="pojo.userName != null"> AND `userName` != #{pojo.userName} </if>
-        <if test="pojo.mobile != null"> AND `mobile` != #{pojo.mobile} </if>
+        <if test="pojo.userName != null"> AND `userName` = #{pojo.userName} </if>
+        <if test="pojo.mobile != null"> AND `mobile` = #{pojo.mobile} </if>
         order by `id` desc
         <include refid="pageCommon"/>
     </select>
