@@ -23,6 +23,7 @@ import com.szmtjk.business.util.DateUtils;
 import com.szmtjk.business.util.PrimitiveUtil;
 import com.szmtjk.business.util.SMSCodeCache;
 import com.szmtjk.business.util.SMSUtil;
+import com.szmtjk.business.util.TokenUtil;
 import com.xxx.common.bean.ErrCode;
 import com.xxx.common.bean.JsonRet;
 import org.slf4j.Logger;
@@ -33,7 +34,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 import org.springframework.util.StringUtils;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 
 /**
@@ -82,7 +85,10 @@ public class WeChatBindServiceImpl implements WeChatBindService {
 //            return JsonRet.getSuccessRet(token);
 //        } else {
 //        }
-        return JsonRet.getSuccessRet(SMSUtil.getMaskMobile(user.getMobile()));
+        Map<String, String> data = new HashMap<>();
+        data.put("mobile", SMSUtil.getMaskMobile(user.getMobile()));
+        data.put("token", TokenUtil.encodeUserToken(user));
+        return JsonRet.getSuccessRet(data);
     }
 
     @Override

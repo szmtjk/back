@@ -3,11 +3,9 @@ package com.szmtjk.web.filter;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.serializer.SerializerFeature;
 import com.google.common.collect.Lists;
-import com.szmtjk.authentication.authenticator.AuthenticateChain;
-import com.szmtjk.authentication.authenticator.impl.LocalAuthenticator;
-import com.szmtjk.authentication.authenticator.impl.OauthAuthenticator;
+import com.szmtjk.authentication.authenticator.AuthenticateChainFactory;
+import com.szmtjk.authentication.util.UserSessionUtil;
 import com.xxx.common.bean.JsonRet;
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.core.annotation.Order;
 
 import javax.servlet.Filter;
@@ -16,6 +14,7 @@ import javax.servlet.FilterConfig;
 import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
+import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
@@ -27,14 +26,14 @@ import java.util.List;
  * Created At: 2018/1/21 下午11:57.
  */
 @Order(1)
-//@WebFilter(urlPatterns = "/*")
+@WebFilter(urlPatterns = "/*")
 public class AuthenticationFilter implements Filter {
 
 	public static boolean isEnabled = true;
 
 	private static final List<String> URL_WHITE_LIST = Lists.newArrayList(
-			"/dangerZoneSpeed/getList", "/webjars", "/api", "/swagger-ui.html", "/swagger-resources",
-			"/v2/api-docs", "/port/getList", "/gps/loadReal", "/waterLevel/getList", "/dangerZone/getList", "/wechat"
+			"/test/", "/webjars", "/api", "/swagger-ui.html", "/swagger-resources",
+			"/v2/api-docs", "/wechat/", "/mobile/"
 	);
 
 	@Override
@@ -64,46 +63,23 @@ public class AuthenticationFilter implements Filter {
 		String requestURI = httpRequest.getRequestURI();
 		String ctx = httpRequest.getContextPath();
 		String requestPath = requestURI.replace(ctx,"");
-//		System.out.println("-getList--------------------------------------------------" + requestPath);
-//		System.out.println("-getList--------------------------------------------------" + requestPath.startsWith("/port/getList"));
-//		System.out.println("-token--------------------------------------------------" + httpRequest.getHeader("token"));
-//		System.out.println("-getParameter--------------------------------------------------" +  httpRequest.getParameter("token"));
-		if (isRequestStartsWithInWhitelist(requestPath) && httpRequest.getHeader("token") == null)
-		{
 
-			//System.out.println("---------------------------------------------------");
-			chain.doFilter(request,response);
-		}
-		else if(!requestPath.startsWith("/signin") && !requestPath.startsWith("/test")){
-			//认证
+		if (!isRequestStartsWithInWhitelist(requestPath)) {// 非白名单的进行token验证
 			String token = httpRequest.getHeader("token");
-			System.out.println(">>>>>>>>>>>>>>>>>>从 Header 获取 Token:" + token);
-			if(StringUtils.isBlank(token)){
-				token = httpRequest.getParameter("token");
-				System.out.println(">>>>>>>>>>>>>>>>>>从 Request 获取 Token:" + token);
-			}
-
-
-			System.out.println(">>>>>>>>>>>>>>>>>>最终 获取 Token:" + token);
-
-			AuthenticateChain authenticateChain = new AuthenticateChain();
-			authenticateChain.addAuthenticator(new LocalAuthenticator())
-								.addAuthenticator(new OauthAuthenticator());
-
-			JsonRet<Object> jsonRet = authenticateChain.authenticate(token);
-			boolean isAuthenticated = jsonRet.isSuccess();
-
+			JsonRet<Object> ret = AuthenticateChainFactory.authenticate(token);
+			boolean isAuthenticated = ret.isSuccess();
 			if(!isAuthenticated){
 				PrintWriter out = response.getWriter();
-				out.print(JSON.toJSONString(jsonRet,SerializerFeature.WriteMapNullValue));
-
+				out.print(JSON.toJSONString(ret,SerializerFeature.WriteMapNullValue));
 				out.flush();
 				out.close();
-			}else{
-				chain.doFilter(request,response);
+				return;
 			}
-		}else{
-			chain.doFilter(request,response);
+		}
+		try {
+			chain.doFilter(request, response);
+		} finally {
+			UserSessionUtil.removeCurrentUser();
 		}
 	}
 

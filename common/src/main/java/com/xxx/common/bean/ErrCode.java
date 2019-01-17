@@ -52,6 +52,7 @@ public enum ErrCode {
 	AUTHTICATION_PASSWD_ERROR(90001,"密码错误"),
 	AUTHTICATION_TOKEN_EXPIRE(90002,"Token已过期"),
 	AUTHTICATION_TOKEN_ERROR(90003,"非法Token"),
+	AUTHTICATION_TOKEN_EMPTY(90004,"Token为空"),
 	AUTHTICATION_FAIL(99999,"认证失败")
     ;
     private int code;
