@@ -7,6 +7,7 @@ import com.szmtjk.business.util.TokenUtil;
 import com.xxx.common.bean.ErrCode;
 import com.xxx.common.bean.JsonRet;
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -14,6 +15,7 @@ import java.util.List;
 @Service
 public class UserAuthenticator extends AbsAuthenticator {
 
+    @Autowired
     private UserService userService;
 
     @Override
