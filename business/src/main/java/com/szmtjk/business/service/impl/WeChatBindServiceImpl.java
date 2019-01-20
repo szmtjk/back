@@ -4,7 +4,6 @@ import com.szmtjk.authentication.model.LocalAuth;
 import com.szmtjk.authentication.model.LocalAuthQuery;
 import com.szmtjk.authentication.service.LocalAuthService;
 import com.szmtjk.authentication.service.wechat.WeChatService;
-import com.szmtjk.authentication.util.UserSessionUtil;
 import com.szmtjk.business.bean.wechat.AppSecretConfig;
 import com.szmtjk.business.bean.wechat.AppType;
 import com.szmtjk.business.bean.wechat.OpenIdResponse;
@@ -89,7 +88,6 @@ public class WeChatBindServiceImpl implements WeChatBindService {
         Map<String, String> data = new HashMap<>();
         data.put("mobile", SMSUtil.getMaskMobile(user.getMobile()));
         data.put("token", TokenUtil.encodeUserToken(user));
-        UserSessionUtil.setCurrentUser(user);
         return JsonRet.getSuccessRet(data);
     }
 

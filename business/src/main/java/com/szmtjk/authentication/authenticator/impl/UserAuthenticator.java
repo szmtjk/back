@@ -1,6 +1,7 @@
 package com.szmtjk.authentication.authenticator.impl;
 
 import com.szmtjk.authentication.authenticator.AbsAuthenticator;
+import com.szmtjk.authentication.util.UserSessionUtil;
 import com.szmtjk.business.model.User;
 import com.szmtjk.business.service.UserService;
 import com.szmtjk.business.util.TokenUtil;
@@ -51,6 +52,7 @@ public class UserAuthenticator extends AbsAuthenticator {
         if (!userRet.isSuccess() || userRet.getData() == null) {
             return JsonRet.getErrRet(ErrCode.AUTHTICATION_TOKEN_ERROR);
         }
+        UserSessionUtil.setCurrentUser(userRet.getData());
         return JsonRet.getSuccessRet(true);
     }
 }
