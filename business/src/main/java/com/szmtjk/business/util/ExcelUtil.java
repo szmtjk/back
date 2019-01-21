@@ -1,5 +1,7 @@
 package com.szmtjk.business.util;
 
+import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.DateUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -132,27 +134,24 @@ public class ExcelUtil {
 //        }
 //    }
 
-//    private static String getCellValue(Cell cell) {
-//        if(null == cell){
-//            //LOGGER.error("[ExcelUtils.getCellValue][cell is null]");
-//            return null;
-//        }
-//        // 判断当前Cell的Type
-//        switch (cell.getCellType()) {
-//            case Cell.CELL_TYPE_NUMERIC:    // 数值类型
-//                if (DateUtil.isCellDateFormatted(cell)) {
-//                    LOGGER.error("[ExcelUtils.getCellValue][cell type is date format]");
-//                    throw new IllegalArgumentException("cell type not support date");
-//                }
-//                return String.valueOf(cell.getNumericCellValue());
-//            case Cell.CELL_TYPE_STRING: // 字符串
-//                return cell.getStringCellValue();
-//            case Cell.CELL_TYPE_BLANK:// 空值
-//                //LOGGER.error("[ExcelUtils.getCellValue][cell type blank]");
-//                return "";
-//            default:// 默认的Cell值
-//                LOGGER.error("[ExcelUtils.getCellValue][cell type not default][cellType={}]", cell.getCellType());
-//                throw new IllegalArgumentException("cell type not supported");
-//        }
-//    }
+    public static String getCellValue(Cell cell) {
+        if(cell == null){
+            return null;
+        }
+        switch (cell.getCellTypeEnum()) {
+            case NUMERIC:
+                if (DateUtil.isCellDateFormatted(cell)) {
+                    LOG.error("ExcelUtil getCellValue, cell type is date format]");
+                    throw new IllegalArgumentException("cell type not support date");
+                }
+                return String.valueOf(cell.getNumericCellValue());
+            case STRING:
+                return cell.getRichStringCellValue().getString();
+            case BLANK:
+                return "";
+            default:
+                LOG.error("ExcelUtil getCellValue, not supported cell type:{}", cell.getCellTypeEnum());
+                throw new IllegalArgumentException("cell type not supported");
+        }
+    }
 }
