@@ -2,6 +2,7 @@ package com.szmtjk.business.util;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 
 /**
  * Created by WCL on 2018/1/20.
@@ -39,6 +40,12 @@ public class DateUtils
         Calendar c = Calendar.getInstance();
         c.setTimeInMillis(time);
         return dateFormatter.format(c.getTime());
+    }
+
+    public static String format(Date date, String format){
+        format = format == null ? "yyyy-MM-dd HH:mm:ss" : format;
+        SimpleDateFormat dateFormatter =new SimpleDateFormat(format);
+        return dateFormatter.format(date);
     }
 
 }
