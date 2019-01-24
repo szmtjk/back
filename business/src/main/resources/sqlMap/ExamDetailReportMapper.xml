@@ -99,7 +99,7 @@
         select <include refid="all_column"/>
         from `ExamDetailReport`
         <include refid="pageQueryWhereCommon" />
-        order by `id` desc
+        order by `id` asc
         <include refid="pageCommon"/>
     </select>
 

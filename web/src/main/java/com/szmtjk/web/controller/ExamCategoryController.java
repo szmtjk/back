@@ -12,6 +12,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.Iterator;
@@ -27,18 +28,21 @@ public class ExamCategoryController extends BaseCRUDController<ExamCategory, Exa
     private ExamDetailReportService examDetailReportService;
 
     @RequestMapping(value = "getCategories", method =  RequestMethod.GET)
+    @ResponseBody
     public JsonRet<List<ExamCategory>> getCategories(Long examId){
         ExamCategoryQuery condition = new ExamCategoryQuery();
+        condition.setPageSize(Integer.MAX_VALUE);
         condition.setExamId(examId);
         JsonRet<List<ExamCategory>> result = getBaseService().getList(condition);
 
         if(result.isSuccess()) {
             List<ExamCategory> categories = result.getData();
-            LOG.info("categories  size=" + categories.size());
+            LOG.info("categories size=" + categories.size());
             Iterator<ExamCategory> categoryIterator = categories.iterator();
             while(categoryIterator.hasNext()){
                 ExamCategory category = categoryIterator.next();
                 ExamDetailReportQuery query = new ExamDetailReportQuery();
+                query.setPageSize(Integer.MAX_VALUE);
                 query.setCategoryId(category.getId());
                 JsonRet<List<ExamDetailReport>> itemsResult = examDetailReportService.getList(query);
                 if(itemsResult.isSuccess()) {
