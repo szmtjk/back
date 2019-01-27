@@ -16,11 +16,12 @@
 
     <sql id="all_column">
         `ID`,
-        `NAME`,
-        `EXAMID`,
-        `SUMMARY`,
-        `SUMMARYDOCTOR`,
-        `SUMMARYDATE`,
+        `CATEGORYID`,
+        `ITEMNAME`,
+        `ITEMUNIT`,
+        `RESULT`,
+        `REFERENCERANGE`,
+        `TIP`,
         `CREATED`,
         `UPDATED`,
         `ISDELETED`
@@ -105,7 +106,7 @@
 
     <sql id="pageQueryWhereCommon">
         where `isDeleted` = 0
-        <if test="pojo.examId != null"> AND `EXAMID` = #{pojo.examId} </if>
+        <if test="pojo.categoryId != null"> AND `CATEGORYID` = #{pojo.categoryId} </if>
     </sql>
 
     <sql id="pageCommon">
