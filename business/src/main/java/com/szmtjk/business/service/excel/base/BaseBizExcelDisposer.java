@@ -1,7 +1,9 @@
-package com.szmtjk.business.service.base;
+package com.szmtjk.business.service.excel.base;
 
 import com.szmtjk.business.service.BizExcelDisposer;
+import com.szmtjk.business.service.excel.ExcelDisposerFactory;
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
+import org.apache.poi.ss.usermodel.DataFormatter;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
@@ -9,12 +11,21 @@ import org.apache.poi.ss.usermodel.WorkbookFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import javax.annotation.PostConstruct;
 import java.io.File;
 import java.io.IOException;
+import java.util.Date;
 
 public abstract class BaseBizExcelDisposer implements BizExcelDisposer {
 
     private static final Logger LOG = LoggerFactory.getLogger(BaseBizExcelDisposer.class);
+
+    private DataFormatter formatter = new DataFormatter();
+
+    @PostConstruct
+    protected void init() {
+        ExcelDisposerFactory.addDisposer(this);
+    }
 
     @Override
     public boolean disposeExcel(File file) {
@@ -54,11 +65,19 @@ public abstract class BaseBizExcelDisposer implements BizExcelDisposer {
         return true;
     }
 
-    protected boolean disposeSimpleRow(Row row) {
-        return true;
+    protected String getStrCellValue(Row row, int cellNum) {
+        return formatter.formatCellValue(row.getCell(cellNum));
     }
 
-    protected boolean disposeComplicatedSheetData(Sheet sheet) {
-        return true;
+    protected String getStrCellValue(Sheet sheet, int rowNum, int cellNum) {
+        return formatter.formatCellValue(sheet.getRow(rowNum).getCell(cellNum));
     }
+
+    protected Date getDateCellValue(Sheet sheet, int rowNum, int cellNum) {
+        return sheet.getRow(rowNum).getCell(cellNum).getDateCellValue();
+    }
+
+    protected abstract boolean disposeSimpleRow(Row row);
+
+    protected abstract boolean disposeComplicatedSheetData(Sheet sheet);
 }

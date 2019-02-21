@@ -24,6 +24,10 @@ public class BaseExam extends BaseModelAndDO {
      * 体检人姓名
      */
     private String fullName;
+    /**
+     * 性别
+     */
+    private int gender;
 
     /**
      * 体检人年龄
@@ -85,6 +89,14 @@ public class BaseExam extends BaseModelAndDO {
 
     public void setFullName(String fullName) {
         this.fullName = fullName;
+    }
+
+    public int getGender() {
+        return gender;
+    }
+
+    public void setGender(int gender) {
+        this.gender = gender;
     }
 
     public int getAge() {

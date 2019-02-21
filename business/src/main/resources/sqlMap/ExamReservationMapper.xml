@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.szmtjk.business.db.dao.ExamReservationDAO">
+    <resultMap id="AllColumnMap" type="com.szmtjk.business.db.entity.ExamReservationDO">
+        <result property="id" column="ID"/>
+        <result property="name" column="NAME"/>
+        <result property="gender" column="GENDER"/>
+        <result property="idNo" column="IDNO"/>
+        <result property="mobile" column="MOBILE"/>
+        <result property="married" column="MARRIED"/>
+        <result property="company" column="COMPANY"/>
+        <result property="packageName" column="PACKAGENAME"/>
+        <result property="examDate" column="EXAMDATE"/>
+        <result property="memo" column="MEMO"/>
+        <result property="created" column="CREATED"/>
+        <result property="updated" column="UPDATED"/>
+        <result property="isDeleted" column="ISDELETED"/>
+    </resultMap>
+
+    <sql id="all_column">
+        `ID`
+        ,`NAME`
+        ,`GENDER`
+        ,`IDNO`
+        ,`MOBILE`
+        ,`MARRIED`
+        ,`COMPANY`
+        ,`PACKAGENAME`
+        ,`EXAMDATE`
+        ,`MEMO`
+        ,`CREATED`
+        ,`UPDATED`
+        ,`ISDELETED`
+    </sql>
+
+    <insert id="insertSelective" useGeneratedKeys="true" keyProperty="pojo.id">
+        INSERT INTO `ExamReservation`
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="pojo.name!=null">NAME,</if>
+            <if test="pojo.gender!=null">GENDER,</if>
+            <if test="pojo.idNo!=null">IDNO,</if>
+            <if test="pojo.mobile!=null">MOBILE,</if>
+            <if test="pojo.married!=null">MARRIED,</if>
+            <if test="pojo.company!=null">COMPANY,</if>
+            <if test="pojo.packageName!=null">PACKAGENAME,</if>
+            <if test="pojo.examDate!=null">EXAMDATE,</if>
+            <if test="pojo.memo!=null">MEMO,</if>
+            CREATED,
+            UPDATED
+        </trim>
+        VALUES
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="pojo.name!=null">#{pojo.name},</if>
+            <if test="pojo.gender!=null">#{pojo.gender},</if>
+            <if test="pojo.idNo!=null">#{pojo.idNo},</if>
+            <if test="pojo.mobile!=null">#{pojo.mobile},</if>
+            <if test="pojo.married!=null">#{pojo.married},</if>
+            <if test="pojo.company!=null">#{pojo.company},</if>
+            <if test="pojo.packageName!=null">#{pojo.packageName},</if>
+            <if test="pojo.examDate!=null">#{pojo.examDate},</if>
+            <if test="pojo.memo!=null">#{pojo.memo},</if>
+            UNIX_TIMESTAMP(now()),
+            UNIX_TIMESTAMP(now())
+        </trim>
+    </insert>
+
+    <update id="update">
+        UPDATE `ExamReservation`
+        SET
+        <trim prefix="" suffix="" suffixOverrides=",">
+            <if test="pojo.name!=null">`NAME` = #{pojo.name},</if>
+            <if test="pojo.gender!=null">`GENDER` = #{pojo.gender},</if>
+            <if test="pojo.idNo!=null">`IDNO` = #{pojo.idNo},</if>
+            <if test="pojo.mobile!=null">`MOBILE` = #{pojo.mobile},</if>
+            <if test="pojo.married!=null">`MARRIED` = #{pojo.married},</if>
+            <if test="pojo.company!=null">`COMPANY` = #{pojo.company},</if>
+            <if test="pojo.packageName!=null">`PACKAGENAME` = #{pojo.packageName},</if>
+            <if test="pojo.examDate!=null">`EXAMDATE` = #{pojo.examDate},</if>
+            <if test="pojo.memo!=null">`MEMO` = #{pojo.memo},</if>
+            UNIX_TIMESTAMP(now()),
+            <if test="pojo.isDeleted!=null">`ISDELETED` = #{pojo.isDeleted},</if>
+        </trim>
+        WHERE `id` = #{pojo.id} and `isDeleted` = 0
+        LIMIT 1
+    </update>
+
+    <update id="del" parameterType="java.lang.Long">
+        UPDATE `ExamReservation`
+        SET `isDeleted` = 1 ,
+        `updated` = UNIX_TIMESTAMP(now())
+        WHERE `id` = #{id} and `isDeleted` = 0
+        LIMIT 1
+    </update>
+
+    <select id="getExistCount" resultType="java.lang.Integer" parameterType="Map" >
+        SELECT  count(id)
+        FROM  `ExamReservation`
+        where `isDeleted` = 0
+        <if test="pojo.id != null"> AND `id` != #{pojo.id} </if>
+        <if test="pojo.name!=null"> AND `NAME` = #{pojo.name}</if>
+        <if test="pojo.gender!=null"> AND `GENDER` = #{pojo.gender}</if>
+        <if test="pojo.idNo!=null"> AND `IDNO` = #{pojo.idNo}</if>
+        <if test="pojo.mobile!=null"> AND `MOBILE` = #{pojo.mobile}</if>
+        <if test="pojo.examDate!=null"> AND `EXAMDATE` = #{pojo.examDate}</if>
+        <if test="pojo.married!=null"> AND `MARRIED` = #{pojo.married}</if>
+        <if test="pojo.company!=null"> AND `COMPANY` = #{pojo.company}</if>
+        <if test="pojo.packageName!=null"> AND PACKAGENAME = #{pojo.packageName}</if>
+        limit 1
+    </select>
+
+    <select id="getCount" resultType="java.lang.Integer" parameterType="Map" >
+        SELECT  count(id)
+        FROM  `ExamReservation`
+        where `isDeleted` = 0
+        <if test="pojo.name!=null">`NAME` = #{pojo.name}</if>
+        <if test="pojo.gender!=null"> AND `GENDER` = #{pojo.gender}</if>
+        <if test="pojo.idNo!=null"> AND `IDNO` = #{pojo.idNo}</if>
+        <if test="pojo.mobile!=null"> AND `MOBILE` = #{pojo.mobile}</if>
+        <if test="pojo.examDate!=null">AND `EXAMDATE` = #{pojo.examDate}</if>
+        <if test="pojo.married!=null"> AND `MARRIED` = #{pojo.married}</if>
+        <if test="pojo.company!=null"> AND `COMPANY` = #{pojo.company}</if>
+        <if test="pojo.packageName!=null"> AND PACKAGENAME = #{pojo.packageName}</if>
+        limit 1
+    </select>
+
+    <select id="queryByPage" resultMap="AllColumnMap" parameterType="Map">
+        select <include refid="all_column"/>
+        from `ExamReservation`
+        where `isDeleted` = 0
+        <if test="pojo.name!=null">`NAME` = #{pojo.name}</if>
+        <if test="pojo.gender!=null"> AND `GENDER` = #{pojo.gender}</if>
+        <if test="pojo.idNo!=null"> AND `IDNO` = #{pojo.idNo}</if>
+        <if test="pojo.mobile!=null"> AND `MOBILE` = #{pojo.mobile}</if>
+        <if test="pojo.examDate!=null">AND `EXAMDATE` = #{pojo.examDate}</if>
+        <if test="pojo.married!=null"> AND `MARRIED` = #{pojo.married}</if>
+        <if test="pojo.company!=null"> AND #{pojo.company}</if>
+        <if test="pojo.packageName!=null"> AND PACKAGENAME = #{pojo.packageName}</if>
+        order by `id` desc
+        <include refid="pageCommon"/>
+    </select>
+
+    <sql id="pageCommon">
+        <choose>
+        <when test="pojo.startRow != null and pojo.startRow gt -1 and pojo.limitNum != null and pojo.limitNum gt 0">
+            limit #{pojo.startRow}, #{pojo.limitNum}
+        </when>
+        <otherwise>
+            limit 200
+        </otherwise>
+        </choose>
+    </sql>
+</mapper>

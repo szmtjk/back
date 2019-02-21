@@ -1,11 +1,15 @@
 package com.szmtjk.web.controller;
 
+import com.szmtjk.business.service.BizExcelDisposer;
+import com.szmtjk.business.service.excel.ExcelDisposerFactory;
 import com.szmtjk.business.util.JPushClientUtil;
 import com.szmtjk.web.controller.base.BaseController;
 import com.szmtjk.web.filter.AuthenticationFilter;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.io.File;
 
 /**
  * Created by Jadic on 2017/6/7.
@@ -23,6 +27,13 @@ public class TestController extends BaseController {
     @RequestMapping(value = "/hi", method = RequestMethod.GET)
     public String testHi() {
         return "hi, i'm ok 2 2";
+    }
+
+    @RequestMapping(value = "/excel", method = RequestMethod.GET)
+    public String testExcelDispose() {
+        BizExcelDisposer excelDisposer = ExcelDisposerFactory.getExcelDisposer(BizExcelDisposer.EXAM_REPORT);
+        excelDisposer.disposeExcel(new File("/Users/xiaohu/exam.xlsx"));
+        return "ok";
     }
 
     @RequestMapping(value = "sendToRegistrationId", method = RequestMethod.POST)

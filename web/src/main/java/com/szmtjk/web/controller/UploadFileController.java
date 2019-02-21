@@ -1,8 +1,12 @@
 package com.szmtjk.web.controller;
 
 import com.szmtjk.web.controller.base.BaseController;
+import com.xxx.common.bean.ErrCode;
 import com.xxx.common.bean.JsonRet;
+import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.IOUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -13,7 +17,11 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.*;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
@@ -21,8 +29,17 @@ import java.util.UUID;
 @Controller
 @RequestMapping("file")
 public class UploadFileController extends BaseController {
+
+    private static final Logger LOG = LoggerFactory.getLogger(UploadFileController.class);
+
     @Value("${xyl.upload.baseDir}")
     private String baseDir;
+
+    @Value("${excel.reservation.zipUploadDir}")
+    private String reservationExcelZipUploadDir;
+
+    @Value("${excel.report.zipUploadDir}")
+    private String reportExcelZipUploadDir;
 
     @RequestMapping(value = "/upfile", method = RequestMethod.POST)
     @ResponseBody
@@ -49,22 +66,6 @@ public class UploadFileController extends BaseController {
         return JsonRet.getSuccessRet(params);
     }
 
-    private String getNewName(MultipartFile fileName) {
-        // 找到原始文件名
-        String originalFilename = fileName.getOriginalFilename();
-        // 找到后缀名.的位置
-        int lastIndexOf = originalFilename.lastIndexOf(".");
-        // 截取后缀名
-        String substring = originalFilename.substring(lastIndexOf);
-        // 生成uuid
-        String uuid = UUID.randomUUID().toString().replaceAll("-","");
-        String newName = uuid + substring;
-
-        return newName;
-
-    }
-
-
     @RequestMapping(value = "filedownload", method = RequestMethod.GET)
     public void down(String fileName, HttpServletResponse response, HttpServletRequest request) throws Exception {
 
@@ -82,7 +83,6 @@ public class UploadFileController extends BaseController {
         fileInputStream.close();
 
     }
-
 
     @RequestMapping(value = "/newUpfile", method = RequestMethod.POST)
     @ResponseBody
@@ -109,5 +109,55 @@ public class UploadFileController extends BaseController {
         return JsonRet.getSuccessRet(params);
     }
 
+    @RequestMapping(value = "/uploadExamReportZip", method = RequestMethod.POST)
+    @ResponseBody
+    public JsonRet<Object> uploadExamReportZip(@RequestParam MultipartFile zipFile, HttpServletRequest request) throws Exception {
+        boolean created = createUploadFile(zipFile, this.reportExcelZipUploadDir);
+        if (created) {
+            return JsonRet.getSuccessRet(true);
+        } else {
+            return JsonRet.getErrRet(ErrCode.ADD_ERR);
+        }
+    }
 
+    @RequestMapping(value = "/uploadExamReservationZip", method = RequestMethod.POST)
+    @ResponseBody
+    public JsonRet<Object> uploadExamReservationZip(@RequestParam MultipartFile zipFile, HttpServletRequest request) throws Exception {
+        boolean created = createUploadFile(zipFile, this.reservationExcelZipUploadDir);
+        if (created) {
+            return JsonRet.getSuccessRet(true);
+        } else {
+            return JsonRet.getErrRet(ErrCode.ADD_ERR);
+        }
+    }
+
+    private boolean createUploadFile(MultipartFile zipFile, String uploadDir) {
+        try {
+            File file = new File(uploadDir);
+            if (!file.exists()) {
+                file.mkdirs();
+            }
+
+            FileUtils.copyInputStreamToFile(zipFile.getInputStream(), new File(uploadDir, zipFile.getOriginalFilename()));
+            return true;
+        } catch (Exception e) {
+            LOG.error("createUploadFile err, uploadDir:{}, newFileName:{}", uploadDir, zipFile.getOriginalFilename(), e);
+        }
+        return false;
+    }
+
+    private String getNewName(MultipartFile fileName) {
+        // 找到原始文件名
+        String originalFilename = fileName.getOriginalFilename();
+        // 找到后缀名.的位置
+        int lastIndexOf = originalFilename.lastIndexOf(".");
+        // 截取后缀名
+        String substring = originalFilename.substring(lastIndexOf);
+        // 生成uuid
+        String uuid = UUID.randomUUID().toString().replaceAll("-","");
+        String newName = uuid + substring;
+
+        return newName;
+
+    }
 }

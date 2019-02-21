@@ -1,9 +1,18 @@
 package com.szmtjk.business.util;
 
+import com.szmtjk.business.service.excel.ExamReportExcelDisposer;
+import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.DateUtil;
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.ss.usermodel.WorkbookFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import java.io.File;
+import java.io.IOException;
 
 /**
  * Created by xiaohu on 2018/12/29.
@@ -134,6 +143,11 @@ public class ExcelUtil {
 //        }
 //    }
 
+    public static String getStrValue(Row row, int cellIndex) {
+        Cell cell = row.getCell(cellIndex);
+        return cell.getRichStringCellValue().getString();
+    }
+
     public static String getCellValue(Cell cell) {
         if(cell == null){
             return null;
@@ -152,6 +166,24 @@ public class ExcelUtil {
             default:
                 LOG.error("ExcelUtil getCellValue, not supported cell type:{}", cell.getCellTypeEnum());
                 throw new IllegalArgumentException("cell type not supported");
+        }
+    }
+
+    public static void main(String[] args) {
+        Workbook workbook = null;
+        try {
+            ExamReportExcelDisposer disposer = new ExamReportExcelDisposer();
+            boolean ok = disposer.disposeExcel(new File("/Users/xiaohu/exam.xlsx"));
+            System.out.println(ok);
+            workbook = WorkbookFactory.create(new File("/Users/xiaohu/exam.xlsx"));
+            Sheet sheet = workbook.getSheetAt(0);// 只获取第一个sheet作解析
+            sheet.forEach(row -> {
+                System.out.println(row.getCell(0));
+            });
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (InvalidFormatException e) {
+            e.printStackTrace();
         }
     }
 }

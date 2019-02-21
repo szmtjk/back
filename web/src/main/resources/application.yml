@@ -31,6 +31,16 @@ wechat:
       appId: wx0c7afe647c20cd75
       appSecret: 0224b50e3edb78091fbc1f3f3ee4f742
 
+excel:
+  reservation:
+    zipUploadDir: /data/excel/reservation/zipUpload
+    unzippedDir: /data/excel/reservation/unzipped
+    invalidFileDir: /data/excel/reservation/invalid
+  report:
+    zipUploadDir: /data/excel/report/zipUpload
+    unzippedDir: /data/excel/report/unzipped
+    invalidFileDir: /data/excel/report/invalid
+
 # Different profiles' configuration
 ---
 spring:
