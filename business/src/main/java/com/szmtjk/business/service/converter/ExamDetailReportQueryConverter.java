@@ -16,6 +16,6 @@ public class ExamDetailReportQueryConverter extends QueryConditionConverter<Exam
             paginationConvert(examDetailReportQuery, dbQuery);
             BeanUtils.copyProperties(examDetailReportQuery, dbQuery);
         }
-        return null;
+        return dbQuery;
     }
 }
