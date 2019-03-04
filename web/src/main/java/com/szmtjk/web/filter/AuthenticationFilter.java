@@ -33,7 +33,7 @@ public class AuthenticationFilter implements Filter {
 
 	private static final List<String> URL_WHITE_LIST = Lists.newArrayList(
 			"/test/", "/webjars", "/api", "/swagger-ui.html", "/swagger-resources",
-			"/v2/api-docs", "/wechat/", "/mobile/"
+			"/v2/api-docs", "/wechat/", "/mobile/", "/signin/"
 	);
 
 	@Override
