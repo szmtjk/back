@@ -41,13 +41,13 @@ public class LocalAuthenticator extends AbsAuthenticator {
 		JsonRet<Object> jsonRet = JsonRet.getErrRet(ErrCode.AUTHTICATION_TOKEN_ERROR.getCode(),ErrCode.AUTHTICATION_TOKEN_ERROR.getMsg());
 
 		List<String> tokenMembers = TokenUtil.decodeUserToken(token);
+		if (tokenMembers == null || tokenMembers.size() != 4) {
+			return JsonRet.getErrRet(ErrCode.AUTHTICATION_TOKEN_ERROR);
+		}
+
 		int userType = Integer.parseInt(tokenMembers.get(3));
 		if (userType != getUserType()) {
 			return JsonRet.getSuccessRet(true);
-		}
-
-		if (tokenMembers == null || tokenMembers.size() != 4) {
-			return JsonRet.getErrRet(ErrCode.AUTHTICATION_TOKEN_ERROR);
 		}
 
 		String sUserId = tokenMembers.get(0);

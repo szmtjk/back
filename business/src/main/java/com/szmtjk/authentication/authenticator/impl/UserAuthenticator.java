@@ -33,12 +33,13 @@ public class UserAuthenticator extends AbsAuthenticator {
         }
 
         List<String> tokenMembers = TokenUtil.decodeUserToken(token);
+        if (tokenMembers == null || tokenMembers.size() != 4) {
+            return JsonRet.getErrRet(ErrCode.AUTHTICATION_TOKEN_ERROR);
+        }
+
         int userType = Integer.parseInt(tokenMembers.get(3));
         if (userType != getUserType()) {
             return JsonRet.getSuccessRet(true);
-        }
-        if (tokenMembers == null || tokenMembers.size() != 4) {
-            return JsonRet.getErrRet(ErrCode.AUTHTICATION_TOKEN_ERROR);
         }
 
         String userId = tokenMembers.get(0);
