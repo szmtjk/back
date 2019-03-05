@@ -1,6 +1,8 @@
 package com.szmtjk.business.util;
 
 import com.google.common.collect.Lists;
+import com.szmtjk.authentication.authenticator.Authenticator;
+import com.szmtjk.authentication.model.LocalAuth;
 import com.szmtjk.authentication.util.DigestUtil;
 import com.szmtjk.business.model.User;
 import org.springframework.util.Base64Utils;
@@ -15,7 +17,15 @@ public class TokenUtil {
     public static String encodeUserToken(User user) {
         long expire = System.currentTimeMillis() + TOKEN_EXPIRE_TIME;
         String md5 = DigestUtil.md5(String.valueOf(user.getId()), user.getUserName(), String.valueOf(expire));
-        String token = user.getId() + ":" + md5 + ":" + expire;
+        String token = user.getId() + ":" + md5 + ":" + expire + ":" + Authenticator.USER_TYPE_WE_CHAT;
+        token = Base64Utils.encodeToString(token.getBytes());
+        return token;
+    }
+
+    public static String encodeUserToken(LocalAuth user) {
+        long expire = System.currentTimeMillis() + TOKEN_EXPIRE_TIME;
+        String md5 = DigestUtil.md5(String.valueOf(user.getId()), user.getLoginName(), user.getPasswd(), String.valueOf(expire));
+        String token = user.getId() + ":" + md5 + ":" + expire + ":" + Authenticator.USER_TYPE_WEB_USER;
         token = Base64Utils.encodeToString(token.getBytes());
         return token;
     }

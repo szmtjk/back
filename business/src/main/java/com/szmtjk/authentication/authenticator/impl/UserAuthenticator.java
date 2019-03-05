@@ -20,6 +20,11 @@ public class UserAuthenticator extends AbsAuthenticator {
     private UserService userService;
 
     @Override
+    public int getUserType() {
+        return USER_TYPE_WE_CHAT;
+    }
+
+    @Override
     public JsonRet<Object> authenticate(String token) {
         JsonRet<Object> jsonRet = null;
         //token 为空直接返回错误
@@ -28,7 +33,11 @@ public class UserAuthenticator extends AbsAuthenticator {
         }
 
         List<String> tokenMembers = TokenUtil.decodeUserToken(token);
-        if (tokenMembers == null || tokenMembers.size() != 3) {
+        int userType = Integer.parseInt(tokenMembers.get(3));
+        if (userType != getUserType()) {
+            return JsonRet.getSuccessRet(true);
+        }
+        if (tokenMembers == null || tokenMembers.size() != 4) {
             return JsonRet.getErrRet(ErrCode.AUTHTICATION_TOKEN_ERROR);
         }
 

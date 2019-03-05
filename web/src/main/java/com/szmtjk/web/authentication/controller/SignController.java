@@ -11,6 +11,7 @@ import com.szmtjk.authentication.service.LocalAuthService;
 import com.szmtjk.authentication.service.OAuthService;
 import com.szmtjk.authentication.util.DigestUtil;
 import com.szmtjk.authentication.util.SessionUtil;
+import com.szmtjk.business.util.TokenUtil;
 import com.xxx.common.bean.ErrCode;
 import com.xxx.common.bean.JsonRet;
 import com.szmtjk.web.controller.base.BaseController;
@@ -81,10 +82,9 @@ public class SignController extends BaseController {
         Long userId = localAuth.getUserId();
 
         //下发 Token
-        long expire = System.currentTimeMillis() + this.tokenExpire;
-        String md5 = DigestUtil.md5(String.valueOf(userId), signName, localPasswd, String.valueOf(expire));
-        String token = userId + ":" + md5 + ":" + expire;
-        token = Base64Utils.encodeToString(token.getBytes());
+//        long expire = System.currentTimeMillis() + this.tokenExpire;
+//        String md5 = DigestUtil.md5(String.valueOf(userId), signName, localPasswd, String.valueOf(expire));
+        String token = TokenUtil.encodeUserToken(localAuth);
         //MTpjM2E0MjY2Y2Y4YzVmNDk1Y2EyYTk5ODA4ZjJmY2Y1ODoxNTE5MTUyMTUyODg0 正确
         //MTpjNDRjODZlZjM2MjIwYzM5NGQ5MmI1YjlhOTgxNGE3OTotMTUxOTE1NTk5MjEzMQ== 过期
         //MjozMTAzODdmNDk3ZTgxODk0OTJmODRiZDU1OGI4ODZkNToxNTE5MTU4MTAzNTU2 非法, 篡改 userId

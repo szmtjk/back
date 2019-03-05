@@ -28,6 +28,12 @@ public class OauthAuthenticator implements Authenticator {
 		this.oAuthService = (OAuthService) ApplicationContextUtil.getBean("oauthServiceImpl");
 		this.weiXinService = (WeiXinService) ApplicationContextUtil.getBean("weiXinServiceImpl");
 	}
+
+	@Override
+	public int getUserType() {
+		return 0;
+	}
+
 	@Override
 	public JsonRet<Object> authenticate(String token) {
 		JsonRet<Object> jsonRet = JsonRet.getErrRet(ErrCode.AUTHTICATION_TOKEN_ERROR.getCode(),ErrCode.AUTHTICATION_TOKEN_ERROR.getMsg());

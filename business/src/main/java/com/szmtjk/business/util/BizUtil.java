@@ -29,5 +29,25 @@ public class BizUtil {
     }
 
     public static void main(String[] args) {
+        for (int i = 10; i <= 99; i ++) {
+            for (int j = 10; j <= 99; j ++) {
+                int t1 = i * j;
+                if (t1 < 1800) {
+                    continue;
+                }
+                int t2 = (j % 10) * i;
+                if (t2 < 180) {
+                    continue;
+                }
+
+                int t3 = i * (j/10);
+                if (t3 > 99) {
+                    continue;
+                }
+                if ((t2 / 10) % 10 == 8  && (t1 /100 % 10 == 8)) {
+                    System.out.println("i = " + i + ",j = " + j);
+                }
+            }
+        }
     }
 }
