@@ -34,19 +34,17 @@
             STATUS,
             TIP,
             CREATED,
-            UPDATED,
-            ISDELETED,
+            UPDATED
         </trim>
         VALUES
         <trim prefix="(" suffix=")" suffixOverrides=",">
-            <if test="bizType!=null">#{bizType},</if>
-            <if test="fileName!=null">#{fileName},</if>
-            <if test="fileNo!=null">#{fileNo},</if>
-            <if test="status!=null">#{status},</if>
-            <if test="tip!=null">#{tip},</if>
+            <if test="pojo.bizType!=null">#{pojo.bizType},</if>
+            <if test="pojo.fileName!=null">#{pojo.fileName},</if>
+            <if test="pojo.fileNo!=null">#{pojo.fileNo},</if>
+            <if test="pojo.status!=null">#{pojo.status},</if>
+            <if test="pojo.tip!=null">#{pojo.tip},</if>
             UNIX_TIMESTAMP(now()),
-            UNIX_TIMESTAMP(now()),
-            <if test="isDeleted!=null">#{isDeleted},</if>
+            UNIX_TIMESTAMP(now())
         </trim>
     </insert>
 
@@ -54,15 +52,14 @@
         UPDATE `FileImportStatus`
         SET
         <trim prefix="" suffix="" suffixOverrides=",">
-            <if test="bizType!=null">`BIZTYPE` = #{bizType},</if>
-            <if test="fileName!=null">`FILENAME` = #{fileName},</if>
-            <if test="fileNo!=null">`FILENO` = #{fileNo},</if>
-            <if test="status!=null">`STATUS` = #{status},</if>
-            <if test="tip!=null">`TIP` = #{tip},</if>
-            UNIX_TIMESTAMP(now()),
-            <if test="isDeleted!=null">`ISDELETED` = #{isDeleted},</if>
+            <if test="pojo.bizType!=null">`BIZTYPE` = #{pojo.bizType},</if>
+            <if test="pojo.fileName!=null">`FILENAME` = #{pojo.fileName},</if>
+            <if test="pojo.fileNo!=null">`FILENO` = #{pojo.fileNo},</if>
+            <if test="pojo.status!=null">`STATUS` = #{pojo.status},</if>
+            <if test="pojo.tip!=null">`TIP` = #{pojo.tip},</if>
+            UNIX_TIMESTAMP(now())
         </trim>
-        WHERE `id` = #{id} and `isDeleted` = 0
+        WHERE `id` = #{pojo.id} and `isDeleted` = 0
         LIMIT 1
     </update>
 
@@ -78,7 +75,7 @@
         SELECT  count(id)
         FROM  `FileImportStatus`
         where `isDeleted` = 0
-        <if test="id != null"> AND `id` != #{id} </if>
+        <if test="id != null"> AND `id` != #{pojo.id} </if>
         <!-- other query condition to be added -->
         limit 1
     </select>
@@ -102,8 +99,8 @@
 
     <sql id="pageCommon">
         <choose>
-        <when test="startRow != null and startRow gt -1 and limitNum != null and limitNum gt 0">
-            limit #{startRow}, #{limitNum}
+        <when test="pojo.startRow != null and pojo.startRow gt -1 and pojo.limitNum != null and pojo.limitNum gt 0">
+            limit #{pojo.startRow}, #{pojo.limitNum}
         </when>
         <otherwise>
             limit 200
