@@ -83,19 +83,23 @@
     <select id="getCount" resultType="java.lang.Integer" parameterType="Map" >
         SELECT  count(id)
         FROM  `FileImportStatus`
-        where `isDeleted` = 0
-        <!-- other query condition to be added -->
+        <include refid="whereCommon"/>
         limit 1
     </select>
 
     <select id="queryByPage" resultMap="AllColumnMap" parameterType="Map">
         select <include refid="all_column"/>
         from `FileImportStatus`
-        where `isDeleted` = 0
-        <!-- other query condition to be added -->
+        <include refid="whereCommon"/>
         order by `id` desc
         <include refid="pageCommon"/>
     </select>
+
+    <sql id="whereCommon">
+        where `isDeleted` = 0
+        <if test="pojo.bizType!=null"> AND `bizType` = #{pojo.bizType}</if>
+        <if test="pojo.fileName!=null"> AND `fileName` like concat('%', #{pojo.fileName}, '%')</if>
+    </sql>
 
     <sql id="pageCommon">
         <choose>
