@@ -27,7 +27,7 @@ public class ZipUtil {
             }
             zipFile.extractAll(dstUnzipDir);
         } catch (ZipException e) {
-            LOG.error("ZipUtil.unzipAllFiles err, source:{}, dst:{}", zipFilePath, dstUnzipDir);
+            LOG.error("ZipUtil.unzipAllFiles err, source:{}, dst:{}", zipFilePath, dstUnzipDir, e);
         }
     }
 
