@@ -125,8 +125,12 @@ public class ExcelFileScanner {
         FileImportStatus fileImportStatus = new FileImportStatus();
         fileImportStatus.setBizType(0);
         int splitterIndex = excel.getName().indexOf("_");
-        fileImportStatus.setFileName(excel.getName().substring(splitterIndex + 1));
-        fileImportStatus.setFileNo(excel.getName().substring(0, splitterIndex));
+        if (splitterIndex > 0) {
+            fileImportStatus.setFileName(excel.getName().substring(splitterIndex + 1));
+            fileImportStatus.setFileNo(excel.getName().substring(0, splitterIndex));
+        } else {
+            fileImportStatus.setFileName(excel.getName());
+        }
         if (BizExcelDisposer.EXAM_RESERVATION.equals(fileType)) {
             fileImportStatus.setBizType(1);
         } else if (BizExcelDisposer.EXAM_REPORT.equals(fileType)) {
