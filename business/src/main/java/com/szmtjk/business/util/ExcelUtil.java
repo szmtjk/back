@@ -1,6 +1,7 @@
 package com.szmtjk.business.util;
 
 import com.szmtjk.business.service.excel.ExamReportExcelDisposer;
+import com.xxx.common.bean.JsonRet;
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.DateUtil;
@@ -173,8 +174,8 @@ public class ExcelUtil {
         Workbook workbook = null;
         try {
             ExamReportExcelDisposer disposer = new ExamReportExcelDisposer();
-            boolean ok = disposer.disposeExcel(new File("/Users/xiaohu/exam.xlsx"));
-            System.out.println(ok);
+            JsonRet<Boolean> ret = disposer.disposeExcel(new File("/Users/xiaohu/exam.xlsx"));
+            System.out.println(ret);
             workbook = WorkbookFactory.create(new File("/Users/xiaohu/exam.xlsx"));
             Sheet sheet = workbook.getSheetAt(0);// 只获取第一个sheet作解析
             sheet.forEach(row -> {

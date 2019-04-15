@@ -20,7 +20,7 @@ public class ExamReservationExcelDisposer extends BaseSimpleBizExcelDisposer {
     private ExamReservationService examReservationService;
 
     @Override
-    protected boolean disposeSimpleRow(Row row) {
+    protected JsonRet<Boolean> disposeSimpleRow(Row row) {
         ExamReservation examReservation = new ExamReservation();
         int cellIndex = 0;
         examReservation.setName(ExcelUtil.getStrValue(row, cellIndex ++));
@@ -33,7 +33,7 @@ public class ExamReservationExcelDisposer extends BaseSimpleBizExcelDisposer {
         examReservation.setExamDate(ExcelUtil.getStrValue(row, cellIndex ++));
         examReservation.setMemo(ExcelUtil.getStrValue(row, cellIndex ++));
         JsonRet<Long> addRet = examReservationService.add(examReservation);
-        return addRet.isSuccess();
+        return JsonRet.getSuccessRet(addRet.isSuccess());
     }
 
     @Override

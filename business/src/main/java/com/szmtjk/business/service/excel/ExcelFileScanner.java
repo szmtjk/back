@@ -1,16 +1,22 @@
 package com.szmtjk.business.service.excel;
 
+import com.szmtjk.business.model.FileImportStatus;
 import com.szmtjk.business.service.BizExcelDisposer;
+import com.szmtjk.business.service.FileImportStatusService;
+import com.szmtjk.business.util.DateUtils;
 import com.szmtjk.business.util.ZipUtil;
+import com.xxx.common.bean.JsonRet;
 import org.apache.commons.io.FileUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
 import java.io.File;
 import java.util.Collection;
+import java.util.Random;
 
 /**
  * excel文件自动扫描器，扫描器工作原理：
@@ -42,6 +48,9 @@ public class ExcelFileScanner {
     @Value("${excel.report.invalidFileDir}")
     private String reportInvalidExcelFileDir;
 
+    @Autowired
+    private FileImportStatusService fileImportStatusService;
+
     private static final String[] ZIP = new String[]{"zip"};
     private static final String[] EXCEL = new String[]{"xls", "xlsx"};
 
@@ -61,12 +70,16 @@ public class ExcelFileScanner {
             }
             Collection<File> zipFiles = FileUtils.listFiles(zipUploadDir, ZIP, false);
             for (File zipFile : zipFiles) {
-                ZipUtil.unzipAllFiles(zipFile.getAbsolutePath(), unzippedDir);
+                ZipUtil.unzipAllFilesAndAddPrefix(zipFile.getAbsolutePath(), unzippedDir, getBatchNo());
                 FileUtils.forceDelete(zipFile);
             }
         } catch (Exception e) {
             LOG.error("ExcelFileScanner.loopZipFilesAndUnzip err, zipFileDir:{}, unzippedDir:{}", zipFileDir, unzippedDir, e);
         }
+    }
+
+    private String getBatchNo() {
+        return DateUtils.getCurrentSystemTime("yyyyMMddHHmmss") + new Random().nextInt(1000);
     }
 
     @Scheduled(fixedRate = 1000, initialDelay = 3000L)
@@ -89,18 +102,36 @@ public class ExcelFileScanner {
             File invalidFileFolder = new File(invalidFileDir);
             Collection<File> excelFiles = FileUtils.listFiles(excelFolder, EXCEL, false);
             for (File excel : excelFiles) {
-                boolean isSuccess = excelDisposer.disposeExcel(excel);
-                if (isSuccess) {
+                FileImportStatus fileImportStatus = createFileImportStatus(excel, disposeKey);
+                JsonRet<Boolean> disposeRet = excelDisposer.disposeExcel(excel);
+                if (disposeRet.isSuccess()) {
                     LOG.info("succeed to dispose:{}", excel.getName());
                     FileUtils.forceDelete(excel);
-                    //todo insert a dispose record to db
+                    fileImportStatus.setStatus(20);
                 } else {//if fail, move the excel to invalid dir
                     LOG.info("fail to dispose:{}, move to:{}", excel.getName(), invalidFileDir);
                     FileUtils.moveFileToDirectory(excel, invalidFileFolder, true);
+                    fileImportStatus.setStatus(30);
+                    fileImportStatus.setTip(disposeRet.getMsg());
                 }
+                fileImportStatusService.add(fileImportStatus);
             }
         } catch (Exception e) {
-            LOG.error("ExcelFileScanner.loopExcelFilesAndDispose", excelDir, invalidFileDir, disposeKey);
+            LOG.error("ExcelFileScanner.loopExcelFilesAndDispose, excelDir:{}, invalidFileDir:{}, disposeKey:{}", excelDir, invalidFileDir, disposeKey, e);
         }
+    }
+
+    private FileImportStatus createFileImportStatus(File excel, String fileType) {
+        FileImportStatus fileImportStatus = new FileImportStatus();
+        fileImportStatus.setBizType(0);
+        int splitterIndex = excel.getName().indexOf("_");
+        fileImportStatus.setFileName(excel.getName().substring(splitterIndex + 1));
+        fileImportStatus.setFileNo(excel.getName().substring(0, splitterIndex));
+        if (BizExcelDisposer.EXAM_RESERVATION.equals(fileType)) {
+            fileImportStatus.setBizType(1);
+        } else if (BizExcelDisposer.EXAM_REPORT.equals(fileType)) {
+            fileImportStatus.setBizType(2);
+        }
+        return fileImportStatus;
     }
 }

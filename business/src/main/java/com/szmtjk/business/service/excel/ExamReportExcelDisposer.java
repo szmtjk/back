@@ -9,6 +9,7 @@ import com.szmtjk.business.service.ExamDetailReportService;
 import com.szmtjk.business.service.ExamService;
 import com.szmtjk.business.service.excel.base.BaseComplicatedExcelDisposer;
 import com.szmtjk.business.util.BizUtil;
+import com.xxx.common.bean.ErrCode;
 import com.xxx.common.bean.JsonRet;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.time.DateUtils;
@@ -36,48 +37,56 @@ public class ExamReportExcelDisposer extends BaseComplicatedExcelDisposer {
     private ExamDetailReportService examDetailReportService;
 
     @Override
-    protected boolean disposeComplicatedSheetData(Sheet sheet) {
+    protected JsonRet<Boolean> disposeComplicatedSheetData(Sheet sheet) {
         ExamWrapper examWrapper = new ExamWrapper();
         examWrapper.setExam(getExam(sheet));
         examWrapper.setExamCategoryList(getExamCategoryList(sheet));
         return saveExamReport(examWrapper);
     }
 
-    private boolean saveExamReport(ExamWrapper examWrapper) {
+    private JsonRet<Boolean> saveExamReport(ExamWrapper examWrapper) {
         JsonRet<Long> addRet = examService.add(examWrapper.getExam());
         if (addRet.isSuccess() && addRet.getData() != null) {
             Long examId = addRet.getData();
             examWrapper.getExam().setId(examId);
-            if (!saveCategory(examWrapper)) {// 保存失败  todo rollback
-                return false;
+            JsonRet<Boolean> categoryRet = saveCategory(examWrapper);
+            if (!categoryRet.isSuccess()) {
+                examService.del(examWrapper.getExam().getId());
+                return categoryRet;
             }
+        } else {
+            return JsonRet.getErrRet(ErrCode.EXCEL_DISPOSE_TYPE_NOT_MATCHED);
         }
-        return true;
+        return JsonRet.getSuccessRet(true);
     }
 
-    private boolean saveCategory(ExamWrapper examWrapper) {
+    private JsonRet<Boolean> saveCategory(ExamWrapper examWrapper) {
         for (ExamCategory category : examWrapper.getExamCategoryList()) {
             category.setExamId(examWrapper.getExam().getId());
             JsonRet<Long> addRet = examCategoryService.add(category);
             if (addRet.isSuccess() && addRet.getData() != null) {
                 category.setId(addRet.getData());
-                if (!saveDetail(category)) {
-                    return false;
+                JsonRet<Boolean> detailRet = saveDetail(category);
+                if (!detailRet.isSuccess()) {
+                    examCategoryService.del(category.getId());
+                    return detailRet;
                 }
+            } else {
+                return JsonRet.getErrRet(ErrCode.EXCEL_EXAM_CATEGORY_SAVE_ERR);
             }
         }
-        return true;
+        return JsonRet.getSuccessRet(true);
     }
 
-    private boolean saveDetail(ExamCategory category) {
+    private JsonRet<Boolean> saveDetail(ExamCategory category) {
         for (ExamDetailReport detail : category.getItems()) {
             detail.setCategoryId(category.getId());
             JsonRet<Long> addRet = examDetailReportService.add(detail);
             if (!addRet.isSuccess()) {
-                return false;
+                return JsonRet.getErrRet(ErrCode.EXCEL_EXAM_DETAIL_SAVE_ERR);
             }
         }
-        return true;
+        return JsonRet.getSuccessRet(true);
     }
 
     private Exam getExam(Sheet sheet) {
