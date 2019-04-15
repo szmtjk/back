@@ -75,8 +75,10 @@
         SELECT  count(id)
         FROM  `FileImportStatus`
         where `isDeleted` = 0
-        <if test="id != null"> AND `id` != #{pojo.id} </if>
-        <!-- other query condition to be added -->
+        <if test="pojo.id != null"> AND `id` != #{pojo.id} </if>
+        <if test="pojo.bizType!=null"> AND `bizType` = #{pojo.bizType} </if>
+        <if test="pojo.fileName!=null"> AND `fileName` = #{pojo.fileName} </if>
+        <if test="pojo.fileNo!=null"> AND `fileNo` = #{pojo.fileNo} </if>
         limit 1
     </select>
 
