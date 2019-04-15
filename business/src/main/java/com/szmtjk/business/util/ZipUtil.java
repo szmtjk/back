@@ -18,6 +18,7 @@ public class ZipUtil {
     public static void unzipAllFilesAndAddPrefix(String zipFilePath, String dstUnzipDir, String newPrefix) {
         try {
             ZipFile zipFile = new ZipFile(zipFilePath);
+            zipFile.setFileNameCharset("UTF-8");
             if (!StringUtils.isEmpty(newPrefix)) {
                 for (Object zipFileHeader : zipFile.getFileHeaders()) {
                     FileHeader fileHeader = (FileHeader) zipFileHeader;
@@ -31,8 +32,8 @@ public class ZipUtil {
     }
 
     public static void main(String[] args) {
-        String zipPath = "/Users/xiaohu/Downloads/test.zip";
-        String dstDir = "/Users/xiaohu/Downloads/";
+        String zipPath = "/Users/xiaohu/Downloads/test/S218_张三2017健康体检.xlsx.zip";
+        String dstDir = "/Users/xiaohu/Downloads/test";
         unzipAllFilesAndAddPrefix(zipPath, dstDir, "2019");
     }
 
