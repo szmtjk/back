@@ -25,14 +25,14 @@
         ,`ISDELETED`
     </sql>
 
-    <insert id="insertSelective" useGeneratedKeys="true" keyProperty="id">
+    <insert id="insertSelective" useGeneratedKeys="true" keyProperty="pojo.id">
         INSERT INTO `FileImportStatus`
         <trim prefix="(" suffix=")" suffixOverrides=",">
-            BIZTYPE,
-            FILENAME,
-            FILENO,
-            STATUS,
-            TIP,
+            <if test="pojo.bizType!=null">BIZTYPE,</if>
+            <if test="pojo.fileName!=null">FILENAME,</if>
+            <if test="pojo.fileNo!=null">FILENO,</if>
+            <if test="pojo.status!=null">STATUS,</if>
+            <if test="pojo.tip!=null">TIP,</if>
             CREATED,
             UPDATED
         </trim>
