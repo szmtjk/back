@@ -55,7 +55,7 @@ public class ExamReportExcelDisposer extends BaseComplicatedExcelDisposer {
                 return categoryRet;
             }
         } else {
-            return JsonRet.getErrRet(ErrCode.EXCEL_DISPOSE_TYPE_NOT_MATCHED);
+            return JsonRet.getErrRet(addRet.getErrCode(), addRet.getMsg());
         }
         return JsonRet.getSuccessRet(true);
     }
