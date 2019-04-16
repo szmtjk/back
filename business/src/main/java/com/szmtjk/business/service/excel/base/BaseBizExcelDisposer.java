@@ -55,7 +55,7 @@ public abstract class BaseBizExcelDisposer implements BizExcelDisposer {
                         disposeSimpleRow(row);
                     }
                 });
-                break;
+                return JsonRet.getSuccessRet(true);
             case COMPLICATED:
                 return disposeComplicatedSheetData(sheet);
             default:
