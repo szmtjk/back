@@ -156,8 +156,7 @@ public class ExcelUtil {
         switch (cell.getCellTypeEnum()) {
             case NUMERIC:
                 if (DateUtil.isCellDateFormatted(cell)) {
-                    LOG.error("ExcelUtil getCellValue, cell type is date format]");
-                    throw new IllegalArgumentException("cell type not support date");
+                    return DateUtils.format(cell.getDateCellValue(), "yyyyy-MM-dd");
                 }
                 return String.valueOf(cell.getNumericCellValue());
             case STRING:
