@@ -70,7 +70,7 @@ public class ExcelFileScanner {
             }
             Collection<File> zipFiles = FileUtils.listFiles(zipUploadDir, ZIP, false);
             for (File zipFile : zipFiles) {
-                ZipUtil.unzipAllFilesAndAddPrefix(zipFile.getAbsolutePath(), unzippedDir, getBatchNo());
+                ZipUtil.unzipAllFilesAndAddPrefix(zipFile.getAbsolutePath(), unzippedDir, getBatchNo() + "_");
                 FileUtils.forceDelete(zipFile);
             }
         } catch (Exception e) {
@@ -79,7 +79,7 @@ public class ExcelFileScanner {
     }
 
     private String getBatchNo() {
-        return DateUtils.getCurrentSystemTime("yyyyMMddHHmmss") + new Random().nextInt(1000);
+        return DateUtils.getCurrentSystemTime("yyyyMMddHHmmss") + new Random().nextInt(10);
     }
 
     @Scheduled(fixedRate = 1000, initialDelay = 3000L)

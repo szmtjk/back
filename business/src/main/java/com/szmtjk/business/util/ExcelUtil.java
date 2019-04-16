@@ -146,7 +146,7 @@ public class ExcelUtil {
 
     public static String getStrValue(Row row, int cellIndex) {
         Cell cell = row.getCell(cellIndex);
-        return cell.getRichStringCellValue().getString();
+        return getCellValue(cell);
     }
 
     public static String getCellValue(Cell cell) {
