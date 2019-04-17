@@ -47,6 +47,7 @@
         INSERT INTO `ExamReport`
         <trim prefix="(" suffix=")" suffixOverrides=",">
             <if test="pojo.userId!=null">`USERID`,</if>
+            <if test="pojo.mobile!=null">`MOBILE`,</if>
             <if test="pojo.examDate!=null">`EXAMDATE`,</if>
             <if test="pojo.examNo!=null">`EXAMNO`,</if>
             <if test="pojo.fullName!=null">`FULLNAME`,</if>
@@ -63,6 +64,7 @@
         VALUES
         <trim prefix="(" suffix=")" suffixOverrides=",">
             <if test="pojo.userId!=null">#{pojo.userId},</if>
+            <if test="pojo.mobile!=null">#{pojo.MOBILE},</if>
             <if test="pojo.examDate!=null">#{pojo.examDate},</if>
             <if test="pojo.examNo!=null">#{pojo.examNo},</if>
             <if test="pojo.fullName!=null">#{pojo.fullName},</if>

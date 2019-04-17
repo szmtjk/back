@@ -15,6 +15,8 @@ import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.time.DateUtils;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -27,6 +29,8 @@ import java.util.List;
 @Service
 public class ExamReportExcelDisposer extends BaseComplicatedExcelDisposer {
 
+    private static final Logger LOG = LoggerFactory.getLogger(ExamReportExcelDisposer.class);
+
     @Autowired
     private ExamService examService;
 
@@ -37,9 +41,9 @@ public class ExamReportExcelDisposer extends BaseComplicatedExcelDisposer {
     private ExamDetailReportService examDetailReportService;
 
     @Override
-    protected JsonRet<Boolean> disposeComplicatedSheetData(Sheet sheet) {
+    protected JsonRet<Boolean> disposeComplicatedSheetData(Sheet sheet, String fileName) {
         ExamWrapper examWrapper = new ExamWrapper();
-        examWrapper.setExam(getExam(sheet));
+        examWrapper.setExam(getExam(sheet, fileName));
         examWrapper.setExamCategoryList(getExamCategoryList(sheet));
         return saveExamReport(examWrapper);
     }
@@ -89,9 +93,10 @@ public class ExamReportExcelDisposer extends BaseComplicatedExcelDisposer {
         return JsonRet.getSuccessRet(true);
     }
 
-    private Exam getExam(Sheet sheet) {
+    private Exam getExam(Sheet sheet, String fileName) {
         Exam exam = new Exam();
         int lastRowNum = sheet.getLastRowNum();
+        exam.setMobile(getMobileFromFileName(fileName));
         exam.setExamNo(getStrCellValue(sheet, 24, 3));
         exam.setFullName(getStrCellValue(sheet, 26, 3));
         exam.setGender(BizUtil.getGender(getStrCellValue(sheet, 28, 3)));
@@ -102,6 +107,21 @@ public class ExamReportExcelDisposer extends BaseComplicatedExcelDisposer {
         exam.setSummaryDate(getDateFromSummary(getStrCellValue(sheet, lastRowNum - 1, 4)));// to be checked
         exam.setSummary(getStrCellValue(sheet, lastRowNum, 1));
         return exam;
+    }
+
+    private String getMobileFromFileName(String fileName) {
+        if (StringUtils.isNotEmpty(fileName)) {
+            try {
+                int mobileStartIndex = fileName.lastIndexOf("_") + 1;
+                int mobileEndIndex = fileName.lastIndexOf(".");
+                if (mobileEndIndex > 0 && mobileStartIndex >= 0 && mobileEndIndex > mobileStartIndex) {
+                    return fileName.substring(mobileStartIndex, mobileEndIndex);
+                }
+            } catch (Exception e) {
+                LOG.error("getMobileFromFileName err, fileName:{}", fileName, e);
+            }
+        }
+        return "";
     }
 
     private List<ExamCategory> getExamCategoryList(Sheet sheet) {

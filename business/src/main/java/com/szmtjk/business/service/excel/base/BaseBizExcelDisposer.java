@@ -36,7 +36,7 @@ public abstract class BaseBizExcelDisposer implements BizExcelDisposer {
         try {
             Workbook workbook = WorkbookFactory.create(file);
             Sheet bizSheet = workbook.getSheetAt(0);// 只获取第一个sheet作解析
-            return disposeSheet(bizSheet);
+            return disposeSheet(bizSheet, file.getName());
         } catch (Exception e) {
             LOG.error("BaseBizExcelDisposer.disposeExcel dispose err, file:{}", file.getName(), e);
             ErrCode err = ErrCode.EXCEL_DISPOSE_ERR;
@@ -44,7 +44,7 @@ public abstract class BaseBizExcelDisposer implements BizExcelDisposer {
         }
     }
 
-    protected JsonRet<Boolean> disposeSheet(Sheet sheet) {
+    protected JsonRet<Boolean> disposeSheet(Sheet sheet, String fileName) {
         if (sheet == null) {
             return JsonRet.getErrRet(ErrCode.EXCEL_FILE_NOT_EXIST);
         }
@@ -57,7 +57,7 @@ public abstract class BaseBizExcelDisposer implements BizExcelDisposer {
                 });
                 return JsonRet.getSuccessRet(true);
             case COMPLICATED:
-                return disposeComplicatedSheetData(sheet);
+                return disposeComplicatedSheetData(sheet, fileName);
             default:
                 break;
         }
@@ -78,5 +78,5 @@ public abstract class BaseBizExcelDisposer implements BizExcelDisposer {
 
     protected abstract JsonRet<Boolean> disposeSimpleRow(Row row);
 
-    protected abstract JsonRet<Boolean> disposeComplicatedSheetData(Sheet sheet);
+    protected abstract JsonRet<Boolean> disposeComplicatedSheetData(Sheet sheet, String fileName);
 }
