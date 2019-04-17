@@ -6,9 +6,14 @@ import java.util.Date;
 
 public class BaseExam extends BaseModelAndDO {
     /**
-     * 体检人ID
+     * 体检人ID，正常该值无法关联
      */
     private Long userId;
+
+    /**
+     * 体检人手机号，正常靠这个唯一标识
+     */
+    private String mobile;
 
     /**
      * 体检日期
@@ -65,6 +70,14 @@ public class BaseExam extends BaseModelAndDO {
 
     public void setUserId(Long userId) {
         this.userId = userId;
+    }
+
+    public String getMobile() {
+        return mobile;
+    }
+
+    public void setMobile(String mobile) {
+        this.mobile = mobile;
     }
 
     public Date getExamDate() {

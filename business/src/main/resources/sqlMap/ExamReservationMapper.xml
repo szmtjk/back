@@ -135,7 +135,20 @@
         <if test="pojo.married!=null"> AND `MARRIED` = #{pojo.married}</if>
         <if test="pojo.company!=null"> AND #{pojo.company}</if>
         <if test="pojo.packageName!=null"> AND PACKAGENAME = #{pojo.packageName}</if>
-        order by `id` desc
+        <choose>
+            <when test="pojo.orderBy!=null">
+                order by #{pojo.orderBy}
+                <if test="pojo.sortType!=null">
+                    <if test="pojo.sortType == 2">
+                        desc
+                    </if>
+                </if>
+            </when>
+            <otherwise>
+                order by `id` desc
+            </otherwise>
+        </choose>
+
         <include refid="pageCommon"/>
     </select>
 

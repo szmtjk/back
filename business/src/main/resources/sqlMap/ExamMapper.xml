@@ -4,9 +4,11 @@
     <resultMap id="AllColumnMap" type="com.szmtjk.business.db.entity.ExamDO">
         <result property="id" column="ID" />
         <result property="userId" column="USERID" />
+        <result property="mobile" column="MOBILE" />
         <result property="examDate" column="EXAMDATE" />
         <result property="examNo" column="EXAMNO" />
         <result property="fullName" column="FULLNAME" />
+        <result property="gender" column="GENDER" />
         <result property="age" column="AGE" />
         <result property="company" column="COMPANY" />
         <result property="summary" column="SUMMARY" />
@@ -20,9 +22,11 @@
     <sql id="all_column">
         `ID`,
         `USERID`,
+        `MOBILE`,
         `EXAMDATE`,
         `EXAMNO`,
         `FULLNAME`,
+        `GENDER`,
         `AGE`,
         `COMPANY`,
         `SUMMARY`,
@@ -46,6 +50,7 @@
             <if test="pojo.examDate!=null">`EXAMDATE`,</if>
             <if test="pojo.examNo!=null">`EXAMNO`,</if>
             <if test="pojo.fullName!=null">`FULLNAME`,</if>
+            <if test="pojo.gender!=null">`GENDER`,</if>
             <if test="pojo.age!=null">`AGE`,</if>
             <if test="pojo.company!=null">`COMPANY`,</if>
             <if test="pojo.summary!=null">`SUMMARY`,</if>
@@ -61,6 +66,7 @@
             <if test="pojo.examDate!=null">#{pojo.examDate},</if>
             <if test="pojo.examNo!=null">#{pojo.examNo},</if>
             <if test="pojo.fullName!=null">#{pojo.fullName},</if>
+            <if test="pojo.gender!=null">#{pojo.gender},</if>
             <if test="pojo.age!=null">#{pojo.age},</if>
             <if test="pojo.company!=null">#{pojo.company},</if>
             <if test="pojo.summary!=null">#{pojo.summary},</if>
@@ -80,6 +86,7 @@
             <if test="pojo.examDate!=null">`EXAMDATE` = #{pojo.examDate},</if>
             <if test="pojo.examNo!=null">`EXAMNO` = #{pojo.examNo},</if>
             <if test="pojo.fullName!=null">`FULLNAME` = #{pojo.fullName},</if>
+            <if test="pojo.gender!=null">`GENDER` = #{pojo.gender},</if>
             <if test="pojo.age!=null">`AGE` = #{pojo.age},</if>
             <if test="pojo.company!=null">`COMPANY` = #{pojo.company},</if>
             <if test="pojo.summary!=null">`SUMMARY` = #{pojo.summary},</if>
@@ -128,6 +135,9 @@
         where `isDeleted` = 0
         <if test="pojo.userId != null"> AND `USERID` = #{pojo.userId} </if>
         <if test="pojo.examNo != null"> AND `EXAMNO` = #{pojo.examNo} </if>
+        <if test="pojo.examNo != null"> AND `MOBILE` = #{pojo.mobile} </if>
+        <if test="pojo.examNo != null"> AND `FULLNAME` = #{pojo.fullName} </if>
+        <if test="pojo.examNo != null"> AND `GENDER` = #{pojo.gender} </if>
     </sql>
 
     <sql id="pageCommon">

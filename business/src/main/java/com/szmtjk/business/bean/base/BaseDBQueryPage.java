@@ -11,6 +11,8 @@ public class BaseDBQueryPage {
     private String editor;
     private int startRow;
     private int limitNum;
+    private String orderBy;// 排序字段 为空则不排序
+    private Integer sortType;// 0 不排序  1：升序  2：降序
 
     public Long getId() {
         return id;
@@ -50,5 +52,21 @@ public class BaseDBQueryPage {
 
     public void setLimitNum(int limitNum) {
         this.limitNum = limitNum;
+    }
+
+    public String getOrderBy() {
+        return orderBy;
+    }
+
+    public void setOrderBy(String orderBy) {
+        this.orderBy = orderBy;
+    }
+
+    public Integer getSortType() {
+        return sortType;
+    }
+
+    public void setSortType(Integer sortType) {
+        this.sortType = sortType;
     }
 }
