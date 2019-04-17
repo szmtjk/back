@@ -12,6 +12,7 @@ public class ExamQuery extends BaseQueryPage {
      * 体检报告编号
      */
     private String examNo;
+
     private String fullName;
     private String mobile;
     private Integer gender;

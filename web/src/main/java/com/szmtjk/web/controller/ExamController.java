@@ -48,7 +48,7 @@ public class ExamController extends BaseCRUDController<Exam, ExamQuery> {
             examQuery.setMobile(examReservation.getMobile());
             examQuery.setFullName(examReservation.getName());
             examQuery.setGender(examReservation.getGender());
-            super.getList(examQuery);
+            return super.getList(examQuery);
         }
         return JsonRet.getErrRet(ErrCode.DATA_NOT_EXIST);
     }
