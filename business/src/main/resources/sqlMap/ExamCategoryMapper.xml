@@ -76,7 +76,7 @@
         UPDATE `ExamCategory`
         SET `isDeleted` = 1 ,
         `updated` = UNIX_TIMESTAMP(now())
-        WHERE `id` = #{pojo.id} and `isDeleted` = 0
+        WHERE `id` = #{id} and `isDeleted` = 0
         LIMIT 1
     </update>
 
