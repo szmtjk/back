@@ -38,14 +38,14 @@ public class ZipUtil {
     }
 
     private static String getEncoding(String path) {
-        String encoding = "GBK";
+        String encoding = "UTF-8";
         try {
             ZipFile zipFile  = new ZipFile(path);
             zipFile.setFileNameCharset(encoding);
             List<FileHeader> list = zipFile.getFileHeaders();
             for (FileHeader fileHeader : list) {
                 if (isMessyCode(fileHeader.getFileName())) {
-                    encoding = "UTF-8";
+                    encoding = "GBK";
                     break;
                 }
             }
@@ -64,18 +64,28 @@ public class ZipUtil {
         int length = (ch != null) ? ch.length : 0;
         for (int i = 0; i < length; i++) {
             char c = ch[i];
-            if (!Character.isLetterOrDigit(c)) {
-                String ss = "" + ch[i];
-                if (!ss.matches("[\u4e00-\u9fa5]+")) {
-                    return true;
-                }
+            if (!Character.isLetterOrDigit(c) && !isChinese(c)) {
+                return true;
             }
         }
         return false;
     }
 
+    private static boolean isChinese(char c) {
+        Character.UnicodeBlock ub = Character.UnicodeBlock.of(c);
+        if (ub == Character.UnicodeBlock.CJK_UNIFIED_IDEOGRAPHS
+                || ub == Character.UnicodeBlock.CJK_COMPATIBILITY_IDEOGRAPHS
+                || ub == Character.UnicodeBlock.CJK_UNIFIED_IDEOGRAPHS_EXTENSION_A
+                || ub == Character.UnicodeBlock.GENERAL_PUNCTUATION
+                || ub == Character.UnicodeBlock.CJK_SYMBOLS_AND_PUNCTUATION
+                || ub == Character.UnicodeBlock.HALFWIDTH_AND_FULLWIDTH_FORMS) {
+            return true;
+        }
+        return false;
+    }
+
     public static void main(String[] args) {
-        String zipPath = "/Users/xiaohu/Downloads/test/S218_张三2017健康体检.xlsx.zip";
+        String zipPath = "/Users/xiaohu/Downloads/test/S016_黄和平_13771729591(1).zip";
         String dstDir = "/Users/xiaohu/Downloads/test";
         unzipAllFilesAndAddPrefix(zipPath, dstDir, "2019");
     }

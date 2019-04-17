@@ -14,6 +14,7 @@ import org.slf4j.LoggerFactory;
 
 import java.io.File;
 import java.io.IOException;
+import java.math.BigDecimal;
 
 /**
  * Created by xiaohu on 2018/12/29.
@@ -158,7 +159,7 @@ public class ExcelUtil {
                 if (DateUtil.isCellDateFormatted(cell)) {
                     return DateUtils.format(cell.getDateCellValue(), "yyyyy-MM-dd");
                 }
-                return String.valueOf(cell.getNumericCellValue());
+                return new BigDecimal(cell.getNumericCellValue()).toPlainString();
             case STRING:
                 return cell.getRichStringCellValue().getString();
             case BLANK:
