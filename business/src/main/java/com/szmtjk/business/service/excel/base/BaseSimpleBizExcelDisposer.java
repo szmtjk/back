@@ -8,7 +8,7 @@ import org.apache.poi.ss.usermodel.Sheet;
 public abstract class BaseSimpleBizExcelDisposer extends BaseBizExcelDisposer {
 
     @Override
-    protected JsonRet<Boolean> disposeComplicatedSheetData(Sheet sheet) {
+    protected JsonRet<Boolean> disposeComplicatedSheetData(Sheet sheet, String fileName) {
         return JsonRet.getErrRet(ErrCode.EXCEL_DISPOSE_TYPE_NOT_MATCHED);
     }
 
