@@ -135,9 +135,9 @@
         where `isDeleted` = 0
         <if test="pojo.userId != null"> AND `USERID` = #{pojo.userId} </if>
         <if test="pojo.examNo != null"> AND `EXAMNO` = #{pojo.examNo} </if>
-        <if test="pojo.examNo != null"> AND `MOBILE` = #{pojo.mobile} </if>
-        <if test="pojo.examNo != null"> AND `FULLNAME` = #{pojo.fullName} </if>
-        <if test="pojo.examNo != null"> AND `GENDER` = #{pojo.gender} </if>
+        <if test="pojo.mobile != null"> AND `MOBILE` = #{pojo.mobile} </if>
+        <if test="pojo.fullName != null"> AND `FULLNAME` = #{pojo.fullName} </if>
+        <if test="pojo.gender != null"> AND `GENDER` = #{pojo.gender} </if>
     </sql>
 
     <sql id="pageCommon">
